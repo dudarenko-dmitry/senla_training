@@ -1,15 +1,13 @@
-package pl.senla.lecture3.task2;
+package pl.senla.lecture3.task2.flower;
 
-public class Flower {
+public abstract class Flower {
 
     private String name;
     private int price;
-    private boolean inBouquet;
 
-    public Flower(String name, int price, boolean inBouquet) {
+    public Flower(String name, int price) {
         this.name = name;
         this.price = price;
-        this.inBouquet = inBouquet;
     }
 
     public String getName() {
@@ -28,20 +26,11 @@ public class Flower {
         this.price = price;
     }
 
-    public boolean isInBouquet() {
-        return inBouquet;
-    }
-
-    public void setInBouquet(boolean inBouquet) {
-        this.inBouquet = inBouquet;
-    }
-
     @Override
     public String toString() {
         return "\nFlower{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
-                ", inBouquet=" + inBouquet +
                 '}';
     }
 }
