@@ -10,8 +10,6 @@ public class PartBody implements IProductPart{
 
     @Override
     public String toString() {
-        return "PartBody{" +
-                "name='" + name + '\'' +
-                '}';
+        return "name='" + name + '\'';
     }
 }

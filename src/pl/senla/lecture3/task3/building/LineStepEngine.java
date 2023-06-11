@@ -7,13 +7,20 @@ import java.util.Scanner;
 
 public class LineStepEngine implements ILineStep {
 
+    private IProductPart partEngine;
+
     @Override
     public IProductPart buildProductPart() {
         System.out.print("Input engine's name -> ");
         Scanner scanner = new Scanner(System.in);
         String name = scanner.next();
-        IProductPart engine = new PartEngine(name);
-        System.out.println(engine + " was produced.");
-        return engine;
+        partEngine = new PartEngine(name);
+        System.out.println(partEngine + " was produced.");
+        return partEngine;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + partEngine + "}";
     }
 }

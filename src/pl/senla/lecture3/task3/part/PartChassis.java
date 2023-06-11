@@ -2,7 +2,10 @@ package pl.senla.lecture3.task3.part;
 
 public class PartChassis implements IProductPart{
 
-    private final String name;
+    private String name;
+
+    public PartChassis() {
+    }
 
     public PartChassis(String name) {
         this.name = name;
@@ -10,8 +13,6 @@ public class PartChassis implements IProductPart{
 
     @Override
     public String toString() {
-        return "PartChassis{" +
-                "name='" + name + '\'' +
-                '}';
+        return "name='" + name + '\'';
     }
 }
