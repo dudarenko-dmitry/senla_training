@@ -1,29 +1,18 @@
 package pl.senla.lecture3.task3.assembly;
 
-import pl.senla.lecture3.task3.part.IProductPart;
+import pl.senla.lecture3.task3.building.ILineStep;
 import pl.senla.lecture3.task3.product.IProduct;
 
 public class AssemblyLineImpl implements IAssemblyLine{
 
-    private IProduct product;
-    private IProductPart firstProductPart;
-    private IProductPart secondProductPart;
-    private IProductPart thirdProductPart;
-
-    public AssemblyLineImpl() {
-
-    }
-
-    public AssemblyLineImpl(IProduct product) {
-        this.product = product;
-    }
+//    private ILineStep lineStepBody;
+//    private ILineStep lineStepChassis;
+//    private ILineStep lineStepEngine;
+    private IProduct car;
 
     @Override
     public IProduct assembleProduct(IProduct product) {
-        System.out.println("Production of auto components is started.");
-        product.installFirstPart(firstProductPart);
-        product.installSecondPart(secondProductPart);
-        product.installThirdPart(thirdProductPart);
-        return product;
+        this.car = product;
+        return car;
     }
 }
