@@ -7,6 +7,7 @@ public abstract class HotelService {
     private int idHotelService;
     private Timestamp startTime;
     private int priceService;
+    private Client client;
 
     public HotelService() {
     }
@@ -15,10 +16,15 @@ public abstract class HotelService {
         this.idHotelService = idHotelService;
     }
 
-    public HotelService(int idHotelService, Timestamp startTime, int priceService) {
+    public HotelService(Client client) {
+        this.client = client;
+    }
+
+    public HotelService(int idHotelService, Timestamp startTime, int priceService, Client client) {
         this.idHotelService = idHotelService;
         this.startTime = startTime;
         this.priceService = priceService;
+        this.client = client;
     }
 
     public int getIdHotelService() {
@@ -45,12 +51,21 @@ public abstract class HotelService {
         this.priceService = priceService;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     @Override
     public String toString() {
         return "HotelService{" +
                 "idHotelService=" + idHotelService +
                 ", startTime=" + startTime +
                 ", priceService=" + priceService +
+                ", clientID=" + client.getIdClient() +
                 '}';
     }
 }
