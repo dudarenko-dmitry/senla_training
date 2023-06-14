@@ -2,29 +2,29 @@ package pl.senla.lecture3.task4.entity;
 
 import jdk.jfr.Timestamp;
 
-public class Accomodation extends HotelService{
+public class Accommodation extends HotelService{
 
     private Room room;
     private int numberOfDays;
 
-    public Accomodation() {
+    public Accommodation() {
     }
 
-    public Accomodation(Room room) {
+    public Accommodation(Room room) {
         this.room = room;
     }
 
-    public Accomodation(int idHotelService, Room room) {
+    public Accommodation(int idHotelService, Room room) {
         super(idHotelService);
         this.room = room;
     }
 
-    public Accomodation(int idHotelService, Timestamp startTime, int priceService, Room room) {
+    public Accommodation(int idHotelService, Timestamp startTime, int priceService, Room room) {
         super(idHotelService, startTime, priceService);
         this.room = room;
     }
 
-    public Accomodation(Room room, int numberOfDays) {
+    public Accommodation(Room room, int numberOfDays) {
         super();
         this.room = room;
         this.numberOfDays = numberOfDays;

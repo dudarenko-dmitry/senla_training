@@ -6,8 +6,8 @@ public interface Controller<T> {
 
     List<T> readAll();
     boolean create(T t);
-    T read(T t);
-    boolean update(T t, T newT);
-    boolean delete(T t);
+    T read(int id);
+    boolean update(T t);
+    boolean delete(int id);
 
 }

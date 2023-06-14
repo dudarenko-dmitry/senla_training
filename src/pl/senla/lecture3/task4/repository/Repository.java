@@ -7,7 +7,7 @@ public interface Repository<T> {
     List<T> readAll();
     boolean create(T t);
     T read(T t);
-    boolean update(T t, T newT);
+    boolean update(T t);
     boolean delete(T t);
 
 }

@@ -55,7 +55,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
+        return "\nRoom{" +
                 "roomId=" + roomId +
                 ", roomNumber=" + roomNumber +
                 ", roomPrice=" + roomPrice +
