@@ -5,7 +5,7 @@ import java.util.List;
 public class Client {
 
     private int idClient;
-    private String nameClient;
+    private String name;
     private int phoneNumber;
     private List<Order> orders;
 
@@ -16,9 +16,9 @@ public class Client {
         this.idClient = idClient;
     }
 
-    public Client(int idClient, String nameClient, int phoneNumber, List<Order> orders) {
+    public Client(int idClient, String name, int phoneNumber, List<Order> orders) {
         this.idClient = idClient;
-        this.nameClient = nameClient;
+        this.name = name;
         this.phoneNumber = phoneNumber;
         this.orders = orders;
     }
@@ -31,12 +31,12 @@ public class Client {
         this.idClient = idClient;
     }
 
-    public String getNameClient() {
-        return nameClient;
+    public String getName() {
+        return name;
     }
 
-    public void setNameClient(String nameClient) {
-        this.nameClient = nameClient;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPhoneNumber() {
@@ -57,9 +57,9 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "\nClient{" +
                 "idClient=" + idClient +
-                ", nameClient='" + nameClient + '\'' +
+                ", name='" + name + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", orders=" + orders +
                 '}';

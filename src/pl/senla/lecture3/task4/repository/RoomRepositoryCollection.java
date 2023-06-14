@@ -17,7 +17,7 @@ public class RoomRepositoryCollection implements Repository<Room>{
 
     @Override
     public boolean create(Room room) {
-        dataStorage.getDataList().add(room);
+        readAll().add(room);
         return true;
     }
 
@@ -25,7 +25,7 @@ public class RoomRepositoryCollection implements Repository<Room>{
     public Room read(Room room) {
         int roomId = room.getRoomId();
         Room roomRead = null;
-        for(Room r : dataStorage.getDataList()){
+        for(Room r : readAll()){
             if (roomId == r.getRoomId()){
                 roomRead = r;
             }
@@ -36,14 +36,14 @@ public class RoomRepositoryCollection implements Repository<Room>{
     @Override
     public boolean update(Room room) { // check method (ID must be always equal index)
         int roomId = room.getRoomId();
-        dataStorage.getDataList().set(roomId, room);
+        readAll().set(roomId, room);
         return true;
     }
 
     @Override
     public boolean delete(Room room) {
         int roomId = room.getRoomId();
-        dataStorage.getDataList().removeIf(r -> roomId == r.getRoomId());
+        readAll().remove(roomId);
         return true;
     }
 }

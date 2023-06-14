@@ -6,16 +6,9 @@ import pl.senla.lecture3.task4.service.Service;
 
 import java.util.List;
 
-public class RoomControllerCollection implements Controller<Room>{
+public class RoomController implements Controller<Room>{
 
-    private Service<Room> roomService = new RoomService();
-
-    public RoomControllerCollection() {
-    }
-
-    public RoomControllerCollection(Service<Room> roomService) {
-        this.roomService = roomService;
-    }
+    private final Service<Room> roomService = new RoomService();
 
     @Override
     public List<Room> readAll() {

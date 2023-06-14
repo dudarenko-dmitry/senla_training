@@ -10,14 +10,7 @@ import static pl.senla.lecture3.task4.constant.RoomConstant.*;
 
 public class RoomService implements Service<Room> {
 
-    private Repository<Room> roomRepository = new RoomRepositoryCollection();
-
-    public RoomService() {
-    }
-
-    public RoomService(Repository<Room> roomRepository) {
-        this.roomRepository = roomRepository;
-    }
+    private final Repository<Room> roomRepository = new RoomRepositoryCollection();
 
     @Override
     public List<Room> readAll() {
