@@ -22,8 +22,7 @@ public class ClientController implements Controller<Client>{
 
     @Override
     public Client read(int id) {
-        Client clientRead = new Client(id);
-        return clientService.read(clientRead);
+        return clientService.read(id);
     }
 
     @Override
@@ -33,7 +32,6 @@ public class ClientController implements Controller<Client>{
 
     @Override
     public boolean delete(int id) {
-        Client clientDeleted = new Client(id);
-        return clientService.delete(clientDeleted);
+        return clientService.delete(id);
     }
 }

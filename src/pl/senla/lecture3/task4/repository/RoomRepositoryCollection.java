@@ -22,11 +22,10 @@ public class RoomRepositoryCollection implements Repository<Room>{
     }
 
     @Override
-    public Room read(Room room) {
-        int roomId = room.getRoomId();
+    public Room read(int id) {
         Room roomRead = null;
         for(Room r : readAll()){
-            if (roomId == r.getRoomId()){
+            if (id == r.getRoomId()){
                 roomRead = r;
             }
         }
@@ -41,9 +40,8 @@ public class RoomRepositoryCollection implements Repository<Room>{
     }
 
     @Override
-    public boolean delete(Room room) {
-        int roomId = room.getRoomId();
-        readAll().remove(roomId);
+    public boolean delete(int id) {
+        readAll().remove(id);
         return true;
     }
 }

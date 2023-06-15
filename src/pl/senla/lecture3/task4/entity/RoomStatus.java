@@ -2,9 +2,10 @@ package pl.senla.lecture3.task4.entity;
 
 public enum RoomStatus {
 
-    FREE("Room is free"),
-    RESERVED("Room is reserved"),
-    REPAIRED("Room is under repair");
+    FREE("Free"),
+    RESERVED("Reserved"),
+    OCCUPIED("Occupied"),
+    REPAIRED("Under repair");
 
     private final String status;
 

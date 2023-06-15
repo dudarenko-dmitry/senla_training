@@ -22,7 +22,7 @@ public class RoomService implements Service<Room> {
 
     @Override
     public boolean create(Room room) {
-        if(roomRepository.read(room) != null) {
+        if(roomRepository.read(room.getRoomId()) != null) {
             System.out.println(ERROR_CREATE_ROOM);
             return false;
         }
@@ -30,13 +30,15 @@ public class RoomService implements Service<Room> {
     }
 
     @Override
-    public Room read(Room room) {
+    public Room read(int id) {
         if(roomRepository.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM);
-        } else if(roomRepository.read(room) == null){
+            return null;
+        } else if(roomRepository.read(id) == null){
             System.out.println(ERROR_READ_ROOM);
+            return null;
         }
-        return roomRepository.read(room);
+        return roomRepository.read(id);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class RoomService implements Service<Room> {
         if(roomRepository.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
-        } else if(roomRepository.read(room) == null){
+        } else if(roomRepository.read(room.getRoomId()) == null){
             System.out.println(ERROR_READ_ROOM);
             return false;
         }
@@ -52,14 +54,14 @@ public class RoomService implements Service<Room> {
     }
 
     @Override
-    public boolean delete(Room room) {
+    public boolean delete(int id) {
         if(roomRepository.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
-        } else if(roomRepository.read(room) == null){
+        } else if(roomRepository.read(id) == null){
             System.out.println(ERROR_READ_ROOM);
             return false;
         }
-        return roomRepository.delete(room);
+        return roomRepository.delete(id);
     }
 }

@@ -1,30 +1,38 @@
 package pl.senla.lecture3.task4.entity;
 
-import jdk.jfr.Timestamp;
+import java.time.LocalDate;
 
 public class GuideTour extends HotelService{
 
     private String nameTour;
     private String transport;
+    private int price;
 
-    public GuideTour() {
-    }
-
-    public GuideTour(String nameTour, String transport) {
+    public GuideTour(String nameTour, String transport, int price) {
         this.nameTour = nameTour;
         this.transport = transport;
+        this.price = price;
     }
 
-    public GuideTour(int idHotelService, String nameTour, String transport) {
+    public GuideTour(int idHotelService, String nameTour, String transport, int price) {
         super(idHotelService);
         this.nameTour = nameTour;
         this.transport = transport;
+        this.price = price;
     }
 
-    public GuideTour(int idHotelService, Timestamp startTime, int priceService, String nameTour, String transport) {
-        super(idHotelService, startTime, priceService);
+    public GuideTour(int idHotelService, LocalDate startDate, String nameTour, String transport, int price) {
+        super(idHotelService, startDate);
         this.nameTour = nameTour;
         this.transport = transport;
+        this.price = price;
+    }
+
+    public GuideTour(int idHotelService, LocalDate startDate, Client client, String nameTour, String transport, int price) {
+        super(idHotelService, startDate, client);
+        this.nameTour = nameTour;
+        this.transport = transport;
+        this.price = price;
     }
 
     public String getNameTour() {
@@ -45,9 +53,10 @@ public class GuideTour extends HotelService{
 
     @Override
     public String toString() {
-        return "GuideTour{" +
+        return "GuideTour{" + super.toString() +
                 "nameTour='" + nameTour + '\'' +
-                ", transport='" + transport + '\'' +
+                ", transport='" + transport +
+                ", price='" +  price + '\'' +
                 '}';
     }
 }

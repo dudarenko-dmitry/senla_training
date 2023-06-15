@@ -5,6 +5,8 @@ public class Room {
     private int roomId;
     private int roomNumber;
     private int roomPrice;
+    private int capacity;
+    private String roomLevel;
     private String roomStatus;
 
     public Room() {
@@ -14,10 +16,12 @@ public class Room {
         this.roomId = roomId;
     }
 
-    public Room(int roomId, int roomNumber, int roomPrice, String roomStatus) {
+    public Room(int roomId, int roomNumber, int roomPrice, int capacity, String roomLevel, String roomStatus) {
         this.roomId = roomId;
         this.roomNumber = roomNumber;
         this.roomPrice = roomPrice;
+        this.capacity = capacity;
+        this.roomLevel = roomLevel;
         this.roomStatus = roomStatus;
     }
 
@@ -53,12 +57,30 @@ public class Room {
         this.roomStatus = roomStatus;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getRoomLevel() {
+        return roomLevel;
+    }
+
+    public void setRoomLevel(String roomLevel) {
+        this.roomLevel = roomLevel;
+    }
+
     @Override
     public String toString() {
         return "\nRoom{" +
                 "roomId=" + roomId +
                 ", roomNumber=" + roomNumber +
                 ", roomPrice=" + roomPrice +
+                ", capacity=" + capacity +
+                ", roomLevel=" + roomLevel +
                 ", roomStatus='" + roomStatus + '\'' +
                 '}';
     }

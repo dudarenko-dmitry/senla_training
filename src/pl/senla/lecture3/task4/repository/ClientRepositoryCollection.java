@@ -22,11 +22,10 @@ public class ClientRepositoryCollection implements Repository<Client> {
     }
 
     @Override
-    public Client read(Client client) {
+    public Client read(int id) {
         Client clientRead = null;
-        int clientId = client.getIdClient();
         for(Client c : readAll()){
-            if(clientId == c.getIdClient()){
+            if(id == c.getIdClient()){
                 clientRead = c;
             }
         }
@@ -41,9 +40,8 @@ public class ClientRepositoryCollection implements Repository<Client> {
     }
 
     @Override
-    public boolean delete(Client client) {
-        int clientId = client.getIdClient();
-        readAll().remove(clientId);
+    public boolean delete(int id) {
+        readAll().remove(id);
         return true;
     }
 }

@@ -1,12 +1,11 @@
 package pl.senla.lecture3.task4.entity;
 
-import jdk.jfr.Timestamp;
+import java.time.LocalDate;
 
 public abstract class HotelService {
 
     private int idHotelService;
-    private Timestamp startTime;
-    private int priceService;
+    private LocalDate startDate;
     private Client client;
 
     public HotelService() {
@@ -16,14 +15,19 @@ public abstract class HotelService {
         this.idHotelService = idHotelService;
     }
 
-    public HotelService(Client client) {
-        this.client = client;
+    public HotelService(int idHotelService, LocalDate startDate) {
+        this.idHotelService = idHotelService;
+        this.startDate = startDate;
     }
 
-    public HotelService(int idHotelService, Timestamp startTime, int priceService, Client client) {
+    public HotelService(int idHotelService, LocalDate startDate, Client client) {
+        if(client == null){
+            System.out.println("Creating new order is not available without Client's data");
+            // check if the Client exists in DB
+            return;
+        }
         this.idHotelService = idHotelService;
-        this.startTime = startTime;
-        this.priceService = priceService;
+        this.startDate = startDate;
         this.client = client;
     }
 
@@ -35,20 +39,12 @@ public abstract class HotelService {
         this.idHotelService = idHotelService;
     }
 
-    public Timestamp getStartTime() {
-        return startTime;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
-    }
-
-    public int getPriceService() {
-        return priceService;
-    }
-
-    public void setPriceService(int priceService) {
-        this.priceService = priceService;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public Client getClient() {
@@ -61,11 +57,8 @@ public abstract class HotelService {
 
     @Override
     public String toString() {
-        return "HotelService{" +
-                "idHotelService=" + idHotelService +
-                ", startTime=" + startTime +
-                ", priceService=" + priceService +
-                ", clientID=" + client.getIdClient() +
-                '}';
+        return "idHotelService=" + idHotelService +
+                ", startDay=" + startDate +
+                client + '}';
     }
 }

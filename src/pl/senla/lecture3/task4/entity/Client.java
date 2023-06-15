@@ -1,13 +1,10 @@
 package pl.senla.lecture3.task4.entity;
 
-import java.util.List;
-
 public class Client {
 
     private int idClient;
     private String name;
     private int phoneNumber;
-    private List<Order> orders;
 
     public Client() {
     }
@@ -16,11 +13,10 @@ public class Client {
         this.idClient = idClient;
     }
 
-    public Client(int idClient, String name, int phoneNumber, List<Order> orders) {
+    public Client(int idClient, String name, int phoneNumber) {
         this.idClient = idClient;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.orders = orders;
     }
 
     public int getIdClient() {
@@ -47,21 +43,12 @@ public class Client {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
     @Override
     public String toString() {
         return "\nClient{" +
                 "idClient=" + idClient +
                 ", name='" + name + '\'' +
                 ", phoneNumber=" + phoneNumber +
-                ", orders=" + orders +
                 '}';
     }
 }

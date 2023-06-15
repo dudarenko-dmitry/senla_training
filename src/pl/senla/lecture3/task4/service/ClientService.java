@@ -23,10 +23,7 @@ public class ClientService implements Service<Client> {
 
     @Override
     public boolean create(Client client) {
-        if(clientRepository.readAll() == null){
-            System.out.println(ERROR_READ_ALL_CLIENT);
-            return false;
-        } else if(clientRepository.read(client) != null){
+        if(clientRepository.read(client.getIdClient()) != null){
             System.out.println(ERROR_CREATE_CLIENT);
             return false;
         }
@@ -34,13 +31,15 @@ public class ClientService implements Service<Client> {
     }
 
     @Override
-    public Client read(Client client) {
+    public Client read(int id) {
         if(clientRepository.readAll() == null){
             System.out.println(ERROR_READ_ALL_CLIENT);
-        } else if(clientRepository.read(client) == null){
+            return null;
+        } else if(clientRepository.read(id) == null){
             System.out.println(ERROR_READ_CLIENT);
+            return null;
         }
-        return clientRepository.read(client);
+        return clientRepository.read(id);
     }
 
     @Override
@@ -48,7 +47,7 @@ public class ClientService implements Service<Client> {
         if(clientRepository.readAll() == null){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
-        } else if(clientRepository.read(client) == null){
+        } else if(clientRepository.read(client.getIdClient()) == null){
             System.out.println(ERROR_READ_CLIENT);
             return false;
         }
@@ -56,14 +55,14 @@ public class ClientService implements Service<Client> {
     }
 
     @Override
-    public boolean delete(Client client) {
+    public boolean delete(int id) {
         if(clientRepository.readAll() == null){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
-        } else if(clientRepository.read(client) == null){
+        } else if(clientRepository.read(id) == null){
             System.out.println(ERROR_READ_CLIENT);
             return false;
         }
-        return clientRepository.delete(client);
+        return clientRepository.delete(id);
     }
 }

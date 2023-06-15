@@ -22,8 +22,7 @@ public class RoomController implements Controller<Room>{
 
     @Override
     public Room read(int roomId) {
-        Room room = new Room(roomId);
-        return roomService.read(room);
+        return roomService.read(roomId);
     }
 
     @Override
@@ -33,7 +32,6 @@ public class RoomController implements Controller<Room>{
 
     @Override
     public boolean delete(int roomId) {
-        Room room = new Room(roomId);
-        return roomService.delete(room);
+        return roomService.delete(roomId);
     }
 }
