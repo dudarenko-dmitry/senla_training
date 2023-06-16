@@ -2,6 +2,9 @@ package pl.senla.hotel.entity;
 
 import java.time.LocalDate;
 
+import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_RESERVATION_NO_ROOM;
+import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_ROOM_NOT_AVAILABLE;
+
 public class RoomReservation extends HotelService{
 
     private Room room;
@@ -14,9 +17,15 @@ public class RoomReservation extends HotelService{
 
     public RoomReservation(int idHotelService, LocalDate startDate, Client client, Room room, int numberOfDays) {
         super(idHotelService, startDate, client);
+        if(room == null){// check if the ROOM exists
+            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
+            return;
+        } else if(!room.getRoomStatus().equals(RoomStatus.FREE.getStatus())){// check if the ROOM is FREE
+            System.out.println(ERROR_ROOM_NOT_AVAILABLE);
+            return;
+        }
         room.setRoomStatus(RoomStatus.RESERVED.getStatus());
         this.room = room;
-        // check if the ROOM exists in DB and is FREE
         this.numberOfDays = numberOfDays;
         this.cost = room.getRoomPrice() * numberOfDays;
     }

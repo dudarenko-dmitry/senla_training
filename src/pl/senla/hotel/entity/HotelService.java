@@ -2,6 +2,8 @@ package pl.senla.hotel.entity;
 
 import java.time.LocalDate;
 
+import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT;
+
 public abstract class HotelService {
 
     private int idHotelService;
@@ -22,8 +24,7 @@ public abstract class HotelService {
 
     public HotelService(int idHotelService, LocalDate startDate, Client client) {
         if(client == null){
-            System.out.println("Creating new order is not available without Client's data");
-            // check if the Client exists in DB
+            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return;
         }
         this.idHotelService = idHotelService;
