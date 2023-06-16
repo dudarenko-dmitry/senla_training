@@ -1,0 +1,9 @@
+package pl.senla.lecture3.task3.part;
+
+public class PartBody implements IProductPart{
+
+    @Override
+    public String toString() {
+        return "PartBody";
+    }
+}
