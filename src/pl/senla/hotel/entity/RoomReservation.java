@@ -46,9 +46,17 @@ public class RoomReservation extends HotelService{
         this.numberOfDays = numberOfDays;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost() {
+        this.cost = numberOfDays * room.getRoomPrice();
+    }
+
     @Override
     public String toString() {
-        return "RoomReservation{" +
+        return "\nRoomReservation {" +
                 super.toString() +
                 room +
                 ",\nnumberOfDays=" + numberOfDays +

@@ -1,5 +1,6 @@
 package pl.senla.hotel.repository;
 
+
 import pl.senla.hotel.entity.RoomReservation;
 import pl.senla.hotel.storage.DataStorageRoomReservation;
 
@@ -8,7 +9,6 @@ import java.util.List;
 public class RoomReservationRepositoryCollection implements Repository<RoomReservation>{
 
     private final DataStorageRoomReservation dataStorageRoomReservation = new DataStorageRoomReservation();
-
 
     @Override
     public List<RoomReservation> readAll() {

@@ -14,6 +14,6 @@ public class RoomReservationConstant {
             "Please, use existing Room.";
     public static final String ERROR_ROOM_NOT_AVAILABLE = "Creating new order is not available.\n" +
             "Please, this Room is not FREE.";
-    public static final String ERROR_READ_ROOM_RESERVATION =     "There is no such room's reservation.\n" +
-                                                                 "Please, check if room's reservations ID correct.";
+    public static final String ERROR_READ_ROOM_RESERVATION =     "There is no such Room's reservation.\n" +
+                                                                 "Please, check if Room's reservations ID correct.";
 }
