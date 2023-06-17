@@ -3,14 +3,18 @@ package pl.senla.hotel.controller;
 import pl.senla.hotel.entity.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 public class ConsoleCollection implements Console{
 
+    //Было так. Сделать после всех проверок внедрение зависимостей через конструктор
     private final Controller<Room> roomController = new RoomController();
     private final Controller<RoomReservation> roomReservationController = new RoomReservationController();
     private final Controller<Client> clientController = new ClientController();
+    private final Controller<Order> orderController = new OrderController();
 
     @Override
     public void start(){
@@ -96,16 +100,32 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(1));
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
 
-        System.out.println("\n=============================");
-        System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
-        Room roomToBeFree = roomController.read(roomReservationController.read(1).getRoom().getRoomId());
-        roomToBeFree.setRoomStatus(RoomStatus.FREE.getStatus()); // add automatic change RoomStatus after deleting of Reservation
-        System.out.println(CONSOLE_DELETE_ROOM_RESERVATION + roomReservationController.delete(1));
-        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
-        System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
+        // Delete RoomReservation works. Take off comments after checking of Order's work
+//        System.out.println("\n=============================");
+//        System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
+//        Room roomToBeFree = roomController.read(roomReservationController.read(1).getRoom().getRoomId());
+//        roomToBeFree.setRoomStatus(RoomStatus.FREE.getStatus()); // add automatic change RoomStatus after deleting of Reservation
+//        System.out.println(CONSOLE_DELETE_ROOM_RESERVATION + roomReservationController.delete(1));
+//        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
+//        System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
 
 
         System.out.println("\n----- Order -----");
+        System.out.println("\n===========================");
+        System.out.println("CREATE ORDERS");
+        //move this action to Creating Client
+        List<HotelService> services0 = new ArrayList<>();
+        List<HotelService> services1 = new ArrayList<>();
+        //move this action/these actions to Creating RoomReservation, Restorant and other HotelServices.
+        services0.add(roomReservation0);
+        services1.add(roomReservation1);
+        Order order0 = new Order(0,clientController.read(0),services0);
+        System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order0));
+        System.out.println(orderController.read(0));
+        Order order1 = new Order(1,clientController.read(1),services1);
+        System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order1));
+        System.out.println(orderController.read(1));
 
+        System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
     }
 }

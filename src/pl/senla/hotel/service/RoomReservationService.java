@@ -42,7 +42,6 @@ public class RoomReservationService implements Service<RoomReservation> {
             return null;
         } else if(roomReservationRepository.read(id) == null){
             System.out.println(ERROR_READ_ROOM_RESERVATION);
-            return null;
         }
         return roomReservationRepository.read(id);
     }

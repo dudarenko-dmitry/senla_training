@@ -27,6 +27,7 @@ public class RoomReservationRepositoryCollection implements Repository<RoomReser
         for(RoomReservation rr : readAll()){
             if(id == rr.getIdHotelService()){
                 reservation = rr;
+                break;
             }
         }
         return reservation;
