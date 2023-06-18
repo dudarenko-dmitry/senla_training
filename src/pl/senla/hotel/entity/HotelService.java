@@ -6,38 +6,23 @@ import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_
 
 public abstract class HotelService {
 
-    private int idHotelService;
     private LocalDate startDate;
     private Guest guest;
 
     public HotelService() {
     }
 
-    public HotelService(int idHotelService) {
-        this.idHotelService = idHotelService;
-    }
-
-    public HotelService(int idHotelService, LocalDate startDate) {
-        this.idHotelService = idHotelService;
+    public HotelService(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public HotelService(int idHotelService, LocalDate startDate, Guest guest) {
+    public HotelService(LocalDate startDate, Guest guest) {
         if(guest == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return;
         }
-        this.idHotelService = idHotelService;
         this.startDate = startDate;
         this.guest = guest;
-    }
-
-    public int getIdHotelService() {
-        return idHotelService;
-    }
-
-    public void setIdHotelService(int idHotelService) {
-        this.idHotelService = idHotelService;
     }
 
     public LocalDate getStartDate() {
@@ -58,8 +43,7 @@ public abstract class HotelService {
 
     @Override
     public String toString() {
-        return "idHotelService=" + idHotelService +
-                ", startDay=" + startDate +
+        return "startDay=" + startDate +
                 guest + '}';
     }
 }

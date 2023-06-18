@@ -2,21 +2,27 @@ package pl.senla.hotel.entity;
 
 import java.time.LocalDate;
 
-import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_RESERVATION_NO_ROOM;
-import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_ROOM_NOT_AVAILABLE;
+import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class RoomReservation extends HotelService{
 
+    private int idRoomReservation;
     private Room room;
     private int numberOfDays;
+    private LocalDate checkOutDate;
     private int cost;
 
-    public RoomReservation(int idHotelService) {
-        super(idHotelService);
+    public RoomReservation(int idRoomReservation) {
+        this.idRoomReservation = idRoomReservation;
     }
 
-    public RoomReservation(int idHotelService, LocalDate startDate, Guest guest, Room room, int numberOfDays) {
-        super(idHotelService, startDate, guest);
+    public RoomReservation(int idRoomReservation, Guest guest, Room room, LocalDate startDate, int numberOfDays) {
+        super(startDate, guest);
+        if(guest == null){
+            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
+            return;
+        }
+        this.idRoomReservation = idRoomReservation;
         if(room == null){// check if the ROOM exists
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
@@ -27,7 +33,12 @@ public class RoomReservation extends HotelService{
         room.setRoomStatus(RoomStatus.RESERVED.getStatus());
         this.room = room;
         this.numberOfDays = numberOfDays;
+        this.checkOutDate = startDate.plusDays(numberOfDays);
         this.cost = room.getRoomPrice() * numberOfDays;
+    }
+
+    public int getIdRoomReservation() {
+        return idRoomReservation;
     }
 
     public Room getRoom() {
@@ -46,6 +57,18 @@ public class RoomReservation extends HotelService{
         this.numberOfDays = numberOfDays;
     }
 
+    public LocalDate getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(LocalDate checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
     public int getCost() {
         return cost;
     }
@@ -57,9 +80,12 @@ public class RoomReservation extends HotelService{
     @Override
     public String toString() {
         return "\nRoomReservation {" +
-                super.toString() +
-                room +
-                ",\nnumberOfDays=" + numberOfDays +
+                "idRoomReservation=" + idRoomReservation + "," +
+                super.getClient().toString() + "," +
+                room + "," +
+                "\nStartDate=" + super.getStartDate().toString() +
+                ", numberOfDays=" + numberOfDays +
+                ", checkOutDate=" + checkOutDate +
                 ", cost=" + cost +
                 '}';
     }

@@ -25,7 +25,7 @@ public class RoomReservationRepositoryCollection implements Repository<RoomReser
     public RoomReservation read(int id) {
         RoomReservation reservation = null;
         for(RoomReservation rr : readAll()){
-            if(id == rr.getIdHotelService()){
+            if(id == rr.getIdRoomReservation()){
                 reservation = rr;
                 break;
             }
@@ -35,7 +35,7 @@ public class RoomReservationRepositoryCollection implements Repository<RoomReser
 
     @Override
     public boolean update(RoomReservation roomReservation) {
-        int id = roomReservation.getIdHotelService();
+        int id = roomReservation.getIdRoomReservation();
         readAll().set(id, roomReservation);
         return true;
     }

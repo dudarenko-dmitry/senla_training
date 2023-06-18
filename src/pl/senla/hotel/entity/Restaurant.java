@@ -3,42 +3,45 @@ package pl.senla.hotel.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static pl.senla.hotel.constant.RestaurantConstant.*;
+
 public class Restaurant extends HotelService{
 
-    LocalTime startTime;
+    private int idRestaurant;
     private int tableNumber;
     private int numberOfGuests;
+    private LocalTime startTime;
     private int price;
 
-    public Restaurant(LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
-        this.startTime = startTime;
+
+
+    public Restaurant(int idRestaurant, Guest guest, int tableNumber, int numberOfGuests,
+                      LocalDate startDate, LocalTime startTime, int price) {
+        super(startDate, guest);
+        if(guest == null){
+            System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_CLIENT);
+            return;
+        }
+        if(tableNumber == -1){// check if the ROOM exists // CREATE Entity TABLE and change IF !!!!!!!!!!!!!!!!!!!!!!!!
+            System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_TABLE);
+            return;
+//        } else if(!table.TableStatus.FREE.getStatus()).equals(TableStatus.FREE.getStatus())){// check if the TABLE is FREE
+//            System.out.println(ERROR_RESTAURANT_NOT_AVAILABLE);
+//            return;
+        }
+        this.idRestaurant = idRestaurant;
         this.tableNumber = tableNumber;
         this.numberOfGuests = numberOfGuests;
+        this.startTime = startTime;
         this.price = price;
     }
 
-    public Restaurant(int idHotelService, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
-        super(idHotelService);
-        this.startTime = startTime;
-        this.tableNumber = tableNumber;
-        this.numberOfGuests = numberOfGuests;
-        this.price = price;
+    public int getIdRestaurant() {
+        return idRestaurant;
     }
 
-    public Restaurant(int idHotelService, LocalDate startDate, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
-        super(idHotelService, startDate);
-        this.startTime = startTime;
-        this.tableNumber = tableNumber;
-        this.numberOfGuests = numberOfGuests;
-        this.price = price;
-    }
-
-    public Restaurant(int idHotelService, LocalDate startDate, Guest guest, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
-        super(idHotelService, startDate, guest);
-        this.startTime = startTime;
-        this.tableNumber = tableNumber;
-        this.numberOfGuests = numberOfGuests;
-        this.price = price;
+    public void setIdRestaurant(int idRestaurant) {
+        this.idRestaurant = idRestaurant;
     }
 
     public int getTableNumber() {
@@ -75,10 +78,14 @@ public class Restaurant extends HotelService{
 
     @Override
     public String toString() {
-        return "Restorant{" + super.toString() +
-                "tableNumber=" + tableNumber +
+        return "\nRestaurant {" +
+                "idRestaurant=" + idRestaurant +
+                super.getClient().toString() + "," +
+                ", tableNumber=" + tableNumber +
                 ", numberOfGuests=" + numberOfGuests +
-                ", price=" + price + '\'' +
+                "\nStartDate=" + super.getStartDate().toString() +
+                ", startTime=" + startTime +
+                ", price=" + price +
                 '}';
     }
 }

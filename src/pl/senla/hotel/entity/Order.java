@@ -49,8 +49,7 @@ public class Order {
     public String toString() {
         return "\nOrder{" +
                 "idOrder=" + idOrder +
-                ", client=" + guest +
-                ", services=" + services +
+                ", " + services +
                 '}';
     }
 }

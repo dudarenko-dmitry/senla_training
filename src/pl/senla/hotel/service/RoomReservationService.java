@@ -28,7 +28,7 @@ public class RoomReservationService implements Service<RoomReservation> {
         } else if(reservation.getRoom() == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
-        } else if(roomReservationRepository.read(reservation.getIdHotelService()) != null){
+        } else if(roomReservationRepository.read(reservation.getIdRoomReservation()) != null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION);
             return false;
         }
@@ -51,7 +51,7 @@ public class RoomReservationService implements Service<RoomReservation> {
         if(roomReservationRepository.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return false;
-        } else if(roomReservationRepository.read(reservation.getIdHotelService()) == null){
+        } else if(roomReservationRepository.read(reservation.getIdRoomReservation()) == null){
             System.out.println(ERROR_READ_ROOM_RESERVATION);
             return false;
         }
