@@ -15,8 +15,8 @@ public class RoomReservation extends HotelService{
         super(idHotelService);
     }
 
-    public RoomReservation(int idHotelService, LocalDate startDate, Client client, Room room, int numberOfDays) {
-        super(idHotelService, startDate, client);
+    public RoomReservation(int idHotelService, LocalDate startDate, Guest guest, Room room, int numberOfDays) {
+        super(idHotelService, startDate, guest);
         if(room == null){// check if the ROOM exists
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;

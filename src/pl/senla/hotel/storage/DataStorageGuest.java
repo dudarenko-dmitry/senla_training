@@ -1,8 +1,8 @@
 package pl.senla.hotel.storage;
 
-import pl.senla.hotel.entity.Client;
+import pl.senla.hotel.entity.Guest;
 
-public class DataStorageClient extends DataStorage<Client>{
+public class DataStorageGuest extends DataStorage<Guest>{
 
     @Override
     public String toString() {

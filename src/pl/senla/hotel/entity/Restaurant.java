@@ -3,21 +3,21 @@ package pl.senla.hotel.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Restorant extends HotelService{
+public class Restaurant extends HotelService{
 
     LocalTime startTime;
     private int tableNumber;
     private int numberOfGuests;
     private int price;
 
-    public Restorant(LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
+    public Restaurant(LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
         this.startTime = startTime;
         this.tableNumber = tableNumber;
         this.numberOfGuests = numberOfGuests;
         this.price = price;
     }
 
-    public Restorant(int idHotelService, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
+    public Restaurant(int idHotelService, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
         super(idHotelService);
         this.startTime = startTime;
         this.tableNumber = tableNumber;
@@ -25,7 +25,7 @@ public class Restorant extends HotelService{
         this.price = price;
     }
 
-    public Restorant(int idHotelService, LocalDate startDate, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
+    public Restaurant(int idHotelService, LocalDate startDate, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
         super(idHotelService, startDate);
         this.startTime = startTime;
         this.tableNumber = tableNumber;
@@ -33,8 +33,8 @@ public class Restorant extends HotelService{
         this.price = price;
     }
 
-    public Restorant(int idHotelService, LocalDate startDate, Client client, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
-        super(idHotelService, startDate, client);
+    public Restaurant(int idHotelService, LocalDate startDate, Guest guest, LocalTime startTime, int tableNumber, int numberOfGuests, int price) {
+        super(idHotelService, startDate, guest);
         this.startTime = startTime;
         this.tableNumber = tableNumber;
         this.numberOfGuests = numberOfGuests;

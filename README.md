@@ -48,17 +48,35 @@ Electronic hotel administrator.
 
 Task 1 (difficulty 6)
 The program should allow you to show:
-1. List of rooms (sort by price, by capacity, by number of stars);
-2. List of available rooms (sort by price, by capacity, by number of stars);
-3. List of guests and their rooms (sort alphabetically and by check-out date);
-4. Total number of available rooms;
-5. Total number of guests;
-6. List of rooms that will be available on a certain date in the future;
-7. The amount of payment for the room to be paid by the guest;
-8. View the last 3 guests of the room and the dates of their stay;
-9. View the list of guest services and their price (sort by price, by date);
-10. Prices of services and rooms (sort by section(category), by price);
-11. Show the details of a separate room.
+1. List of rooms (sort by price, by capacity, by number of stars):
+- readAllRoomsSortByPrice,
+- readAllRoomsSortByCapacity,
+- readAllRoomsSortByStatus;
+2. List of available rooms (sort by price, by capacity, by number of stars):
+- readAllFreeRoomsSortByPrice,
+- readAllFreeRoomsSortByCapacity,
+- readAllFreeRoomsSortByStatus;
+3. List of guests and their rooms (sort alphabetically and by check-out date):
+- readAllOrdersSortByGuestName,
+- readAllOrdersSortByGuestCheckOut;
+4. Total number of available rooms:
+- countRoomsFree;
+5. Total number of guests:
+- countNumberOfGuests;
+6. List of rooms that will be available on a certain date in the future:
+- readAllRoomsFreeForDate;
+7. The amount of payment for the room to be paid by the guest:
+- countTotalPaymentForGuest;
+8. View the last 3 guests of the room and the dates of their stay:
+- read3LastGuestAndDatesForRoom;
+9. View the list of guest services and their price (sort by price, by date):
+- readAllServicesAndPricesForGuestSortByPrice,
+- readAllServicesAndPricesForGuestSortByDate;
+10. Prices of services and rooms (sort by section(category), by price):
+- showPriceListForServicesSortByCategory,
+- showPriceListForServicesSortByPrice;
+11. Show the details of a separate room:
+- readRoom.
 
 Task 2 (difficulty 2)
 Assemble the program written during the previous task into an executable Jar file.

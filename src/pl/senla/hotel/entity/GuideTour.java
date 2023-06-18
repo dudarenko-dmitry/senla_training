@@ -28,8 +28,8 @@ public class GuideTour extends HotelService{
         this.price = price;
     }
 
-    public GuideTour(int idHotelService, LocalDate startDate, Client client, String nameTour, String transport, int price) {
-        super(idHotelService, startDate, client);
+    public GuideTour(int idHotelService, LocalDate startDate, Guest guest, String nameTour, String transport, int price) {
+        super(idHotelService, startDate, guest);
         this.nameTour = nameTour;
         this.transport = transport;
         this.price = price;

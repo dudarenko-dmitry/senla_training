@@ -1,30 +1,30 @@
 package pl.senla.hotel.entity;
 
-public class Client {
+public class Guest {
 
-    private int idClient;
+    private int idGuest;
     private String name;
     private int phoneNumber;
 
-    public Client() {
+    public Guest() {
     }
 
-    public Client(int idClient) {
-        this.idClient = idClient;
+    public Guest(int idGuest) {
+        this.idGuest = idGuest;
     }
 
-    public Client(int idClient, String name, int phoneNumber) {
-        this.idClient = idClient;
+    public Guest(int idGuest, String name, int phoneNumber) {
+        this.idGuest = idGuest;
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public int getIdClient() {
-        return idClient;
+    public int getIdGuest() {
+        return idGuest;
     }
 
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
+    public void setIdGuest(int idGuest) {
+        this.idGuest = idGuest;
     }
 
     public String getName() {
@@ -45,8 +45,8 @@ public class Client {
 
     @Override
     public String toString() {
-        return "\nClient{" +
-                "idClient=" + idClient +
+        return "\nGuest{" +
+                "idGuest=" + idGuest +
                 ", name='" + name + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 '}';

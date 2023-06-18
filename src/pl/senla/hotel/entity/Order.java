@@ -5,7 +5,7 @@ import java.util.List;
 public class Order {
 
     private int idOrder;
-    private Client client;
+    private Guest guest;
     private List<HotelService> services;
 
     public Order() {
@@ -15,9 +15,9 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Order(int idOrder, Client client, List<HotelService> services) {
+    public Order(int idOrder, Guest guest, List<HotelService> services) {
         this.idOrder = idOrder;
-        this.client = client;
+        this.guest = guest;
         this.services = services;
     }
 
@@ -29,12 +29,12 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Client getClient() {
-        return client;
+    public Guest getClient() {
+        return guest;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(Guest guest) {
+        this.guest = guest;
     }
 
     public List<HotelService> getServices() {
@@ -49,7 +49,7 @@ public class Order {
     public String toString() {
         return "\nOrder{" +
                 "idOrder=" + idOrder +
-                ", client=" + client +
+                ", client=" + guest +
                 ", services=" + services +
                 '}';
     }

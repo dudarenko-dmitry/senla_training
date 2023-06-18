@@ -1,8 +1,8 @@
 package pl.senla.hotel.storage;
 
-import pl.senla.hotel.entity.Restorant;
+import pl.senla.hotel.entity.Restaurant;
 
-public class DataStorageRestorant extends DataStorage<Restorant>{
+public class DataStorageRestaurant extends DataStorage<Restaurant>{
 
     @Override
     public String toString() {

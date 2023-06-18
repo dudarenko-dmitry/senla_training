@@ -8,7 +8,7 @@ public abstract class HotelService {
 
     private int idHotelService;
     private LocalDate startDate;
-    private Client client;
+    private Guest guest;
 
     public HotelService() {
     }
@@ -22,14 +22,14 @@ public abstract class HotelService {
         this.startDate = startDate;
     }
 
-    public HotelService(int idHotelService, LocalDate startDate, Client client) {
-        if(client == null){
+    public HotelService(int idHotelService, LocalDate startDate, Guest guest) {
+        if(guest == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return;
         }
         this.idHotelService = idHotelService;
         this.startDate = startDate;
-        this.client = client;
+        this.guest = guest;
     }
 
     public int getIdHotelService() {
@@ -48,18 +48,18 @@ public abstract class HotelService {
         this.startDate = startDate;
     }
 
-    public Client getClient() {
-        return client;
+    public Guest getClient() {
+        return guest;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(Guest guest) {
+        this.guest = guest;
     }
 
     @Override
     public String toString() {
         return "idHotelService=" + idHotelService +
                 ", startDay=" + startDate +
-                client + '}';
+                guest + '}';
     }
 }
