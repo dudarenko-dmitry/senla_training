@@ -18,18 +18,18 @@ public class RoomReservation extends HotelService{
 
     public RoomReservation(int idRoomReservation, Guest guest, Room room, LocalDate startDate, int numberOfDays) {
         super(startDate, guest);
-        if(guest == null){
-            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
-            return;
-        }
+//        if(guest == null){
+//            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
+//            return;
+//        }
         this.idRoomReservation = idRoomReservation;
-        if(room == null){// check if the ROOM exists
-            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
-            return;
-        } else if(!room.getRoomStatus().equals(RoomStatus.FREE.getStatus())){// check if the ROOM is FREE
-            System.out.println(ERROR_ROOM_NOT_AVAILABLE);
-            return;
-        }
+//        if(room == null){// check if the ROOM exists
+//            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
+//            return;
+//        } else if(!room.getRoomStatus().equals(RoomStatus.FREE.getStatus())){// check if the ROOM is FREE
+//            System.out.println(ERROR_ROOM_NOT_AVAILABLE);
+//            return;
+//        }
         room.setRoomStatus(RoomStatus.RESERVED.getStatus());
         this.room = room;
         this.numberOfDays = numberOfDays;

@@ -2,7 +2,7 @@ package pl.senla.hotel.controller;
 
 import java.util.List;
 
-public interface Controller<T> {
+public interface ControllerCRUDALL<T> {
 
     List<T> readAll();
     boolean create(T t);

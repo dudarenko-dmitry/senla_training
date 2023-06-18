@@ -6,7 +6,7 @@ import pl.senla.hotel.storage.DataStorageRoomReservation;
 
 import java.util.List;
 
-public class RoomReservationRepositoryCollection implements Repository<RoomReservation>{
+public class RepositoryRoomReservationCollection implements RepositoryRoomReservation {
 
     private final DataStorageRoomReservation dataStorageRoomReservation = new DataStorageRoomReservation();
 

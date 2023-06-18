@@ -1,16 +1,16 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.Guest;
-import pl.senla.hotel.repository.GuestRepositoryCollection;
-import pl.senla.hotel.repository.Repository;
+import pl.senla.hotel.repository.RepositoryGuest;
+import pl.senla.hotel.repository.RepositoryGuestCollection;
 
 import java.util.List;
 
 import static pl.senla.hotel.constant.ClientConstant.*;
 
-public class GuestService implements Service<Guest> {
+public class GuestService implements ServiceGuest {
 
-    private final Repository<Guest> guestRepository = new GuestRepositoryCollection();
+    private final RepositoryGuest guestRepository = new RepositoryGuestCollection();
 
 
     @Override

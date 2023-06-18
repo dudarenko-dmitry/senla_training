@@ -1,16 +1,16 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.repository.OrderRepositoryCollection;
-import pl.senla.hotel.repository.Repository;
+import pl.senla.hotel.repository.RepositoryOrder;
+import pl.senla.hotel.repository.RepositoryOrderCollection;
 
 import java.util.List;
 
 import static pl.senla.hotel.constant.OrderConstant.*;
 
-public class OrderService implements Service<Order>{
+public class OrderService implements ServiceOrder {
 
-    private final Repository<Order> orderRepository = new OrderRepositoryCollection();
+    private final RepositoryOrder orderRepository = new RepositoryOrderCollection();
 
     @Override
     public List<Order> readAll() {

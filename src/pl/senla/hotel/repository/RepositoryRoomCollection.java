@@ -6,7 +6,7 @@ import pl.senla.hotel.storage.DataStorageRoom;
 
 import java.util.List;
 
-public class RoomRepositoryCollection implements Repository<Room>{
+public class RepositoryRoomCollection implements RepositoryRoom {
 
     private final DataStorage<Room> dataStorage = new DataStorageRoom();
 

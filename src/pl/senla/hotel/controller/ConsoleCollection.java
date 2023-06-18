@@ -11,10 +11,10 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 public class ConsoleCollection implements Console{
 
     //Было так. Сделать после всех проверок внедрение зависимостей через конструктор
-    private final Controller<Room> roomController = new RoomController();
-    private final Controller<RoomReservation> roomReservationController = new RoomReservationController();
-    private final Controller<Guest> guestController = new GuestController();
-    private final Controller<Order> orderController = new OrderController();
+    private final ControllerRoom roomController = new ControllerRoomCollection();
+    private final ControllerRoomReservation roomReservationController = new ControllerRoomReservationCollection();
+    private final ControllerGuest guestController = new ControllerGuestCollection();
+    private final ControllerOrder orderController = new ControllerOrderCollection();
 
     @Override
     public void start(){
@@ -131,42 +131,42 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation1));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(1));
 
-        RoomReservation roomReservation2 = new RoomReservation(1, guestController.read(2),
+        RoomReservation roomReservation2 = new RoomReservation(2, guestController.read(2),
                 roomController.read(2), startDay2,3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation2));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(2));
 
-        RoomReservation roomReservation3 = new RoomReservation(1, guestController.read(3),
+        RoomReservation roomReservation3 = new RoomReservation(3, guestController.read(3),
                 roomController.read(3), startDay3, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation3));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(3));
 
-        RoomReservation roomReservation4 = new RoomReservation(1, guestController.read(4),
+        RoomReservation roomReservation4 = new RoomReservation(4, guestController.read(4),
                 roomController.read(4), startDay4, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation4));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(4));
 
-        RoomReservation roomReservation5 = new RoomReservation(1, guestController.read(5),
+        RoomReservation roomReservation5 = new RoomReservation(5, guestController.read(5),
                 roomController.read(5), startDay5, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation5));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(5));
 
-        RoomReservation roomReservation6 = new RoomReservation(1, guestController.read(6),
+        RoomReservation roomReservation6 = new RoomReservation(6, guestController.read(6),
                 roomController.read(6), startDay6, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation6));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(6));
 
-        RoomReservation roomReservation7 = new RoomReservation(1, guestController.read(7),
+        RoomReservation roomReservation7 = new RoomReservation(7, guestController.read(7),
                 roomController.read(7), startDay7, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation7));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(7));
 
-        RoomReservation roomReservation8 = new RoomReservation(1, guestController.read(8),
+        RoomReservation roomReservation8 = new RoomReservation(8, guestController.read(8),
                 roomController.read(8), startDay8, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation8));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(8));
 
-        RoomReservation roomReservation9 = new RoomReservation(1, guestController.read(9),
+        RoomReservation roomReservation9 = new RoomReservation(9, guestController.read(9),
                 roomController.read(9), startDay9, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation9));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(9));

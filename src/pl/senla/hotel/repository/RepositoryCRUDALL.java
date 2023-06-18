@@ -1,8 +1,8 @@
-package pl.senla.hotel.service;
+package pl.senla.hotel.repository;
 
 import java.util.List;
 
-public interface Service<T> {
+public interface RepositoryCRUDALL<T> {
 
     List<T> readAll();
     boolean create(T t);

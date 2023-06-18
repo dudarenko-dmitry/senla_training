@@ -2,13 +2,13 @@ package pl.senla.hotel.controller;
 
 import pl.senla.hotel.service.RoomReservationService;
 import pl.senla.hotel.entity.RoomReservation;
-import pl.senla.hotel.service.Service;
+import pl.senla.hotel.service.ServiceRoomReservation;
 
 import java.util.List;
 
-public class RoomReservationController implements Controller<RoomReservation> {
+public class ControllerRoomReservationCollection implements ControllerRoomReservation {
 
-    private final Service<RoomReservation> roomReservationService = new RoomReservationService();
+    private final ServiceRoomReservation roomReservationService = new RoomReservationService();
 
 
     @Override

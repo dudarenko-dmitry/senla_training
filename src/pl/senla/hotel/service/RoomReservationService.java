@@ -1,16 +1,16 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.RoomReservation;
-import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RoomReservationRepositoryCollection;
+import pl.senla.hotel.repository.RepositoryRoomReservation;
+import pl.senla.hotel.repository.RepositoryRoomReservationCollection;
 
 import java.util.List;
 
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
-public class RoomReservationService implements Service<RoomReservation> {
+public class RoomReservationService implements ServiceRoomReservation {
 
-    private final Repository<RoomReservation> roomReservationRepository = new RoomReservationRepositoryCollection();
+    private final RepositoryRoomReservation roomReservationRepository = new RepositoryRoomReservationCollection();
 
     @Override
     public List<RoomReservation> readAll() {
@@ -31,6 +31,15 @@ public class RoomReservationService implements Service<RoomReservation> {
         } else if(roomReservationRepository.read(reservation.getIdRoomReservation()) != null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION);
             return false;
+//        } else if(reservation.getStartDate()){
+//
+//           create check if room is FREE at this period of time
+//           create check if room is FREE at this period of time
+//           create check if room is FREE at this period of time
+//           create check if room is FREE at this period of time
+//           create check if room is FREE at this period of time
+
+//            return false;
         }
         return roomReservationRepository.create(reservation);
     }

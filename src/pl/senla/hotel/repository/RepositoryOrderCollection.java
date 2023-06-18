@@ -6,7 +6,7 @@ import pl.senla.hotel.storage.DataStorageOrder;
 
 import java.util.List;
 
-public class OrderRepositoryCollection implements Repository<Order> {
+public class RepositoryOrderCollection implements RepositoryOrder {
 
     private final DataStorage<Order> orderDataStorage = new DataStorageOrder();
 

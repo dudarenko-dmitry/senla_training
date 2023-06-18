@@ -2,14 +2,14 @@ package pl.senla.hotel.service;
 
 import pl.senla.hotel.constant.RoomConstant;
 import pl.senla.hotel.entity.Room;
-import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RoomRepositoryCollection;
+import pl.senla.hotel.repository.RepositoryRoom;
+import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.List;
 
-public class RoomService implements Service<Room> {
+public class RoomService implements ServiceRoom {
 
-    private final Repository<Room> roomRepository = new RoomRepositoryCollection();
+    private final RepositoryRoom roomRepository = new RepositoryRoomCollection();
 
     @Override
     public List<Room> readAll() {

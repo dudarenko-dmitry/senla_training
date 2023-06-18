@@ -2,13 +2,13 @@ package pl.senla.hotel.controller;
 
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.service.OrderService;
-import pl.senla.hotel.service.Service;
+import pl.senla.hotel.service.ServiceCRUDALL;
 
 import java.util.List;
 
-public class OrderController implements Controller<Order> {
+public class ControllerOrderCollection implements ControllerOrder {
 
-    private final Service<Order> orderService = new OrderService();
+    private final ServiceCRUDALL<Order> orderService = new OrderService();
 
 
     @Override

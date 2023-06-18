@@ -2,13 +2,13 @@ package pl.senla.hotel.controller;
 
 import pl.senla.hotel.service.RoomService;
 import pl.senla.hotel.entity.Room;
-import pl.senla.hotel.service.Service;
+import pl.senla.hotel.service.ServiceCRUDALL;
 
 import java.util.List;
 
-public class RoomController implements Controller<Room>{
+public class ControllerRoomCollection implements ControllerRoom {
 
-    private final Service<Room> roomService = new RoomService();
+    private final ServiceCRUDALL<Room> roomService = new RoomService();
 
     @Override
     public List<Room> readAll() {
