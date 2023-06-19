@@ -8,7 +8,7 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.ClientConstant.*;
 
-public class GuestService implements ServiceGuest {
+public class ServiceGuestImpl implements ServiceGuest {
 
     private final RepositoryGuest guestRepository = new RepositoryGuestCollection();
 

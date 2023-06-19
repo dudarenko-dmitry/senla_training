@@ -20,19 +20,19 @@ public class ConsoleCollection implements Console{
     public void start(){
 
         System.out.println("\n----- Room -----");
-        System.out.println("=============================");
+        System.out.println("==============================");
         System.out.println("CREATE and READ ROOMS");
-        Room room0 = new Room(0,11,100,1, RoomLevel.STANDART.getLevel(), RoomStatus.FREE.getStatus());
-        Room room1 = new Room(1,12,120,2,RoomLevel.ECONOM.getLevel(), RoomStatus.FREE.getStatus());
-        Room room2 = new Room(2,13,150,2,RoomLevel.LUX.getLevel(), RoomStatus.FREE.getStatus());
-        Room room3 = new Room(3,21,100,1,RoomLevel.STANDART.getLevel(), RoomStatus.FREE.getStatus());
-        Room room4 = new Room(4,22,120,2,RoomLevel.ECONOM.getLevel(), RoomStatus.FREE.getStatus());
-        Room room5 = new Room(5,23,150,2,RoomLevel.LUX.getLevel(), RoomStatus.FREE.getStatus());
-        Room room6 = new Room(6,31,110,1,RoomLevel.STANDART.getLevel(), RoomStatus.FREE.getStatus());
-        Room room7 = new Room(7,32,140,2,RoomLevel.ECONOM.getLevel(), RoomStatus.FREE.getStatus());
-        Room room8 = new Room(8,33,160,2,RoomLevel.LUX.getLevel(), RoomStatus.FREE.getStatus());
-        Room room9 = new Room(9,41,400,4,RoomLevel.LUX.getLevel(), RoomStatus.FREE.getStatus());
-        Room room10 = new Room(10,42,400,4,RoomLevel.LUX.getLevel(), RoomStatus.FREE.getStatus());
+        Room room0 = new Room(0,11,100,1, RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room1 = new Room(1,12,120,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room2 = new Room(2,13,150,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room3 = new Room(3,21,100,1,RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room4 = new Room(4,22,120,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room5 = new Room(5,23,150,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room6 = new Room(6,31,110,1,RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room7 = new Room(7,32,140,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room8 = new Room(8,33,160,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room9 = new Room(9,41,400,4,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room10 = new Room(10,42,400,4,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
 
         System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room0));
         System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room1));
@@ -50,7 +50,7 @@ public class ConsoleCollection implements Console{
         System.out.println(roomController.read(2));
         System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
 
-        System.out.println("\n=============================");
+        System.out.println("\n=========================");
         System.out.println("UPDATE ROOM");
         room0.setRoomPrice(200); // create later methods for changing of different attributes
         System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(room0));
@@ -58,7 +58,7 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
 
         // add automatic deleting of HotelService and Order in case of deleting of Room
-        System.out.println("\n=============================");
+        System.out.println("\n=======================");
         System.out.println("DELETE ROOM");
         System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(10));
         System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
@@ -96,7 +96,7 @@ public class ConsoleCollection implements Console{
         System.out.println(guestController.read(2));
         System.out.println(CONSOLE_READ_ALL_GUESTS + guestController.readAll());
 
-        System.out.println("\n=============================");
+        System.out.println("\n============================");
         System.out.println("UPDATE GUEST");
         guest0.setPhoneNumber(378340012); //update Client
         System.out.println(CONSOLE_CHANGE_GUEST + guestController.update(guest0));
@@ -195,7 +195,7 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
 
         // Delete RoomReservation works. Take off comments after checking of Order's work
-//        System.out.println("\n=============================");
+//        System.out.println("\n===========================");
 //        System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
 //        Room roomToBeFree = roomController.read(roomReservationController.read(1).getRoom().getRoomId());
 //        roomToBeFree.setRoomStatus(RoomStatus.FREE.getStatus()); // add automatic change RoomStatus after deleting of Reservation
@@ -205,7 +205,7 @@ public class ConsoleCollection implements Console{
 
 
         System.out.println("\n----- Order -----");
-        System.out.println("\n===========================");
+        System.out.println("\n=========================");
         System.out.println("CREATE ORDERS");
         //move this action to Creating Client
         List<HotelService> services0 = new ArrayList<>();
@@ -238,6 +238,14 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY + roomController.readAllRoomsSortByCapacity());
         System.out.println("Sort Room By Status");
         System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL + roomController.readAllRoomsSortByLevel());
+
+        System.out.println("===========================");
+        System.out.println("Sort Free Rooms By Price");
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE + roomReservationController.readAllFreeRoomsSortByPrice());
+        System.out.println("Sort Free Room By Capacity");
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY + roomReservationController.readAllFreeRoomsSortByCapacity());
+        System.out.println("Sort Free Room By Status");
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL + roomReservationController.readAllFreeRoomsSortByLevel());
         // some logic
 
     }

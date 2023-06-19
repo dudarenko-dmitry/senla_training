@@ -5,17 +5,18 @@ public class ConsoleConstant {
     private ConsoleConstant() {
     }
 
-    public static final String CONSOLE_READ_ALL_ROOMS = "\nList of all rooms: ";
-    public static final String CONSOLE_READ_ROOM = "Room: ";
-    public static final String CONSOLE_CREATE_ROOM = "New room was created: ";
-    public static final String CONSOLE_CHANGE_ROOM = "Room was changed: ";
-    public static final String CONSOLE_DELETE_ROOM = "Room was deleted: ";
+    public static final String CONSOLE_READ_ALL_ROOMS =         "\nList of all rooms: ";
+    public static final String CONSOLE_READ_ALL_FREE_ROOMS =    "\nList of all free rooms: ";
+    public static final String CONSOLE_READ_ROOM =              "Room: ";
+    public static final String CONSOLE_CREATE_ROOM =            "New room was created: ";
+    public static final String CONSOLE_CHANGE_ROOM =            "Room was changed: ";
+    public static final String CONSOLE_DELETE_ROOM =            "Room was deleted: ";
 
     public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS = "\nList of all room's reservations: ";
-    public static final String CONSOLE_READ_ROOM_RESERVATION = "Room's reservation: ";
-    public static final String CONSOLE_CREATE_ROOM_RESERVATION = "New room's reservation was created: ";
-    public static final String CONSOLE_CHANGE_ROOM_RESERVATION = "Room reservation was changed: ";
-    public static final String CONSOLE_DELETE_ROOM_RESERVATION = "Room reservation was deleted: ";
+    public static final String CONSOLE_READ_ROOM_RESERVATION =      "Room's reservation: ";
+    public static final String CONSOLE_CREATE_ROOM_RESERVATION =    "New room's reservation was created: ";
+    public static final String CONSOLE_CHANGE_ROOM_RESERVATION =    "Room reservation was changed: ";
+    public static final String CONSOLE_DELETE_ROOM_RESERVATION =    "Room reservation was deleted: ";
 
     public static final String CONSOLE_READ_ALL_GUESTS = "\nList of all Guests: ";
     public static final String CONSOLE_READ_GUEST = "Guest: ";

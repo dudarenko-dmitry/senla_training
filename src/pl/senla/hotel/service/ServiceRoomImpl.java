@@ -7,7 +7,7 @@ import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.List;
 
-public class RoomService implements ServiceRoom {
+public class ServiceRoomImpl implements ServiceRoom {
 
     private final RepositoryRoom roomRepository = new RepositoryRoomCollection();
 

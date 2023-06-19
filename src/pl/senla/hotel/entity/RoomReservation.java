@@ -2,8 +2,6 @@ package pl.senla.hotel.entity;
 
 import java.time.LocalDate;
 
-import static pl.senla.hotel.constant.RoomReservationConstant.*;
-
 public class RoomReservation extends HotelService{
 
     private int idRoomReservation;
@@ -30,11 +28,11 @@ public class RoomReservation extends HotelService{
 //            System.out.println(ERROR_ROOM_NOT_AVAILABLE);
 //            return;
 //        }
-        room.setRoomStatus(RoomStatus.RESERVED.getStatus());
         this.room = room;
         this.numberOfDays = numberOfDays;
         this.checkOutDate = startDate.plusDays(numberOfDays);
         this.cost = room.getRoomPrice() * numberOfDays;
+        // add logic for DELETING Free Room
     }
 
     public int getIdRoomReservation() {

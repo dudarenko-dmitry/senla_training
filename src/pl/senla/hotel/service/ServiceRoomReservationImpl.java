@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.entity.Room;
 import pl.senla.hotel.entity.RoomReservation;
 import pl.senla.hotel.repository.RepositoryRoomReservation;
 import pl.senla.hotel.repository.RepositoryRoomReservationCollection;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
-public class RoomReservationService implements ServiceRoomReservation {
+public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private final RepositoryRoomReservation roomReservationRepository = new RepositoryRoomReservationCollection();
 
@@ -77,5 +78,20 @@ public class RoomReservationService implements ServiceRoomReservation {
             return false;
         }
         return roomReservationRepository.delete(id);
+    }
+
+    @Override
+    public List<Room> readAllFreeRoomsSortByPrice() {
+        return roomReservationRepository.readAllFreeRoomsSortByPrice();
+    }
+
+    @Override
+    public List<Room> readAllFreeRoomsSortByCapacity() {
+        return roomReservationRepository.readAllFreeRoomsSortByCapacity();
+    }
+
+    @Override
+    public List<Room> readAllFreeRoomsSortByLevel() {
+        return roomReservationRepository.readAllFreeRoomsSortByLevel();
     }
 }

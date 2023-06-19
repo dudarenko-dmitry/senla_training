@@ -8,7 +8,7 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.OrderConstant.*;
 
-public class OrderService implements ServiceOrder {
+public class ServiceOrderImpl implements ServiceOrder {
 
     private final RepositoryOrder orderRepository = new RepositoryOrderCollection();
 

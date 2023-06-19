@@ -1,15 +1,10 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.entity.Room;
-import pl.senla.hotel.entity.RoomComparatorByCapacity;
-import pl.senla.hotel.entity.RoomComparatorByPrice;
-import pl.senla.hotel.entity.RoomComparatorByLevel;
+import pl.senla.hotel.entity.*;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageRoom;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RepositoryRoomCollection implements RepositoryRoom {
 

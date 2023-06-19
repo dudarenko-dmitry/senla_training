@@ -2,9 +2,7 @@ package pl.senla.hotel.entity;
 
 public enum RoomStatus {
 
-    FREE("Free"),
-    RESERVED("Reserved"),
-    OCCUPIED("Occupied"),
+    AVAILABLE("Available"),
     REPAIRED("Under repair");
 
     private final String status;
