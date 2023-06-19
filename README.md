@@ -51,7 +51,7 @@ The program should allow you to show:
 1. List of rooms (sort by price, by capacity, by number of stars):
 - readAllRoomsSortByPrice,
 - readAllRoomsSortByCapacity,
-- readAllRoomsSortByStatus;
+- readAllRoomsSortByLevel;
 2. List of available rooms (sort by price, by capacity, by number of stars):
 - readAllFreeRoomsSortByPrice,
 - readAllFreeRoomsSortByCapacity,

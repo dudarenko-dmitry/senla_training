@@ -34,4 +34,8 @@ public class ConsoleConstant {
     public static final String CONSOLE_CREATE_ORDER = "New Order was created: ";
     public static final String CONSOLE_CHANGE_ORDER = "Order changed: ";
     public static final String CONSOLE_DELETE_ORDER = "Order deleted: ";
+
+    public static final String SORTED_BY_PRICE =      " sorted by price ";
+    public static final String SORTED_BY_CAPACITY =   " sorted by capacity ";
+    public static final String SORTED_BY_LEVEL =     " sorted by room's level ";
 }

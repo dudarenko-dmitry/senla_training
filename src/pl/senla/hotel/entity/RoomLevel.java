@@ -2,9 +2,9 @@ package pl.senla.hotel.entity;
 
 public enum RoomLevel {
 
-    LUX("Lux"),
-    STANDART("Standart"),
-    ECONOM("Econom");
+    LUX("3***"),
+    STANDART("2**"),
+    ECONOM("1*");
 
     private final  String level;
 

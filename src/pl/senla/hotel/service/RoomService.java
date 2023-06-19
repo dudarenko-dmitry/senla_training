@@ -63,4 +63,19 @@ public class RoomService implements ServiceRoom {
         }
         return roomRepository.delete(id);
     }
+
+    @Override
+    public List<Room> readAllRoomsSortByPrice() {
+        return roomRepository.readAllRoomsSortByPrice();
+    }
+
+    @Override
+    public List<Room> readAllRoomsSortByCapacity() {
+        return roomRepository.readAllRoomsSortByCapacity();
+    }
+
+    @Override
+    public List<Room> readAllRoomsSortByLevel() {
+        return roomRepository.readAllRoomsSortByLevel();
+    }
 }

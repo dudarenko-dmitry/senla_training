@@ -223,6 +223,22 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
 
         System.out.println("\n===========================");
-        System.out.println("CREATE ORDERS");
+        System.out.println("UPDATE ORDERS");
+        // some logic
+
+        System.out.println("\n===========================");
+        System.out.println("DELETE ORDERS");
+        // some logic
+
+        System.out.println("\n------------ TASK 4.1. -----------");
+        System.out.println("===========================");
+        System.out.println("Sort Room By Price");
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE + roomController.readAllRoomsSortByPrice());
+        System.out.println("Sort Room By Capacity");
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY + roomController.readAllRoomsSortByCapacity());
+        System.out.println("Sort Room By Status");
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL + roomController.readAllRoomsSortByLevel());
+        // some logic
+
     }
 }

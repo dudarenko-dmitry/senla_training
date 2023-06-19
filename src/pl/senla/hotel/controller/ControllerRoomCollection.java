@@ -2,13 +2,13 @@ package pl.senla.hotel.controller;
 
 import pl.senla.hotel.service.RoomService;
 import pl.senla.hotel.entity.Room;
-import pl.senla.hotel.service.ServiceCRUDALL;
+import pl.senla.hotel.service.ServiceRoom;
 
 import java.util.List;
 
 public class ControllerRoomCollection implements ControllerRoom {
 
-    private final ServiceCRUDALL<Room> roomService = new RoomService();
+    private final ServiceRoom roomService = new RoomService();
 
     @Override
     public List<Room> readAll() {
@@ -33,5 +33,20 @@ public class ControllerRoomCollection implements ControllerRoom {
     @Override
     public boolean delete(int roomId) {
         return roomService.delete(roomId);
+    }
+
+    @Override
+    public List<Room> readAllRoomsSortByPrice() {
+        return roomService.readAllRoomsSortByPrice();
+    }
+
+    @Override
+    public List<Room> readAllRoomsSortByCapacity() {
+        return roomService.readAllRoomsSortByCapacity();
+    }
+
+    @Override
+    public List<Room> readAllRoomsSortByLevel() {
+        return roomService.readAllRoomsSortByLevel();
     }
 }
