@@ -65,4 +65,9 @@ public class ServiceGuestImpl implements ServiceGuest {
         }
         return guestRepository.delete(id);
     }
+
+    @Override
+    public int countNumberOfGuestsTotal() {
+        return guestRepository.countNumberOfGuestsTotal();
+    }
 }

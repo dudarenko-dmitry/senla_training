@@ -44,4 +44,9 @@ public class RepositoryGuestCollection implements RepositoryGuest {
         readAll().remove(id);
         return true;
     }
+
+    @Override
+    public int countNumberOfGuestsTotal() {
+        return (int) readAll().stream().count();
+    }
 }
