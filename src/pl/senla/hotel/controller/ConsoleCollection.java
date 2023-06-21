@@ -3,16 +3,15 @@ package pl.senla.hotel.controller;
 import pl.senla.hotel.entity.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
+import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class ConsoleCollection implements Console{
 
-    //Было так. Сделать после всех проверок внедрение зависимостей через конструктор
-    public final LocalDate START_DATE_YEAR = LocalDate.of(2023, 1, 1);
-    public final LocalDate END_DATE_YEAR = LocalDate.of(2023, 12, 31);
     private final ControllerRoom roomController = new ControllerRoomCollection();
     private final ControllerRoomReservation roomReservationController = new ControllerRoomReservationCollection();
     private final ControllerGuest guestController = new ControllerGuestCollection();
@@ -285,6 +284,11 @@ public class ConsoleCollection implements Console{
         System.out.println("Sort RoomReservations By CheckOut");
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_CHECK_OUT +
                 roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
+
+        System.out.println("\n===========================");
+        System.out.println("Count Free Room on Date");
+        LocalDateTime checkedTime = LocalDateTime.of(2023,7,6, 15, 0);
+        System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTime + ": "  + roomReservationController.countFreeRoomsOnTime(checkedTime));
         // some logic
 
     }

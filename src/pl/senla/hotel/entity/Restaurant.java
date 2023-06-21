@@ -1,7 +1,6 @@
 package pl.senla.hotel.entity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import static pl.senla.hotel.constant.RestaurantConstant.*;
 
@@ -10,14 +9,14 @@ public class Restaurant extends HotelService{
     private int idRestaurant;
     private int tableNumber;
     private int numberOfGuests;
-    private LocalTime startTime;
+    private LocalDateTime startTime;
     private int price;
 
 
 
     public Restaurant(int idRestaurant, Guest guest, int tableNumber, int numberOfGuests,
-                      LocalDate startDate, LocalTime startTime, int price) {
-        super(startDate, guest);
+                      LocalDateTime startTime, int price) {
+        super(guest);
         if(guest == null){
             System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_CLIENT);
             return;
@@ -60,11 +59,11 @@ public class Restaurant extends HotelService{
         this.numberOfGuests = numberOfGuests;
     }
 
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
@@ -83,8 +82,7 @@ public class Restaurant extends HotelService{
                 super.getGuest().toString() + "," +
                 ", tableNumber=" + tableNumber +
                 ", numberOfGuests=" + numberOfGuests +
-                "\nStartDate=" + super.getStartDate().toString() +
-                ", startTime=" + startTime +
+                "\nStartTime=" + startTime +
                 ", price=" + price +
                 '}';
     }

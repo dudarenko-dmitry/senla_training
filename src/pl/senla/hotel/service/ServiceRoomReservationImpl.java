@@ -6,6 +6,7 @@ import pl.senla.hotel.repository.RepositoryFreeRoomCollection;
 import pl.senla.hotel.repository.RepositoryRoomReservation;
 import pl.senla.hotel.repository.RepositoryRoomReservationCollection;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static pl.senla.hotel.constant.FreeRoomConstant.ERROR_READ_ALL_FREE_ROOM;
@@ -133,4 +134,10 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
         return roomReservationRepository.readAllRoomReservationsSortByGuestCheckOut();
     }
+
+    @Override
+    public int countFreeRoomsOnTime(LocalDateTime checkedDateTime) {
+        return freeRoomRepository.countFreeRoomsOnTime(checkedDateTime);
+    }
+
 }

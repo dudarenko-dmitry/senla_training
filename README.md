@@ -60,9 +60,10 @@ The program should allow you to show:
 - readAllRoomReservationsSortByGuestName,
 - readAllRoomReservationsSortByGuestCheckOut;
 4. Total number of available rooms:
-- countRoomsFree;
+- countFreeRoomsOnTime;
 5. Total number of guests:
-- countNumberOfGuests;
+- countNumberOfGuestsTotal;
+- countNumberOfGuestsOnDate;
 6. List of rooms that will be available on a certain date in the future:
 - readAllRoomsFreeForDate;
 7. The amount of payment for the room to be paid by the guest:

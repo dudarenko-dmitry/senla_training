@@ -16,6 +16,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_CREATE_FREE_ROOM =            "New Free room (Time-slot) was created: ";
     public static final String CONSOLE_CHANGE_FREE_ROOM =            "Free Room (Time-slot) was changed: ";
     public static final String CONSOLE_DELETE_FREE_ROOM =            "Free Room (Time-slot) was deleted: ";
+    public static final String CONSOLE_NUMBER_OF_FREE_ROOMS =        "Number of Free rooms on ";
 
     public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS = "\nList of all room's reservations: ";
     public static final String CONSOLE_READ_ROOM_RESERVATION =      "Room's reservation: ";

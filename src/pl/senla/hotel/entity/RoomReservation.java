@@ -1,13 +1,17 @@
 package pl.senla.hotel.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class RoomReservation extends HotelService{
 
     private final int idRoomReservation;
     private Room room;
     private int numberOfDays;
-    private LocalDate checkOutDate;
+    private LocalDateTime checkInTime;
+    private LocalDateTime checkOutTime;
     private int cost;
 
     public RoomReservation(int idRoomReservation) {
@@ -15,7 +19,7 @@ public class RoomReservation extends HotelService{
     }
 
     public RoomReservation(int idRoomReservation, Guest guest, Room room, LocalDate startDate, int numberOfDays) {
-        super(startDate, guest);
+        super(guest);
 //        if(guest == null){
 //            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
 //            return;
@@ -30,7 +34,8 @@ public class RoomReservation extends HotelService{
 //        }
         this.room = room;
         this.numberOfDays = numberOfDays;
-        this.checkOutDate = startDate.plusDays(numberOfDays);
+        this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
+        this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
         this.cost = room.getRoomPrice() * numberOfDays;
         // add logic for DELETING Free Room
     }
@@ -55,12 +60,12 @@ public class RoomReservation extends HotelService{
         this.numberOfDays = numberOfDays;
     }
 
-    public LocalDate getCheckOutDate() {
-        return checkOutDate;
+    public LocalDateTime getCheckOutTime() {
+        return checkOutTime;
     }
 
-    public void setCheckOutDate(LocalDate checkOutDate) {
-        this.checkOutDate = checkOutDate;
+    public void setCheckOutTime(LocalDateTime checkOutTime) {
+        this.checkOutTime = checkOutTime;
     }
 
     public void setCost(int cost) {
@@ -81,9 +86,9 @@ public class RoomReservation extends HotelService{
                 "idRoomReservation=" + idRoomReservation + "," +
                 super.getGuest().toString() + "," +
                 room + "," +
-                "\nStartDate=" + super.getStartDate().toString() +
+                "\ncheck-in time=" + checkInTime +
                 ", numberOfDays=" + numberOfDays +
-                ", checkOutDate=" + checkOutDate +
+                ", check-out time=" + checkOutTime +
                 ", cost=" + cost +
                 '}';
     }

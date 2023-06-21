@@ -5,6 +5,7 @@ import pl.senla.hotel.entity.*;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageRoomReservation;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class RepositoryRoomReservationCollection implements RepositoryRoomReservation {

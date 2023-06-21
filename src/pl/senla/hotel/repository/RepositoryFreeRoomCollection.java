@@ -7,6 +7,7 @@ import pl.senla.hotel.entity.FreeRoomComparatorByPrice;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageFreeRoom;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RepositoryFreeRoomCollection implements RepositoryFreeRoom{
@@ -53,5 +54,12 @@ public class RepositoryFreeRoomCollection implements RepositoryFreeRoom{
     @Override
     public List<FreeRoom> readAllFreeRoomsSortByLevel() {
         return readAll().stream().sorted(new FreeRoomComparatorByLevel()).toList();
+    }
+
+    public int countFreeRoomsOnTime(LocalDateTime checkedDateTime) {
+        return (int) readAll()
+                .stream()
+                .filter(fr -> checkedDateTime.isAfter(fr.getStartTime()) && checkedDateTime.isBefore(fr.getEndTime().plusDays(1)))
+                .count();
     }
 }

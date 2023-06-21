@@ -1,10 +1,11 @@
 package pl.senla.hotel.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class GuideTour extends HotelService{
 
     private int idGuideTour;
+    private LocalDateTime startDateTime;
     private String nameTour;
     private String transport;
     private int price;
@@ -13,8 +14,9 @@ public class GuideTour extends HotelService{
         this.idGuideTour = idGuideTour;
     }
 
-    public GuideTour(int idGuideTour, Guest guest, String nameTour, String transport, LocalDate startDate, int price) {
-        super(startDate, guest);
+    public GuideTour(int idGuideTour, Guest guest, String nameTour, String transport, LocalDateTime startDateTime, int price) {
+        super(guest);
+        this.startDateTime = startDateTime;
         this.idGuideTour = idGuideTour;
         this.nameTour = nameTour;
         this.transport = transport;
@@ -59,7 +61,7 @@ public class GuideTour extends HotelService{
                 "idGuideTour=" + idGuideTour + "," +
                 super.getGuest().toString() + "," +
                 nameTour + "," +
-                "\nStartDate=" + super.getStartDate().toString() +
+                "\nStartTime=" + startDateTime +
                 ", transport=" + transport +
                 ", cost=" + price +
                 '}';

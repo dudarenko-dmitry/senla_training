@@ -1,19 +1,22 @@
 package pl.senla.hotel.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class FreeRoom {
 
     private int idFreeRoom;
     private Room room;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public FreeRoom(int idFreeRoom, Room room, LocalDate startDate, LocalDate endDate) {
         this.idFreeRoom = idFreeRoom;
         this.room = room;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startTime = LocalDateTime.of(startDate, HOTEL_CHECK_OUT_TIME);
+        this.endTime = LocalDateTime.of(endDate, HOTEL_CHECK_IN_TIME);
     }
 
     public int getIdFreeRoom() {
@@ -32,20 +35,20 @@ public class FreeRoom {
         this.room = room;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     @Override
@@ -53,8 +56,8 @@ public class FreeRoom {
         return "\nFreeRoom{" +
                 "IdFreeRoomSlot=" + idFreeRoom +
                 ", room=" + room +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
+                ", startDate=" + startTime +
+                ", endDate=" + endTime +
                 '}';
     }
 }

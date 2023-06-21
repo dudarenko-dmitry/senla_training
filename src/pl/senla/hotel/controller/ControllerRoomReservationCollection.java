@@ -5,6 +5,7 @@ import pl.senla.hotel.service.ServiceRoomReservationImpl;
 import pl.senla.hotel.entity.RoomReservation;
 import pl.senla.hotel.service.ServiceRoomReservation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ControllerRoomReservationCollection implements ControllerRoomReservation {
@@ -84,5 +85,10 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
         return roomReservationService.readAllRoomReservationsSortByGuestCheckOut();
+    }
+
+    @Override
+    public int countFreeRoomsOnTime(LocalDateTime checkedDateTime) {
+        return roomReservationService.countFreeRoomsOnTime(checkedDateTime);
     }
 }
