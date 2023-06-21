@@ -91,4 +91,9 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     public int countFreeRoomsOnTime(LocalDateTime checkedDateTime) {
         return roomReservationService.countFreeRoomsOnTime(checkedDateTime);
     }
+
+    @Override
+    public int countNumberOfGuestsOnDate(LocalDateTime checkedTime) {
+        return roomReservationService.countNumberOfGuestsOnDate(checkedTime);
+    }
 }

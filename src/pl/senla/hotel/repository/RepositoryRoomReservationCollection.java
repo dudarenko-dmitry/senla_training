@@ -5,7 +5,7 @@ import pl.senla.hotel.entity.*;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageRoomReservation;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RepositoryRoomReservationCollection implements RepositoryRoomReservation {
@@ -56,5 +56,14 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
         return readAll().stream().sorted(new RoomReservationsComparatorByCheckOut()).toList();
+    }
+
+    @Override
+    public int countNumberOfGuestsOnDate(LocalDateTime checkedTime) {
+        return (int) readAll()
+                .stream()
+                .filter(rr -> checkedTime.isAfter(rr.getCheckInTime()) &&
+                        checkedTime.isBefore(rr.getCheckOutTime()))
+                .count();
     }
 }

@@ -52,6 +52,14 @@ public class RoomReservation extends HotelService{
         this.room = room;
     }
 
+    public LocalDateTime getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(LocalDateTime checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
     public int getNumberOfDays() {
         return numberOfDays;
     }

@@ -23,12 +23,14 @@ public class ConsoleConstant {
     public static final String CONSOLE_CREATE_ROOM_RESERVATION =    "New room's reservation was created: ";
     public static final String CONSOLE_CHANGE_ROOM_RESERVATION =    "Room reservation was changed: ";
     public static final String CONSOLE_DELETE_ROOM_RESERVATION =    "Room reservation was deleted: ";
+    public static final String CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW =  "Number of Guest in Hotel on time ";
 
-    public static final String CONSOLE_READ_ALL_GUESTS = "\nList of all Guests: ";
-    public static final String CONSOLE_READ_GUEST = "Guest: ";
-    public static final String CONSOLE_CREATE_GUEST = "New Guest was created: ";
-    public static final String CONSOLE_CHANGE_GUEST = "Guest was changed: ";
-    public static final String CONSOLE_DELETE_GUEST = "Guest was deleted: ";
+    public static final String CONSOLE_READ_ALL_GUESTS =            "\nList of all Guests: ";
+    public static final String CONSOLE_READ_GUEST =                 "Guest: ";
+    public static final String CONSOLE_CREATE_GUEST =               "New Guest was created: ";
+    public static final String CONSOLE_CHANGE_GUEST =               "Guest was changed: ";
+    public static final String CONSOLE_DELETE_GUEST =               "Guest was deleted: ";
+    public static final String CONSOLE_NUMBER_GUEST_TOTAL =         "Total number of registered Guest in DataBase: ";
 
     public static final String CONSOLE_READ_ALL_SERVICES = "\nList of all Services: ";
     public static final String CONSOLE_READ_SERVICE = "Service: ";

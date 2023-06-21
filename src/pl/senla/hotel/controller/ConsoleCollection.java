@@ -287,15 +287,16 @@ public class ConsoleCollection implements Console{
 
         System.out.println("\n===========================");
         System.out.println("Count Free Room on Date");
-        LocalDateTime checkedTime = LocalDateTime.of(2023,7,6, 15, 0);
+        LocalDateTime checkedTime = LocalDateTime.of(2023,7,3, 15, 0);
         System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTime + ": " +
                 roomReservationController.countFreeRoomsOnTime(checkedTime));
 
         System.out.println("\n===========================");
         System.out.println("Count Total number of registered Guest in DataBase");
-        System.out.println("Total number of registered Guest in DataBase: " +
-                guestController.countNumberOfGuestsTotal());
-
+        System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
+        System.out.println("Count number of Guest in Hotel on Date");
+        System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTime + ": " +
+                roomReservationController.countNumberOfGuestsOnDate(checkedTime));
         // some logic
 
     }

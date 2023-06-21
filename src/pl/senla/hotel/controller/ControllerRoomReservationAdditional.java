@@ -9,5 +9,6 @@ public interface ControllerRoomReservationAdditional {
 
     List<RoomReservation> readAllRoomReservationsSortByGuestName();
     List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut();
+    int countNumberOfGuestsOnDate(LocalDateTime checkedTime);
 
 }
