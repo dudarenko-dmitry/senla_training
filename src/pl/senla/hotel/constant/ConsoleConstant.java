@@ -6,11 +6,16 @@ public class ConsoleConstant {
     }
 
     public static final String CONSOLE_READ_ALL_ROOMS =         "\nList of all rooms: ";
-    public static final String CONSOLE_READ_ALL_FREE_ROOMS =    "\nList of all free rooms: ";
     public static final String CONSOLE_READ_ROOM =              "Room: ";
     public static final String CONSOLE_CREATE_ROOM =            "New room was created: ";
     public static final String CONSOLE_CHANGE_ROOM =            "Room was changed: ";
     public static final String CONSOLE_DELETE_ROOM =            "Room was deleted: ";
+
+    public static final String CONSOLE_READ_ALL_FREE_ROOMS =         "\nList of all Free rooms (Time-slots): ";
+    public static final String CONSOLE_READ_FREE_ROOM =              "Free Room (Time-slot): ";
+    public static final String CONSOLE_CREATE_FREE_ROOM =            "New Free room (Time-slot) was created: ";
+    public static final String CONSOLE_CHANGE_FREE_ROOM =            "Free Room (Time-slot) was changed: ";
+    public static final String CONSOLE_DELETE_FREE_ROOM =            "Free Room (Time-slot) was deleted: ";
 
     public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS = "\nList of all room's reservations: ";
     public static final String CONSOLE_READ_ROOM_RESERVATION =      "Room's reservation: ";
@@ -36,7 +41,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_CHANGE_ORDER = "Order changed: ";
     public static final String CONSOLE_DELETE_ORDER = "Order deleted: ";
 
-    public static final String SORTED_BY_PRICE =      " sorted by price ";
-    public static final String SORTED_BY_CAPACITY =   " sorted by capacity ";
-    public static final String SORTED_BY_LEVEL =     " sorted by room's level ";
+    public static final String SORTED_BY_PRICE =      " sorted by Room's price ";
+    public static final String SORTED_BY_CAPACITY =   " sorted by Room's capacity ";
+    public static final String SORTED_BY_LEVEL =     " sorted by Room's level ";
 }

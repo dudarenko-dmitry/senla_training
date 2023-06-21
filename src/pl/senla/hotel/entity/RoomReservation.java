@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class RoomReservation extends HotelService{
 
-    private int idRoomReservation;
+    private final int idRoomReservation;
     private Room room;
     private int numberOfDays;
     private LocalDate checkOutDate;

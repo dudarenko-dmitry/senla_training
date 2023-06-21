@@ -1,6 +1,6 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.entity.Room;
+import pl.senla.hotel.entity.FreeRoom;
 import pl.senla.hotel.service.ServiceRoomReservationImpl;
 import pl.senla.hotel.entity.RoomReservation;
 import pl.senla.hotel.service.ServiceRoomReservation;
@@ -10,7 +10,6 @@ import java.util.List;
 public class ControllerRoomReservationCollection implements ControllerRoomReservation {
 
     private final ServiceRoomReservation roomReservationService = new ServiceRoomReservationImpl();
-
 
     @Override
     public List<RoomReservation> readAll() {
@@ -37,19 +36,43 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
         return roomReservationService.delete(id);
     }
 
+    @Override
+    public List<FreeRoom> readAllFreeRooms() {
+        return roomReservationService.readAllFreeRooms();
+    }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByPrice() {
+    public boolean createFreeRoom(FreeRoom freeRoom) {
+        return roomReservationService.createFreeRoom(freeRoom);
+    }
+
+    @Override
+    public FreeRoom readFreeRoom(int id) {
+        return roomReservationService.readFreeRoom(id);
+    }
+
+    @Override
+    public boolean updateFreeRoom(FreeRoom freeRoom) {
+        return roomReservationService.updateFreeRoom(freeRoom);
+    }
+
+    @Override
+    public boolean deleteFreeRoom(int id) {
+        return roomReservationService.deleteFreeRoom(id);
+    }
+
+    @Override
+    public List<FreeRoom> readAllFreeRoomsSortByPrice() {
         return roomReservationService.readAllFreeRoomsSortByPrice();
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByCapacity() {
+    public List<FreeRoom> readAllFreeRoomsSortByCapacity() {
         return roomReservationService.readAllFreeRoomsSortByCapacity();
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByLevel() {
+    public List<FreeRoom> readAllFreeRoomsSortByLevel() {
         return roomReservationService.readAllFreeRoomsSortByLevel();
     }
 }

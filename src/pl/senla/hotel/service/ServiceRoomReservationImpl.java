@@ -1,17 +1,20 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.Room;
-import pl.senla.hotel.entity.RoomReservation;
+import pl.senla.hotel.entity.*;
+import pl.senla.hotel.repository.RepositoryFreeRoom;
+import pl.senla.hotel.repository.RepositoryFreeRoomCollection;
 import pl.senla.hotel.repository.RepositoryRoomReservation;
 import pl.senla.hotel.repository.RepositoryRoomReservationCollection;
 
 import java.util.List;
 
+import static pl.senla.hotel.constant.FreeRoomConstant.ERROR_READ_ALL_FREE_ROOM;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private final RepositoryRoomReservation roomReservationRepository = new RepositoryRoomReservationCollection();
+    private final RepositoryFreeRoom freeRoomRepository = new RepositoryFreeRoomCollection();
 
     @Override
     public List<RoomReservation> readAll() {
@@ -32,7 +35,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         } else if(roomReservationRepository.read(reservation.getIdRoomReservation()) != null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION);
             return false;
-//        } else if(reservation.getStartDate()){
 //
 //           create check if room is FREE at this period of time
 //           create check if room is FREE at this period of time
@@ -40,7 +42,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 //           create check if room is FREE at this period of time
 //           create check if room is FREE at this period of time
 
-//            return false;
         }
         return roomReservationRepository.create(reservation);
     }
@@ -81,17 +82,45 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByPrice() {
-        return roomReservationRepository.readAllFreeRoomsSortByPrice();
+    public List<FreeRoom> readAllFreeRooms() {
+        if(freeRoomRepository.readAll() == null){
+            System.out.println(ERROR_READ_ALL_FREE_ROOM);
+        }
+        return freeRoomRepository.readAll();
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByCapacity() {
-        return roomReservationRepository.readAllFreeRoomsSortByCapacity();
+    public boolean createFreeRoom(FreeRoom freeRoom) {
+        return freeRoomRepository.create(freeRoom);
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByLevel() {
-        return roomReservationRepository.readAllFreeRoomsSortByLevel();
+    public FreeRoom readFreeRoom(int id) {
+        return freeRoomRepository.read(id);
+    }
+
+    @Override
+    public boolean updateFreeRoom(FreeRoom freeRoom) {
+        return freeRoomRepository.update(freeRoom);
+    }
+
+    @Override
+    public boolean deleteFreeRoom(int id) {
+        return delete(id);
+    }
+
+    @Override
+    public List<FreeRoom> readAllFreeRoomsSortByPrice() {
+        return freeRoomRepository.readAllFreeRoomsSortByPrice();
+    }
+
+    @Override
+    public List<FreeRoom> readAllFreeRoomsSortByCapacity() {
+        return freeRoomRepository.readAllFreeRoomsSortByCapacity();
+    }
+
+    @Override
+    public List<FreeRoom> readAllFreeRoomsSortByLevel() {
+        return freeRoomRepository.readAllFreeRoomsSortByLevel();
     }
 }

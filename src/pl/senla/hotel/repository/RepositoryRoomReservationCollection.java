@@ -3,7 +3,6 @@ package pl.senla.hotel.repository;
 
 import pl.senla.hotel.entity.*;
 import pl.senla.hotel.storage.DataStorage;
-import pl.senla.hotel.storage.DataStorageFreeRoom;
 import pl.senla.hotel.storage.DataStorageRoomReservation;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
 public class RepositoryRoomReservationCollection implements RepositoryRoomReservation {
 
     private final DataStorage<RoomReservation> dataStorageRoomReservation = new DataStorageRoomReservation();
-    private final DataStorage<FreeRoom> dataStorageFreeRoom = new DataStorageFreeRoom();
 
     @Override
     public List<RoomReservation> readAll() {
@@ -49,18 +47,4 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
         return true;
     }
 
-    @Override
-    public List<Room> readAllFreeRoomsSortByPrice() {
-        return null;
-    }
-
-    @Override
-    public List<Room> readAllFreeRoomsSortByCapacity() {
-        return null;
-    }
-
-    @Override
-    public List<Room> readAllFreeRoomsSortByLevel() {
-        return null;
-    }
 }
