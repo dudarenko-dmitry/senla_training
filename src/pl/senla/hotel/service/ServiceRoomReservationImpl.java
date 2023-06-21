@@ -145,4 +145,8 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         return roomReservationRepository.countNumberOfGuestsOnDate(checkedTime);
     }
 
+    @Override
+    public List<FreeRoom> readAllRoomsFreeAtTime(LocalDateTime checkedTime) {
+        return freeRoomRepository.readAllRoomsFreeAtTime(checkedTime);
+    }
 }

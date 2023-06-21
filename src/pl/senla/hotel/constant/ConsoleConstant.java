@@ -12,6 +12,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_DELETE_ROOM =            "Room was deleted: ";
 
     public static final String CONSOLE_READ_ALL_FREE_ROOMS =         "\nList of all Free rooms (Time-slots): ";
+    public static final String CONSOLE_READ_ALL_FREE_ROOMS_TIME =    "\nList of all Free rooms at Time: ";
     public static final String CONSOLE_READ_FREE_ROOM =              "Free Room (Time-slot): ";
     public static final String CONSOLE_CREATE_FREE_ROOM =            "New Free room (Time-slot) was created: ";
     public static final String CONSOLE_CHANGE_FREE_ROOM =            "Free Room (Time-slot) was changed: ";
@@ -23,7 +24,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_CREATE_ROOM_RESERVATION =    "New room's reservation was created: ";
     public static final String CONSOLE_CHANGE_ROOM_RESERVATION =    "Room reservation was changed: ";
     public static final String CONSOLE_DELETE_ROOM_RESERVATION =    "Room reservation was deleted: ";
-    public static final String CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW =  "Number of Guest in Hotel on time ";
+    public static final String CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW =  "Number of Guest in Hotel at time ";
 
     public static final String CONSOLE_READ_ALL_GUESTS =            "\nList of all Guests: ";
     public static final String CONSOLE_READ_GUEST =                 "Guest: ";

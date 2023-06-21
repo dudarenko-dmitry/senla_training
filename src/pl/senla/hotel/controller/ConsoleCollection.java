@@ -297,7 +297,10 @@ public class ConsoleCollection implements Console{
         System.out.println("Count number of Guest in Hotel on Date");
         System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTime + ": " +
                 roomReservationController.countNumberOfGuestsOnDate(checkedTime));
-        // some logic
+
+        System.out.println("\n===========================");
+        System.out.println("List of all Free rooms at Time");
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME + roomReservationController.readAllRoomsFreeAtTime(checkedTime));
 
     }
 }

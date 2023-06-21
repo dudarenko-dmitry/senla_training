@@ -11,5 +11,6 @@ public interface ControllerFreeRoomAdditional {
     List<FreeRoom> readAllFreeRoomsSortByCapacity();
     List<FreeRoom> readAllFreeRoomsSortByLevel();
     int countFreeRoomsOnTime(LocalDateTime checkedDateTime);
+    List<FreeRoom> readAllRoomsFreeAtTime(LocalDateTime checkedTime);
 
 }

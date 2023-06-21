@@ -65,7 +65,7 @@ The program should allow you to show:
 - countNumberOfGuestsTotal;
 - countNumberOfGuestsOnDate;
 6. List of rooms that will be available on a certain date in the future:
-- readAllRoomsFreeForDate;
+- readAllRoomsFreeAtTime;
 7. The amount of payment for the room to be paid by the guest:
 - countTotalPaymentForGuest;
 8. View the last 3 guests of the room and the dates of their stay:

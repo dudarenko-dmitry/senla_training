@@ -62,4 +62,13 @@ public class RepositoryFreeRoomCollection implements RepositoryFreeRoom{
                 .filter(fr -> checkedDateTime.isAfter(fr.getStartTime()) && checkedDateTime.isBefore(fr.getEndTime().plusDays(1)))
                 .count();
     }
+
+    @Override
+    public List<FreeRoom> readAllRoomsFreeAtTime(LocalDateTime checkedTime) {
+        return readAll()
+                .stream()
+                .filter(fr -> fr.getStartTime().isBefore(checkedTime) &&
+                        fr.getEndTime().isAfter(checkedTime))
+                .toList();
+    }
 }
