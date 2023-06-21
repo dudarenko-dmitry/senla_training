@@ -66,4 +66,14 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
                         checkedTime.isBefore(rr.getCheckOutTime()))
                 .count();
     }
+
+    @Override
+    public int countGuestPaymentForRoom(int idGuest) {
+        return readAll()
+                .stream()
+                .filter(rr -> rr.getGuest().getIdGuest() == idGuest)
+                .findFirst()
+                .map(RoomReservation::getCost)
+                .orElse(0);
+    }
 }

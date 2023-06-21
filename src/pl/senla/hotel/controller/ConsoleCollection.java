@@ -218,14 +218,13 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(1));
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
 
-        // Delete RoomReservation works. Take off comments after checking of Order's work
-//        System.out.println("\n===========================");
-//        System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
-//        Room roomToBeFree = roomController.read(roomReservationController.read(1).getRoom().getRoomId());
-//        roomToBeFree.setRoomStatus(RoomStatus.FREE.getStatus()); // add automatic change RoomStatus after deleting of Reservation
-//        System.out.println(CONSOLE_DELETE_ROOM_RESERVATION + roomReservationController.delete(1));
-//        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
-//        System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
+        System.out.println("\n========================");
+        System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
+        Room roomToBeFree = roomController.read(roomReservationController.read(1).getRoom().getRoomId());
+        roomToBeFree.setRoomStatus(RoomStatus.AVAILABLE.getStatus()); // add automatic change RoomStatus after deleting of Reservation
+        System.out.println(CONSOLE_DELETE_ROOM_RESERVATION + roomReservationController.delete(1));
+        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
+        System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
 
 
         System.out.println("\n----- Order -----");
@@ -246,11 +245,11 @@ public class ConsoleCollection implements Console{
 
         System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
 
-        System.out.println("\n===========================");
+        System.out.println("\n=========================");
         System.out.println("UPDATE ORDERS");
         // some logic
 
-        System.out.println("\n===========================");
+        System.out.println("\n==========================");
         System.out.println("DELETE ORDERS");
         // some logic
 
@@ -266,7 +265,7 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL +
                 roomController.readAllRoomsSortByLevel());
 
-        System.out.println("\n===========================");
+        System.out.println("\n=========================");
         System.out.println("Sort Free Rooms By Price");
         System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +
                 roomReservationController.readAllFreeRoomsSortByPrice());
@@ -277,7 +276,7 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL +
                 roomReservationController.readAllFreeRoomsSortByLevel());
 
-        System.out.println("\n===========================");
+        System.out.println("\n========================");
         System.out.println("Sort RoomReservations By GuestName");
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_GUEST_NAME +
                 roomReservationController.readAllRoomReservationsSortByGuestName());
@@ -285,13 +284,13 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_CHECK_OUT +
                 roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
 
-        System.out.println("\n===========================");
+        System.out.println("\n=======================");
         System.out.println("Count Free Room on Date");
         LocalDateTime checkedTime = LocalDateTime.of(2023,7,3, 15, 0);
         System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTime + ": " +
                 roomReservationController.countFreeRoomsOnTime(checkedTime));
 
-        System.out.println("\n===========================");
+        System.out.println("\n============================");
         System.out.println("Count Total number of registered Guest in DataBase");
         System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
         System.out.println("Count number of Guest in Hotel on Date");
@@ -302,5 +301,8 @@ public class ConsoleCollection implements Console{
         System.out.println("List of all Free rooms at Time");
         System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME + roomReservationController.readAllRoomsFreeAtTime(checkedTime));
 
+        System.out.println("\n===========================");
+        System.out.println("Guest's payment for room");
+        System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM + roomReservationController.countGuestPaymentForRoom(2));
     }
 }

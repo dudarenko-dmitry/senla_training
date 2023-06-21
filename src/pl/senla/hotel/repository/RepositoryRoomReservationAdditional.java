@@ -10,4 +10,5 @@ public interface RepositoryRoomReservationAdditional {
     List<RoomReservation> readAllRoomReservationsSortByGuestName();
     List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut();
     int countNumberOfGuestsOnDate(LocalDateTime checkedTime);
+    int countGuestPaymentForRoom(int idGuest);
 }

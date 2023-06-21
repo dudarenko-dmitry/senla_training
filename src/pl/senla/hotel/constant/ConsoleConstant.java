@@ -25,6 +25,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_CHANGE_ROOM_RESERVATION =    "Room reservation was changed: ";
     public static final String CONSOLE_DELETE_ROOM_RESERVATION =    "Room reservation was deleted: ";
     public static final String CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW =  "Number of Guest in Hotel at time ";
+    public static final String CONSOLE_GUEST_PAYMENT_FOR_ROOM =     "Guest's payment for the room: ";
 
     public static final String CONSOLE_READ_ALL_GUESTS =            "\nList of all Guests: ";
     public static final String CONSOLE_READ_GUEST =                 "Guest: ";
