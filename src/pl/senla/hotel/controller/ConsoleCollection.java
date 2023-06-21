@@ -258,19 +258,33 @@ public class ConsoleCollection implements Console{
         System.out.println("\n------------ TASK 4.1. -----------");
         System.out.println("===========================");
         System.out.println("Sort Room By Price");
-        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE + roomController.readAllRoomsSortByPrice());
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE +
+                roomController.readAllRoomsSortByPrice());
         System.out.println("Sort Room By Capacity");
-        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY + roomController.readAllRoomsSortByCapacity());
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY +
+                roomController.readAllRoomsSortByCapacity());
         System.out.println("Sort Room By Status");
-        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL + roomController.readAllRoomsSortByLevel());
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL +
+                roomController.readAllRoomsSortByLevel());
 
         System.out.println("\n===========================");
         System.out.println("Sort Free Rooms By Price");
-        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE + roomReservationController.readAllFreeRoomsSortByPrice());
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +
+                roomReservationController.readAllFreeRoomsSortByPrice());
         System.out.println("Sort Free Room By Capacity");
-        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY + roomReservationController.readAllFreeRoomsSortByCapacity());
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY +
+                roomReservationController.readAllFreeRoomsSortByCapacity());
         System.out.println("Sort Free Room By Status");
-        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL + roomReservationController.readAllFreeRoomsSortByLevel());
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL +
+                roomReservationController.readAllFreeRoomsSortByLevel());
+
+        System.out.println("\n===========================");
+        System.out.println("Sort RoomReservations By GuestName");
+        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_GUEST_NAME +
+                roomReservationController.readAllRoomReservationsSortByGuestName());
+        System.out.println("Sort RoomReservations By CheckOut");
+        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_CHECK_OUT +
+                roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
         // some logic
 
     }

@@ -57,7 +57,7 @@ public class GuideTour extends HotelService{
     public String toString() {
         return "\nGuideTour {" +
                 "idGuideTour=" + idGuideTour + "," +
-                super.getClient().toString() + "," +
+                super.getGuest().toString() + "," +
                 nameTour + "," +
                 "\nStartDate=" + super.getStartDate().toString() +
                 ", transport=" + transport +

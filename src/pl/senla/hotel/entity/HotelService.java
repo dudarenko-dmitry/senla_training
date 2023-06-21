@@ -33,11 +33,11 @@ public abstract class HotelService {
         this.startDate = startDate;
     }
 
-    public Guest getClient() {
+    public Guest getGuest() {
         return guest;
     }
 
-    public void setClient(Guest guest) {
+    public void setGuest(Guest guest) {
         this.guest = guest;
     }
 

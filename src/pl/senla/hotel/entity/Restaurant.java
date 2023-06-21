@@ -80,7 +80,7 @@ public class Restaurant extends HotelService{
     public String toString() {
         return "\nRestaurant {" +
                 "idRestaurant=" + idRestaurant +
-                super.getClient().toString() + "," +
+                super.getGuest().toString() + "," +
                 ", tableNumber=" + tableNumber +
                 ", numberOfGuests=" + numberOfGuests +
                 "\nStartDate=" + super.getStartDate().toString() +

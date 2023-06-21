@@ -79,7 +79,7 @@ public class RoomReservation extends HotelService{
     public String toString() {
         return "\nRoomReservation {" +
                 "idRoomReservation=" + idRoomReservation + "," +
-                super.getClient().toString() + "," +
+                super.getGuest().toString() + "," +
                 room + "," +
                 "\nStartDate=" + super.getStartDate().toString() +
                 ", numberOfDays=" + numberOfDays +

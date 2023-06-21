@@ -75,4 +75,14 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     public List<FreeRoom> readAllFreeRoomsSortByLevel() {
         return roomReservationService.readAllFreeRoomsSortByLevel();
     }
+
+    @Override
+    public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
+        return roomReservationService.readAllRoomReservationsSortByGuestName();
+    }
+
+    @Override
+    public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
+        return roomReservationService.readAllRoomReservationsSortByGuestCheckOut();
+    }
 }

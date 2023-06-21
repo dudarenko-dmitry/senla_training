@@ -57,8 +57,8 @@ The program should allow you to show:
 - readAllFreeRoomsSortByCapacity,
 - readAllFreeRoomsSortByStatus;
 3. List of guests and their rooms (sort alphabetically and by check-out date):
-- readAllOrdersSortByGuestName,
-- readAllOrdersSortByGuestCheckOut;
+- readAllRoomReservationsSortByGuestName,
+- readAllRoomReservationsSortByGuestCheckOut;
 4. Total number of available rooms:
 - countRoomsFree;
 5. Total number of guests:

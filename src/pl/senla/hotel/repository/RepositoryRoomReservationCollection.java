@@ -47,4 +47,13 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
         return true;
     }
 
+    @Override
+    public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
+        return readAll().stream().sorted(new RoomReservationsComparatorByGuestName()).toList();
+    }
+
+    @Override
+    public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
+        return readAll().stream().sorted(new RoomReservationsComparatorByCheckOut()).toList();
+    }
 }

@@ -26,7 +26,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public boolean create(RoomReservation reservation) {
-        if(reservation.getClient() == null){
+        if(reservation.getGuest() == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return false;
         } else if(reservation.getRoom() == null){
@@ -122,5 +122,15 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     @Override
     public List<FreeRoom> readAllFreeRoomsSortByLevel() {
         return freeRoomRepository.readAllFreeRoomsSortByLevel();
+    }
+
+    @Override
+    public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
+        return roomReservationRepository.readAllRoomReservationsSortByGuestName();
+    }
+
+    @Override
+    public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
+        return roomReservationRepository.readAllRoomReservationsSortByGuestCheckOut();
     }
 }

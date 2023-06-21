@@ -43,5 +43,8 @@ public class ConsoleConstant {
 
     public static final String SORTED_BY_PRICE =      " sorted by Room's price ";
     public static final String SORTED_BY_CAPACITY =   " sorted by Room's capacity ";
-    public static final String SORTED_BY_LEVEL =     " sorted by Room's level ";
+    public static final String SORTED_BY_LEVEL =      " sorted by Room's level ";
+    public static final String SORTED_BY_GUEST_NAME = " sorted by Guest's name ";
+    public static final String SORTED_BY_CHECK_OUT =  " sorted by check-out time";
+
 }
