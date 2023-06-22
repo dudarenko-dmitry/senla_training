@@ -154,4 +154,9 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     public int countGuestPaymentForRoom(int idGuest) {
         return roomReservationRepository.countGuestPaymentForRoom(idGuest);
     }
+
+    @Override
+    public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
+        return roomReservationRepository.read3LastGuestAndDatesForRoom(idRoom);
+    }
 }

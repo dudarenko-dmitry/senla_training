@@ -11,5 +11,6 @@ public interface ServiceRoomReservationAdditional {
     List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut();
     int countNumberOfGuestsOnDate(LocalDateTime checkedTime);
     int countGuestPaymentForRoom(int idGuest);
+    List<String> read3LastGuestAndDatesForRoom(int idRoom);
 
 }

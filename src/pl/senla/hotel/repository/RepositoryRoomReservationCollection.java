@@ -6,6 +6,7 @@ import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageRoomReservation;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RepositoryRoomReservationCollection implements RepositoryRoomReservation {
@@ -75,5 +76,31 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
                 .findFirst()
                 .map(RoomReservation::getCost)
                 .orElse(0);
+    }
+
+    @Override
+    public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
+        List<String> guestsAndDates = new ArrayList<>();
+        List<RoomReservation> roomReservationsForRoom = readAll()
+                .stream()
+                .filter(rr -> rr.getRoom().getRoomId() == idRoom)
+                .toList();
+        int numberOfReservations = roomReservationsForRoom.size();
+        int i = 1;
+        while(i <= 3){
+            if(numberOfReservations - i >= 0){
+                RoomReservation rr = roomReservationsForRoom.get(numberOfReservations - i);
+                Guest guest = rr.getGuest();
+                LocalDateTime checkInTime = rr.getCheckInTime();
+                LocalDateTime checkOutTime = rr.getCheckOutTime();
+                String guestAndDate = "\n" + i + ": " + guest.toString() + ", check-in = " +
+                        checkInTime.toString() + ", check-out = " + checkOutTime.toString();
+                guestsAndDates.add(guestAndDate);
+            } else{
+                guestsAndDates.add("\n" + i + ": no reservation");
+            }
+            i++;
+        }
+        return guestsAndDates;
     }
 }

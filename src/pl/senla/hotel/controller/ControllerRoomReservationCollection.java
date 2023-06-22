@@ -106,4 +106,9 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     public int countGuestPaymentForRoom(int idGuest) {
         return roomReservationService.countGuestPaymentForRoom(idGuest);
     }
+
+    @Override
+    public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
+        return roomReservationService.read3LastGuestAndDatesForRoom(idRoom);
+    }
 }

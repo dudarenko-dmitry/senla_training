@@ -304,5 +304,9 @@ public class ConsoleCollection implements Console{
         System.out.println("\n===========================");
         System.out.println("Guest's payment for room");
         System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM + roomReservationController.countGuestPaymentForRoom(2));
+
+        System.out.println("\n===========================");
+        System.out.println("3 last Guest and their dates of stays for room");
+        System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(5));
     }
 }

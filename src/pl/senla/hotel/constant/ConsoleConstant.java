@@ -33,6 +33,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_CHANGE_GUEST =               "Guest was changed: ";
     public static final String CONSOLE_DELETE_GUEST =               "Guest was deleted: ";
     public static final String CONSOLE_NUMBER_GUEST_TOTAL =         "Total number of registered Guest in DataBase: ";
+    public static final String CONSOLE_3_GUESTS_AND_DATES =         "The last 3 guests of the room and the dates of their stay: ";
 
     public static final String CONSOLE_READ_ALL_SERVICES = "\nList of all Services: ";
     public static final String CONSOLE_READ_SERVICE = "Service: ";
