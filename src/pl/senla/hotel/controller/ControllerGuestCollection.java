@@ -3,7 +3,6 @@ package pl.senla.hotel.controller;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.service.ServiceGuest;
 import pl.senla.hotel.service.ServiceGuestImpl;
-import pl.senla.hotel.service.ServiceCRUDALL;
 
 import java.util.List;
 

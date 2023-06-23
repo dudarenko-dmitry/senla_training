@@ -1,6 +1,8 @@
 package pl.senla.hotel.repository;
 
 
+import pl.senla.hotel.comparators.RoomReservationsComparatorByCheckOut;
+import pl.senla.hotel.comparators.RoomReservationsComparatorByGuestName;
 import pl.senla.hotel.entity.*;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageRoomReservation;

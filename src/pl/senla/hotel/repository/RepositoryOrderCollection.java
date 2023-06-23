@@ -1,5 +1,7 @@
 package pl.senla.hotel.repository;
 
+import pl.senla.hotel.entity.HotelService;
+import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageOrder;
@@ -43,5 +45,15 @@ public class RepositoryOrderCollection implements RepositoryOrder {
     public boolean delete(int id) {
         readAll().remove(id);
         return true;
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByPrice(int idGuest) {
+        return readAll().stream().filter(hs -> hs.getClient().getIdGuest() == idGuest).flatMap(o -> o.getServices().stream()).sorted(new HotelServicesComparatorByPrice()).toList();
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByDate(int idGuest) {
+        return null;
     }
 }

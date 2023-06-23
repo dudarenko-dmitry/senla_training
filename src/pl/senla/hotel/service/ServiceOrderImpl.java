@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.entity.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.repository.RepositoryOrder;
 import pl.senla.hotel.repository.RepositoryOrderCollection;
@@ -66,5 +67,15 @@ public class ServiceOrderImpl implements ServiceOrder {
             System.out.println(ERROR_READ_ORDER);
         }
         return orderRepository.delete(id);
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByPrice(int idGuest) {
+        return orderRepository.readAllServicesSortByPrice(idGuest);
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByDate(int idGuest) {
+        return orderRepository.readAllServicesSortByDate(idGuest);
     }
 }

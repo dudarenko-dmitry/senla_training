@@ -1,14 +1,15 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.entity.HotelService;
 import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.service.ServiceOrder;
 import pl.senla.hotel.service.ServiceOrderImpl;
-import pl.senla.hotel.service.ServiceCRUDALL;
 
 import java.util.List;
 
 public class ControllerOrderCollection implements ControllerOrder {
 
-    private final ServiceCRUDALL<Order> orderService = new ServiceOrderImpl();
+    private final ServiceOrder orderService = new ServiceOrderImpl();
 
 
     @Override
@@ -34,5 +35,15 @@ public class ControllerOrderCollection implements ControllerOrder {
     @Override
     public boolean delete(int id) {
         return orderService.delete(id);
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByPrice(int idGuest) {
+        return orderService.readAllServicesSortByPrice(idGuest);
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByDate(int idGuest) {
+        return orderService.readAllServicesSortByDate(idGuest);
     }
 }

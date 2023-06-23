@@ -19,7 +19,7 @@ public class RoomReservation extends HotelService{
     }
 
     public RoomReservation(int idRoomReservation, Guest guest, Room room, LocalDate startDate, int numberOfDays) {
-        super(guest);
+        super("RoomReservation", guest);
 //        if(guest == null){
 //            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
 //            return;
@@ -91,7 +91,8 @@ public class RoomReservation extends HotelService{
     @Override
     public String toString() {
         return "\nRoomReservation {" +
-                "idRoomReservation=" + idRoomReservation + "," +
+                "typeOfService=" + super.getTypeOfService() +
+                ", idRoomReservation=" + idRoomReservation + "," +
                 super.getGuest().toString() + "," +
                 room + "," +
                 "\ncheck-in time=" + checkInTime +
