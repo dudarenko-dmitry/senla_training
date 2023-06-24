@@ -1,6 +1,6 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.entity.FreeRoom;
+import pl.senla.hotel.entity.services.FreeRoom;
 
 import java.time.LocalDateTime;
 import java.util.List;

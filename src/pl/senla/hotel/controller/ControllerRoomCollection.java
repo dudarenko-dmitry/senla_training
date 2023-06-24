@@ -1,7 +1,7 @@
 package pl.senla.hotel.controller;
 
 import pl.senla.hotel.service.ServiceRoomImpl;
-import pl.senla.hotel.entity.Room;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.service.ServiceRoom;
 
 import java.util.List;

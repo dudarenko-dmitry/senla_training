@@ -1,6 +1,6 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.entity.RoomReservation;
+import pl.senla.hotel.entity.services.RoomReservation;
 
 import java.time.LocalDateTime;
 import java.util.List;

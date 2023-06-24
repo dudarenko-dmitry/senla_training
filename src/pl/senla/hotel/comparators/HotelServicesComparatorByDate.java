@@ -1,9 +1,9 @@
 package pl.senla.hotel.comparators;
 
-import pl.senla.hotel.entity.GuideTour;
-import pl.senla.hotel.entity.HotelService;
-import pl.senla.hotel.entity.Restaurant;
-import pl.senla.hotel.entity.RoomReservation;
+import pl.senla.hotel.entity.services.Transfer;
+import pl.senla.hotel.entity.services.HotelService;
+import pl.senla.hotel.entity.services.Restaurant;
+import pl.senla.hotel.entity.services.RoomReservation;
 
 import java.util.Comparator;
 
@@ -18,15 +18,15 @@ public class HotelServicesComparatorByDate implements Comparator<HotelService> {
                 return compareRoomReservation((RoomReservation) o1, (RoomReservation) o2);
             case "Restaurant":
                 return compareRestaurant((Restaurant) o1, (Restaurant) o2);
-            case "GuideTour":
-                return compareGuideTour((GuideTour) o1, (GuideTour) o2);
+            case "Transfer":
+                return compareTransfer((Transfer) o1, (Transfer) o2);
             default:
                 System.out.println(ERROR_IN_SERVICE_TYPE);
                 return 0;
         }
     }
 
-    private int compareGuideTour(GuideTour o1, GuideTour o2) {
+    private int compareTransfer(Transfer o1, Transfer o2) {
         if(o1.getStartDateTime().isBefore(o2.getStartDateTime())){
             return -1;
         } else if(o1.getStartDateTime().isAfter(o2.getStartDateTime())){

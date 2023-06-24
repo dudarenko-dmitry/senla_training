@@ -1,6 +1,6 @@
 package pl.senla.hotel.storage;
 
-import pl.senla.hotel.entity.RoomReservation;
+import pl.senla.hotel.entity.services.RoomReservation;
 
 public class DataStorageRoomReservation extends DataStorage<RoomReservation>{
 

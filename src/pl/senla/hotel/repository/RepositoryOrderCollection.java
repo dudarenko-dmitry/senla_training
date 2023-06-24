@@ -1,7 +1,7 @@
 package pl.senla.hotel.repository;
 
 import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
-import pl.senla.hotel.entity.HotelService;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.storage.DataStorage;

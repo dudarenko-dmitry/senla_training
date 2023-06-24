@@ -1,6 +1,6 @@
 package pl.senla.hotel.comparators;
 
-import pl.senla.hotel.entity.RoomReservation;
+import pl.senla.hotel.entity.services.RoomReservation;
 
 import java.util.Comparator;
 

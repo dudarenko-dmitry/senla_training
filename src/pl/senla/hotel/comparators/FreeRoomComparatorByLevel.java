@@ -1,6 +1,6 @@
 package pl.senla.hotel.comparators;
 
-import pl.senla.hotel.entity.FreeRoom;
+import pl.senla.hotel.entity.services.FreeRoom;
 
 import java.util.Comparator;
 

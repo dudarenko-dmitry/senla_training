@@ -1,7 +1,7 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.constant.RoomConstant;
-import pl.senla.hotel.entity.Room;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.repository.RepositoryRoom;
 import pl.senla.hotel.repository.RepositoryRoomCollection;
 
@@ -21,7 +21,7 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean create(Room room) {
-        if(roomRepository.read(room.getRoomId()) != null) {
+        if(roomRepository.read(room.getIdFacility()) != null) {
             System.out.println(RoomConstant.ERROR_CREATE_ROOM);
             return false;
         }
@@ -45,7 +45,7 @@ public class ServiceRoomImpl implements ServiceRoom {
         if(roomRepository.readAll() == null){
             System.out.println(RoomConstant.ERROR_READ_ALL_ROOM);
             return false;
-        } else if(roomRepository.read(room.getRoomId()) == null){
+        } else if(roomRepository.read(room.getIdFacility()) == null){
             System.out.println(RoomConstant.ERROR_READ_ROOM);
             return false;
         }

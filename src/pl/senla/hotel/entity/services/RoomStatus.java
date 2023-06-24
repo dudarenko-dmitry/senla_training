@@ -1,4 +1,4 @@
-package pl.senla.hotel.entity;
+package pl.senla.hotel.entity.services;
 
 public enum RoomStatus {
 

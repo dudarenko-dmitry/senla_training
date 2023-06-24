@@ -1,4 +1,6 @@
-package pl.senla.hotel.entity;
+package pl.senla.hotel.entity.services;
+
+import pl.senla.hotel.entity.Guest;
 
 import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT;
 

@@ -1,6 +1,7 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.*;
+import pl.senla.hotel.entity.services.FreeRoom;
+import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.repository.RepositoryFreeRoom;
 import pl.senla.hotel.repository.RepositoryFreeRoomCollection;
 import pl.senla.hotel.repository.RepositoryRoomReservation;

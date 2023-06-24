@@ -74,8 +74,8 @@ The program should allow you to show:
 - readAllServicesSortByPrice,
 - readAllServicesSortByDate;
 10. Prices of services and rooms (sort by section(category), by price):
-- showPriceListForServicesSortByCategory,
-- showPriceListForServicesSortByPrice;
+- readPriceListForServicesSortByCategory,
+- readPriceListForServicesSortByPrice;
 11. Show the details of a separate room:
 - readRoom.
 

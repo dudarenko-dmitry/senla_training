@@ -42,6 +42,12 @@ public class ConsoleConstant {
     public static final String CONSOLE_CHANGE_SERVICE =                 "Service changed: ";
     public static final String CONSOLE_DELETE_SERVICE =                 "Service deleted: ";
 
+    public static final String CONSOLE_READ_ALL_FACILITIES =        "\nHotel's facilities' price list: ";
+    public static final String CONSOLE_READ_FACILITY =              "Hotel's facility: ";
+    public static final String CONSOLE_CREATE_FACILITY =            "New Hotel's facility was created: ";
+    public static final String CONSOLE_CHANGE_FACILITY =            "Hotel's facility changed: ";
+    public static final String CONSOLE_DELETE_FACILITY =            "Hotel's facility deleted: ";
+
     public static final String CONSOLE_READ_ALL_ORDERS = "\nList of all Orders: ";
     public static final String CONSOLE_READ_ORDER = "Order: ";
     public static final String CONSOLE_CREATE_ORDER = "New Order was created: ";
@@ -54,5 +60,6 @@ public class ConsoleConstant {
     public static final String SORTED_BY_LEVEL =      " sorted by Room's level ";
     public static final String SORTED_BY_GUEST_NAME = " sorted by Guest's name ";
     public static final String SORTED_BY_CHECK_OUT =  " sorted by check-out time";
+    public static final String SORTED_BY_CATEGORY =   " sorted by category";
 
 }

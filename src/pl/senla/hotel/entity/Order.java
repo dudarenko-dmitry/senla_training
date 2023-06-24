@@ -1,5 +1,7 @@
 package pl.senla.hotel.entity;
 
+import pl.senla.hotel.entity.services.HotelService;
+
 import java.util.List;
 
 public class Order {

@@ -1,8 +1,8 @@
 package pl.senla.hotel.storage;
 
-import pl.senla.hotel.entity.GuideTour;
+import pl.senla.hotel.entity.services.Transfer;
 
-public class DataStorageGuideTour extends DataStorage<GuideTour>{
+public class DataStorageTransfer extends DataStorage<Transfer>{
 
     @Override
     public String toString() {

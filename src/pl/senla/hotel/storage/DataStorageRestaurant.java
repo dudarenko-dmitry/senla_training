@@ -1,6 +1,6 @@
 package pl.senla.hotel.storage;
 
-import pl.senla.hotel.entity.Restaurant;
+import pl.senla.hotel.entity.services.Restaurant;
 
 public class DataStorageRestaurant extends DataStorage<Restaurant>{
 

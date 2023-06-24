@@ -1,4 +1,7 @@
-package pl.senla.hotel.entity;
+package pl.senla.hotel.entity.services;
+
+import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.entity.facilities.Room;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,7 +39,7 @@ public class RoomReservation extends HotelService{
         this.numberOfDays = numberOfDays;
         this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
         this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
-        this.cost = room.getRoomPrice() * numberOfDays;
+        this.cost = room.getPrice() * numberOfDays;
         // add logic for DELETING Free Room
     }
 
@@ -85,7 +88,7 @@ public class RoomReservation extends HotelService{
     }
 
     public void setCost() {
-        this.cost = numberOfDays * room.getRoomPrice();
+        this.cost = numberOfDays * room.getPrice();
     }
 
     @Override

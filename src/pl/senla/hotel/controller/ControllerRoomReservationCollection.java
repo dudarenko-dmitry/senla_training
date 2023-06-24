@@ -1,8 +1,8 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.entity.FreeRoom;
+import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.service.ServiceRoomReservationImpl;
-import pl.senla.hotel.entity.RoomReservation;
+import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.service.ServiceRoomReservation;
 
 import java.time.LocalDateTime;

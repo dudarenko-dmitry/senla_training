@@ -1,6 +1,6 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.HotelService;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.repository.RepositoryOrder;
 import pl.senla.hotel.repository.RepositoryOrderCollection;

@@ -1,6 +1,9 @@
 package pl.senla.hotel.controller;
 
 import pl.senla.hotel.entity.*;
+import pl.senla.hotel.entity.facilities.CategoryFacility;
+import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.services.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +16,7 @@ import static pl.senla.hotel.constant.HotelConstant.*;
 public class ConsoleCollection implements Console{
 
     private final ControllerRoom roomController = new ControllerRoomCollection();
+    private final ControllerFacility facilityController = new ControllerFacilityCollection();
     private final ControllerRoomReservation roomReservationController = new ControllerRoomReservationCollection();
     private final ControllerGuest guestController = new ControllerGuestCollection();
     private final ControllerOrder orderController = new ControllerOrderCollection();
@@ -23,38 +27,49 @@ public class ConsoleCollection implements Console{
         System.out.println("\n----- Room and FreeRoom -----");
         System.out.println("==============================");
         System.out.println("CREATE and READ ROOMS");
-        Room room0 = new Room(0,11,100,1, RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room0 = new Room(0, CategoryFacility.ROOM.getTypeName(), "11",100,1, RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom0 = new FreeRoom(0, room0, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom in CONSTRUCTOR
+        facilityController.create(room0);
         roomReservationController.createFreeRoom(freeRoom0);
-        Room room1 = new Room(1,12,120,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room1 = new Room(1,CategoryFacility.ROOM.getTypeName(), "12",120,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom1 = new FreeRoom(1, room1, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room1);
         roomReservationController.createFreeRoom(freeRoom1);
-        Room room2 = new Room(2,13,150,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room2 = new Room(2,CategoryFacility.ROOM.getTypeName(), "13",150,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom2 = new FreeRoom(2, room2, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room2);
         roomReservationController.createFreeRoom(freeRoom2);
-        Room room3 = new Room(3,21,100,1,RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room3 = new Room(3,CategoryFacility.ROOM.getTypeName(), "21",100,1,RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom3 = new FreeRoom(3, room3, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room3);
         roomReservationController.createFreeRoom(freeRoom3);
-        Room room4 = new Room(4,22,120,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room4 = new Room(4,CategoryFacility.ROOM.getTypeName(), "22",120,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom4 = new FreeRoom(4, room4, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room4);
         roomReservationController.createFreeRoom(freeRoom4);
-        Room room5 = new Room(5,23,150,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room5 = new Room(5,CategoryFacility.ROOM.getTypeName(), "23",150,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom5 = new FreeRoom(5, room5, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room5);
         roomReservationController.createFreeRoom(freeRoom5);
-        Room room6 = new Room(6,31,110,1,RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room6 = new Room(6,CategoryFacility.ROOM.getTypeName(), "31",110,1,RoomLevel.STANDART.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom6 = new FreeRoom(6, room6, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room6);
         roomReservationController.createFreeRoom(freeRoom6);
-        Room room7 = new Room(7,32,140,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room7 = new Room(7,CategoryFacility.ROOM.getTypeName(), "32",140,2,RoomLevel.ECONOM.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom7 = new FreeRoom(7, room7, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room7);
         roomReservationController.createFreeRoom(freeRoom7);
-        Room room8 = new Room(8,33,160,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room8 = new Room(8,CategoryFacility.ROOM.getTypeName(), "33",160,2,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom8 = new FreeRoom(8, room8, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room8);
         roomReservationController.createFreeRoom(freeRoom8);
-        Room room9 = new Room(9,41,400,4,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room9 = new Room(9,CategoryFacility.ROOM.getTypeName(), "41",400,4,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom9 = new FreeRoom(9, room9, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room9);
         roomReservationController.createFreeRoom(freeRoom9);
-        Room room10 = new Room(10,42,400,4,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
+        Room room10 = new Room(10,CategoryFacility.ROOM.getTypeName(), "42",400,4,RoomLevel.LUX.getLevel(), RoomStatus.AVAILABLE.getStatus());
         FreeRoom freeRoom10 = new FreeRoom(10, room10, START_DATE_YEAR, END_DATE_YEAR); // create automatic changing IDfreeRoom
+        facilityController.create(room10);
         roomReservationController.createFreeRoom(freeRoom10);
 
         System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room0));
@@ -76,7 +91,7 @@ public class ConsoleCollection implements Console{
 
         System.out.println("\n=========================");
         System.out.println("UPDATE ROOM");
-        room0.setRoomPrice(200); // create later methods for changing of different attributes
+        room0.setPrice(200); // create later methods for changing of different attributes
         System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(room0));
         System.out.println(roomController.read(0));
         System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
@@ -220,7 +235,7 @@ public class ConsoleCollection implements Console{
 
         System.out.println("\n========================");
         System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
-        Room roomToBeFree = roomController.read(roomReservationController.read(1).getRoom().getRoomId());
+        Room roomToBeFree = roomController.read(roomReservationController.read(1).getRoom().getIdFacility());
         roomToBeFree.setRoomStatus(RoomStatus.AVAILABLE.getStatus()); // add automatic change RoomStatus after deleting of Reservation
         System.out.println(CONSOLE_DELETE_ROOM_RESERVATION + roomReservationController.delete(1));
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
@@ -315,6 +330,11 @@ public class ConsoleCollection implements Console{
         System.out.println("\n9 ===========================");
         System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE + orderController.readAllServicesSortByPrice(1));
         System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE + orderController.readAllServicesSortByDate(1));
-        //logic
+
+        System.out.println("\n10 ===========================");
+        //checked without creating instances Table and Transport
+        System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY + facilityController.readPriceListForServicesSortByCategory());
+        System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_PRICE + facilityController.readPriceListForServicesSortByPrice());
+
     }
 }

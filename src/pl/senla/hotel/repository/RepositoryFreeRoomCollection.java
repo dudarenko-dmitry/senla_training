@@ -1,6 +1,6 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.entity.FreeRoom;
+import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.comparators.FreeRoomComparatorByCapacity;
 import pl.senla.hotel.comparators.FreeRoomComparatorByLevel;
 import pl.senla.hotel.comparators.FreeRoomComparatorByPrice;

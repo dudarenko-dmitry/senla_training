@@ -1,4 +1,6 @@
-package pl.senla.hotel.entity;
+package pl.senla.hotel.entity.services;
+
+import pl.senla.hotel.entity.facilities.Room;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
