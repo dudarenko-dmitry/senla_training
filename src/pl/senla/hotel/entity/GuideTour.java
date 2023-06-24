@@ -55,6 +55,14 @@ public class GuideTour extends HotelService{
         this.price = price;
     }
 
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
     @Override
     public String toString() {
         return "\nGuideTour{" +

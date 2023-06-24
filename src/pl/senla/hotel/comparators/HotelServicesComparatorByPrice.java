@@ -7,6 +7,8 @@ import pl.senla.hotel.entity.RoomReservation;
 
 import java.util.Comparator;
 
+import static pl.senla.hotel.constant.HotelServieConstant.ERROR_IN_SERVICE_TYPE;
+
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
     @Override
@@ -19,9 +21,9 @@ public class HotelServicesComparatorByPrice implements Comparator<HotelService> 
             case "GuideTour":
                 return compareGuideTour((GuideTour) o1, (GuideTour) o2);
             default:
-                System.out.println("ERROR IN SERVICE TYPE.");
+                System.out.println(ERROR_IN_SERVICE_TYPE);
+                return 0;
         }
-        return 0;
     }
 
     private int compareRoomReservation(RoomReservation o1, RoomReservation o2){

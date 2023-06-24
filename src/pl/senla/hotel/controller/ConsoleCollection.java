@@ -314,6 +314,7 @@ public class ConsoleCollection implements Console{
 
         System.out.println("\n9 ===========================");
         System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE + orderController.readAllServicesSortByPrice(1));
+        System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE + orderController.readAllServicesSortByDate(1));
         //logic
     }
 }
