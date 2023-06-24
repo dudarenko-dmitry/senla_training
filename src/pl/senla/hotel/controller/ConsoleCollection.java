@@ -155,17 +155,17 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation1));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(1));
 
-        RoomReservation roomReservation2 = new RoomReservation(2, guestController.read(2),
+        RoomReservation roomReservation2 = new RoomReservation(2, guestController.read(1),
                 roomController.read(2), startDay2,3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation2));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(2));
 
-        RoomReservation roomReservation3 = new RoomReservation(3, guestController.read(3),
+        RoomReservation roomReservation3 = new RoomReservation(3, guestController.read(1),
                 roomController.read(3), startDay3, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation3));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(3));
 
-        RoomReservation roomReservation4 = new RoomReservation(4, guestController.read(4),
+        RoomReservation roomReservation4 = new RoomReservation(4, guestController.read(1),
                 roomController.read(4), startDay4, 3);
         System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation4));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(4));
@@ -233,9 +233,12 @@ public class ConsoleCollection implements Console{
         //move this action to Creating Client
         List<HotelService> services0 = new ArrayList<>();
         List<HotelService> services1 = new ArrayList<>();
-        //move this action/these actions to Creating RoomReservation, Restorant and other HotelServices.
+        //move this action/these actions to Creating RoomReservation, Restaurant and other HotelServices.
         services0.add(roomReservation0);
         services1.add(roomReservation1);
+        services1.add(roomReservation2);
+        services1.add(roomReservation3);
+        services1.add(roomReservation4);
         Order order0 = new Order(0, guestController.read(0),services0);
         System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order0));
         System.out.println(orderController.read(0));
@@ -305,8 +308,12 @@ public class ConsoleCollection implements Console{
         System.out.println("Guest's payment for room");
         System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM + roomReservationController.countGuestPaymentForRoom(2));
 
-        System.out.println("\n===========================");
+        System.out.println("\n8 ===========================");
         System.out.println("3 last Guest and their dates of stays for room");
         System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(5));
+
+        System.out.println("\n9 ===========================");
+        System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE + orderController.readAllServicesSortByPrice(1));
+        //logic
     }
 }

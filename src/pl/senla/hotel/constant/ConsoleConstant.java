@@ -35,11 +35,12 @@ public class ConsoleConstant {
     public static final String CONSOLE_NUMBER_GUEST_TOTAL =         "Total number of registered Guest in DataBase: ";
     public static final String CONSOLE_3_GUESTS_AND_DATES =         "The last 3 guests of the room and the dates of their stay: ";
 
-    public static final String CONSOLE_READ_ALL_SERVICES = "\nList of all Services: ";
-    public static final String CONSOLE_READ_SERVICE = "Service: ";
-    public static final String CONSOLE_CREATE_SERVICE = "New Service was created: ";
-    public static final String CONSOLE_CHANGE_SERVICE = "Service changed: ";
-    public static final String CONSOLE_DELETE_SERVICE = "Service deleted: ";
+    public static final String CONSOLE_READ_ALL_SERVICES =              "\nList of all Services: ";
+    public static final String CONSOLE_READ_ALL_SERVICES_FOR_GUEST =    "\nList of all Services: ";
+    public static final String CONSOLE_READ_SERVICE =                   "Service: ";
+    public static final String CONSOLE_CREATE_SERVICE =                 "New Service was created: ";
+    public static final String CONSOLE_CHANGE_SERVICE =                 "Service changed: ";
+    public static final String CONSOLE_DELETE_SERVICE =                 "Service deleted: ";
 
     public static final String CONSOLE_READ_ALL_ORDERS = "\nList of all Orders: ";
     public static final String CONSOLE_READ_ORDER = "Order: ";
@@ -47,7 +48,8 @@ public class ConsoleConstant {
     public static final String CONSOLE_CHANGE_ORDER = "Order changed: ";
     public static final String CONSOLE_DELETE_ORDER = "Order deleted: ";
 
-    public static final String SORTED_BY_PRICE =      " sorted by Room's price ";
+    public static final String SORTED_BY_PRICE =      " sorted by price ";
+    public static final String SORTED_BY_DATE =       " sorted by date ";
     public static final String SORTED_BY_CAPACITY =   " sorted by Room's capacity ";
     public static final String SORTED_BY_LEVEL =      " sorted by Room's level ";
     public static final String SORTED_BY_GUEST_NAME = " sorted by Guest's name ";

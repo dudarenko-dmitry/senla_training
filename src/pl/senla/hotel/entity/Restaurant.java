@@ -16,7 +16,7 @@ public class Restaurant extends HotelService{
 
     public Restaurant(int idRestaurant, Guest guest, int tableNumber, int numberOfGuests,
                       LocalDateTime startTime, int price) {
-        super(guest);
+        super("Restaurant", guest);
         if(guest == null){
             System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_CLIENT);
             return;
@@ -78,7 +78,8 @@ public class Restaurant extends HotelService{
     @Override
     public String toString() {
         return "\nRestaurant {" +
-                "idRestaurant=" + idRestaurant +
+                "typeOfService=" + super.getTypeOfService() +
+                ", idRestaurant=" + idRestaurant +
                 super.getGuest().toString() + "," +
                 ", tableNumber=" + tableNumber +
                 ", numberOfGuests=" + numberOfGuests +

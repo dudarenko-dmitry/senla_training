@@ -15,7 +15,7 @@ public class GuideTour extends HotelService{
     }
 
     public GuideTour(int idGuideTour, Guest guest, String nameTour, String transport, LocalDateTime startDateTime, int price) {
-        super(guest);
+        super("GuideTour", guest);
         this.startDateTime = startDateTime;
         this.idGuideTour = idGuideTour;
         this.nameTour = nameTour;
@@ -57,8 +57,9 @@ public class GuideTour extends HotelService{
 
     @Override
     public String toString() {
-        return "\nGuideTour {" +
-                "idGuideTour=" + idGuideTour + "," +
+        return "\nGuideTour{" +
+                "typeOfService=" + super.getTypeOfService() +
+                ", idGuideTour=" + idGuideTour + "," +
                 super.getGuest().toString() + "," +
                 nameTour + "," +
                 "\nStartTime=" + startDateTime +

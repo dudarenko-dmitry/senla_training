@@ -4,17 +4,27 @@ import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_
 
 public abstract class HotelService {
 
+    private String typeOfService;
     private Guest guest;
 
-    public HotelService() {
+    protected HotelService() {
     }
 
-    public HotelService(Guest guest) {
+    protected HotelService(String typeOfService, Guest guest) {
         if(guest == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return;
         }
         this.guest = guest;
+        this.typeOfService=typeOfService;
+    }
+
+    public String getTypeOfService() {
+        return typeOfService;
+    }
+
+    public void setTypeOfService(String typeOfService) {
+        this.typeOfService = typeOfService;
     }
 
     public Guest getGuest() {
@@ -27,6 +37,13 @@ public abstract class HotelService {
 
     @Override
     public String toString() {
-        return "{" + guest + '}';
+        return  "{typeOfService='" + typeOfService + '\'' +
+                ", guest=" + guest +
+                '}';
     }
+
+    //    @Override
+//    public String toString() {
+//        return "{" + guest + '}';
+//    }
 }
