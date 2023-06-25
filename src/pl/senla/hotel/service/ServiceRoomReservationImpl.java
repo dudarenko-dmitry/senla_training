@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.repository.RepositoryFreeRoom;
@@ -28,23 +29,40 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public boolean create(RoomReservation reservation) {
+        FreeRoom checkedFreeRoom = freeRoomRepository
+                .readAll()
+                .stream()
+                .filter(fr -> fr.getRoom().equals(reservation.getRoom()))
+                .filter(fr -> fr.getStartTime().isBefore(reservation.getCheckInTime()) &&
+                        fr.getEndTime().isAfter(reservation.getCheckOutTime()))
+                .findFirst()
+                .orElse(null);
         if(reservation.getGuest() == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return false;
         } else if(reservation.getRoom() == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
-        } else if(roomReservationRepository.read(reservation.getIdRoomReservation()) != null){
+        } else if(roomReservationRepository.read(reservation.getIdRoomReservation()) != null) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION);
             return false;
-//
-//           create check if room is FREE at this period of time
-//           create check if room is FREE at this period of time
-//           create check if room is FREE at this period of time
-//           create check if room is FREE at this period of time
-//           create check if room is FREE at this period of time
-
+        } else if (checkedFreeRoom == null){
+            System.out.println(ERROR_ROOM_NOT_AVAILABLE);
+            return false;
         }
+
+        LocalDateTime checkedFreeRoomEndTime = freeRoomRepository.read(checkedFreeRoom.getIdFreeRoom()).getEndTime();
+        checkedFreeRoom.setEndTime(reservation.getCheckInTime());
+        freeRoomRepository.update(checkedFreeRoom);
+
+        Room checkedRoomForFreeRoom = freeRoomRepository.read(checkedFreeRoom.getIdFreeRoom()).getRoom();
+        int newFreeRoomId = freeRoomRepository.readAll()
+                .stream()
+                .map(FreeRoom::getIdFreeRoom)
+                .max((o1, o2) -> o1 - o2)
+                .orElse(-1);
+        FreeRoom freeRoomNew = new FreeRoom(newFreeRoomId, checkedRoomForFreeRoom, reservation.getCheckOutTime(), checkedFreeRoomEndTime);
+        freeRoomRepository.create(freeRoomNew);
         return roomReservationRepository.create(reservation);
     }
 

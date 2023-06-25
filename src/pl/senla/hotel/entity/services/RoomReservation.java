@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static pl.senla.hotel.constant.HotelConstant.*;
+import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class RoomReservation extends HotelService{
 
@@ -23,24 +24,16 @@ public class RoomReservation extends HotelService{
 
     public RoomReservation(int idRoomReservation, Guest guest, Room room, LocalDate startDate, int numberOfDays) {
         super("RoomReservation", guest);
-//        if(guest == null){
-//            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
-//            return;
-//        }
         this.idRoomReservation = idRoomReservation;
-//        if(room == null){// check if the ROOM exists
-//            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
-//            return;
-//        } else if(!room.getRoomStatus().equals(RoomStatus.FREE.getStatus())){// check if the ROOM is FREE
-//            System.out.println(ERROR_ROOM_NOT_AVAILABLE);
-//            return;
-//        }
+        if(room == null){
+            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
+            return;
+        }
         this.room = room;
         this.numberOfDays = numberOfDays;
         this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
         this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
         this.cost = room.getPrice() * numberOfDays;
-        // add logic for DELETING Free Room
     }
 
     public int getIdRoomReservation() {
@@ -93,8 +86,8 @@ public class RoomReservation extends HotelService{
 
     @Override
     public String toString() {
-        return "\nRoomReservation {" +
-                "typeOfService=" + super.getTypeOfService() +
+        return "\n\nRoomReservation {" +
+                "Type of Service=" + super.getTypeOfService() +
                 ", idRoomReservation=" + idRoomReservation + "," +
                 super.getGuest().toString() + "," +
                 room + "," +

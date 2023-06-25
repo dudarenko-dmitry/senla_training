@@ -12,7 +12,7 @@ public class RoomReservationConstant {
             "Please, create new Client or use existing Client.";
     public static final String ERROR_CREATE_ROOM_RESERVATION_NO_ROOM = "Creating new Reservation is not available.\n" +
             "Please, use existing Room.";
-    public static final String ERROR_ROOM_NOT_AVAILABLE = "Creating new Reservation is not available.\n" +
-            "Please, this Room is not FREE.";
+    public static final String ERROR_ROOM_NOT_AVAILABLE = "This Room is already reserved at selected time.\n" +
+            "Please, change dates or choose another Room";
     public static final String ERROR_READ_ROOM_RESERVATION =     "There is no such Room's reservation.";
 }
