@@ -215,19 +215,18 @@ public class ConsoleCollection implements Console{
         // create later methods for changing of different attributes
         System.out.println("\n=============================");
         System.out.println("UPDATE RESERVATION");
-        roomReservation1.setNumberOfDays(5);
-        roomReservation1.setCost(); // add automatic editing COST during ROOM UPDATE !!!
-        // add check if room is FREE for new period during UPDATE !!!
+        System.out.println("Before: " + CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(1));
+        roomReservationController.read(1).setNumberOfDays(5);
         System.out.println(CONSOLE_CHANGE_ROOM_RESERVATION + roomReservationController.update(roomReservation1));
-        System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(1));
-        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
-        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + roomReservationController.readAllFreeRooms());
+        System.out.println("After: " + CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(1));
+//        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
+//        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + roomReservationController.readAllFreeRooms());
 
         System.out.println("\n========================");
         System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
         System.out.println(CONSOLE_DELETE_ROOM_RESERVATION + roomReservationController.delete(1));
-        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
-        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + roomReservationController.readAllFreeRooms());
+//        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
+//        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + roomReservationController.readAllFreeRooms());
 
         System.out.println("\n----- Order -----");
         System.out.println("\n=========================");

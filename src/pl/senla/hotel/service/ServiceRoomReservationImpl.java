@@ -86,8 +86,10 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             System.out.println(ERROR_READ_ROOM_RESERVATION);
             return false;
         }
-
-        return roomReservationRepository.update(reservation);
+        reservation.setCost(reservation.getRoom().getPrice() * reservation.getNumberOfDays());
+        delete(reservation.getIdRoomReservation());
+        create(reservation);
+        return true;
     }
 
     @Override
@@ -104,13 +106,11 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 .filter(fr -> fr.getRoom().equals(read(id).getRoom()))
                 .filter(fr -> fr.getEndTime().equals(read(id).getCheckInTime()))
                 .findFirst().orElse(null);
-        System.out.println("FreeROOM1: " + freeRoom1);
         FreeRoom freeRoom2 = readAllFreeRooms()
                 .stream()
                 .filter(fr -> fr.getRoom().equals(read(id).getRoom()))
                 .filter(fr -> fr.getStartTime().isEqual(read(id).getCheckOutTime()))
                 .findFirst().orElse(null);
-        System.out.println("FreeROOM2: " + freeRoom2);
 
         if(freeRoom1 != null && freeRoom2 != null){
             freeRoom1.setEndTime(freeRoom2.getEndTime());
