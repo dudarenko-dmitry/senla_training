@@ -63,6 +63,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 .orElse(-1);
         FreeRoom freeRoomNew = new FreeRoom(newFreeRoomId, checkedRoomForFreeRoom, reservation.getCheckOutTime(), checkedFreeRoomEndTime);
         freeRoomRepository.create(freeRoomNew);
+        setIdRoomReservationNew(reservation);
         return roomReservationRepository.create(reservation);
     }
 
@@ -198,5 +199,16 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     @Override
     public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
         return roomReservationRepository.read3LastGuestAndDatesForRoom(idRoom);
+    }
+
+
+    private void setIdRoomReservationNew(RoomReservation reservation) {
+        int lastId = readAll()
+                .stream()
+                .map(RoomReservation::getIdRoomReservation)
+                .max((o1, o2) -> o1 - o2)
+                .orElse(0);
+        System.out.println("LAST ID RoomReservation: " + lastId);
+        reservation.setIdRoomReservation(lastId + 1);
     }
 }

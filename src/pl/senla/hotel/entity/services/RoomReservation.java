@@ -11,7 +11,7 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class RoomReservation extends HotelService{
 
-    private final int idRoomReservation;
+    private int idRoomReservation;
     private Room room;
     private int numberOfDays;
     private LocalDateTime checkInTime;
@@ -22,9 +22,8 @@ public class RoomReservation extends HotelService{
         this.idRoomReservation = idRoomReservation;
     }
 
-    public RoomReservation(int idRoomReservation, Guest guest, Room room, LocalDate startDate, int numberOfDays) {
+    public RoomReservation(Guest guest, Room room, LocalDate startDate, int numberOfDays) {
         super("RoomReservation", guest);
-        this.idRoomReservation = idRoomReservation;
         if(room == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
@@ -38,6 +37,10 @@ public class RoomReservation extends HotelService{
 
     public int getIdRoomReservation() {
         return idRoomReservation;
+    }
+
+    public void setIdRoomReservation(int idRoomReservation) {
+        this.idRoomReservation = idRoomReservation;
     }
 
     public Room getRoom() {
