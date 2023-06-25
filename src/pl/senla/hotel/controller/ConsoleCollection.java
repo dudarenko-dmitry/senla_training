@@ -221,108 +221,107 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_CHANGE_ROOM_RESERVATION + roomReservationController.update(roomReservation1));
         System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(1));
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + roomReservationController.readAllFreeRooms());
 
         System.out.println("\n========================");
         System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
-        Room roomToBeFree = roomController.read(roomReservationController.read(1).getRoom().getIdFacility());
-        roomToBeFree.setRoomStatus(RoomStatus.AVAILABLE.getStatus()); // add automatic change RoomStatus after deleting of Reservation
         System.out.println(CONSOLE_DELETE_ROOM_RESERVATION + roomReservationController.delete(1));
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + roomReservationController.readAllFreeRooms());
 
-//
-//        System.out.println("\n----- Order -----");
-//        System.out.println("\n=========================");
-//        System.out.println("CREATE ORDERS");
-//        //move this action to Creating Client
-//        List<HotelService> services0 = new ArrayList<>();
-//        List<HotelService> services1 = new ArrayList<>();
-//        //move this action/these actions to Creating RoomReservation, Restaurant and other HotelServices.
-//        services0.add(roomReservation0);
-//        services1.add(roomReservation1);
-//        services1.add(roomReservation2);
-//        services1.add(roomReservation3);
-//        services1.add(roomReservation4);
-//        Order order0 = new Order(0, guestController.read(0),services0);
-//        System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order0));
-//        System.out.println(orderController.read(0));
-//        Order order1 = new Order(1, guestController.read(1),services1);
-//        System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order1));
-//        System.out.println(orderController.read(1));
-//
-//        System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
-//
-//        System.out.println("\n=========================");
-//        System.out.println("UPDATE ORDERS");
-//        // some logic
-//
-//        System.out.println("\n==========================");
-//        System.out.println("DELETE ORDERS");
-//        // some logic
-//
-//        System.out.println("\n------------ TASK 4.1. -----------");
-//        System.out.println("===========================");
-//        System.out.println("Sort Room By Price");
-//        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE +
-//                roomController.readAllRoomsSortByPrice());
-//        System.out.println("Sort Room By Capacity");
-//        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY +
-//                roomController.readAllRoomsSortByCapacity());
-//        System.out.println("Sort Room By Status");
-//        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL +
-//                roomController.readAllRoomsSortByLevel());
-//
-//        System.out.println("\n=========================");
-//        System.out.println("Sort Free Rooms By Price");
-//        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +
-//                roomReservationController.readAllFreeRoomsSortByPrice());
-//        System.out.println("Sort Free Room By Capacity");
-//        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY +
-//                roomReservationController.readAllFreeRoomsSortByCapacity());
-//        System.out.println("Sort Free Room By Status");
-//        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL +
-//                roomReservationController.readAllFreeRoomsSortByLevel());
-//
-//        System.out.println("\n========================");
-//        System.out.println("Sort RoomReservations By GuestName");
-//        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_GUEST_NAME +
-//                roomReservationController.readAllRoomReservationsSortByGuestName());
-//        System.out.println("Sort RoomReservations By CheckOut");
-//        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_CHECK_OUT +
-//                roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
-//
-//        System.out.println("\n=======================");
-//        System.out.println("Count Free Room on Date");
-//        LocalDateTime checkedTime = LocalDateTime.of(2023,7,3, 15, 0);
-//        System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTime + ": " +
-//                roomReservationController.countFreeRoomsOnTime(checkedTime));
-//
-//        System.out.println("\n============================");
-//        System.out.println("Count Total number of registered Guest in DataBase");
-//        System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
-//        System.out.println("Count number of Guest in Hotel on Date");
-//        System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTime + ": " +
-//                roomReservationController.countNumberOfGuestsOnDate(checkedTime));
-//
-//        System.out.println("\n===========================");
-//        System.out.println("List of all Free rooms at Time");
-//        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME + roomReservationController.readAllRoomsFreeAtTime(checkedTime));
-//
-//        System.out.println("\n===========================");
-//        System.out.println("Guest's payment for room");
-//        System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM + roomReservationController.countGuestPaymentForRoom(2));
-//
-//        System.out.println("\n8 ===========================");
-//        System.out.println("3 last Guest and their dates of stays for room");
-//        System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(5));
-//
-//        System.out.println("\n9 ===========================");
-//        System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE + orderController.readAllServicesSortByPrice(1));
-//        System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE + orderController.readAllServicesSortByDate(1));
-//
-//        System.out.println("\n10 ===========================");
-//        //checked without creating instances Table and Transport
-//        System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY + facilityController.readPriceListForServicesSortByCategory());
-//        System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_PRICE + facilityController.readPriceListForServicesSortByPrice());
+        System.out.println("\n----- Order -----");
+        System.out.println("\n=========================");
+        System.out.println("CREATE ORDERS");
+        //move this action to Creating Client
+        List<HotelService> services0 = new ArrayList<>();
+        List<HotelService> services1 = new ArrayList<>();
+        //move this action/these actions to Creating RoomReservation, Restaurant and other HotelServices.
+        services0.add(roomReservation0);
+        services1.add(roomReservation1);
+        services1.add(roomReservation2);
+        services1.add(roomReservation3);
+        services1.add(roomReservation4);
+        Order order0 = new Order(0, guestController.read(0),services0);
+        System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order0));
+        System.out.println(orderController.read(0));
+        Order order1 = new Order(1, guestController.read(1),services1);
+        System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order1));
+        System.out.println(orderController.read(1));
+
+        System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
+
+        System.out.println("\n=========================");
+        System.out.println("UPDATE ORDERS");
+        // some logic
+
+        System.out.println("\n==========================");
+        System.out.println("DELETE ORDERS");
+        // some logic
+
+        System.out.println("\n------------ TASK 4.1. -----------");
+        System.out.println("===========================");
+        System.out.println("Sort Room By Price");
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE +
+                roomController.readAllRoomsSortByPrice());
+        System.out.println("Sort Room By Capacity");
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY +
+                roomController.readAllRoomsSortByCapacity());
+        System.out.println("Sort Room By Status");
+        System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL +
+                roomController.readAllRoomsSortByLevel());
+
+        System.out.println("\n=========================");
+        System.out.println("Sort Free Rooms By Price");
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +
+                roomReservationController.readAllFreeRoomsSortByPrice());
+        System.out.println("Sort Free Room By Capacity");
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY +
+                roomReservationController.readAllFreeRoomsSortByCapacity());
+        System.out.println("Sort Free Room By Status");
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL +
+                roomReservationController.readAllFreeRoomsSortByLevel());
+
+        System.out.println("\n========================");
+        System.out.println("Sort RoomReservations By GuestName");
+        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_GUEST_NAME +
+                roomReservationController.readAllRoomReservationsSortByGuestName());
+        System.out.println("Sort RoomReservations By CheckOut");
+        System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_CHECK_OUT +
+                roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
+
+        System.out.println("\n=======================");
+        System.out.println("Count Free Room on Date");
+        LocalDateTime checkedTime = LocalDateTime.of(2023,7,3, 15, 0);
+        System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTime + ": " +
+                roomReservationController.countFreeRoomsOnTime(checkedTime));
+
+        System.out.println("\n============================");
+        System.out.println("Count Total number of registered Guest in DataBase");
+        System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
+        System.out.println("Count number of Guest in Hotel on Date");
+        System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTime + ": " +
+                roomReservationController.countNumberOfGuestsOnDate(checkedTime));
+
+        System.out.println("\n===========================");
+        System.out.println("List of all Free rooms at Time");
+        System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME + roomReservationController.readAllRoomsFreeAtTime(checkedTime));
+
+        System.out.println("\n===========================");
+        System.out.println("Guest's payment for room");
+        System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM + roomReservationController.countGuestPaymentForRoom(2));
+
+        System.out.println("\n8 ===========================");
+        System.out.println("3 last Guest and their dates of stays for room");
+        System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(5));
+
+        System.out.println("\n9 ===========================");
+        System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE + orderController.readAllServicesSortByPrice(1));
+        System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE + orderController.readAllServicesSortByDate(1));
+
+        System.out.println("\n10 ===========================");
+        //checked without creating instances Table and Transport
+        System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY + facilityController.readPriceListForServicesSortByCategory());
+        System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_PRICE + facilityController.readPriceListForServicesSortByPrice());
 
     }
 }

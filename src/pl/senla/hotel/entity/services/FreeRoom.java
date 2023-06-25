@@ -18,8 +18,8 @@ public class FreeRoom {
     public FreeRoom(int idFreeRoom, Room room, LocalDate startDate, LocalDate endDate) {
         this.idFreeRoom = idFreeRoom;
         this.room = room;
-        this.startTime = LocalDateTime.of(startDate, HOTEL_CHECK_OUT_TIME);
-        this.endTime = LocalDateTime.of(endDate, HOTEL_CHECK_IN_TIME);
+        this.startTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
+        this.endTime = LocalDateTime.of(endDate, HOTEL_CHECK_OUT_TIME);
     }
 
     public FreeRoom(int newFreeRoomId, Room checkedRoomForFreeRoom, LocalDateTime checkOutTime, LocalDateTime checkedFreeRoomEndTime) {
