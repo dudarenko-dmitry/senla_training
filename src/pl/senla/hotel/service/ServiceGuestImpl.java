@@ -1,6 +1,7 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.repository.RepositoryGuest;
 import pl.senla.hotel.repository.RepositoryGuestCollection;
 
@@ -23,20 +24,18 @@ public class ServiceGuestImpl implements ServiceGuest {
 
     @Override
     public boolean create(Guest guest) {
-        if(guestRepository.read(guest.getIdGuest()) != null){
+        if(read(guest.getIdGuest()) != null && read(guest.getIdGuest()).equals(guest)){
             System.out.println(ERROR_CREATE_CLIENT);
             return false;
         }
+        setIdGuestNew(guest);
         return guestRepository.create(guest);
     }
 
     @Override
     public Guest read(int id) {
-        if(guestRepository.readAll() == null){
+        if(readAll() == null){
             System.out.println(ERROR_READ_ALL_CLIENT);
-            return null;
-        } else if(guestRepository.read(id) == null){
-            System.out.println(ERROR_READ_CLIENT);
             return null;
         }
         return guestRepository.read(id);
@@ -44,10 +43,10 @@ public class ServiceGuestImpl implements ServiceGuest {
 
     @Override
     public boolean update(Guest guest) {
-        if(guestRepository.readAll() == null){
+        if(readAll() == null){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
-        } else if(guestRepository.read(guest.getIdGuest()) == null){
+        } else if(read(guest.getIdGuest()) == null){
             System.out.println(ERROR_READ_CLIENT);
             return false;
         }
@@ -56,10 +55,10 @@ public class ServiceGuestImpl implements ServiceGuest {
 
     @Override
     public boolean delete(int id) {
-        if(guestRepository.readAll() == null){
+        if(readAll() == null){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
-        } else if(guestRepository.read(id) == null){
+        } else if(read(id) == null){
             System.out.println(ERROR_READ_CLIENT);
             return false;
         }
@@ -69,5 +68,14 @@ public class ServiceGuestImpl implements ServiceGuest {
     @Override
     public int countNumberOfGuestsTotal() {
         return guestRepository.countNumberOfGuestsTotal();
+    }
+
+    private void setIdGuestNew(Guest guest) {
+        int lastId = readAll()
+                .stream()
+                .map(Guest::getIdGuest)
+                .max((o1, o2) -> o1 - o2)
+                .orElse(-1);
+        guest.setIdGuest(lastId + 1);
     }
 }

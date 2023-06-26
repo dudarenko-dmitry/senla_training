@@ -2,7 +2,7 @@ package pl.senla.hotel.entity;
 
 public class Guest {
 
-    private int idGuest;
+    private int idGuest = -1;
     private String name;
     private int phoneNumber;
 
