@@ -5,8 +5,8 @@ public class Room extends HotelFacility{
     private String roomLevel;
     private String roomStatus;
 
-    public Room(int idFacility, String category, String nameFacility, int price, int capacity, String roomLevel, String roomStatus) {
-        super(idFacility, category, nameFacility, price, capacity);
+    public Room(String category, String nameFacility, int price, int capacity, String roomLevel, String roomStatus) {
+        super(category, nameFacility, price, capacity);
         this.roomLevel = roomLevel;
         this.roomStatus = roomStatus;
     }

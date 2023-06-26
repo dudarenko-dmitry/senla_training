@@ -2,8 +2,8 @@ package pl.senla.hotel.entity.facilities;
 
 public class Table extends HotelFacility{
 
-    public Table(int idFacility, String category, String nameFacility, int price, int capacity) {
-        super(idFacility, category, nameFacility, price, capacity);
+    public Table(String category, String nameFacility, int price, int capacity) {
+        super(category, nameFacility, price, capacity);
     }
 
     @Override

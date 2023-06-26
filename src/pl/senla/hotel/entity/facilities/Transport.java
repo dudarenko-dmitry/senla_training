@@ -2,8 +2,8 @@ package pl.senla.hotel.entity.facilities;
 
 public class Transport extends HotelFacility{
 
-    public Transport(int idFacility, String category, String nameFacility, int price, int capacity) {
-        super(idFacility, category, nameFacility, price, capacity);
+    public Transport(String category, String nameFacility, int price, int capacity) {
+        super(category, nameFacility, price, capacity);
     }
 
     @Override

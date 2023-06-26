@@ -9,8 +9,7 @@ public abstract class HotelFacility {
     private int price;
     private int capacity;
 
-    protected HotelFacility(int idFacility, String category, String nameFacility, int price, int capacity) {
-        this.idFacility = idFacility;
+    protected HotelFacility(String category, String nameFacility, int price, int capacity) {
         this.category = category;
         this.nameFacility = nameFacility;
         this.price = price;
