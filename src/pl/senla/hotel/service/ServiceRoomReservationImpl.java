@@ -53,16 +53,17 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
         LocalDateTime checkedFreeRoomEndTime = freeRoomRepository.read(checkedFreeRoom.getIdFreeRoom()).getEndTime();
         checkedFreeRoom.setEndTime(reservation.getCheckInTime());
-        freeRoomRepository.update(checkedFreeRoom);
+        updateFreeRoom(checkedFreeRoom);
 
         Room checkedRoomForFreeRoom = freeRoomRepository.read(checkedFreeRoom.getIdFreeRoom()).getRoom();
-        int newFreeRoomId = freeRoomRepository.readAll()
-                .stream()
-                .map(FreeRoom::getIdFreeRoom)
-                .max((o1, o2) -> o1 - o2)
-                .orElse(-1);
-        FreeRoom freeRoomNew = new FreeRoom(newFreeRoomId, checkedRoomForFreeRoom, reservation.getCheckOutTime(), checkedFreeRoomEndTime);
-        freeRoomRepository.create(freeRoomNew);
+//        int newFreeRoomId = freeRoomRepository.readAll()
+//                .stream()
+//                .map(FreeRoom::getIdFreeRoom)
+//                .max((o1, o2) -> o1 - o2)
+//                .orElse(0);
+        FreeRoom freeRoomNew = new FreeRoom(checkedRoomForFreeRoom, reservation.getCheckOutTime(), checkedFreeRoomEndTime);
+//        setIdFreeRoomNew(freeRoomNew);
+        createFreeRoom(freeRoomNew);
         setIdRoomReservationNew(reservation);
         return roomReservationRepository.create(reservation);
     }
@@ -133,6 +134,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public boolean createFreeRoom(FreeRoom freeRoom) {
+        setIdFreeRoomNew(freeRoom);
         return freeRoomRepository.create(freeRoom);
     }
 
@@ -207,8 +209,16 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 .stream()
                 .map(RoomReservation::getIdRoomReservation)
                 .max((o1, o2) -> o1 - o2)
-                .orElse(0);
-        System.out.println("LAST ID RoomReservation: " + lastId);
+                .orElse(-1);
         reservation.setIdRoomReservation(lastId + 1);
+    }
+
+    private void setIdFreeRoomNew(FreeRoom freeRoom) {
+        int lastId = readAllFreeRooms()
+                .stream()
+                .map(FreeRoom::getIdFreeRoom)
+                .max((o1, o2) -> o1 - o2)
+                .orElse(-1);
+        freeRoom.setIdFreeRoom(lastId + 1);
     }
 }

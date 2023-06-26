@@ -4,26 +4,23 @@ import pl.senla.hotel.entity.facilities.Room;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class FreeRoom {
 
-    private int idFreeRoom;
+    private int idFreeRoom = -1;
     private Room room;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public FreeRoom(int idFreeRoom, Room room, LocalDate startDate, LocalDate endDate) {
-        this.idFreeRoom = idFreeRoom;
+    public FreeRoom(Room room, LocalDate startDate, LocalDate endDate) {
         this.room = room;
         this.startTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
         this.endTime = LocalDateTime.of(endDate, HOTEL_CHECK_OUT_TIME);
     }
 
-    public FreeRoom(int newFreeRoomId, Room checkedRoomForFreeRoom, LocalDateTime checkOutTime, LocalDateTime checkedFreeRoomEndTime) {
-        this.idFreeRoom = newFreeRoomId;
+    public FreeRoom(Room checkedRoomForFreeRoom, LocalDateTime checkOutTime, LocalDateTime checkedFreeRoomEndTime) {
         this.room = checkedRoomForFreeRoom;
         this.startTime = checkOutTime;
         this.endTime = checkedFreeRoomEndTime;

@@ -11,7 +11,7 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class RoomReservation extends HotelService{
 
-    private int idRoomReservation;
+    private int idRoomReservation = -1;
     private Room room;
     private int numberOfDays;
     private LocalDateTime checkInTime;
