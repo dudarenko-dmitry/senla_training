@@ -43,7 +43,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         } else if(reservation.getRoom() == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
-        } else if(roomReservationRepository.read(reservation.getIdRoomReservation()) != null) {
+        } else if(read(reservation.getIdRoomReservation()) != null) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION);
             return false;
         } else if (checkedFreeRoom == null){
@@ -56,13 +56,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         updateFreeRoom(checkedFreeRoom);
 
         Room checkedRoomForFreeRoom = freeRoomRepository.read(checkedFreeRoom.getIdFreeRoom()).getRoom();
-//        int newFreeRoomId = freeRoomRepository.readAll()
-//                .stream()
-//                .map(FreeRoom::getIdFreeRoom)
-//                .max((o1, o2) -> o1 - o2)
-//                .orElse(0);
         FreeRoom freeRoomNew = new FreeRoom(checkedRoomForFreeRoom, reservation.getCheckOutTime(), checkedFreeRoomEndTime);
-//        setIdFreeRoomNew(freeRoomNew);
         createFreeRoom(freeRoomNew);
         setIdRoomReservationNew(reservation);
         return roomReservationRepository.create(reservation);
@@ -70,7 +64,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public RoomReservation read(int id) {
-        if(roomReservationRepository.readAll() == null){
+        if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return null;
         } else if(roomReservationRepository.read(id) == null){

@@ -29,7 +29,7 @@ public class ServiceOrderImpl implements ServiceOrder {
         } else if(order.getServices() == null){
             System.out.println(ERROR_CREATE_ORDER_NO_SERVICES);
             return false;
-        } else if(read(order.getIdOrder()) != null){
+        } else if(read(order.getIdOrder()) != null && read(order.getIdOrder()).equals(order)){
             System.out.println(ERROR_CREATE_ORDER);
             return false;
         }
@@ -38,7 +38,7 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public Order read(int id) {
-        if(orderRepository.readAll() == null){
+        if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ORDERS);
             return null;
         } else if(orderRepository.read(id) == null){
@@ -49,10 +49,10 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public boolean update(Order order) {
-        if(orderRepository.readAll() == null){
+        if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
-        } else if(orderRepository.read(order.getIdOrder()) == null){
+        } else if(read(order.getIdOrder()) == null){
             System.out.println(ERROR_READ_ORDER);
         }
         return orderRepository.update(order);
@@ -60,10 +60,10 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public boolean delete(int id) {
-        if(orderRepository.readAll() == null){
+        if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
-        } else if(orderRepository.read(id) == null){
+        } else if(read(id) == null){
             System.out.println(ERROR_READ_ORDER);
         }
         return orderRepository.delete(id);
@@ -77,5 +77,14 @@ public class ServiceOrderImpl implements ServiceOrder {
     @Override
     public List<HotelService> readAllServicesSortByDate(int idGuest) {
         return orderRepository.readAllServicesSortByDate(idGuest);
+    }
+
+    private void setIdOrderNew(Order order) {
+        int lastId = readAll()
+                .stream()
+                .map(Order::getIdOrder)
+                .max((o1, o2) -> o1 - o2)
+                .orElse(-1);
+        order.setIdOrder(lastId + 1);
     }
 }

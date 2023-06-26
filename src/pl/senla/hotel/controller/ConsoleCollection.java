@@ -224,7 +224,6 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
         System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + roomReservationController.readAllFreeRooms());
 
-        /**
         System.out.println("\n----- Order -----");
         System.out.println("\n=========================");
         System.out.println("CREATE ORDERS");
@@ -237,10 +236,10 @@ public class ConsoleCollection implements Console{
         services1.add(roomReservation2);
         services1.add(roomReservation3);
         services1.add(roomReservation4);
-        Order order0 = new Order(0, guestController.read(0),services0);
+        Order order0 = new Order(guestController.read(0),services0);
         System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order0));
         System.out.println(orderController.read(0));
-        Order order1 = new Order(1, guestController.read(1),services1);
+        Order order1 = new Order(guestController.read(1),services1);
         System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order1));
         System.out.println(orderController.read(1));
 
@@ -253,6 +252,7 @@ public class ConsoleCollection implements Console{
         System.out.println("\n==========================");
         System.out.println("DELETE ORDERS");
         // some logic
+
 
         System.out.println("\n------------ TASK 4.1. -----------");
         System.out.println("===========================");
@@ -304,11 +304,11 @@ public class ConsoleCollection implements Console{
 
         System.out.println("\n===========================");
         System.out.println("Guest's payment for room");
-        System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM + roomReservationController.countGuestPaymentForRoom(2));
+        System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM + roomReservationController.countGuestPaymentForRoom(guestController.read(5).getIdGuest()));
 
         System.out.println("\n8 ===========================");
         System.out.println("3 last Guest and their dates of stays for room");
-        System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(5));
+        System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(roomController.read(2).getIdFacility()));
 
         System.out.println("\n9 ===========================");
         System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE + orderController.readAllServicesSortByPrice(1));
@@ -318,6 +318,5 @@ public class ConsoleCollection implements Console{
         //checked without creating instances Table and Transport
         System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY + facilityController.readPriceListForServicesSortByCategory());
         System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_PRICE + facilityController.readPriceListForServicesSortByPrice());
-*/
     }
 }

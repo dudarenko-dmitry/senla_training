@@ -1,7 +1,6 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.Guest;
-import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.repository.RepositoryGuest;
 import pl.senla.hotel.repository.RepositoryGuestCollection;
 
@@ -36,6 +35,9 @@ public class ServiceGuestImpl implements ServiceGuest {
     public Guest read(int id) {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_CLIENT);
+            return null;
+        } else if(guestRepository.read(id) == null){
+            System.out.println(ERROR_READ_CLIENT);
             return null;
         }
         return guestRepository.read(id);

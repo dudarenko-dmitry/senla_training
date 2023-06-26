@@ -2,11 +2,12 @@ package pl.senla.hotel.service;
 
 import pl.senla.hotel.constant.RoomConstant;
 import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.repository.RepositoryRoom;
 import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.List;
+
+import static pl.senla.hotel.constant.RoomConstant.*;
 
 public class ServiceRoomImpl implements ServiceRoom {
 
@@ -15,7 +16,7 @@ public class ServiceRoomImpl implements ServiceRoom {
     @Override
     public List<Room> readAll() {
         if(roomRepository.readAll() == null){
-            System.out.println(RoomConstant.ERROR_READ_ALL_ROOM);
+            System.out.println(ERROR_READ_ALL_ROOM);
         }
         return roomRepository.readAll();
     }
@@ -24,7 +25,7 @@ public class ServiceRoomImpl implements ServiceRoom {
     public boolean create(Room room) {
         if(read(room.getIdFacility()) != null &&
                 read(room.getIdFacility()).equals(room)) {
-            System.out.println(RoomConstant.ERROR_CREATE_ROOM);
+            System.out.println(ERROR_CREATE_ROOM);
             return false;
         }
         setIdRoomNew(room);
@@ -34,8 +35,10 @@ public class ServiceRoomImpl implements ServiceRoom {
     @Override
     public Room read(int id) {
         if(readAll() == null){
-            System.out.println(RoomConstant.ERROR_READ_ALL_ROOM);
+            System.out.println(ERROR_READ_ALL_ROOM);
             return null;
+        } else if(roomRepository.read(id) == null){
+            System.out.println(ERROR_READ_ROOM);
         }
         return roomRepository.read(id);
     }
@@ -43,10 +46,10 @@ public class ServiceRoomImpl implements ServiceRoom {
     @Override
     public boolean update(Room room) {
         if(readAll() == null){
-            System.out.println(RoomConstant.ERROR_READ_ALL_ROOM);
+            System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if(read(room.getIdFacility()) == null){
-            System.out.println(RoomConstant.ERROR_READ_ROOM);
+            System.out.println(ERROR_READ_ROOM);
             return false;
         }
         return roomRepository.update(room);
@@ -55,10 +58,10 @@ public class ServiceRoomImpl implements ServiceRoom {
     @Override
     public boolean delete(int id) {
         if(readAll() == null){
-            System.out.println(RoomConstant.ERROR_READ_ALL_ROOM);
+            System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if(read(id) == null){
-            System.out.println(RoomConstant.ERROR_READ_ROOM);
+            System.out.println(ERROR_READ_ROOM);
             return false;
         }
         return roomRepository.delete(id);

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Order {
 
-    private int idOrder;
+    private int idOrder = -1;
     private Guest guest;
     private List<HotelService> services;
 
@@ -17,8 +17,7 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Order(int idOrder, Guest guest, List<HotelService> services) {
-        this.idOrder = idOrder;
+    public Order(Guest guest, List<HotelService> services) {
         this.guest = guest;
         this.services = services;
     }

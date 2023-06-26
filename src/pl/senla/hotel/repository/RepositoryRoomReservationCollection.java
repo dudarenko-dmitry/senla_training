@@ -73,12 +73,16 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
 
     @Override
     public int countGuestPaymentForRoom(int idGuest) {
-        return readAll()
+        List<Integer> costs = readAll()
                 .stream()
                 .filter(rr -> rr.getGuest().getIdGuest() == idGuest)
-                .findFirst()
                 .map(RoomReservation::getCost)
-                .orElse(0);
+                .toList();
+        int sum = 0;
+        for(Integer cost : costs){
+            sum = sum + cost;
+        }
+        return sum;
     }
 
     @Override
