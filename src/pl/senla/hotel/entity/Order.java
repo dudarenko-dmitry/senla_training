@@ -1,11 +1,13 @@
 package pl.senla.hotel.entity;
 
+import pl.senla.hotel.entity.services.HotelService;
+
 import java.util.List;
 
 public class Order {
 
-    private int idOrder;
-    private Client client;
+    private int idOrder = -1;
+    private Guest guest;
     private List<HotelService> services;
 
     public Order() {
@@ -15,9 +17,8 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Order(int idOrder, Client client, List<HotelService> services) {
-        this.idOrder = idOrder;
-        this.client = client;
+    public Order(Guest guest, List<HotelService> services) {
+        this.guest = guest;
         this.services = services;
     }
 
@@ -29,12 +30,12 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Client getClient() {
-        return client;
+    public Guest getClient() {
+        return guest;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(Guest guest) {
+        this.guest = guest;
     }
 
     public List<HotelService> getServices() {
@@ -49,8 +50,7 @@ public class Order {
     public String toString() {
         return "\nOrder{" +
                 "idOrder=" + idOrder +
-                ", client=" + client +
-                ", services=" + services +
+                ", " + services +
                 '}';
     }
 }
