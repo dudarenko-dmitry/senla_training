@@ -18,7 +18,7 @@ public class Restaurant extends HotelService{
 
     public Restaurant(int idRestaurant, Guest guest, int tableNumber, int numberOfGuests,
                       LocalDateTime startTime, int price) {
-        super("Restaurant", guest);
+        super(TypeOfService.RESTAURANT.getTypeName(), guest);
         if(guest == null){
             System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_CLIENT);
             return;

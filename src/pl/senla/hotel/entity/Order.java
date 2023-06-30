@@ -30,11 +30,11 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Guest getClient() {
+    public Guest getGuest() {
         return guest;
     }
 
-    public void setClient(Guest guest) {
+    public void setGuest(Guest guest) {
         this.guest = guest;
     }
 

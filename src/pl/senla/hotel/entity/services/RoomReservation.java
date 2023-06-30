@@ -23,7 +23,7 @@ public class RoomReservation extends HotelService{
     }
 
     public RoomReservation(Guest guest, Room room, LocalDate startDate, int numberOfDays) {
-        super("RoomReservation", guest);
+        super(TypeOfService.ROOM_RESERVATION.getTypeName(), guest);
         if(room == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
