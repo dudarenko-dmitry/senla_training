@@ -27,12 +27,12 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     @Override
     public boolean update(HotelFacility hotelFacility) {
-        return false;
+        return hotelFacilityService.update(hotelFacility);
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return hotelFacilityService.delete(id);
     }
 
     @Override

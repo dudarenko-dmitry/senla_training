@@ -92,3 +92,4 @@ Task Requirement:
 The archive of the folder with the assembled program and the startup file should be embedded in GIT in the appropriate branch.
 
 -----------------------------------------------------------------------------
+

@@ -13,8 +13,7 @@ public class Guest {
         this.idGuest = idGuest;
     }
 
-    public Guest(int idGuest, String name, int phoneNumber) {
-        this.idGuest = idGuest;
+    public Guest(String name, int phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
