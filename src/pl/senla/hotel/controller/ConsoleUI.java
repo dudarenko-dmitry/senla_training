@@ -304,16 +304,125 @@ public class ConsoleUI implements Console {
 
     private void printMenuAnalytics() {
         System.out.println("\n===== Menu Analytics Reports =====");
-        System.out.println("1. . ");
-        System.out.println("2. . ");
-        System.out.println("3. . ");
-        System.out.println("4. . ");
-        System.out.println("5. . ");
+        System.out.println("1. List of rooms sort by price. ");
+        System.out.println("2. List of rooms by capacity. ");
+        System.out.println("3. List of rooms by number of stars. ");
+        System.out.println("4. List of available rooms sort by price. ");
+        System.out.println("5. List of available rooms sort by capacity. ");
+        System.out.println("6. List of available rooms sort by number of stars. ");
+        System.out.println("7. List of guests and their rooms sort alphabetically. ");
+        System.out.println("8. List of guests and their rooms sort by check-out date. ");
+        System.out.println("9. Total number of available rooms. ");
+        System.out.println("10. Total number of guests. ");
+        System.out.println("11. Total number of guests on date. ");
+        System.out.println("12. List of rooms that will be available on a certain date in the future. ");
+        System.out.println("13. The amount of payment for the room to be paid by the guest. ");
+        System.out.println("14. View the last 3 guests of the room and the dates of their stay. ");
+        System.out.println("15. View the list of guest services and their price sort by price. ");
+        System.out.println("16. View the list of guest services and their price sort by date. ");
+        System.out.println("17. Prices of services and rooms sort by category. ");
+        System.out.println("18. Prices of services and rooms sort by price. ");
+        System.out.println("19. Show the details of a separate room (WHAT DOES IT MEAN???). ");
         System.out.println("0. Quit to Main menu. ");
-    } //TODO
+    } //ready
 
     private void navigateMenuAnalytics(int index) {
-    } //TODO
+        Scanner sc = new Scanner(System.in);
+        switch (index) {
+            case 1:
+                System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE +
+                        roomController.readAllRoomsSortByPrice());
+                break;
+            case 2:
+                System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY +
+                        roomController.readAllRoomsSortByCapacity());
+                break;
+            case 3:
+                System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL +
+                        roomController.readAllRoomsSortByLevel());
+                break;
+            case 4:
+                System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +
+                        roomReservationController.readAllFreeRoomsSortByPrice());
+                break;
+            case 5:
+                System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY +
+                        roomReservationController.readAllFreeRoomsSortByCapacity());
+                break;
+            case 6:
+                System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL +
+                        roomReservationController.readAllFreeRoomsSortByLevel());
+                break;
+            case 7:
+                System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_GUEST_NAME +
+                        roomReservationController.readAllRoomReservationsSortByGuestName());
+                break;
+            case 8:
+                System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_CHECK_OUT +
+                        roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
+                break;
+            case 9:
+                LocalDateTime checkedTime = inputDateTime();
+                System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTime + ": " +
+                        roomReservationController.countFreeRoomsOnTime(checkedTime));
+                break;
+            case 10:
+                System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
+                break;
+            case 11:
+                checkedTime = inputDateTime();
+                System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTime + ": " +
+                        roomReservationController.countNumberOfGuestsOnDate(checkedTime));
+                break;
+            case 12:
+                checkedTime = inputDateTime();
+                System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME +
+                        roomReservationController.readAllRoomsFreeAtTime(checkedTime));
+                break;
+            case 13:
+                System.out.print("Input Guest's ID --> ");
+                int idGuest = sc.nextInt();
+                System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM +
+                        roomReservationController.countGuestPaymentForRoom(idGuest));
+                break;
+            case 14:
+                System.out.print("Input Room's ID --> ");
+                int idRoom = sc.nextInt();
+                System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(idRoom));
+                break;
+            case 15:
+                System.out.print("Input Guest's ID --> ");
+                idGuest = sc.nextInt();
+                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE +
+                        orderController.readAllServicesSortByPrice(idGuest));
+                break;
+            case 16:
+                System.out.print("Input Guest's ID --> ");
+                idGuest = sc.nextInt();
+                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE +
+                        orderController.readAllServicesSortByDate(idGuest));
+                break;
+            case 17:
+                System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY +
+                        facilityController.readPriceListForServicesSortByCategory());
+                break;
+            case 18:
+                System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_PRICE +
+                        facilityController.readPriceListForServicesSortByPrice());
+                break;
+            case 19:
+                System.out.print("Input Room's ID --> ");
+                idRoom = sc.nextInt();
+                roomController.read(idRoom);
+                break;
+            case 0:
+                startMainMenu();
+                break;
+            default:
+                System.out.println(ERROR_INPUT_NAVIGATE);
+                startMenuAnalytics();
+        }
+    } //ready
 
     private void startMenuRoom() {
         while (true) {
@@ -321,7 +430,7 @@ public class ConsoleUI implements Console {
             int index = makeChoice();
             navigateMenuRoom(index);
         }
-    }
+    } //ready
 
     private void printMenuRoom() {
         System.out.println("\n===== Menu Rooms =====");
@@ -417,7 +526,7 @@ public class ConsoleUI implements Console {
             int index = makeChoice();
             navigateMenuTable(index);
         }
-    } //ready
+    } //ready. do not use
 
     private void printMenuTable() {
         System.out.println("\n===== Menu Tables =====");
@@ -427,7 +536,7 @@ public class ConsoleUI implements Console {
         System.out.println("4. Update Room. ");
         System.out.println("5. Delete Room. ");
         System.out.println("0. Quit to Main menu. ");
-    } //ready
+    } //ready. do not use
 
     private void navigateMenuTable(int index) {
         // TODO document why this method is empty
@@ -439,7 +548,7 @@ public class ConsoleUI implements Console {
             int index = makeChoice();
             navigateMenuTransport(index);
         }
-    } //ready
+    } //ready. do not use
 
     private void printMenuTransport() {
         System.out.println("\n===== Menu Transports =====");
@@ -449,7 +558,7 @@ public class ConsoleUI implements Console {
         System.out.println("4. Update Transport. ");
         System.out.println("5. Delete Transport. ");
         System.out.println("0. Quit to Main menu. ");
-    } //ready
+    } //ready. do not use
 
     private void navigateMenuTransport(int index) {
         // TODO document why this method is empty
@@ -490,6 +599,8 @@ public class ConsoleUI implements Console {
     } //ready
 
     /**
+     * didn't use this code earlier:
+     *
      //    private void printMenuHotelServices() { // printCreateHotelServiceList or DELETE
      //        System.out.println("\n===== Menu HotelServices =====");
      //        System.out.println("1. Read all HotelServices. "); //delete
@@ -538,73 +649,7 @@ public class ConsoleUI implements Console {
      */
 
     /**
-     * System.out.println("\n------------ TASK 4.1. -----------");
-     * System.out.println("===========================");
-     * System.out.println("Sort Room By Price");
-     * System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE +
-     * roomController.readAllRoomsSortByPrice());
-     * System.out.println("Sort Room By Capacity");
-     * System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY +
-     * roomController.readAllRoomsSortByCapacity());
-     * System.out.println("Sort Room By Status");
-     * System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL +
-     * roomController.readAllRoomsSortByLevel());
-     * <p>
-     * System.out.println("\n=========================");
-     * System.out.println("Sort Free Rooms By Price");
-     * System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +
-     * roomReservationController.readAllFreeRoomsSortByPrice());
-     * System.out.println("Sort Free Room By Capacity");
-     * System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY +
-     * roomReservationController.readAllFreeRoomsSortByCapacity());
-     * System.out.println("Sort Free Room By Status");
-     * System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL +
-     * roomReservationController.readAllFreeRoomsSortByLevel());
-     * <p>
-     * System.out.println("\n========================");
-     * System.out.println("Sort RoomReservations By GuestName");
-     * System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_GUEST_NAME +
-     * roomReservationController.readAllRoomReservationsSortByGuestName());
-     * System.out.println("Sort RoomReservations By CheckOut");
-     * System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_CHECK_OUT +
-     * roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
-     * <p>
-     * System.out.println("\n=======================");
-     * System.out.println("Count Free Room on Date");
-     * LocalDateTime checkedTime = LocalDateTime.of(2023,7,3, 15, 0);
-     * System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTime + ": " +
-     * roomReservationController.countFreeRoomsOnTime(checkedTime));
-     * <p>
-     * System.out.println("\n============================");
-     * System.out.println("Count Total number of registered Guest in DataBase");
-     * System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
-     * System.out.println("Count number of Guest in Hotel on Date");
-     * System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTime + ": " +
-     * roomReservationController.countNumberOfGuestsOnDate(checkedTime));
-     * <p>
-     * System.out.println("\n===========================");
-     * System.out.println("List of all Free rooms at Time");
-     * System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME + roomReservationController.readAllRoomsFreeAtTime(checkedTime));
-     * <p>
-     * System.out.println("\n===========================");
-     * System.out.println("Guest's payment for room");
-     * System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM + roomReservationController.countGuestPaymentForRoom(guestController.read(5).getIdGuest()));
-     * <p>
-     * System.out.println("\n8 ===========================");
-     * System.out.println("3 last Guest and their dates of stays for room");
-     * System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(roomController.read(2).getIdFacility()));
-     * <p>
-     * System.out.println("\n9 ===========================");
-     * System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE + orderController.readAllServicesSortByPrice(1));
-     * System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE + orderController.readAllServicesSortByDate(1));
-     * <p>
-     * System.out.println("\n10 ===========================");
-     * //checked without creating instances Table and Transport
-     * System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY + facilityController.readPriceListForServicesSortByCategory());
-     * System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_PRICE + facilityController.readPriceListForServicesSortByPrice());
-     */
-
-    /**
+     * application is ready to work only with RoomReservation.  Restaurant and Transfer do not use
      * private void printMenuRoomReservation() {
      * System.out.println("\n===== Menu RoomReservations =====");
      * System.out.println("1. Read all RoomReservations. ");
