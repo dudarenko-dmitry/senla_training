@@ -2,17 +2,19 @@ package pl.senla.hotel.controller;
 
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.facilities.CategoryFacility;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.entity.services.RoomReservation;
-import pl.senla.hotel.entity.services.TypeOfService;
+import pl.senla.hotel.entity.services.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
+import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class ConsoleUI implements Console {
 
@@ -24,7 +26,7 @@ public class ConsoleUI implements Console {
 
     @Override
     public void startMainMenu() {
-        while(true){
+        while (true) {
             printMainMenu();
             int index = makeChoice();
             navigateMainMenu(index);
@@ -55,8 +57,8 @@ public class ConsoleUI implements Console {
         }
     } //ready
 
-    private void startMenuHotelFacilities(){
-        while(true){
+    private void startMenuHotelFacilities() {
+        while (true) {
             printSelectHotelFacilities();
             int index = makeChoice();
             navigateMenuHotelFacilities(index);
@@ -81,8 +83,8 @@ public class ConsoleUI implements Console {
         }
     } //ready
 
-    private void startMenuGuest(){
-        while(true){
+    private void startMenuGuest() {
+        while (true) {
             printMenuGuest();
             int index = makeChoice();
             navigateMenuGuest(index);
@@ -142,8 +144,8 @@ public class ConsoleUI implements Console {
         }
     } // ready
 
-    private void startMenuOrder(){
-        while (true){
+    private void startMenuOrder() {
+        while (true) {
             printMenuOrders();
             int index = makeChoice();
             navigateMenuOrders(index);
@@ -173,7 +175,7 @@ public class ConsoleUI implements Console {
                 System.out.print("Input Guest's ID --> ");
                 int guestId = sc.nextInt();
                 Guest guest = guestController.read(guestId);
-                List<HotelService> hotelServices = getHotelServiceList(guest);
+                List<HotelService> hotelServices = createHotelServiceList(guest);
                 Order order = new Order(guest, hotelServices);
                 System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order));
             }
@@ -181,10 +183,9 @@ public class ConsoleUI implements Console {
                 System.out.print("Input Order's ID to Update -->");
                 int idUpdate = sc.nextInt();
                 Order orderUpdated = orderController.read(idUpdate);
-
-                //logic for Update
-                //logic for Update
-                //logic for Update
+                List<HotelService> services = orderUpdated.getServices();
+                services = updateHotelServiceList(services);
+                orderUpdated.setServices(services);
                 System.out.println(CONSOLE_CREATE_ORDER + orderController.update(orderUpdated));
             }
             case 5 -> {
@@ -200,128 +201,340 @@ public class ConsoleUI implements Console {
         }
     } // in progress
 
-    private List<HotelService> getHotelServiceList(Guest guest) { //createHotelServiceList
-        printMenuHotelServices(); // printCreateHotelServiceList
-        int index = makeChoice();
-        List<HotelService> servicesGuest = new ArrayList<>();
-
-        return navigateMenuHotelServices(servicesGuest, guest, index);
+    private List<HotelService> updateHotelServiceList(List<HotelService> services) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(CONSOLE_READ_ALL_SERVICES + services);
+        System.out.print("Input Service's ID to Update -->");
+        int idService = sc.nextInt();
+        printSelectCreatedHotelServices();
+        System.out.print("Select Type of updating Service\n works only for (1) RoomReservation --> ");
+        int typeOfServiceInt = sc.nextInt();
+        return navigateUpdateHotelServiceList(services, typeOfServiceInt, idService);
     }
 
-    private void printMenuHotelServices() { // printCreateHotelServiceList
-        System.out.println("\n===== Menu HotelServices =====");
-        System.out.println("1. Read all HotelServices. "); //delete
-        System.out.println("2. Read HotelService. "); //delete
-        System.out.println("3. Create new HotelService. ");
-        System.out.println("4. Update HotelService. "); //delete
-        System.out.println("5. Delete HotelService. "); //delete
-        System.out.println("0. Save List and Quit to Order menu. ");
-    } //ready
-
-    private List<HotelService> navigateMenuHotelServices(List<HotelService> servicesGuest, Guest guest, int index){ // navigateCreateHotelServiceList
+    private List<HotelService> navigateUpdateHotelServiceList(List<HotelService> services, int typeOfServiceInt, int idService) {
         Scanner sc = new Scanner(System.in);
-        switch (index){
-            case 1: //delete
-                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + servicesGuest);
+        switch (typeOfServiceInt){
+            case 1:
+                System.out.println("Update RoomReservation: ");
+                System.out.println("Input new Date. ");
+                LocalDate startDate = inputDate();
+                System.out.print("Input number of days to reserve --> ");
+                int numberOfDays = sc.nextInt();
+                RoomReservation roomReservation = roomReservationController.read(idService);
+                roomReservation.setCheckInTime(LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME));
+                roomReservation.setNumberOfDays(numberOfDays);
+                roomReservationController.update(roomReservation);
                 break;
-            case 2: //delete
-                System.out.print("Input ID of Service --> ");
-                int idService = sc.nextInt();
-                orderController.read(idService);
+            case 2:
+                // do not use
                 break;
             case 3:
-                System.out.println("Add new HotelService (works only for RoomReservations!!!) to Order.");
-                RoomReservation roomReservationNew = selectTypeHotelServices(guest); //Later change return from RoomReservation to HotelService and refactor
-                System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservationNew));
-                servicesGuest.add(roomReservationNew);
-                break;
-            case 4: //delete
-                System.out.println("Update HotelService (works only for RoomReservations!!!) to Order.");
-
+                // do not use 2
                 break;
             case 0:
-                return servicesGuest;
-            default:
-                System.out.println(ERROR_INPUT_NAVIGATE);
-                navigateMenuHotelServices(servicesGuest, guest, index);
+                return services;
         }
-        return servicesGuest;
+        return services;
     }
 
-    private RoomReservation selectTypeHotelServices(Guest guest){
-        printSelectHotelServices();
-        int index = makeChoice();
-        return navigateSelectTypeHotelServices(guest, index);
-    } //ready //Later change return from RoomReservation to HotelService and refactor
+    private List<HotelService> createHotelServiceList(Guest guest) { //createHotelServiceList
+        List<HotelService> guestServices = new ArrayList<>();
+        int index;
+        do {
+            printSelectCreatedHotelServices();
+            index = makeChoice();
+            guestServices.add(navigateCreateHotelServiceList(guest, index));
+        } while (index != 0);
+        return guestServices; //return RoomReservation
+    }
 
-    private void printSelectHotelServices() {
-        System.out.println("\n===== Hotel Services =====");
+    private void printSelectCreatedHotelServices() {
+        System.out.println("\n===== Hotel Service =====");
         System.out.println("1. Room Reservation. ");
         System.out.println("2. Restaurant Reservation. ");
         System.out.println("3. Transfer Reservation. ");
+        System.out.println("0. Save List and Quit to Order menu. ");
     } //ready
 
     //Later change return from RoomReservation to HotelService and refactor
-    private RoomReservation navigateSelectTypeHotelServices(Guest guest, int index){ //use only (1) RoomReservation
+    private RoomReservation navigateCreateHotelServiceList(Guest guest, int index) { //use only (1) RoomReservation
         Scanner sc = new Scanner(System.in);
-        String typeOfService = null;
-                switch (index){
+        switch (index) {
             case 1:
-                typeOfService = TypeOfService.ROOM_RESERVATION.getTypeName();
                 System.out.print("Input Id Room --> ");
                 int idRoom = sc.nextInt();
                 Room room = roomController.read(idRoom);
                 LocalDate startDate = inputDate();
                 System.out.print("Input number of days to reserve --> ");
                 int numberOfDays = sc.nextInt();
-                RoomReservation roomReservation = new RoomReservation(guest, room, startDate, numberOfDays);
-                return roomReservation;
+                RoomReservation roomReservationNew = new RoomReservation(guest, room, startDate, numberOfDays);
+                System.out.println(CONSOLE_CREATE_ROOM_RESERVATION +
+                        roomReservationController.create(roomReservationNew));
+                return roomReservationNew;
             case 2: // do not use
                 System.out.println("Do not use this type of Service: Restaurant. ");
-                typeOfService = TypeOfService.RESTAURANT.getTypeName();
-                return null;
+                LocalDateTime startDateTime = inputDateTime();
+                //logic
+                //return new Restaurant(...));
+                break;
             case 3: // do not use
                 System.out.println("Do not use this type of Service: Transfer");
-                typeOfService = TypeOfService.TRANSFER.getTypeName();
-                return null;
+                startDateTime = inputDateTime();
+                //logic
+                //return new Transfer(...);
+                break;
             default:
                 System.out.println(ERROR_INPUT_NAVIGATE);
-                selectTypeHotelServices(guest);
-                return null;
+                navigateCreateHotelServiceList(guest, index);
+        }
+        return null; // return HotelServices
+    } //ready
+
+    private void startMenuAnalytics() {
+        while (true) {
+            printMenuAnalytics();
+            int index = makeChoice();
+            navigateMenuAnalytics(index);
         }
     } //ready
 
+    private void printMenuAnalytics() {
+        System.out.println("\n===== Menu Analytics Reports =====");
+        System.out.println("1. . ");
+        System.out.println("2. . ");
+        System.out.println("3. . ");
+        System.out.println("4. . ");
+        System.out.println("5. . ");
+        System.out.println("0. Quit to Main menu. ");
+    } //TODO
 
+    private void navigateMenuAnalytics(int index) {
+    } //TODO
+
+    private void startMenuRoom() {
+        while (true) {
+            printMenuRoom();
+            int index = makeChoice();
+            navigateMenuRoom(index);
+        }
+    }
+
+    private void printMenuRoom() {
+        System.out.println("\n===== Menu Rooms =====");
+        System.out.println("1. Read all Rooms. ");
+        System.out.println("2. Read Room. ");
+        System.out.println("3. Create new Room. ");
+        System.out.println("4. Update Room. ");
+        System.out.println("5. Delete Room. ");
+        System.out.println("0. Quit to Main menu. ");
+    } //ready
+
+    private void navigateMenuRoom(int index) {
+        Scanner sc = new Scanner(System.in);
+        switch (index) {
+            case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
+            case 2 -> {
+                System.out.print("Input ID Room -->");
+                int id = sc.nextInt();
+                System.out.println(CONSOLE_READ_ROOM + roomController.read(id));
+            }
+            case 3 -> {
+                System.out.println("Input new Room's data: ");
+                System.out.print("Room number/name --> ");
+                String roomNumber = sc.next();
+                System.out.print("Price of Room --> ");
+                int price = sc.nextInt();
+                System.out.print("Capacity of Room --> ");
+                int capacity = sc.nextInt();
+                String roomLevel = selectRoomLevel();
+                Room room = new Room(CategoryFacility.ROOM.getTypeName(), roomNumber, price, capacity,
+                        roomLevel, RoomStatus.AVAILABLE.getStatus());
+                System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room));
+                FreeRoom freeRoom1 = new FreeRoom(room, START_DATE_YEAR, END_DATE_YEAR);
+                facilityController.create(room); // CHECK (need for creating price-list)
+                roomReservationController.createFreeRoom(freeRoom1);
+            }
+            case 4 -> {
+                System.out.print("Input ID Room to Update -->");
+                int idRoomUpdate = sc.nextInt();
+                System.out.print("Input new price --> ");
+                int newPrice = sc.nextInt();
+                Room roomUpdated = roomController.read(idRoomUpdate);
+                roomUpdated.setPrice(newPrice);
+                facilityController.update(roomUpdated);
+                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(roomUpdated));
+            }
+            case 5 -> {
+                System.out.print("Input ID Room to Delete -->");
+                int idRoomDelete = sc.nextInt();
+                System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
+            }
+            case 0 -> startMainMenu();
+            default -> {
+                System.out.println(ERROR_INPUT_NAVIGATE);
+                navigateMenuRoom(makeChoice());
+            }
+        }
+    } //ready
+
+    private String selectRoomLevel() {
+        printRoomLevel();
+        System.out.print("Number of star --> ");
+        return navigateRoomLevel();
+    } //ready
+
+    private void printRoomLevel() {
+        System.out.println("\n Rooms' levels: ");
+        System.out.println("1. Econom 1*");
+        System.out.println("2. Standart 2**");
+        System.out.println("3. Lux 3***");
+    } //ready
+
+    private String navigateRoomLevel() {
+        Scanner sc = new Scanner(System.in);
+        int level = sc.nextInt();
+        switch (level) {
+            case 1:
+                return RoomLevel.ECONOM.getLevel();
+            case 2:
+                return RoomLevel.STANDART.getLevel();
+            case 3:
+                return RoomLevel.LUX.getLevel();
+            default:
+                System.out.println(ERROR_INPUT_NAVIGATE);
+                startMainMenu();
+                return null;
+        }
+    } // ready
+
+    private void startMenuTable() {
+        while (true) {
+            printMenuTable();
+            int index = makeChoice();
+            navigateMenuTable(index);
+        }
+    } //ready
+
+    private void printMenuTable() {
+        System.out.println("\n===== Menu Tables =====");
+        System.out.println("1. Read all Rooms. ");
+        System.out.println("2. Read Room. ");
+        System.out.println("3. Create new Room. ");
+        System.out.println("4. Update Room. ");
+        System.out.println("5. Delete Room. ");
+        System.out.println("0. Quit to Main menu. ");
+    } //ready
+
+    private void navigateMenuTable(int index) {
+        // TODO document why this method is empty
+    } // do not use
+
+    private void startMenuTransport() {
+        while (true) {
+            printMenuTransport();
+            int index = makeChoice();
+            navigateMenuTransport(index);
+        }
+    } //ready
+
+    private void printMenuTransport() {
+        System.out.println("\n===== Menu Transports =====");
+        System.out.println("1. Read all Transports. ");
+        System.out.println("2. Read Transport. ");
+        System.out.println("3. Create new Transport. ");
+        System.out.println("4. Update Transport. ");
+        System.out.println("5. Delete Transport. ");
+        System.out.println("0. Quit to Main menu. ");
+    } //ready
+
+    private void navigateMenuTransport(int index) {
+        // TODO document why this method is empty
+    } // do not use
+
+    private int makeChoice() {
+        System.out.print("Input your choice --> ");
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
+    } // ready
+
+    private LocalDate inputDate() {
+        System.out.println("Select start date of Reservation. ");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Input year --> ");
+        int year = sc.nextInt();
+        System.out.print("Input month --> ");
+        int month = sc.nextInt();
+        System.out.print("Input day --> ");
+        int day = sc.nextInt();
+        return LocalDate.of(year, month, day);
+    } //ready
+
+    private LocalDateTime inputDateTime() {
+        System.out.println("Select start Time of Reservation. ");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Input year --> ");
+        int year = sc.nextInt();
+        System.out.print("Input month --> ");
+        int month = sc.nextInt();
+        System.out.print("Input day --> ");
+        int day = sc.nextInt();
+        System.out.print("Input hour --> ");
+        int hour = sc.nextInt();
+        System.out.print("Input minute --> ");
+        int minute = sc.nextInt();
+        return LocalDateTime.of(year, month, day, hour, minute);
+    } //ready
 
     /**
-    * System.out.println("\n----- RoomReservation -----");
-    * System.out.println("=============================");
-    * System.out.println("CREATE and READ RESERVATION");
-    * LocalDate startDay0 = LocalDate.of(2023,7,1);
-    * LocalDate startDay1 = LocalDate.of(2023,7,2);
-    * RoomReservation roomReservation0 = new RoomReservation(guestController.read(0),
-    * roomController.read(0), startDay0, 2);
-    * System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservation0));
-    * System.out.println(CONSOLE_READ_ROOM_RESERVATION + roomReservationController.read(0));
-    * <p>
-    * // !!!!! avoid creating new RoomReservation with Client=null||Room=Null !!!!!
-    * <p>
-    * // create later methods for changing of different attributes
-    * System.out.println("\n=============================");
-    * System.out.println("UPDATE RESERVATION");
-    * roomReservationController.read(1).setNumberOfDays(5);
-    * System.out.println(CONSOLE_CHANGE_ROOM_RESERVATION + roomReservationController.update(roomReservation1));
-    * <p>
-    * System.out.println("\n========================");
-    * System.out.println("DELETE RESERVATION and MAKE ROOM FREE");
-    * System.out.println(CONSOLE_DELETE_ROOM_RESERVATION + roomReservationController.delete(1));
-    * System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + roomReservationController.readAll());
-    * System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + roomReservationController.readAllFreeRooms());
-    * <p>
+     //    private void printMenuHotelServices() { // printCreateHotelServiceList or DELETE
+     //        System.out.println("\n===== Menu HotelServices =====");
+     //        System.out.println("1. Read all HotelServices. "); //delete
+     //        System.out.println("2. Read HotelService. "); //delete
+     //        System.out.println("3. Create new HotelService. ");
+     //        System.out.println("4. Update HotelService. "); //delete
+     //        System.out.println("5. Delete HotelService. "); //delete
+     //        System.out.println("0. Save List and Quit to Order menu. ");
+     //    } //ready
+     //
+     //    private List<HotelService> navigateMenuHotelServices(List<HotelService> servicesGuest, Guest guest, int index){ // navigateCreateHotelServiceList
+     //        Scanner sc = new Scanner(System.in);
+     //        switch (index){
+     //            case 1: //delete
+     //                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + servicesGuest);
+     //                break;
+     //            case 2: //delete
+     //                System.out.print("Input ID of Service --> ");
+     //                int idService = sc.nextInt();
+     //                orderController.read(idService);
+     //                break;
+     //            case 3:
+     //                System.out.println("Add new HotelService (works only for RoomReservations!!!) to Order.");
+     //                RoomReservation roomReservationNew = selectTypeHotelServices(guest); //Later change return from RoomReservation to HotelService and refactor
+     //                System.out.println(CONSOLE_CREATE_ROOM_RESERVATION + roomReservationController.create(roomReservationNew));
+     //                servicesGuest.add(roomReservationNew);
+     //                break;
+     //            case 4: //delete
+     //                System.out.println("Update HotelService (works only for RoomReservations!!!) to Order.");
+     //
+     //                break;
+     //            case 0:
+     //                return servicesGuest;
+     //            default:
+     //                System.out.println(ERROR_INPUT_NAVIGATE);
+     //                navigateMenuHotelServices(servicesGuest, guest, index);
+     //        }
+     //        return servicesGuest;
+     //    }
+     //
+     //    private RoomReservation selectTypeHotelServices(Guest guest){
+     //        printSelectHotelServices();
+     //        int index = makeChoice();
+     //        return navigateSelectTypeHotelServices(guest, index);
+     //    } //ready //Later change return from RoomReservation to HotelService and refactor
      */
 
-      /**
-     * <p>
+    /**
      * System.out.println("\n------------ TASK 4.1. -----------");
      * System.out.println("===========================");
      * System.out.println("Sort Room By Price");
@@ -388,214 +601,37 @@ public class ConsoleUI implements Console {
      * System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_PRICE + facilityController.readPriceListForServicesSortByPrice());
      */
 
+    /**
+     * private void printMenuRoomReservation() {
+     * System.out.println("\n===== Menu RoomReservations =====");
+     * System.out.println("1. Read all RoomReservations. ");
+     * System.out.println("2. Read RoomReservation. ");
+     * System.out.println("3. Create new RoomReservation. ");
+     * System.out.println("4. Update RoomReservation. ");
+     * System.out.println("5. Delete RoomReservation. ");
+     * System.out.println("0. Quit to Main menu. ");
+     * } //ready //create NAVIGATION
+     * <p>
+     * private void printMenuRestaurantReservation() {
+     * System.out.println("\n===== Menu RestaurantReservations =====");
+     * System.out.println("1. Read all RestaurantReservations. ");
+     * System.out.println("2. Read RestaurantReservation. ");
+     * System.out.println("3. Create new RestaurantReservation. ");
+     * System.out.println("4. Update RestaurantReservation. ");
+     * System.out.println("5. Delete RestaurantReservation. ");
+     * System.out.println("0. Quit to Main menu. ");
+     * } //ready //create NAVIGATION
+     * <p>
+     * private void printMenuTransferReservation() {
+     * System.out.println("\n===== Menu TransferReservations =====");
+     * System.out.println("1. Read all TransferReservations. ");
+     * System.out.println("2. Read TransferReservation. ");
+     * System.out.println("3. Create new TransferReservation. ");
+     * System.out.println("4. Update TransferReservation. ");
+     * System.out.println("5. Delete TransferReservation. ");
+     * System.out.println("0. Quit to Main menu. ");
+     * } //ready //create NAVIGATION
+     */
 
-    private void printMenuRoomReservation() {
-        System.out.println("\n===== Menu RoomReservations =====");
-        System.out.println("1. Read all RoomReservations. ");
-        System.out.println("2. Read RoomReservation. ");
-        System.out.println("3. Create new RoomReservation. ");
-        System.out.println("4. Update RoomReservation. ");
-        System.out.println("5. Delete RoomReservation. ");
-        System.out.println("0. Quit to Main menu. ");
-    } //ready //create NAVIGATION
-
-    private void printMenuRestaurantReservation() {
-        System.out.println("\n===== Menu RestaurantReservations =====");
-        System.out.println("1. Read all RestaurantReservations. ");
-        System.out.println("2. Read RestaurantReservation. ");
-        System.out.println("3. Create new RestaurantReservation. ");
-        System.out.println("4. Update RestaurantReservation. ");
-        System.out.println("5. Delete RestaurantReservation. ");
-        System.out.println("0. Quit to Main menu. ");
-    } //ready //create NAVIGATION
-
-    private void printMenuTransferReservation() {
-        System.out.println("\n===== Menu TransferReservations =====");
-        System.out.println("1. Read all TransferReservations. ");
-        System.out.println("2. Read TransferReservation. ");
-        System.out.println("3. Create new TransferReservation. ");
-        System.out.println("4. Update TransferReservation. ");
-        System.out.println("5. Delete TransferReservation. ");
-        System.out.println("0. Quit to Main menu. ");
-    } //ready //create NAVIGATION
-
-    private int makeChoice() {
-        System.out.print("Input your choice --> ");
-        Scanner sc = new Scanner(System.in);
-        return sc.nextInt();
-    } // ready
-
-    private LocalDate inputDate() {
-        System.out.println("Select start date of Reservation. ");
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Input day --> ");
-        int day = sc.nextInt();
-        System.out.print("Input month --> ");
-        int month = sc.nextInt();
-        System.out.print("Input year --> ");
-        int year = sc.nextInt();
-        return LocalDate.of(year,month,day);
-    } //ready
 }
 
-/**
- private void startMenuAnalytics(){
- while(true){
- printMenuAnalytics();
- int index = makeChoice();
- navigateMenuAnalytics(index);
- }
- } //ready
-
- private void printMenuAnalytics() {
- System.out.println("\n===== Menu Analytics Reports =====");
- System.out.println("1. . ");
- System.out.println("2. . ");
- System.out.println("3. . ");
- System.out.println("4. . ");
- System.out.println("5. . ");
- System.out.println("0. Quit to Main menu. ");
- }
-
- private void navigateMenuAnalytics(int index) {
- } //TODO
-
- private void startMenuRoom(){
- while (true){
- printMenuRoom();
- int index = makeChoice();
- navigateMenuRoom(index);
- }
- }
-
- private void printMenuRoom() {
- System.out.println("\n===== Menu Rooms =====");
- System.out.println("1. Read all Rooms. ");
- System.out.println("2. Read Room. ");
- System.out.println("3. Create new Room. ");
- System.out.println("4. Update Room. ");
- System.out.println("5. Delete Room. ");
- System.out.println("0. Quit to Main menu. ");
- } //ready
-
- private void navigateMenuRoom(int index) {
- Scanner sc = new Scanner(System.in);
- switch (index) {
- case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
- case 2 -> {
- System.out.print("Input ID Room -->");
- int id = sc.nextInt();
- System.out.println(CONSOLE_READ_ROOM + roomController.read(id));
- }
- case 3 -> {
- System.out.println("Input new Room's data: ");
- System.out.print("Room number/name --> ");
- String roomNumber = sc.next();
- System.out.print("Price of Room --> ");
- int price = sc.nextInt();
- System.out.print("Capacity of Room --> ");
- int capacity = sc.nextInt();
- String roomLevel = selectRoomLevel();
- Room room = new Room(CategoryFacility.ROOM.getTypeName(), roomNumber, price, capacity,
- roomLevel, RoomStatus.AVAILABLE.getStatus());
- System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room));
- FreeRoom freeRoom1 = new FreeRoom(room, START_DATE_YEAR, END_DATE_YEAR);
- facilityController.create(room); // CHECK ??????????????????????????????????
- roomReservationController.createFreeRoom(freeRoom1);
- }
- case 4 -> {
- System.out.print("Input ID Room to Update -->");
- int idRoomUpdate = sc.nextInt();
- System.out.print("Input new price --> ");
- int newPrice = sc.nextInt();
- Room roomUpdated = roomController.read(idRoomUpdate);
- roomUpdated.setPrice(newPrice);
- System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(roomUpdated));
- }
- case 5 -> {
- System.out.print("Input ID Room to Delete -->");
- int idRoomDelete = sc.nextInt();
- System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
- }
- case 0 -> startMainMenu();
- default -> {
- System.out.println(ERROR_INPUT_NAVIGATE);
- navigateMenuRoom(makeChoice());
- }
- }
- } //ready ??? need to check!!!
-
- private String selectRoomLevel(){
- printRoomLevel();
- System.out.print("Number of star --> ");
- return navigateRoomLevel();
- } //ready
-
- private void printRoomLevel() {
- System.out.println("\n Rooms' levels: ");
- System.out.println("1. Econom 1*");
- System.out.println("2. Standart 2**");
- System.out.println("3. Lux 3***");
- } //ready
-
- private String navigateRoomLevel(){
- Scanner sc = new Scanner(System.in);
- int level = sc.nextInt();
- switch(level){
- case 1:
- return RoomLevel.ECONOM.getLevel();
- case 2:
- return RoomLevel.STANDART.getLevel();
- case 3:
- return RoomLevel.LUX.getLevel();
- default:
- System.out.println(ERROR_INPUT_NAVIGATE);
- startMainMenu();
- return null;
- }
- } // ready
-
- private void startMenuTable(){
- while (true){
- printMenuTable();
- int index = makeChoice();
- navigateMenuTable(index);
- }
- } //ready
-
- private void printMenuTable() {
- System.out.println("\n===== Menu Tables =====");
- System.out.println("1. Read all Rooms. ");
- System.out.println("2. Read Room. ");
- System.out.println("3. Create new Room. ");
- System.out.println("4. Update Room. ");
- System.out.println("5. Delete Room. ");
- System.out.println("0. Quit to Main menu. ");
- } //ready
-
- private void navigateMenuTable(int index) {
- // TODO document why this method is empty
- } // don't create
-
- private void startMenuTransport(){
- while (true){
- printMenuTransport();
- int index = makeChoice();
- navigateMenuTransport(index);
- }
- } //ready
-
- private void printMenuTransport() {
- System.out.println("\n===== Menu Transports =====");
- System.out.println("1. Read all Transports. ");
- System.out.println("2. Read Transport. ");
- System.out.println("3. Create new Transport. ");
- System.out.println("4. Update Transport. ");
- System.out.println("5. Delete Transport. ");
- System.out.println("0. Quit to Main menu. ");
- } //ready
-
- private void navigateMenuTransport(int index) {
- // TODO document why this method is empty
- } // don't create
- */

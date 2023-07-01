@@ -29,11 +29,13 @@ public class RepositoryFacilityCollection implements RepositoryFacility{
 
     @Override
     public boolean update(HotelFacility hotelFacility) {
-        return false;
+        readAll().set(hotelFacility.getIdFacility(), hotelFacility);
+        return true;
     }
 
     @Override
     public boolean delete(int id) {
+        readAll().remove(id);
         return false;
     }
 

@@ -27,12 +27,12 @@ public class ControllerFacilityCollection implements ControllerFacility{
 
     @Override
     public boolean update(HotelFacility hotelFacility) {
-        return false;
+        return serviceFacility.update(hotelFacility);
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return serviceFacility.delete(id);
     }
 
     @Override
