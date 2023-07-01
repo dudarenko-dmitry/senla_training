@@ -34,7 +34,7 @@ public class ConsoleUI implements Console {
     } // ready
 
     private void printMainMenu() {
-        System.out.println("<<<<< Welcome to Hotel >>>>>");
+        System.out.println("\n<<<<< Welcome to Hotel >>>>>");
         System.out.println("===== Main menu =====");
         System.out.println("1. Hotel facilities operations. ");
         System.out.println("2. Guests operations. ");
@@ -105,8 +105,8 @@ public class ConsoleUI implements Console {
         Scanner sc = new Scanner(System.in);
         switch (index) {
             case 1 -> {
-                System.out.println(CONSOLE_READ_ALL_GUESTS);
-                guestController.readAll();
+                System.out.println(CONSOLE_READ_ALL_GUESTS + guestController.readAll());
+                break;
             }
             case 2 -> {
                 System.out.print("Input ID Guest -->");
@@ -167,7 +167,7 @@ public class ConsoleUI implements Console {
         switch (index) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
             case 2 -> {
-                System.out.print("Input Order's ID -->");
+                System.out.print("Input Order's ID --> ");
                 int id = sc.nextInt();
                 System.out.println(CONSOLE_READ_ORDER + orderController.read(id));
             }
@@ -214,7 +214,7 @@ public class ConsoleUI implements Console {
 
     private List<HotelService> navigateUpdateHotelServiceList(List<HotelService> services, int typeOfServiceInt, int idService) {
         Scanner sc = new Scanner(System.in);
-        switch (typeOfServiceInt){
+        switch (typeOfServiceInt) {
             case 1:
                 System.out.println("Update RoomReservation: ");
                 System.out.println("Input new Date. ");
@@ -244,7 +244,7 @@ public class ConsoleUI implements Console {
         do {
             printSelectCreatedHotelServices();
             index = makeChoice();
-            guestServices.add(navigateCreateHotelServiceList(guest, index));
+            guestServices = (List<HotelService>) navigateCreateHotelServiceList(guestServices, guest, index); //=
         } while (index != 0);
         return guestServices; //return RoomReservation
     }
@@ -258,7 +258,7 @@ public class ConsoleUI implements Console {
     } //ready
 
     //Later change return from RoomReservation to HotelService and refactor
-    private RoomReservation navigateCreateHotelServiceList(Guest guest, int index) { //use only (1) RoomReservation
+    private List<HotelService> navigateCreateHotelServiceList(List<HotelService> guestServices, Guest guest, int index) { //use only (1) RoomReservation
         Scanner sc = new Scanner(System.in);
         switch (index) {
             case 1:
@@ -271,24 +271,27 @@ public class ConsoleUI implements Console {
                 RoomReservation roomReservationNew = new RoomReservation(guest, room, startDate, numberOfDays);
                 System.out.println(CONSOLE_CREATE_ROOM_RESERVATION +
                         roomReservationController.create(roomReservationNew));
-                return roomReservationNew;
+                guestServices.add(roomReservationNew);
+                break;
             case 2: // do not use
                 System.out.println("Do not use this type of Service: Restaurant. ");
                 LocalDateTime startDateTime = inputDateTime();
                 //logic
-                //return new Restaurant(...));
+                //guestServices.add(new Restaurant());
                 break;
             case 3: // do not use
                 System.out.println("Do not use this type of Service: Transfer");
                 startDateTime = inputDateTime();
                 //logic
-                //return new Transfer(...);
+                //guestServices.add(new Transfer());
                 break;
+            case 0:
+                return guestServices;
             default:
                 System.out.println(ERROR_INPUT_NAVIGATE);
-                navigateCreateHotelServiceList(guest, index);
+                navigateCreateHotelServiceList(guestServices, guest, index);
         }
-        return null; // return HotelServices
+        return guestServices; // return List<HotelServices>
     } //ready
 
     private void startMenuAnalytics() {
