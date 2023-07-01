@@ -3,7 +3,6 @@ package pl.senla.hotel.controller;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.*;
 
