@@ -66,11 +66,11 @@ public class ConsoleUIschema implements Console {
     } //ready
 
     private void printSelectHotelFacilities() {
-        System.out.println("\n===== Menu Hotel Facilities =====");
-        System.out.println("1. Room operations. ");
-        System.out.println("2. Table operations. ");
-        System.out.println("3. Transport operations. ");
-        System.out.println("0. Quit to Main menu. ");
+//        System.out.println("\n===== Menu Hotel Facilities =====");
+//        System.out.println("1. Room operations. ");
+//        System.out.println("2. Table operations. ");
+//        System.out.println("3. Transport operations. ");
+//        System.out.println("0. Quit to Main menu. ");
     } //ready
 
     private void navigateMenuHotelFacilities(int index) {
