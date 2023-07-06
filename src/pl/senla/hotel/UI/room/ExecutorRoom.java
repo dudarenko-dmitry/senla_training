@@ -11,9 +11,7 @@ import pl.senla.hotel.entity.services.RoomStatus;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
-import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT_NAVIGATE;
-import static pl.senla.hotel.constant.HotelConstant.END_DATE_YEAR;
-import static pl.senla.hotel.constant.HotelConstant.START_DATE_YEAR;
+import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class ExecutorRoom implements Executor {
 

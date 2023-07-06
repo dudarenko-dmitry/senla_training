@@ -17,7 +17,7 @@ public class NavigatorRoom implements Navigator {
     protected MenuItem item4 = new RoomItem4();
     protected MenuItem item5 = new RoomItem5();
     protected MenuItem item0 = new RoomItem0();
-    protected MenuItem[] menuItems = {item1, item2, item3, item0};
+    protected MenuItem[] menuItems = {item1, item2, item3, item4, item5, item0};
 
     public String getNameMenu() {
         return nameMenu;
@@ -33,6 +33,14 @@ public class NavigatorRoom implements Navigator {
 
     public MenuItem getItem3() {
         return item3;
+    }
+
+    public MenuItem getItem4() {
+        return item4;
+    }
+
+    public MenuItem getItem5() {
+        return item5;
     }
 
     public MenuItem getItem0() {

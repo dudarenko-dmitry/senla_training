@@ -31,31 +31,31 @@ public class ConsoleUIschema implements Console {
             int index = makeChoice();
             navigateMainMenu(index);
         }
-    } // ready
+    } // ready // +
 
     private void printMainMenu() {
-        System.out.println("\n<<<<< Welcome to Hotel >>>>>");
-        System.out.println("===== Main menu =====");
-        System.out.println("1. Hotel facilities operations. ");
-        System.out.println("2. Guests operations. ");
-        System.out.println("3. Orders' operations. ");
-        System.out.println("4. Analytics reports. ");
-        System.out.println("0. Quit from program. ");
-    } //ready
+//        System.out.println("\n<<<<< Welcome to Hotel >>>>>");
+//        System.out.println("===== Main menu =====");
+//        System.out.println("1. Hotel facilities operations. ");
+//        System.out.println("2. Guests operations. ");
+//        System.out.println("3. Orders' operations. ");
+//        System.out.println("4. Analytics reports. ");
+//        System.out.println("0. Quit from program. ");
+    } //ready // +
 
     private void navigateMainMenu(int index) {
-        switch (index) {
-            case 1 -> startMenuHotelFacilities();
-            case 2 -> startMenuGuest();
-            case 3 -> startMenuOrder();
-            case 4 -> startMenuAnalytics();
-            case 0 -> {
-                System.out.println("Good-bye.");
-                System.exit(0);
-            }
-            default -> System.out.println(ERROR_INPUT_NAVIGATE);
-        }
-    } //ready
+//        switch (index) {
+//            case 1 -> startMenuHotelFacilities();
+//            case 2 -> startMenuGuest();
+//            case 3 -> startMenuOrder();
+//            case 4 -> startMenuAnalytics();
+//            case 0 -> {
+//                System.out.println("Good-bye.");
+//                System.exit(0);
+//            }
+//            default -> System.out.println(ERROR_INPUT_NAVIGATE);
+//        }
+    } //ready // +
 
     private void startMenuHotelFacilities() {
 //        while (true) {
