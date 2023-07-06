@@ -1,14 +1,13 @@
 package pl.senla.hotel.UI;
 
-public class Navigator {
+import java.util.Scanner;
 
-    private Menu currentMenu;
+public interface Navigator {
 
-    private void printMenu(){
-
-    }
-
-    private void navigate(int index){
-
+    void buildMenu();
+    default int makeChoice(){
+        System.out.print("Input your choice --> ");
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
     }
 }

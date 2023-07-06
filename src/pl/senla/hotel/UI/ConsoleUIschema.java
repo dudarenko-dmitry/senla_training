@@ -58,12 +58,12 @@ public class ConsoleUIschema implements Console {
     } //ready
 
     private void startMenuHotelFacilities() {
-        while (true) {
-            printSelectHotelFacilities();
-            int index = makeChoice();
-            navigateMenuHotelFacilities(index);
-        }
-    } //ready
+//        while (true) {
+//            printSelectHotelFacilities();
+//            int index = makeChoice();
+//            navigateMenuHotelFacilities(index);
+//        }
+    } //ready // +
 
     private void printSelectHotelFacilities() {
 //        System.out.println("\n===== Menu Hotel Facilities =====");
@@ -71,17 +71,17 @@ public class ConsoleUIschema implements Console {
 //        System.out.println("2. Table operations. ");
 //        System.out.println("3. Transport operations. ");
 //        System.out.println("0. Quit to Main menu. ");
-    } //ready
+    } //ready // +
 
     private void navigateMenuHotelFacilities(int index) {
-        switch (index) {
-            case 1 -> startMenuRoom();
-            case 2 -> startMenuTable();
-            case 3 -> startMenuTransport();
-            case 0 -> startMainMenu();
-            default -> System.out.println(ERROR_INPUT_NAVIGATE);
-        }
-    } //ready
+//        switch (index) {
+//            case 1 -> startMenuRoom();
+//            case 2 -> startMenuTable();
+//            case 3 -> startMenuTransport();
+//            case 0 -> startMainMenu();
+//            default -> System.out.println(ERROR_INPUT_NAVIGATE);
+//        }
+    } //ready // +-
 
     private void startMenuGuest() {
         while (true) {
@@ -425,100 +425,100 @@ public class ConsoleUIschema implements Console {
     } //ready
 
     private void startMenuRoom() {
-        while (true) {
-            printMenuRoom();
-            int index = makeChoice();
-            navigateMenuRoom(index);
-        }
-    } //ready
+//        while (true) {
+//            printMenuRoom();
+//            int index = makeChoice();
+//            navigateMenuRoom(index);
+//        }
+    } //ready // +
 
     private void printMenuRoom() {
-        System.out.println("\n===== Menu Rooms =====");
-        System.out.println("1. Read all Rooms. ");
-        System.out.println("2. Read Room. ");
-        System.out.println("3. Create new Room. ");
-        System.out.println("4. Update Room. ");
-        System.out.println("5. Delete Room. ");
-        System.out.println("0. Quit to Main menu. ");
-    } //ready
+//        System.out.println("\n===== Menu Rooms =====");
+//        System.out.println("1. Read all Rooms. ");
+//        System.out.println("2. Read Room. ");
+//        System.out.println("3. Create new Room. ");
+//        System.out.println("4. Update Room. ");
+//        System.out.println("5. Delete Room. ");
+//        System.out.println("0. Quit to Main menu. ");
+    } //ready // +
 
     private void navigateMenuRoom(int index) {
-        Scanner sc = new Scanner(System.in);
-        switch (index) {
-            case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
-            case 2 -> {
-                System.out.print("Input ID Room -->");
-                int id = sc.nextInt();
-                System.out.println(CONSOLE_READ_ROOM + roomController.read(id));
-            }
-            case 3 -> {
-                System.out.println("Input new Room's data: ");
-                System.out.print("Room number/name --> ");
-                String roomNumber = sc.next();
-                System.out.print("Price of Room --> ");
-                int price = sc.nextInt();
-                System.out.print("Capacity of Room --> ");
-                int capacity = sc.nextInt();
-                String roomLevel = selectRoomLevel();
-                Room room = new Room(CategoryFacility.ROOM.getTypeName(), roomNumber, price, capacity,
-                        roomLevel, RoomStatus.AVAILABLE.getStatus());
-                System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room));
-                FreeRoom freeRoom1 = new FreeRoom(room, START_DATE_YEAR, END_DATE_YEAR);
-                facilityController.create(room); // CHECK (need for creating price-list)
-                roomReservationController.createFreeRoom(freeRoom1);
-            }
-            case 4 -> {
-                System.out.print("Input ID Room to Update -->");
-                int idRoomUpdate = sc.nextInt();
-                System.out.print("Input new price --> ");
-                int newPrice = sc.nextInt();
-                Room roomUpdated = roomController.read(idRoomUpdate);
-                roomUpdated.setPrice(newPrice);
-                facilityController.update(roomUpdated);
-                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(roomUpdated));
-            }
-            case 5 -> {
-                System.out.print("Input ID Room to Delete -->");
-                int idRoomDelete = sc.nextInt();
-                System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
-            }
-            case 0 -> startMainMenu();
-            default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
-                navigateMenuRoom(makeChoice());
-            }
-        }
-    } //ready
+//        Scanner sc = new Scanner(System.in);
+//        switch (index) {
+//            case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
+//            case 2 -> {
+//                System.out.print("Input ID Room -->");
+//                int id = sc.nextInt();
+//                System.out.println(CONSOLE_READ_ROOM + roomController.read(id));
+//            }
+//            case 3 -> {
+//                System.out.println("Input new Room's data: ");
+//                System.out.print("Room number/name --> ");
+//                String roomNumber = sc.next();
+//                System.out.print("Price of Room --> ");
+//                int price = sc.nextInt();
+//                System.out.print("Capacity of Room --> ");
+//                int capacity = sc.nextInt();
+//                String roomLevel = selectRoomLevel();
+//                Room room = new Room(CategoryFacility.ROOM.getTypeName(), roomNumber, price, capacity,
+//                        roomLevel, RoomStatus.AVAILABLE.getStatus());
+//                System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room));
+//                FreeRoom freeRoom1 = new FreeRoom(room, START_DATE_YEAR, END_DATE_YEAR);
+//                facilityController.create(room); // CHECK (need for creating price-list)
+//                roomReservationController.createFreeRoom(freeRoom1);
+//            }
+//            case 4 -> {
+//                System.out.print("Input ID Room to Update -->");
+//                int idRoomUpdate = sc.nextInt();
+//                System.out.print("Input new price --> ");
+//                int newPrice = sc.nextInt();
+//                Room roomUpdated = roomController.read(idRoomUpdate);
+//                roomUpdated.setPrice(newPrice);
+//                facilityController.update(roomUpdated);
+//                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(roomUpdated));
+//            }
+//            case 5 -> {
+//                System.out.print("Input ID Room to Delete -->");
+//                int idRoomDelete = sc.nextInt();
+//                System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
+//            }
+//            case 0 -> startMainMenu();
+//            default -> {
+//                System.out.println(ERROR_INPUT_NAVIGATE);
+//                navigateMenuRoom(makeChoice());
+//            }
+//        }
+    } //ready // +
 
     private String selectRoomLevel() {
-        printRoomLevel();
-        System.out.print("Number of star --> ");
+//        printRoomLevel();
+//        System.out.print("Number of star --> ");
         return navigateRoomLevel();
-    } //ready
+    } //ready // +
 
     private void printRoomLevel() {
-        System.out.println("\n Rooms' levels: ");
-        System.out.println("1. Econom 1*");
-        System.out.println("2. Standart 2**");
-        System.out.println("3. Lux 3***");
-    } //ready
+//        System.out.println("\n Rooms' levels: ");
+//        System.out.println("1. Economy 1*");
+//        System.out.println("2. Standard 2**");
+//        System.out.println("3. Lux 3***");
+    } //ready // +
 
     private String navigateRoomLevel() {
-        Scanner sc = new Scanner(System.in);
-        int level = sc.nextInt();
-        switch (level) {
-            case 1:
-                return RoomLevel.ECONOM.getLevel();
-            case 2:
-                return RoomLevel.STANDART.getLevel();
-            case 3:
-                return RoomLevel.LUX.getLevel();
-            default:
-                System.out.println(ERROR_INPUT_NAVIGATE);
-                startMainMenu();
+//        Scanner sc = new Scanner(System.in);
+//        int level = sc.nextInt();
+//        switch (level) {
+//            case 1:
+//                return RoomLevel.ECONOM.getLevel();
+//            case 2:
+//                return RoomLevel.STANDART.getLevel();
+//            case 3:
+//                return RoomLevel.LUX.getLevel();
+//            default:
+//                System.out.println(ERROR_INPUT_NAVIGATE);
+//                startMainMenu();
                 return null;
-        }
-    } // ready
+//        }
+    } // ready // +
 
     private void startMenuTable() {
         while (true) {
