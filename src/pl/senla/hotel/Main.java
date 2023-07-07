@@ -1,6 +1,5 @@
 package pl.senla.hotel;
 
-import pl.senla.hotel.UI.ConsoleUIschema;
 import pl.senla.hotel.controller.Console;
 import pl.senla.hotel.controller.ConsoleUI;
 
