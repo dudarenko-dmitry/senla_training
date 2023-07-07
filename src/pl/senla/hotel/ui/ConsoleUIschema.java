@@ -23,6 +23,8 @@ public class ConsoleUIschema implements Console {
     private final ControllerGuest guestController = new ControllerGuestCollection();
     private final ControllerOrder orderController = new ControllerOrderCollection();
 
+    /**
+     * все меню готовы
     @Override
     public void startMainMenu() {
         while (true) {
@@ -142,6 +144,7 @@ public class ConsoleUIschema implements Console {
 //            }
 //        }
     } // ready // +
+    */
 
     private void startMenuOrder() {
         while (true) {
@@ -293,37 +296,39 @@ public class ConsoleUIschema implements Console {
         return guestServices; // return List<HotelServices>
     } //ready
 
+    /**
+     * все Меню готовы
     private void startMenuAnalytics() {
         while (true) {
             printMenuAnalytics();
             int index = makeChoice();
             navigateMenuAnalytics(index);
         }
-    } //ready
+    } //ready // +
 
     private void printMenuAnalytics() {
-        System.out.println("\n===== Menu Analytics Reports =====");
-        System.out.println("1. List of rooms sort by price. ");
-        System.out.println("2. List of rooms by capacity. ");
-        System.out.println("3. List of rooms by number of stars. ");
-        System.out.println("4. List of available rooms sort by price. ");
-        System.out.println("5. List of available rooms sort by capacity. ");
-        System.out.println("6. List of available rooms sort by number of stars. ");
-        System.out.println("7. List of guests and their rooms sort alphabetically. ");
-        System.out.println("8. List of guests and their rooms sort by check-out date. ");
-        System.out.println("9. Total number of available rooms. ");
-        System.out.println("10. Total number of guests. ");
-        System.out.println("11. Total number of guests on date. ");
-        System.out.println("12. List of rooms that will be available on a certain date in the future. ");
-        System.out.println("13. The amount of payment for the room to be paid by the guest. ");
-        System.out.println("14. View the last 3 guests of the room and the dates of their stay. ");
-        System.out.println("15. View the list of guest services and their price sort by price. ");
-        System.out.println("16. View the list of guest services and their price sort by date. ");
-        System.out.println("17. Prices of services and rooms sort by category. ");
-        System.out.println("18. Prices of services and rooms sort by price. ");
-        System.out.println("19. Show the details of a separate room (WHAT DOES IT MEAN???). ");
-        System.out.println("0. Quit to Main menu. ");
-    } //ready
+//        System.out.println("\n===== Menu Analytics Reports =====");
+//        System.out.println("1. List of rooms sort by price. ");
+//        System.out.println("2. List of rooms by capacity. ");
+//        System.out.println("3. List of rooms by number of stars. ");
+//        System.out.println("4. List of available rooms sort by price. ");
+//        System.out.println("5. List of available rooms sort by capacity. ");
+//        System.out.println("6. List of available rooms sort by number of stars. ");
+//        System.out.println("7. List of guests and their rooms sort alphabetically. ");
+//        System.out.println("8. List of guests and their rooms sort by check-out date. ");
+//        System.out.println("9. Total number of available rooms. ");
+//        System.out.println("10. Total number of guests. ");
+//        System.out.println("11. Total number of guests on date. ");
+//        System.out.println("12. List of rooms that will be available on a certain date in the future. ");
+//        System.out.println("13. The amount of payment for the room to be paid by the guest. ");
+//        System.out.println("14. View the last 3 guests of the room and the dates of their stay. ");
+//        System.out.println("15. View the list of guest services and their price sort by price. ");
+//        System.out.println("16. View the list of guest services and their price sort by date. ");
+//        System.out.println("17. Prices of services and rooms sort by category. ");
+//        System.out.println("18. Prices of services and rooms sort by price. ");
+//        System.out.println("19. Show the details of a separate room (WHAT DOES IT MEAN???). ");
+//        System.out.println("0. Quit to Main menu. ");
+    } //ready // +
 
     private void navigateMenuAnalytics(int index) {
         Scanner sc = new Scanner(System.in);
@@ -421,7 +426,7 @@ public class ConsoleUIschema implements Console {
                 System.out.println(ERROR_INPUT_NAVIGATE);
                 startMenuAnalytics();
         }
-    } //ready
+    } //ready // +
 
     private void startMenuRoom() {
 //        while (true) {
@@ -567,7 +572,8 @@ public class ConsoleUIschema implements Console {
         System.out.print("Input your choice --> ");
         Scanner sc = new Scanner(System.in);
         return sc.nextInt();
-    } // ready
+    } // ready // +
+     */
 
     private LocalDate inputDate() {
         System.out.println("Select start date of Reservation. ");
@@ -595,7 +601,7 @@ public class ConsoleUIschema implements Console {
         System.out.print("Input minute --> ");
         int minute = sc.nextInt();
         return LocalDateTime.of(year, month, day, hour, minute);
-    } //ready
+    } //ready // +
 
     /**
      * didn't use this code earlier:
