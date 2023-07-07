@@ -1,13 +1,13 @@
-package pl.senla.hotel.ui.roomlevel;
+package pl.senla.hotel.ui.services;
 
 import pl.senla.hotel.ui.MenuItem;
 
-public class RoomLevelItem3 implements MenuItem {
+public class HotelServiceItem1 implements MenuItem {
 
     private final String nameItem;
 
-    public RoomLevelItem3() {
-        this.nameItem = "3. Lux 3***";
+    public HotelServiceItem1() {
+        this.nameItem = "1. Room Reservation.";
     }
 
     @Override

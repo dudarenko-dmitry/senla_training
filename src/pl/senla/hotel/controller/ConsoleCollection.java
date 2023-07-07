@@ -13,6 +13,13 @@ import java.util.List;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.HotelConstant.*;
 
+/**
+ *
+ this CLASS is not already used in application
+ usage of this CLASS was changed to ConsoleUI with UserInterface
+ *
+ */
+
 public class ConsoleCollection implements Console{
 
     private final ControllerRoom roomController = new ControllerRoomCollection();

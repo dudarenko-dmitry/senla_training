@@ -1,13 +1,13 @@
-package pl.senla.hotel.ui.roomlevel;
+package pl.senla.hotel.ui.order;
 
 import pl.senla.hotel.ui.MenuItem;
 
-public class RoomLevelItem2 implements MenuItem {
+public class OrderItem5 implements MenuItem {
 
     private final String nameItem;
 
-    public RoomLevelItem2() {
-        this.nameItem = "2. Standard 2**";
+    public OrderItem5() {
+        this.nameItem = "5. Delete Order.";
     }
 
     @Override

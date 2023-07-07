@@ -15,6 +15,13 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.HotelConstant.*;
 
+/**
+ *
+ this CLASS is not already used in application
+ usage of this CLASS was upgraded to StartMenu with UserInterface (look package package pl.senla.hotel.ui.*)
+ *
+*/
+
 public class ConsoleUI implements Console {
 
     private final ControllerRoom roomController = new ControllerRoomCollection();

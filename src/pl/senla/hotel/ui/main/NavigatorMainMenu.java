@@ -11,7 +11,7 @@ public class NavigatorMainMenu implements Navigator {
     private final MenuItem item3 = new MainMenuItem3();
     private final MenuItem item4 = new MainMenuItem4();
     private final MenuItem item0 = new MainMenuItem0();
-    private final MenuItem[] menuItems = {item1, item2, item3, item3, item4, item0};
+    private final MenuItem[] menuItems = {item1, item2, item3, item4, item0};
 
     public String getNameMenu() {
         return nameMenu;
