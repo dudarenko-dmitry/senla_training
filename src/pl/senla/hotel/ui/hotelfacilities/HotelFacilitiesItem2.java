@@ -1,32 +1,13 @@
 package pl.senla.hotel.ui.hotelfacilities;
 
-import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.MenuItem;
 
 public class HotelFacilitiesItem2 implements MenuItem {
 
-    private String nameItem;
-    private Navigator nextNavigator; // TODO // what is it?
+    private final String nameItem;
 
     public HotelFacilitiesItem2() {
         nameItem = "2. Table operations.";
-        nextNavigator = null;
-    }
-
-    public String getNameItem() {
-        return nameItem;
-    }
-
-    public void setNameItem(String nameItem) {
-        this.nameItem = nameItem;
-    }
-
-    public Navigator getNextMenu() {
-        return nextNavigator;
-    }
-
-    public void setNextMenu(Navigator nextNavigator) {
-        this.nextNavigator = nextNavigator;
     }
 
     @Override

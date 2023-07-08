@@ -1,4 +1,4 @@
-package pl.senla.hotel.ui.roomlevel;
+package pl.senla.hotel.ui.room.roomlevel;
 
 import pl.senla.hotel.ui.Navigator;
 

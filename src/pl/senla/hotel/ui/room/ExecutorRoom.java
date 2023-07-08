@@ -2,7 +2,7 @@ package pl.senla.hotel.ui.room;
 
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
-import pl.senla.hotel.ui.roomlevel.StartMenuRoomLevel;
+import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.Room;
