@@ -11,7 +11,11 @@ import java.util.List;
 
 public class RepositoryRoomCollection implements RepositoryRoom {
 
-    private final DataStorage<Room> dataStorage = new DataStorageRoom();
+    private final DataStorage<Room> dataStorage;
+
+    public RepositoryRoomCollection() {
+        this.dataStorage = DataStorageRoom.getDataStorageRoom();
+    }
 
     @Override
     public List<Room> readAll() {

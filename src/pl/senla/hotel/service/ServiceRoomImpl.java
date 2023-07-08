@@ -1,10 +1,10 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.constant.RoomConstant;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.repository.RepositoryRoom;
 import pl.senla.hotel.repository.RepositoryRoomCollection;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static pl.senla.hotel.constant.RoomConstant.*;
@@ -86,7 +86,7 @@ public class ServiceRoomImpl implements ServiceRoom {
         int lastId = readAll()
                 .stream()
                 .map(Room::getIdFacility)
-                .max((o1, o2) -> o1 - o2)
+                .max(Comparator.comparingInt(o -> o))
                 .orElse(-1);
         room.setIdFacility(lastId + 1);
     }
