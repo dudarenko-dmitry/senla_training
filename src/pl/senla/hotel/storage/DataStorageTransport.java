@@ -4,6 +4,18 @@ import pl.senla.hotel.entity.services.Transfer;
 
 public class DataStorageTransport extends DataStorage<Transfer>{
 
+    private static DataStorageTransport dataStorageTransport;
+
+    private DataStorageTransport(){}
+
+    public static DataStorageTransport getDataStorageTransport(){
+        if (dataStorageTransport == null) {
+            dataStorageTransport = new DataStorageTransport();
+            System.out.println("DataStorage for Transport was created.");
+        }
+        return dataStorageTransport;
+    }
+
     @Override
     public String toString() {
         return "Transport {" + super.toString();

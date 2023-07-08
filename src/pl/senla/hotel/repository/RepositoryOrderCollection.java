@@ -12,7 +12,11 @@ import java.util.List;
 
 public class RepositoryOrderCollection implements RepositoryOrder {
 
-    private final DataStorage<Order> orderDataStorage = new DataStorageOrder();
+    private final DataStorage<Order> orderDataStorage;
+
+    public RepositoryOrderCollection() {
+        this.orderDataStorage = DataStorageOrder.getDataStorageOrder();
+    }
 
     @Override
     public List<Order> readAll() {

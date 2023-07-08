@@ -8,7 +8,11 @@ import java.util.List;
 
 public class RepositoryGuestCollection implements RepositoryGuest {
 
-    private final DataStorage<Guest> dataStorage = new DataStorageGuest();
+    private final DataStorage<Guest> dataStorage;
+
+    public RepositoryGuestCollection() {
+        this.dataStorage = DataStorageGuest.getDataStorageGuest();
+    }
 
     @Override
     public List<Guest> readAll() {
@@ -47,6 +51,6 @@ public class RepositoryGuestCollection implements RepositoryGuest {
 
     @Override
     public int countNumberOfGuestsTotal() {
-        return (int) readAll().stream().count();
+        return readAll().size();
     }
 }

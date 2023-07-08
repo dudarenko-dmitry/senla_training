@@ -12,7 +12,11 @@ import java.util.List;
 
 public class RepositoryFreeRoomCollection implements RepositoryFreeRoom{
 
-    private final DataStorage<FreeRoom> dataStorageFreeRoom = new DataStorageFreeRoom();
+    private final DataStorage<FreeRoom> dataStorageFreeRoom;
+
+    public RepositoryFreeRoomCollection() {
+        this.dataStorageFreeRoom = DataStorageFreeRoom.getDataStorageFreeRoom();
+    }
 
     @Override
     public List<FreeRoom> readAll() {
