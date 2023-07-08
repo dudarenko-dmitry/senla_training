@@ -14,7 +14,11 @@ import java.util.List;
 
 public class RepositoryRoomReservationCollection implements RepositoryRoomReservation {
 
-    private final DataStorage<RoomReservation> dataStorageRoomReservation = new DataStorageRoomReservation();
+    private final DataStorage<RoomReservation> dataStorageRoomReservation;
+
+    public RepositoryRoomReservationCollection() {
+        this.dataStorageRoomReservation = DataStorageRoomReservation.getDataStorageRoomReservation();
+    }
 
     @Override
     public List<RoomReservation> readAll() {
