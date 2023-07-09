@@ -62,4 +62,6 @@ public class ConsoleConstant {
     public static final String SORTED_BY_CHECK_OUT =  " sorted by check-out time";
     public static final String SORTED_BY_CATEGORY =   " sorted by category";
 
+    public static final String ERROR_INPUT_NAVIGATE =   "ERROR!!!\nYou input is invalid. Please, repeat input.";
+
 }

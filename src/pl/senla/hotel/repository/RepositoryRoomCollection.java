@@ -11,7 +11,11 @@ import java.util.List;
 
 public class RepositoryRoomCollection implements RepositoryRoom {
 
-    private final DataStorage<Room> dataStorage = new DataStorageRoom();
+    private final DataStorage<Room> dataStorage;
+
+    public RepositoryRoomCollection() {
+        this.dataStorage = DataStorageRoom.getDataStorageRoom();
+    }
 
     @Override
     public List<Room> readAll() {
@@ -36,7 +40,7 @@ public class RepositoryRoomCollection implements RepositoryRoom {
     }
 
     @Override
-    public boolean update(Room room) { // check method (ID must be always equal index)
+    public boolean update(Room room) {
         int roomId = room.getIdFacility();
         readAll().set(roomId, room);
         return true;

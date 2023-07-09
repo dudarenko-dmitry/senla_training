@@ -10,7 +10,11 @@ import java.util.List;
 
 public class RepositoryFacilityCollection implements RepositoryFacility{
 
-    private final DataStorage<HotelFacility> priceList = new DataStorageFacility();
+    private final DataStorage<HotelFacility> priceList;
+
+    public RepositoryFacilityCollection() {
+        this.priceList = DataStorageFacility.getDataStorageFacility();
+    }
 
     @Override
     public List<HotelFacility> readAll() {
@@ -29,11 +33,13 @@ public class RepositoryFacilityCollection implements RepositoryFacility{
 
     @Override
     public boolean update(HotelFacility hotelFacility) {
-        return false;
+        readAll().set(hotelFacility.getIdFacility(), hotelFacility);
+        return true;
     }
 
     @Override
     public boolean delete(int id) {
+        readAll().remove(id);
         return false;
     }
 

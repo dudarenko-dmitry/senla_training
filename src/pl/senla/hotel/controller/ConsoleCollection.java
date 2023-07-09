@@ -13,6 +13,13 @@ import java.util.List;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.HotelConstant.*;
 
+/**
+ *
+ this CLASS is not already used in application
+ usage of this CLASS was changed to ConsoleUI with UserInterface
+ *
+ */
+
 public class ConsoleCollection implements Console{
 
     private final ControllerRoom roomController = new ControllerRoomCollection();
@@ -22,7 +29,7 @@ public class ConsoleCollection implements Console{
     private final ControllerOrder orderController = new ControllerOrderCollection();
 
     @Override
-    public void start(){
+    public void startMainMenu(){
 
         System.out.println("\n----- Room and FreeRoom -----");
         System.out.println("==============================");
@@ -105,18 +112,18 @@ public class ConsoleCollection implements Console{
         System.out.println("\n----- GUEST -----");
         System.out.println("=============================");
         System.out.println("CREATE and READ GUEST");
-        Guest guest0 = new Guest(0, "Tom", 351434000);
-        Guest guest1 = new Guest(1, "John", 380452004);
-        Guest guest2 = new Guest(2, "Sam", 905350895);
-        Guest guest3 = new Guest(3, "Adam", 13564899);
-        Guest guest4 = new Guest(4, "Helen", 905350235);
-        Guest guest5 = new Guest(5, "Buddy", 905350124);
-        Guest guest6 = new Guest(6, "Steve", 2834595);
-        Guest guest7 = new Guest(7, "Jim", 624339229);
-        Guest guest8 = new Guest(8, "Olga", 33343466);
-        Guest guest9 = new Guest(9, "Violet", 22222222);
-        Guest guest10 = new Guest(10, "Eugene", 3333333);
-        Guest guest11 = new Guest(11, "Sally", 44444444);
+        Guest guest0 = new Guest("Tom", 351434000);
+        Guest guest1 = new Guest("John", 380452004);
+        Guest guest2 = new Guest("Sam", 905350895);
+        Guest guest3 = new Guest("Adam", 13564899);
+        Guest guest4 = new Guest("Helen", 905350235);
+        Guest guest5 = new Guest("Buddy", 905350124);
+        Guest guest6 = new Guest("Steve", 2834595);
+        Guest guest7 = new Guest("Jim", 624339229);
+        Guest guest8 = new Guest("Olga", 33343466);
+        Guest guest9 = new Guest("Violet", 22222222);
+        Guest guest10 = new Guest("Eugene", 3333333);
+        Guest guest11 = new Guest("Sally", 44444444);
 
         System.out.println(CONSOLE_CREATE_GUEST + guestController.create(guest0));
         System.out.println(CONSOLE_CREATE_GUEST + guestController.create(guest1));

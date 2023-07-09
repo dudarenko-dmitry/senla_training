@@ -2,7 +2,20 @@ package pl.senla.hotel.storage;
 
 import pl.senla.hotel.entity.services.Restaurant;
 
-public class DataStorageRestaurant extends DataStorage<Restaurant>{
+public class DataStorageRestaurant extends DataStorage<Restaurant> {
+
+    private static DataStorageRestaurant dataStorageRestaurant;
+
+    private DataStorageRestaurant() {
+    }
+
+    public static DataStorageRestaurant getDataStorageRestaurant() {
+        if (dataStorageRestaurant == null) {
+            dataStorageRestaurant = new DataStorageRestaurant();
+            System.out.println("DataStorage for Restaurant was created.");
+        }
+        return dataStorageRestaurant;
+    }
 
     @Override
     public String toString() {
