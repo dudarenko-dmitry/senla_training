@@ -39,6 +39,10 @@ public class ExecutorCreateHotelServiceList {
                 System.out.print("Input number of days to reserve --> ");
                 int numberOfDays = sc.nextInt();
                 RoomReservation roomReservationNew = new RoomReservation(guest, room, startDate, numberOfDays);
+                if(roomReservationNew.getIdRoomReservation() == -1){
+                    System.out.println("RoomReservation was not created. Check Room or Guest");
+                    break;
+                }
                 System.out.println(CONSOLE_CREATE_ROOM_RESERVATION +
                         roomReservationController.create(roomReservationNew));
                 guestServices.add(roomReservationNew);

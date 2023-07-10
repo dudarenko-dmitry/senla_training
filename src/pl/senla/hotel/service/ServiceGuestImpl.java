@@ -10,8 +10,11 @@ import static pl.senla.hotel.constant.ClientConstant.*;
 
 public class ServiceGuestImpl implements ServiceGuest {
 
-    private final RepositoryGuest guestRepository = new RepositoryGuestCollection();
+    private final RepositoryGuest guestRepository;
 
+    public ServiceGuestImpl() {
+        this.guestRepository = new RepositoryGuestCollection();
+    }
 
     @Override
     public List<Guest> readAll() {

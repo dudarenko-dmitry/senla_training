@@ -24,11 +24,19 @@ import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class ConsoleUI implements Console {
 
-    private final ControllerRoom roomController = new ControllerRoomCollection();
-    private final ControllerFacility facilityController = new ControllerFacilityCollection();
-    private final ControllerRoomReservation roomReservationController = new ControllerRoomReservationCollection();
-    private final ControllerGuest guestController = new ControllerGuestCollection();
-    private final ControllerOrder orderController = new ControllerOrderCollection();
+    private final ControllerRoom roomController;
+    private final ControllerFacility facilityController;
+    private final ControllerRoomReservation roomReservationController;
+    private final ControllerGuest guestController;
+    private final ControllerOrder orderController;
+
+    public ConsoleUI() {
+        this.roomController = new ControllerRoomCollection();
+        this.facilityController = new ControllerFacilityCollection();
+        this.roomReservationController = new ControllerRoomReservationCollection();
+        this.guestController = new ControllerGuestCollection();
+        this.orderController = new ControllerOrderCollection();
+    }
 
     @Override
     public void startMainMenu() {

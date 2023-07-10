@@ -12,7 +12,11 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 
 public class ServiceOrderImpl implements ServiceOrder {
 
-    private final RepositoryOrder orderRepository = new RepositoryOrderCollection();
+    private final RepositoryOrder orderRepository;
+
+    public ServiceOrderImpl() {
+        this.orderRepository = new RepositoryOrderCollection();
+    }
 
     @Override
     public List<Order> readAll() {

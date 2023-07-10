@@ -16,8 +16,13 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
-    private final RepositoryRoomReservation roomReservationRepository = new RepositoryRoomReservationCollection();
-    private final RepositoryFreeRoom freeRoomRepository = new RepositoryFreeRoomCollection();
+    private final RepositoryRoomReservation roomReservationRepository;
+    private final RepositoryFreeRoom freeRoomRepository;
+
+    public ServiceRoomReservationImpl() {
+        this.roomReservationRepository = new RepositoryRoomReservationCollection();
+        this.freeRoomRepository = new RepositoryFreeRoomCollection();
+    }
 
     @Override
     public List<RoomReservation> readAll() {

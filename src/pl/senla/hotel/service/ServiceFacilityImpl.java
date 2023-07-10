@@ -8,7 +8,11 @@ import java.util.List;
 
 public class ServiceFacilityImpl implements ServiceFacility{
 
-    private final RepositoryFacility hotelFacilityService = new RepositoryFacilityCollection();
+    private final RepositoryFacility hotelFacilityService;
+
+    public ServiceFacilityImpl() {
+        this.hotelFacilityService = new RepositoryFacilityCollection();
+    }
 
     @Override
     public List<HotelFacility> readAll() {

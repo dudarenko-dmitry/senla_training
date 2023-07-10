@@ -11,7 +11,11 @@ import static pl.senla.hotel.constant.RoomConstant.*;
 
 public class ServiceRoomImpl implements ServiceRoom {
 
-    private final RepositoryRoom roomRepository = new RepositoryRoomCollection();
+    private final RepositoryRoom roomRepository;
+
+    public ServiceRoomImpl() {
+        this.roomRepository = new RepositoryRoomCollection();
+    }
 
     @Override
     public List<Room> readAll() {
