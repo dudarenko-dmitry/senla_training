@@ -19,16 +19,23 @@ import static pl.senla.hotel.constant.HotelConstant.*;
  *
  this CLASS is not already used in application
  usage of this CLASS was upgraded to StartMenu with UserInterface (look package package pl.senla.hotel.ui.*)
- *
-*/
+
 
 public class ConsoleUI implements Console {
 
-    private final ControllerRoom roomController = new ControllerRoomCollection();
-    private final ControllerFacility facilityController = new ControllerFacilityCollection();
-    private final ControllerRoomReservation roomReservationController = new ControllerRoomReservationCollection();
-    private final ControllerGuest guestController = new ControllerGuestCollection();
-    private final ControllerOrder orderController = new ControllerOrderCollection();
+    private final ControllerRoom roomController;
+    private final ControllerFacility facilityController;
+    private final ControllerRoomReservation roomReservationController;
+    private final ControllerGuest guestController;
+    private final ControllerOrder orderController;
+
+    public ConsoleUI() {
+        this.roomController = new ControllerRoomCollection();
+        this.facilityController = new ControllerFacilityCollection();
+        this.roomReservationController = new ControllerRoomReservationCollection();
+        this.guestController = new ControllerGuestCollection();
+        this.orderController = new ControllerOrderCollection();
+    }
 
     @Override
     public void startMainMenu() {
@@ -182,7 +189,7 @@ public class ConsoleUI implements Console {
                 int guestId = sc.nextInt();
                 Guest guest = guestController.read(guestId);
                 List<HotelService> hotelServices = createHotelServiceList(guest);
-                Order order = new Order(guest, hotelServices);
+                Order order = new Order(-1, hotelServices);
                 System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order));
             }
             case 4 -> {
@@ -603,6 +610,9 @@ public class ConsoleUI implements Console {
         int minute = sc.nextInt();
         return LocalDateTime.of(year, month, day, hour, minute);
     } //ready
+    }
+ *
+ */
 
     /**
      * didn't use this code earlier:
@@ -686,6 +696,4 @@ public class ConsoleUI implements Console {
      * System.out.println("0. Quit to Main menu. ");
      * } //ready //create NAVIGATION
      */
-
-}
 

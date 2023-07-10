@@ -16,8 +16,8 @@ public class ControllerRoomCollection implements ControllerRoom {
     }
 
     @Override
-    public boolean create(Room room) {
-        return roomService.create(room);
+    public boolean create(String roomString) {
+        return roomService.create(roomString);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class ControllerRoomCollection implements ControllerRoom {
     }
 
     @Override
-    public boolean update(Room room) {
-        return roomService.update(room);
+    public boolean update(int id, String roomString) {
+        return roomService.update(id, roomString);
     }
 
     @Override

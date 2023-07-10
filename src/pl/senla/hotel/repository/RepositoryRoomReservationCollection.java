@@ -6,6 +6,7 @@ import pl.senla.hotel.comparators.RoomReservationsComparatorByGuestName;
 import pl.senla.hotel.entity.*;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.storage.DataStorage;
+import pl.senla.hotel.storage.DataStorageGuest;
 import pl.senla.hotel.storage.DataStorageRoomReservation;
 
 import java.time.LocalDateTime;
@@ -15,8 +16,10 @@ import java.util.List;
 public class RepositoryRoomReservationCollection implements RepositoryRoomReservation {
 
     private final DataStorage<RoomReservation> dataStorageRoomReservation;
+    private final DataStorage<Guest> dataStorageGuest;
 
     public RepositoryRoomReservationCollection() {
+        this.dataStorageGuest = DataStorageGuest.getDataStorageGuest();
         this.dataStorageRoomReservation = DataStorageRoomReservation.getDataStorageRoomReservation();
     }
 
@@ -79,7 +82,7 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
     public int countGuestPaymentForRoom(int idGuest) {
         List<Integer> costs = readAll()
                 .stream()
-                .filter(rr -> rr.getGuest().getIdGuest() == idGuest)
+                .filter(rr -> rr.getIdGuest() == idGuest)
                 .map(RoomReservation::getCost)
                 .toList();
         int sum = 0;
@@ -94,14 +97,15 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
         List<String> guestsAndDates = new ArrayList<>();
         List<RoomReservation> roomReservationsForRoom = readAll()
                 .stream()
-                .filter(rr -> rr.getRoom().getIdFacility() == idRoom)
+                .filter(rr -> rr.getIdRoom() == idRoom)
                 .toList();
         int numberOfReservations = roomReservationsForRoom.size();
         int i = 1;
         while(i <= 3){
             if(numberOfReservations - i >= 0){
                 RoomReservation rr = roomReservationsForRoom.get(numberOfReservations - i);
-                Guest guest = rr.getGuest();
+                int idGuest = rr.getIdGuest();
+                Guest guest = dataStorageGuest.getDataList().get(idGuest);
                 LocalDateTime checkInTime = rr.getCheckInTime();
                 LocalDateTime checkOutTime = rr.getCheckOutTime();
                 String guestAndDate = "\n" + i + ": " + guest.toString() + ", check-in = " +

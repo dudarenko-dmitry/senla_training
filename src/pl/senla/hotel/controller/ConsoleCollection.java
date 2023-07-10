@@ -18,15 +18,22 @@ import static pl.senla.hotel.constant.HotelConstant.*;
  this CLASS is not already used in application
  usage of this CLASS was changed to ConsoleUI with UserInterface
  *
- */
 
 public class ConsoleCollection implements Console{
 
-    private final ControllerRoom roomController = new ControllerRoomCollection();
-    private final ControllerFacility facilityController = new ControllerFacilityCollection();
-    private final ControllerRoomReservation roomReservationController = new ControllerRoomReservationCollection();
-    private final ControllerGuest guestController = new ControllerGuestCollection();
-    private final ControllerOrder orderController = new ControllerOrderCollection();
+    private final ControllerRoom roomController;
+    private final ControllerFacility facilityController;
+    private final ControllerRoomReservation roomReservationController;
+    private final ControllerGuest guestController;
+    private final ControllerOrder orderController;
+
+    public ConsoleCollection() {
+        this.roomController = new ControllerRoomCollection();
+        this.facilityController = new ControllerFacilityCollection();
+        this.roomReservationController = new ControllerRoomReservationCollection();
+        this.guestController = new ControllerGuestCollection();
+        this.orderController = new ControllerOrderCollection();
+    }
 
     @Override
     public void startMainMenu(){
@@ -243,10 +250,10 @@ public class ConsoleCollection implements Console{
         services1.add(roomReservation2);
         services1.add(roomReservation3);
         services1.add(roomReservation4);
-        Order order0 = new Order(guestController.read(0),services0);
+        Order order0 = new Order(-1, services0);
         System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order0));
         System.out.println(orderController.read(0));
-        Order order1 = new Order(guestController.read(1),services1);
+        Order order1 = new Order(-1, services1);
         System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order1));
         System.out.println(orderController.read(1));
 
@@ -326,4 +333,6 @@ public class ConsoleCollection implements Console{
         System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY + facilityController.readPriceListForServicesSortByCategory());
         System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_PRICE + facilityController.readPriceListForServicesSortByPrice());
     }
+
 }
+ */

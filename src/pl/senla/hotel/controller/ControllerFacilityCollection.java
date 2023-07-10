@@ -16,8 +16,8 @@ public class ControllerFacilityCollection implements ControllerFacility{
     }
 
     @Override
-    public boolean create(HotelFacility hotelFacility) {
-        return serviceFacility.create(hotelFacility);
+    public boolean create(String hotelFacilityString) {
+        return serviceFacility.create(hotelFacilityString);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class ControllerFacilityCollection implements ControllerFacility{
     }
 
     @Override
-    public boolean update(HotelFacility hotelFacility) {
-        return serviceFacility.update(hotelFacility);
+    public boolean update(int id, String hotelFacilityString) {
+        return serviceFacility.update(id, hotelFacilityString);
     }
 
     @Override

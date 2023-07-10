@@ -16,6 +16,10 @@ public abstract class HotelFacility {
         this.capacity = capacity;
     }
 
+    public HotelFacility() {
+
+    }
+
     public int getIdFacility() {
         return idFacility;
     }

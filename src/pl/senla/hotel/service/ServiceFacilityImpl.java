@@ -8,40 +8,44 @@ import java.util.List;
 
 public class ServiceFacilityImpl implements ServiceFacility{
 
-    private final RepositoryFacility hotelFacilityService = new RepositoryFacilityCollection();
+    private final RepositoryFacility repositoryHotelFacility;
 
-    @Override
-    public List<HotelFacility> readAll() {
-        return hotelFacilityService.readAll();
+    public ServiceFacilityImpl() {
+        this.repositoryHotelFacility = new RepositoryFacilityCollection();
     }
 
     @Override
-    public boolean create(HotelFacility hotelFacility) {
-        return hotelFacilityService.create(hotelFacility);
+    public List<HotelFacility> readAll() {
+        return repositoryHotelFacility.readAll();
+    }
+
+    @Override
+    public boolean create(String hotelFacilityString) {
+        return repositoryHotelFacility.create(null); // null !!!
     }
 
     @Override
     public HotelFacility read(int id) {
-        return null;
+        return repositoryHotelFacility.read(id);
     }
 
     @Override
-    public boolean update(HotelFacility hotelFacility) {
-        return hotelFacilityService.update(hotelFacility);
+    public boolean update(int id, String hotelFacilityString) {
+        return repositoryHotelFacility.update(null); // null !!!
     }
 
     @Override
     public boolean delete(int id) {
-        return hotelFacilityService.delete(id);
+        return repositoryHotelFacility.delete(id);
     }
 
     @Override
     public List<HotelFacility> readPriceListForServicesSortByCategory() {
-        return hotelFacilityService.readPriceListForServicesSortByCategory();
+        return repositoryHotelFacility.readPriceListForServicesSortByCategory();
     }
 
     @Override
     public List<HotelFacility> readPriceListForServicesSortByPrice() {
-        return hotelFacilityService.readPriceListForServicesSortByPrice();
+        return repositoryHotelFacility.readPriceListForServicesSortByPrice();
     }
 }

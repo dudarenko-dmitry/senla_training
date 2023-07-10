@@ -34,17 +34,17 @@ public class ExecutorGuest implements Executor {
                 String name = sc.next();
                 System.out.print("Guest's phone number --> ");
                 int phoneNumber = sc.nextInt();
-                Guest guestNew = new Guest(name, phoneNumber);
-                System.out.println(CONSOLE_CREATE_GUEST + guestController.create(guestNew));
+                StringBuilder guestString = new StringBuilder()
+                        .append(name).append(":")
+                        .append(phoneNumber).append(":");
+                System.out.println(CONSOLE_CREATE_GUEST + guestController.create(String.valueOf(guestString)));
             }
             case 4 -> {
                 System.out.print("Input ID Guest to Update -->");
                 int idGuestUpdate = sc.nextInt();
                 System.out.print("Input new phoneNumber --> ");
-                int newPhoneNumber = sc.nextInt();
-                Guest guestUpdated = guestController.read(idGuestUpdate);
-                guestUpdated.setPhoneNumber(newPhoneNumber);
-                System.out.println(CONSOLE_CHANGE_GUEST + guestController.update(guestUpdated));
+                String newPhoneNumber = sc.next();
+                System.out.println(CONSOLE_CHANGE_GUEST + guestController.update(idGuestUpdate, newPhoneNumber));
             }
             case 5 -> {
                 System.out.print("Input ID Guest to Delete -->");

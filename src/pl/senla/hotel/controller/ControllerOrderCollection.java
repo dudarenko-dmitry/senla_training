@@ -1,6 +1,5 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.service.ServiceOrder;
@@ -19,18 +18,18 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public boolean create(Order order) {
-        return orderService.create(order);
+    public boolean create(String orderString) {
+        return orderService.create(orderString);
     }
 
     @Override
-    public Order read(int id) {
-        return orderService.read(id);
+    public Order read(int idOrder) {
+        return orderService.read(idOrder);
     }
 
     @Override
-    public boolean update(Order order) {
-        return orderService.update(order);
+    public boolean update(int idOrder, String orderString) {
+        return orderService.update(idOrder, orderString);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public List<HotelService> readAllServicesForGuest(Guest guest) {
+    public List<HotelService> readAllServicesForGuest(int guest) {
         return orderService.readAllServicesForGuest(guest);
     }
 }

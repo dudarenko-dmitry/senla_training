@@ -14,20 +14,16 @@ public class HotelServicesComparatorByPrice implements Comparator<HotelService> 
     @Override
     public int compare(HotelService o1, HotelService o2) {
         switch(o1.getTypeOfService()){
-            case "RoomReservation":
-                return compareRoomReservation((RoomReservation) o1, (RoomReservation) o2);
-            case "Restaurant":
-                return compareRestaurant((Restaurant) o1, (Restaurant) o2);
-            case "Transfer":
-                return compareTransfer((Transfer) o1, (Transfer) o2);
-            default:
-                System.out.println(ERROR_IN_SERVICE_TYPE);
-                return 0;
+            case "RoomReservation" -> {return compareRoomReservation((RoomReservation) o1, (RoomReservation) o2);}
+            case "Restaurant" -> {return compareRestaurant((Restaurant) o1, (Restaurant) o2);}
+            case "Transfer" -> {return compareTransfer((Transfer) o1, (Transfer) o2);}
+            default -> {System.out.println(ERROR_IN_SERVICE_TYPE);
+                return 0;}
         }
     }
 
     private int compareRoomReservation(RoomReservation o1, RoomReservation o2){
-        return o1.getRoom().getPrice() - o2.getRoom().getPrice();
+        return o1.getIdRoom().getPrice() - o2.getIdRoom().getPrice();
     }
 
     private int compareRestaurant(Restaurant o1, Restaurant o2){

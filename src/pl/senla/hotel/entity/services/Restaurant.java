@@ -1,7 +1,5 @@
 package pl.senla.hotel.entity.services;
 
-import pl.senla.hotel.entity.Guest;
-
 import java.time.LocalDateTime;
 
 import static pl.senla.hotel.constant.RestaurantConstant.*;
@@ -16,14 +14,14 @@ public class Restaurant extends HotelService{
 
 
 
-    public Restaurant(int idRestaurant, Guest guest, int tableNumber, int numberOfGuests,
+    public Restaurant(int idRestaurant, int idGuest, int tableNumber, int numberOfGuests,
                       LocalDateTime startTime, int price) {
-        super(TypeOfService.RESTAURANT.getTypeName(), guest);
-        if(guest == null){
+        super(TypeOfService.RESTAURANT.getTypeName(), idGuest);
+        if(idGuest == -1){
             System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_CLIENT);
             return;
         }
-        if(tableNumber == -1){// check if the ROOM exists // CREATE Entity TABLE and change IF !!!!!!!!!!!!!!!!!!!!!!!!
+        if(tableNumber == -1){// CREATE Entity TABLE and change IF !!!!!!!!!!!!!!!!!!!!!!!!
             System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_TABLE);
             return;
 //        } else if(!table.TableStatus.FREE.getStatus()).equals(TableStatus.FREE.getStatus())){// check if the TABLE is FREE
@@ -82,7 +80,7 @@ public class Restaurant extends HotelService{
         return "\nRestaurant {" +
                 "typeOfService=" + super.getTypeOfService() +
                 ", idRestaurant=" + idRestaurant +
-                super.getGuest().toString() + "," +
+                ", idGuest=" + super.getIdGuest() + "," +
                 ", tableNumber=" + tableNumber +
                 ", numberOfGuests=" + numberOfGuests +
                 "\nStartTime=" + startTime +

@@ -48,12 +48,17 @@ public class ExecutorRoom implements Executor {
                 if(roomLevel.equals("")){
                     execute(userSelection);
                 }
-                Room room = new Room(CategoryFacility.ROOM.getTypeName(), roomNumber, price, capacity,
-                        roomLevel, RoomStatus.AVAILABLE.getStatus());
-                System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room));
-                FreeRoom freeRoom1 = new FreeRoom(room, START_DATE_YEAR, END_DATE_YEAR);
-                facilityController.create(room); // CHECK (need for creating price-list)
-                roomReservationController.createFreeRoom(freeRoom1);
+                StringBuilder stringRoom = new StringBuilder()
+                        .append(CategoryFacility.ROOM.getTypeName()).append(":")
+                        .append(roomNumber).append(":")
+                        .append(price).append(":")
+                        .append(capacity).append(":")
+                        .append(roomLevel).append(":")
+                        .append(RoomStatus.AVAILABLE.getStatus());
+                System.out.println(CONSOLE_CREATE_ROOM + roomController.create(String.valueOf(stringRoom)));
+//                FreeRoom freeRoom1 = new FreeRoom(room, START_DATE_YEAR, END_DATE_YEAR);
+                facilityController.create(String.valueOf(stringRoom)); // CHECK (need for creating price-list)
+//                roomReservationController.createFreeRoom(freeRoom1);
             }
             case 4 -> {
                 System.out.print("Input ID Room to Update -->");
@@ -62,8 +67,8 @@ public class ExecutorRoom implements Executor {
                 int newPrice = sc.nextInt();
                 Room roomUpdated = roomController.read(idRoomUpdate);
                 roomUpdated.setPrice(newPrice);
-                facilityController.update(roomUpdated);
-                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(roomUpdated));
+                facilityController.update(idRoomUpdate, String.valueOf(newPrice));
+                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(idRoomUpdate, String.valueOf(newPrice)));
             }
             case 5 -> {
                 System.out.print("Input ID Room to Delete -->");

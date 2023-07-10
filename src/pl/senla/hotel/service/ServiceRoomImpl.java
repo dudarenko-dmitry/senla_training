@@ -11,7 +11,11 @@ import static pl.senla.hotel.constant.RoomConstant.*;
 
 public class ServiceRoomImpl implements ServiceRoom {
 
-    private final RepositoryRoom roomRepository = new RepositoryRoomCollection();
+    private final RepositoryRoom roomRepository;
+
+    public ServiceRoomImpl() {
+        this.roomRepository = new RepositoryRoomCollection();
+    }
 
     @Override
     public List<Room> readAll() {
@@ -22,12 +26,16 @@ public class ServiceRoomImpl implements ServiceRoom {
     }
 
     @Override
-    public boolean create(Room room) {
-        if(read(room.getIdFacility()) != null &&
-                read(room.getIdFacility()).equals(room)) {
-            System.out.println(ERROR_CREATE_ROOM);
-            return false;
-        }
+    public boolean create(String roomString) {
+        String[] roomData = roomString.split(":");
+        Room room = new Room();
+        room.setIdFacility(-1);
+        room.setCategory(roomData[0]);
+        room.setNameFacility(roomData[1]);
+        room.setPrice(Integer.parseInt(roomData[2]));
+        room.setCapacity(Integer.parseInt(roomData[3]));
+        room.setRoomLevel(roomData[4]);
+        room.setRoomStatus(roomData[5]);
         setIdRoomNew(room);
         return roomRepository.create(room);
     }
@@ -44,15 +52,17 @@ public class ServiceRoomImpl implements ServiceRoom {
     }
 
     @Override
-    public boolean update(Room room) {
+    public boolean update(int idRoom, String roomString) {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
-        } else if(read(room.getIdFacility()) == null){
+        } else if(read(idRoom) == null){
             System.out.println(ERROR_READ_ROOM);
             return false;
         }
-        return roomRepository.update(room);
+        Room roomUpdate = read(idRoom);
+        roomUpdate.setPrice(Integer.parseInt(roomString));
+        return roomRepository.update(roomUpdate);
     }
 
     @Override
