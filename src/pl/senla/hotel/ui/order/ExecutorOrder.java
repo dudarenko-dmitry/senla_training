@@ -44,10 +44,9 @@ public class ExecutorOrder implements Executor {
             }
             case 3 -> {
                 System.out.print("Input Guest's ID --> ");
-                int guestId = sc.nextInt();
-                Guest guest = guestController.read(guestId);
-                List<HotelService> hotelServices = createHotelServiceList.runMenu(guest);
-                Order order = new Order(guest, hotelServices);
+                int idGuest = sc.nextInt();
+                List<HotelService> hotelServices = createHotelServiceList.runMenu(idGuest);
+                Order order = new Order(idGuest, hotelServices);
                 System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order));
             }
             case 4 -> {

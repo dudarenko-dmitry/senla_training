@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Navigator;
 
@@ -18,7 +17,7 @@ public class StartCreateHotelServiceList {
     }
 
     //don't work with PRIVATE access modifier. WHY?
-    public List<HotelService> runMenu(Guest guest) {
+    public List<HotelService> runMenu(int guest) {
         List<HotelService> guestServices = new ArrayList<>();
         int userChoice;
         do {

@@ -1,6 +1,5 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.service.ServiceOrder;
@@ -49,7 +48,7 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public List<HotelService> readAllServicesForGuest(Guest guest) {
+    public List<HotelService> readAllServicesForGuest(int guest) {
         return orderService.readAllServicesForGuest(guest);
     }
 }

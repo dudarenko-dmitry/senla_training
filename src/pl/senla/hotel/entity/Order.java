@@ -7,18 +7,15 @@ import java.util.List;
 public class Order {
 
     private int idOrder = -1;
-    private Guest guest;
+    private int idGuest;
     private List<HotelService> services;
-
-    public Order() {
-    }
 
     public Order(int idOrder) {
         this.idOrder = idOrder;
     }
 
-    public Order(Guest guest, List<HotelService> services) {
-        this.guest = guest;
+    public Order(int idGuest, List<HotelService> services) {
+        this.idGuest = idGuest;
         this.services = services;
     }
 
@@ -30,12 +27,12 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Guest getGuest() {
-        return guest;
+    public int getIdGuest() {
+        return idGuest;
     }
 
-    public void setGuest(Guest guest) {
-        this.guest = guest;
+    public void setIdGuest(int idGuest) {
+        this.idGuest = idGuest;
     }
 
     public List<HotelService> getServices() {

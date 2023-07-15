@@ -1,24 +1,22 @@
 package pl.senla.hotel.entity.services;
 
-import pl.senla.hotel.entity.Guest;
-
 import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT;
 
 public abstract class HotelService {
 
-    private String typeOfService;
-    private Guest guest;
+    protected String typeOfService;
+    protected int idGuest;
 
     protected HotelService() {
     }
 
-    protected HotelService(String typeOfService, Guest guest) {
-        if(guest == null){
+    protected HotelService(String typeOfService, int idGuest) {
+        if (idGuest == -1) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return;
         }
-        this.guest = guest;
-        this.typeOfService=typeOfService;
+        this.idGuest = idGuest;
+        this.typeOfService = typeOfService;
     }
 
     public String getTypeOfService() {
@@ -29,23 +27,19 @@ public abstract class HotelService {
         this.typeOfService = typeOfService;
     }
 
-    public Guest getGuest() {
-        return guest;
+    public int getIdGuest() {
+        return idGuest;
     }
 
-    public void setGuest(Guest guest) {
-        this.guest = guest;
+    public void setIdGuest(int idGuest) {
+        this.idGuest = idGuest;
     }
 
     @Override
     public String toString() {
-        return  "{typeOfService='" + typeOfService + '\'' +
-                ", guest=" + guest +
+        return "{typeOfService='" + typeOfService + '\'' +
+                ", idGuest=" + idGuest +
                 '}';
     }
 
-    //    @Override
-//    public String toString() {
-//        return "{" + guest + '}';
-//    }
 }

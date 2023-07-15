@@ -4,7 +4,6 @@ import pl.senla.hotel.controller.ControllerRoom;
 import pl.senla.hotel.controller.ControllerRoomCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
 import pl.senla.hotel.controller.ControllerRoomReservationCollection;
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
@@ -28,7 +27,7 @@ public class ExecutorCreateHotelServiceList {
     }
 
     //Later change return from RoomReservation to HotelService and refactor
-    protected List<HotelService> createHotelServiceList(List<HotelService> guestServices, Guest guest, int index) { //use only (1) RoomReservation
+    protected List<HotelService> createHotelServiceList(List<HotelService> guestServices, int guest, int index) { //use only (1) RoomReservation
         Scanner sc = new Scanner(System.in);
         switch (index) {
             case 1:

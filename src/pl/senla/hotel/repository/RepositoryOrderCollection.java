@@ -1,7 +1,6 @@
 package pl.senla.hotel.repository;
 
 import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.Order;
@@ -57,7 +56,7 @@ public class RepositoryOrderCollection implements RepositoryOrder {
     public List<HotelService> readAllServicesSortByPrice(int idGuest) {
         return readAll()
                 .stream()
-                .filter(o -> o.getGuest().getIdGuest() == idGuest)
+                .filter(o -> o.getIdGuest() == idGuest)
                 .flatMap(o -> o.getServices().stream())
                 .sorted(new HotelServicesComparatorByPrice())
                 .toList();
@@ -67,17 +66,17 @@ public class RepositoryOrderCollection implements RepositoryOrder {
     public List<HotelService> readAllServicesSortByDate(int idGuest) {
         return readAll()
                 .stream()
-                .filter(o -> o.getGuest().getIdGuest() == idGuest)
+                .filter(o -> o.getIdGuest() == idGuest)
                 .flatMap(o -> o.getServices().stream())
                 .sorted(new HotelServicesComparatorByDate())
                 .toList();
     }
 
     @Override
-    public List<HotelService> readAllServicesForGuest(Guest guest) {
+    public List<HotelService> readAllServicesForGuest(int idGuest) {
         return readAll()
                 .stream()
-                .filter(o -> o.getGuest().equals(guest))
+                .filter(o -> o.getIdGuest() == idGuest)
                 .map(Order::getServices)
                 .findAny().orElse(null);
     }

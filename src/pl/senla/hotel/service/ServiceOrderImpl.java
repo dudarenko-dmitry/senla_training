@@ -1,6 +1,5 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.repository.RepositoryOrder;
@@ -28,7 +27,7 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public boolean create(Order order) {
-        if(order.getGuest() == null){
+        if(order.getIdGuest() == -1){
             System.out.println(ERROR_CREATE_ORDER_NO_CLIENT);
             return false;
         } else if(order.getServices() == null){
@@ -85,8 +84,8 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     @Override
-    public List<HotelService> readAllServicesForGuest(Guest guest) {
-        return orderRepository.readAllServicesForGuest(guest);
+    public List<HotelService> readAllServicesForGuest(int idGuest) {
+        return orderRepository.readAllServicesForGuest(idGuest);
     }
 
     private void setIdOrderNew(Order order) {

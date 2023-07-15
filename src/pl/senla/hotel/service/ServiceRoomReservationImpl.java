@@ -3,10 +3,7 @@ package pl.senla.hotel.service;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.entity.services.RoomReservation;
-import pl.senla.hotel.repository.RepositoryFreeRoom;
-import pl.senla.hotel.repository.RepositoryFreeRoomCollection;
-import pl.senla.hotel.repository.RepositoryRoomReservation;
-import pl.senla.hotel.repository.RepositoryRoomReservationCollection;
+import pl.senla.hotel.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,36 +13,40 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
-    private final RepositoryRoomReservation roomReservationRepository;
-    private final RepositoryFreeRoom freeRoomRepository;
+    private final RepositoryRoomReservation repositoryRoomReservation;
+    private final RepositoryFreeRoom repositoryFreeRoom;
+    private final RepositoryGuest repositoryGuest;
+    private final RepositoryRoom repositoryRoom;
 
     public ServiceRoomReservationImpl() {
-        this.roomReservationRepository = new RepositoryRoomReservationCollection();
-        this.freeRoomRepository = new RepositoryFreeRoomCollection();
+        this.repositoryRoomReservation = new RepositoryRoomReservationCollection();
+        this.repositoryFreeRoom = new RepositoryFreeRoomCollection();
+        this.repositoryGuest = new RepositoryGuestCollection();
+        this.repositoryRoom = new RepositoryRoomCollection();
     }
 
     @Override
     public List<RoomReservation> readAll() {
-        if(roomReservationRepository.readAll() == null){
+        if(repositoryRoomReservation.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
         }
-        return roomReservationRepository.readAll();
+        return repositoryRoomReservation.readAll();
     }
 
     @Override
     public boolean create(RoomReservation reservation) {
-        FreeRoom checkedFreeRoom = freeRoomRepository
+        FreeRoom checkedFreeRoom = repositoryFreeRoom
                 .readAll()
                 .stream()
-                .filter(fr -> fr.getRoom().equals(reservation.getRoom()))
+                .filter(fr -> fr.getRoom().equals(reservation.getIdRoom()))
                 .filter(fr -> fr.getStartTime().isBefore(reservation.getCheckInTime()) &&
                         fr.getEndTime().isAfter(reservation.getCheckOutTime()))
                 .findFirst()
                 .orElse(null);
-        if(reservation.getGuest() == null){
+        if(reservation.getIdGuest() == -1){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return false;
-        } else if(reservation.getRoom() == null){
+        } else if(reservation.getIdRoom() == -1){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
         } else if(read(reservation.getIdRoomReservation()) != null) {
@@ -56,15 +57,15 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             return false;
         }
 
-        LocalDateTime checkedFreeRoomEndTime = freeRoomRepository.read(checkedFreeRoom.getIdFreeRoom()).getEndTime();
+        LocalDateTime checkedFreeRoomEndTime = repositoryFreeRoom.read(checkedFreeRoom.getIdFreeRoom()).getEndTime();
         checkedFreeRoom.setEndTime(reservation.getCheckInTime());
         updateFreeRoom(checkedFreeRoom);
 
-        Room checkedRoomForFreeRoom = freeRoomRepository.read(checkedFreeRoom.getIdFreeRoom()).getRoom();
+        Room checkedRoomForFreeRoom = repositoryFreeRoom.read(checkedFreeRoom.getIdFreeRoom()).getRoom();
         FreeRoom freeRoomNew = new FreeRoom(checkedRoomForFreeRoom, reservation.getCheckOutTime(), checkedFreeRoomEndTime);
         createFreeRoom(freeRoomNew);
         setIdRoomReservationNew(reservation);
-        return roomReservationRepository.create(reservation);
+        return repositoryRoomReservation.create(reservation);
     }
 
     @Override
@@ -72,22 +73,22 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return null;
-        } else if(roomReservationRepository.read(id) == null){
+        } else if(repositoryRoomReservation.read(id) == null){
             System.out.println(ERROR_READ_ROOM_RESERVATION);
         }
-        return roomReservationRepository.read(id);
+        return repositoryRoomReservation.read(id);
     }
 
     @Override
     public boolean update(RoomReservation reservation) {
-        if(roomReservationRepository.readAll() == null){
+        if(repositoryRoomReservation.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return false;
-        } else if(roomReservationRepository.read(reservation.getIdRoomReservation()) == null){
+        } else if(repositoryRoomReservation.read(reservation.getIdRoomReservation()) == null){
             System.out.println(ERROR_READ_ROOM_RESERVATION);
             return false;
         }
-        reservation.setCost(reservation.getRoom().getPrice() * reservation.getNumberOfDays());
+        reservation.setCost(reservation.getIdRoom().getPrice() * reservation.getNumberOfDays());
         delete(reservation.getIdRoomReservation());
         create(reservation);
         return true;
@@ -95,56 +96,56 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public boolean delete(int id) {
-        if(roomReservationRepository.readAll() == null){
+        if(repositoryRoomReservation.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return false;
-        } else if(roomReservationRepository.read(id) == null){
+        } else if(repositoryRoomReservation.read(id) == null){
             System.out.println(ERROR_READ_ROOM_RESERVATION);
             return false;
         }
         FreeRoom freeRoom1 = readAllFreeRooms()
                 .stream()
-                .filter(fr -> fr.getRoom().equals(read(id).getRoom()))
+                .filter(fr -> fr.getRoom().equals(read(id).getIdRoom()))
                 .filter(fr -> fr.getEndTime().equals(read(id).getCheckInTime()))
                 .findFirst().orElse(null);
         FreeRoom freeRoom2 = readAllFreeRooms()
                 .stream()
-                .filter(fr -> fr.getRoom().equals(read(id).getRoom()))
+                .filter(fr -> fr.getRoom().equals(read(id).getIdRoom()))
                 .filter(fr -> fr.getStartTime().isEqual(read(id).getCheckOutTime()))
                 .findFirst().orElse(null);
 
         if(freeRoom1 != null && freeRoom2 != null){
             freeRoom1.setEndTime(freeRoom2.getEndTime());
-            freeRoomRepository.update(freeRoom1);
-            freeRoomRepository.delete(freeRoom2.getIdFreeRoom());
+            repositoryFreeRoom.update(freeRoom1);
+            repositoryFreeRoom.delete(freeRoom2.getIdFreeRoom());
         } else {
             System.out.println("Something is going wrong in ServiceRoomRepository!!!");
         }
-        return roomReservationRepository.delete(id);
+        return repositoryRoomReservation.delete(id);
     }
 
     @Override
     public List<FreeRoom> readAllFreeRooms() {
-        if(freeRoomRepository.readAll() == null){
+        if(repositoryFreeRoom.readAll() == null){
             System.out.println(ERROR_READ_ALL_FREE_ROOM);
         }
-        return freeRoomRepository.readAll();
+        return repositoryFreeRoom.readAll();
     }
 
     @Override
     public boolean createFreeRoom(FreeRoom freeRoom) {
         setIdFreeRoomNew(freeRoom);
-        return freeRoomRepository.create(freeRoom);
+        return repositoryFreeRoom.create(freeRoom);
     }
 
     @Override
     public FreeRoom readFreeRoom(int id) {
-        return freeRoomRepository.read(id);
+        return repositoryFreeRoom.read(id);
     }
 
     @Override
     public boolean updateFreeRoom(FreeRoom freeRoom) {
-        return freeRoomRepository.update(freeRoom);
+        return repositoryFreeRoom.update(freeRoom);
     }
 
     @Override
@@ -154,52 +155,52 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public List<FreeRoom> readAllFreeRoomsSortByPrice() {
-        return freeRoomRepository.readAllFreeRoomsSortByPrice();
+        return repositoryFreeRoom.readAllFreeRoomsSortByPrice();
     }
 
     @Override
     public List<FreeRoom> readAllFreeRoomsSortByCapacity() {
-        return freeRoomRepository.readAllFreeRoomsSortByCapacity();
+        return repositoryFreeRoom.readAllFreeRoomsSortByCapacity();
     }
 
     @Override
     public List<FreeRoom> readAllFreeRoomsSortByLevel() {
-        return freeRoomRepository.readAllFreeRoomsSortByLevel();
+        return repositoryFreeRoom.readAllFreeRoomsSortByLevel();
     }
 
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
-        return roomReservationRepository.readAllRoomReservationsSortByGuestName();
+        return repositoryRoomReservation.readAllRoomReservationsSortByGuestName();
     }
 
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
-        return roomReservationRepository.readAllRoomReservationsSortByGuestCheckOut();
+        return repositoryRoomReservation.readAllRoomReservationsSortByGuestCheckOut();
     }
 
     @Override
     public int countFreeRoomsOnTime(LocalDateTime checkedDateTime) {
-        return freeRoomRepository.countFreeRoomsOnTime(checkedDateTime);
+        return repositoryFreeRoom.countFreeRoomsOnTime(checkedDateTime);
     }
 
     @Override
     public int countNumberOfGuestsOnDate(LocalDateTime checkedTime) {
-        return roomReservationRepository.countNumberOfGuestsOnDate(checkedTime);
+        return repositoryRoomReservation.countNumberOfGuestsOnDate(checkedTime);
     }
 
     @Override
     public List<FreeRoom> readAllRoomsFreeAtTime(LocalDateTime checkedTime) {
-        return freeRoomRepository.readAllRoomsFreeAtTime(checkedTime);
+        return repositoryFreeRoom.readAllRoomsFreeAtTime(checkedTime);
     }
 
     @Override
     public int countGuestPaymentForRoom(int idGuest) {
-        return roomReservationRepository.countGuestPaymentForRoom(idGuest);
+        return repositoryRoomReservation.countGuestPaymentForRoom(idGuest);
     }
 
     @Override
     public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
-        return roomReservationRepository.read3LastGuestAndDatesForRoom(idRoom);
+        return repositoryRoomReservation.read3LastGuestAndDatesForRoom(idRoom);
     }
 
 
