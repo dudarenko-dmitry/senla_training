@@ -25,7 +25,7 @@ public class ServiceGuestImpl implements ServiceGuest {
     }
 
     @Override
-    public boolean create(Guest guest) {
+    public boolean create(String guest) {
         if(read(guest.getIdGuest()) != null && read(guest.getIdGuest()).equals(guest)){
             System.out.println(ERROR_CREATE_CLIENT);
             return false;

@@ -7,7 +7,6 @@ import pl.senla.hotel.entity.services.RoomReservation;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,7 +36,7 @@ public class ExecutorUpdateHotelServiceList {
                 RoomReservation roomReservation = roomReservationController.read(idService);
                 roomReservation.setCheckInTime(LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME));
                 roomReservation.setNumberOfDays(numberOfDays);
-                roomReservationController.update(roomReservation);
+                roomReservationController.update(-1, "");
                 break;
             case 2:
                 System.out.println("Update Restaurant's Reservation: ");

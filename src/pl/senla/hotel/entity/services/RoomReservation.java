@@ -25,7 +25,8 @@ public class RoomReservation extends HotelService{
         this.numberOfDays = numberOfDays;
         this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
         this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
-        this.cost = idRoom.getPrice() * numberOfDays;
+//        this.cost = idRoom.getPrice() * numberOfDays; // REFACTOR !!!!!!!!!!!!!!!!!!!!!!!!!!
+        this.cost = 1000000000;
     }
 
     public int getIdRoomReservation() {
@@ -77,7 +78,8 @@ public class RoomReservation extends HotelService{
     }
 
     public void setCost() {
-        this.cost = numberOfDays * idRoom.getPrice();
+//        this.cost = numberOfDays * idRoom.getPrice();
+        this.cost = 100000000;
     }
 
     @Override

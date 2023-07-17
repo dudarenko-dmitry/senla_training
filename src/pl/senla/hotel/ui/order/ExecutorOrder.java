@@ -4,7 +4,6 @@ import pl.senla.hotel.controller.ControllerGuest;
 import pl.senla.hotel.controller.ControllerGuestCollection;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.controller.ControllerOrderCollection;
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Executor;
@@ -56,7 +55,7 @@ public class ExecutorOrder implements Executor {
                 List<HotelService> services = orderUpdated.getServices();
                 services = updateHotelServiceList.runMenu(services);
                 orderUpdated.setServices(services);
-                System.out.println(CONSOLE_CREATE_ORDER + orderController.update(orderUpdated));
+                System.out.println(CONSOLE_CREATE_ORDER + orderController.update(-1, ""));
             }
             case 5 -> {
                 System.out.print("Input ID Order to Delete -->");

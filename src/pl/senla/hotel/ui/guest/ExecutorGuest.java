@@ -44,7 +44,7 @@ public class ExecutorGuest implements Executor {
                 int newPhoneNumber = sc.nextInt();
                 Guest guestUpdated = guestController.read(idGuestUpdate);
                 guestUpdated.setPhoneNumber(newPhoneNumber);
-                System.out.println(CONSOLE_CHANGE_GUEST + guestController.update(guestUpdated));
+                System.out.println(CONSOLE_CHANGE_GUEST + guestController.update(-1, ""));
             }
             case 5 -> {
                 System.out.print("Input ID Guest to Delete -->");

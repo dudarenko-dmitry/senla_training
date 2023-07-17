@@ -26,7 +26,7 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     @Override
-    public boolean create(Order order) {
+    public boolean create(String order) {
         if(order.getIdGuest() == -1){
             System.out.println(ERROR_CREATE_ORDER_NO_CLIENT);
             return false;

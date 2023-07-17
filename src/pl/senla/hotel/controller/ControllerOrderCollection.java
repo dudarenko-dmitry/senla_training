@@ -18,7 +18,7 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public boolean create(Order order) {
+    public boolean create(String order) {
         return orderService.create(order);
     }
 
@@ -28,7 +28,7 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public boolean update(Order order) {
+    public boolean update(int id, String tString) {
         return orderService.update(order);
     }
 

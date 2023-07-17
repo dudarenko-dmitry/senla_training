@@ -34,7 +34,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     }
 
     @Override
-    public boolean create(RoomReservation reservation) {
+    public boolean create(String reservation) {
         FreeRoom checkedFreeRoom = repositoryFreeRoom
                 .readAll()
                 .stream()

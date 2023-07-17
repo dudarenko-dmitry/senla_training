@@ -18,7 +18,7 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public boolean create(RoomReservation reservation) {
+    public boolean create(String reservation) {
         return roomReservationService.create(reservation);
     }
 
@@ -28,7 +28,7 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public boolean update(RoomReservation reservation) {
+    public boolean update(int id, String tString) {
         return roomReservationService.update(reservation);
     }
 

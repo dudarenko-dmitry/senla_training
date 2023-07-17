@@ -16,7 +16,7 @@ public class ControllerGuestCollection implements ControllerGuest {
     }
 
     @Override
-    public boolean create(Guest guest) {
+    public boolean create(String guest) {
         return guestService.create(guest);
     }
 
@@ -26,7 +26,7 @@ public class ControllerGuestCollection implements ControllerGuest {
     }
 
     @Override
-    public boolean update(Guest guest) {
+    public boolean update(int id, String tString) {
         return guestService.update(guest);
     }
 

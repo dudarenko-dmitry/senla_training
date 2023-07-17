@@ -11,6 +11,10 @@ public class Room extends HotelFacility{
         this.roomStatus = roomStatus;
     }
 
+    public Room() {
+        super();
+    }
+
     public String getRoomStatus() {
         return roomStatus;
     }
@@ -39,12 +43,4 @@ public class Room extends HotelFacility{
                 ", roomStatus='" + roomStatus + '\'' +
                 '}';
     }
-//    idFacility
-//    category
-//    nameFacility
-//    price
-//    capacity
-
-//    roomLevel
-//    roomStatus
 }

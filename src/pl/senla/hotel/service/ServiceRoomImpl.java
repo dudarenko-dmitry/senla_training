@@ -26,16 +26,26 @@ public class ServiceRoomImpl implements ServiceRoom {
     }
 
     @Override
-    public boolean create(Room room) {
-        if(read(room.getIdFacility()) != null &&
-                read(room.getIdFacility()).equals(room)) {
-            System.out.println(ERROR_CREATE_ROOM);
-            return false;
-        }
+    public boolean create(String roomString) {
+        String[] roomData = roomString.split(":");
+        Room room = new Room();
+        room.setIdFacility(-1);
+        room.setCategory(roomData[0]);
+        room.setNameFacility(roomData[1]);
+        room.setPrice(Integer.parseInt(roomData[2]));
+        room.setCapacity(Integer.parseInt(roomData[3]));
+        room.setRoomLevel(roomData[4]);
+        room.setRoomStatus(roomData[5]);
         setIdRoomNew(room);
         return roomRepository.create(room);
     }
 
+//    public Room(String category,
+//    String nameFacility,
+//    int price,
+//    int capacity,
+//    String roomLevel,
+//    String roomStatus)
     @Override
     public Room read(int id) {
         if(readAll() == null){
@@ -48,15 +58,24 @@ public class ServiceRoomImpl implements ServiceRoom {
     }
 
     @Override
-    public boolean update(Room room) {
+    public boolean update(int idRoom, String roomString) {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
-        } else if(read(room.getIdFacility()) == null){
+        } else if(read(idRoom) == null){
             System.out.println(ERROR_READ_ROOM);
             return false;
         }
-        return roomRepository.update(room);
+        String[] roomData = roomString.split(":");
+        Room roomUpdate = new Room();
+        roomUpdate.setIdFacility(idRoom);
+        roomUpdate.setCategory(roomData[0]);
+        roomUpdate.setNameFacility(roomData[1]);
+        roomUpdate.setPrice(Integer.parseInt(roomData[2]));
+        roomUpdate.setCapacity(Integer.parseInt(roomData[3]));
+        roomUpdate.setRoomLevel(roomData[4]);
+        roomUpdate.setRoomStatus(roomData[5]);
+        return roomRepository.update(roomUpdate);
     }
 
     @Override

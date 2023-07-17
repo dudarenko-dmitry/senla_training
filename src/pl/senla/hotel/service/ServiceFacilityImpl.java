@@ -20,7 +20,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
     }
 
     @Override
-    public boolean create(HotelFacility hotelFacility) {
+    public boolean create(String hotelFacility) {
         return hotelFacilityService.create(hotelFacility);
     }
 
