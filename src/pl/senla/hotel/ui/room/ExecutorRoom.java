@@ -67,8 +67,8 @@ public class ExecutorRoom implements Executor {
                 int newPrice = sc.nextInt();
                 Room roomUpdated = roomController.read(idRoomUpdate);
                 roomUpdated.setPrice(newPrice);
-                facilityController.update(-1, "");
-                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(-1, ""));
+                facilityController.update(idRoomUpdate, String.valueOf(newPrice));
+                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(idRoomUpdate, String.valueOf(newPrice)));
             }
             case 5 -> {
                 System.out.print("Input ID Room to Delete -->");

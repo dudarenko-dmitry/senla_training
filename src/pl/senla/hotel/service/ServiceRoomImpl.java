@@ -40,12 +40,6 @@ public class ServiceRoomImpl implements ServiceRoom {
         return roomRepository.create(room);
     }
 
-//    public Room(String category,
-//    String nameFacility,
-//    int price,
-//    int capacity,
-//    String roomLevel,
-//    String roomStatus)
     @Override
     public Room read(int id) {
         if(readAll() == null){
@@ -66,15 +60,8 @@ public class ServiceRoomImpl implements ServiceRoom {
             System.out.println(ERROR_READ_ROOM);
             return false;
         }
-        String[] roomData = roomString.split(":");
-        Room roomUpdate = new Room();
-        roomUpdate.setIdFacility(idRoom);
-        roomUpdate.setCategory(roomData[0]);
-        roomUpdate.setNameFacility(roomData[1]);
-        roomUpdate.setPrice(Integer.parseInt(roomData[2]));
-        roomUpdate.setCapacity(Integer.parseInt(roomData[3]));
-        roomUpdate.setRoomLevel(roomData[4]);
-        roomUpdate.setRoomStatus(roomData[5]);
+        Room roomUpdate = read(idRoom);
+        roomUpdate.setPrice(Integer.parseInt(roomString));
         return roomRepository.update(roomUpdate);
     }
 

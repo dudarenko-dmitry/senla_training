@@ -25,11 +25,12 @@ public class ServiceGuestImpl implements ServiceGuest {
     }
 
     @Override
-    public boolean create(String guest) {
-        if(read(guest.getIdGuest()) != null && read(guest.getIdGuest()).equals(guest)){
-            System.out.println(ERROR_CREATE_CLIENT);
-            return false;
-        }
+    public boolean create(String guestString) {
+        Guest guest = new Guest();
+        String[] guestData = guestString.split(":");
+        guest.setIdGuest(-1);
+        guest.setName(guestData[0]);
+        guest.setPhoneNumber(Integer.parseInt(guestData[1]));
         setIdGuestNew(guest);
         return guestRepository.create(guest);
     }
@@ -47,14 +48,16 @@ public class ServiceGuestImpl implements ServiceGuest {
     }
 
     @Override
-    public boolean update(Guest guest) {
+    public boolean update(int idGuest, String guestUpdate) {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
-        } else if(read(guest.getIdGuest()) == null){
+        } else if(read(idGuest) == null){
             System.out.println(ERROR_READ_CLIENT);
             return false;
         }
+        Guest guest = read(idGuest);
+        guest.setPhoneNumber(Integer.parseInt(guestUpdate));
         return guestRepository.update(guest);
     }
 

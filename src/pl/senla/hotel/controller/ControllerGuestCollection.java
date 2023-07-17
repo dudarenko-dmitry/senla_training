@@ -26,8 +26,8 @@ public class ControllerGuestCollection implements ControllerGuest {
     }
 
     @Override
-    public boolean update(int id, String tString) {
-        return guestService.update(guest);
+    public boolean update(int id, String guestUpdate) {
+        return guestService.update(id, guestUpdate);
     }
 
     @Override
