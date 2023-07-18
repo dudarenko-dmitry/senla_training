@@ -10,6 +10,7 @@ import pl.senla.hotel.entity.services.RoomReservation;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,34 +28,35 @@ public class ExecutorCreateHotelServiceList {
     }
 
     //Later change return from RoomReservation to HotelService and refactor
-    protected List<HotelService> createHotelServiceList(List<HotelService> guestServices, int guest, int index) { //use only (1) RoomReservation
+    protected List<HotelService> createHotelServiceList(int idGuest, int index) { //use only (1) RoomReservation
         Scanner sc = new Scanner(System.in);
+        List<HotelService> guestServices = new ArrayList<>();
         switch (index) {
             case 1:
                 System.out.print("Input Id Room --> ");
                 int idRoom = sc.nextInt();
-                Room room = roomController.read(idRoom);
-                LocalDate startDate = inputDate();
+                String startDateString = inputDateString();
                 System.out.print("Input number of days to reserve --> ");
                 int numberOfDays = sc.nextInt();
-                RoomReservation roomReservationNew = new RoomReservation(guest, room, startDate, numberOfDays);
-                if(roomReservationNew.getIdRoomReservation() == -1){
-                    System.out.println("RoomReservation was not created. Check Room or Guest");
-                    break;
-                }
+
+                StringBuilder roomReservationString = new StringBuilder()
+                        .append(idGuest).append(":")
+                        .append(idRoom).append(":")
+                        .append(startDateString).append(":")
+                        .append(numberOfDays);
+
                 System.out.println(CONSOLE_CREATE_ROOM_RESERVATION +
-                        roomReservationController.create(roomReservationNew));
-                guestServices.add(roomReservationNew);
+                        roomReservationController.create(String.valueOf(roomReservationString)));
+
+//                guestServices.add(roomReservationNew);
                 break;
             case 2: // do not use
                 System.out.println("Do not use this type of Service: Restaurant. ");
-                //LocalDateTime startDateTime = inputDateTime();
                 //logic
                 //guestServices.add(new Restaurant());
                 break;
             case 3: // do not use
                 System.out.println("Do not use this type of Service: Transfer");
-                //startDateTime = inputDateTime();
                 //logic
                 //guestServices.add(new Transfer());
                 break;
@@ -62,7 +64,7 @@ public class ExecutorCreateHotelServiceList {
                 return guestServices;
             default:
                 System.out.println(ERROR_INPUT_NAVIGATE);
-                new StartCreateHotelServiceList().runMenu(guest);
+                new StartCreateHotelServiceList().runMenu(idGuest);
         }
         return guestServices; // return List<HotelServices>
     }
@@ -79,6 +81,18 @@ public class ExecutorCreateHotelServiceList {
         return LocalDate.of(year, month, day);
     }
 
+    private String inputDateString() {
+        System.out.println("Select start date of Reservation. ");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Input year --> ");
+        int year = sc.nextInt();
+        System.out.print("Input month --> ");
+        int month = sc.nextInt();
+        System.out.print("Input day --> ");
+        int day = sc.nextInt();
+        return year + "-" + month + "-" + day;
+    }
+
     private LocalDateTime inputDateTime() {
         System.out.println("Select start Time of Reservation. ");
         Scanner sc = new Scanner(System.in);
@@ -93,5 +107,21 @@ public class ExecutorCreateHotelServiceList {
         System.out.print("Input minute --> ");
         int minute = sc.nextInt();
         return LocalDateTime.of(year, month, day, hour, minute);
+    }
+
+    private String inputDateTimeString() {
+        System.out.println("Select start Time of Reservation. ");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Input year --> ");
+        int year = sc.nextInt();
+        System.out.print("Input month --> ");
+        int month = sc.nextInt();
+        System.out.print("Input day --> ");
+        int day = sc.nextInt();
+        System.out.print("Input hour --> ");
+        int hour = sc.nextInt();
+        System.out.print("Input minute --> ");
+        int minute = sc.nextInt();
+        return year + "-" + month + "-" + day + "-" + hour + "-" + minute;
     }
 }

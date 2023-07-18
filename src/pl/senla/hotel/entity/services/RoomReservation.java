@@ -29,6 +29,10 @@ public class RoomReservation extends HotelService{
         this.cost = 1000000000;
     }
 
+    public RoomReservation() {
+
+    }
+
     public int getIdRoomReservation() {
         return idRoomReservation;
     }

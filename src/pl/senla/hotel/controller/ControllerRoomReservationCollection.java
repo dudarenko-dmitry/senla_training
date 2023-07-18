@@ -18,23 +18,23 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public boolean create(String reservation) {
-        return roomReservationService.create(reservation);
+    public boolean create(String reservationString) {
+        return roomReservationService.create(reservationString);
     }
 
     @Override
-    public RoomReservation read(int id) {
-        return roomReservationService.read(id);
+    public RoomReservation read(int idReservation) {
+        return roomReservationService.read(idReservation);
     }
 
     @Override
-    public boolean update(int id, String tString) {
-        return roomReservationService.update(reservation);
+    public boolean update(int idReservation, String reservationString) {
+        return roomReservationService.update(idReservation, reservationString);
     }
 
     @Override
-    public boolean delete(int id) {
-        return roomReservationService.delete(id);
+    public boolean delete(int idReservation) {
+        return roomReservationService.delete(idReservation);
     }
 
     @Override

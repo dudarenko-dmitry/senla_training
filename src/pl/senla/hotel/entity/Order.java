@@ -19,6 +19,10 @@ public class Order {
         this.services = services;
     }
 
+    public Order() {
+
+    }
+
     public int getIdOrder() {
         return idOrder;
     }

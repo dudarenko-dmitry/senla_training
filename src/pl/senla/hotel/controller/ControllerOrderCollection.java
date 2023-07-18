@@ -18,18 +18,18 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public boolean create(String order) {
-        return orderService.create(order);
+    public boolean create(String orderString) {
+        return orderService.create(orderString);
     }
 
     @Override
-    public Order read(int id) {
-        return orderService.read(id);
+    public Order read(int idOrder) {
+        return orderService.read(idOrder);
     }
 
     @Override
-    public boolean update(int id, String tString) {
-        return orderService.update(order);
+    public boolean update(int idOrder, String orderString) {
+        return orderService.update(idOrder, orderString);
     }
 
     @Override

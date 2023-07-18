@@ -37,7 +37,7 @@ public abstract class HotelService {
 
     @Override
     public String toString() {
-        return "{typeOfService='" + typeOfService + '\'' +
+        return "{typeOfService='" + typeOfService +
                 ", idGuest=" + idGuest +
                 '}';
     }

@@ -45,8 +45,10 @@ public class ExecutorOrder implements Executor {
                 System.out.print("Input Guest's ID --> ");
                 int idGuest = sc.nextInt();
                 List<HotelService> hotelServices = createHotelServiceList.runMenu(idGuest);
-                Order order = new Order(idGuest, hotelServices);
-                System.out.println(CONSOLE_CREATE_ORDER + orderController.create(order));
+                StringBuilder orderString = new StringBuilder()
+                        .append(idGuest).append(":")
+                        .append(hotelServices);
+                System.out.println(CONSOLE_CREATE_ORDER + orderController.create(String.valueOf(orderString)));
             }
             case 4 -> {
                 System.out.print("Input Order's ID to Update -->");
@@ -55,7 +57,7 @@ public class ExecutorOrder implements Executor {
                 List<HotelService> services = orderUpdated.getServices();
                 services = updateHotelServiceList.runMenu(services);
                 orderUpdated.setServices(services);
-                System.out.println(CONSOLE_CREATE_ORDER + orderController.update(-1, ""));
+                System.out.println(CONSOLE_CREATE_ORDER + orderController.update(idUpdate, String.valueOf(services)));
             }
             case 5 -> {
                 System.out.print("Input ID Order to Delete -->");
