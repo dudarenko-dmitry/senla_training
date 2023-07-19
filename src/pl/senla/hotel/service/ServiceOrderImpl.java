@@ -81,14 +81,16 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     @Override
-    public boolean update(int idOrder, String orderUpdatedString) {
+    // This method is not used in application.
+    // All changes are processed in appropriate Services depending on Type of Hotel's Service.
+    public boolean update(int idOrder, String orderUpdatingString) {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
         } else if(read(idOrder) == null){
             System.out.println(ERROR_READ_ORDER);
         }
-        return repositoryOrder.update(order);
+        return repositoryOrder.update(null);
     }
 
     @Override

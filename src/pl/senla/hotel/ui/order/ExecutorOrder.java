@@ -1,9 +1,6 @@
 package pl.senla.hotel.ui.order;
 
-import pl.senla.hotel.controller.ControllerGuest;
-import pl.senla.hotel.controller.ControllerGuestCollection;
-import pl.senla.hotel.controller.ControllerOrder;
-import pl.senla.hotel.controller.ControllerOrderCollection;
+import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Executor;
@@ -21,12 +18,14 @@ public class ExecutorOrder implements Executor {
 
     private final ControllerOrder orderController;
     private final ControllerGuest guestController;
+    private final ControllerRoomReservation roomReservationController;
     private final StartCreateHotelServiceList createHotelServiceList;
     private final StartUpdateHotelServiceList updateHotelServiceList;
 
     public ExecutorOrder() {
         this.orderController = new ControllerOrderCollection();
         this.guestController = new ControllerGuestCollection();
+        this.roomReservationController = new ControllerRoomReservationCollection();
         this.createHotelServiceList = new StartCreateHotelServiceList();
         this.updateHotelServiceList = new StartUpdateHotelServiceList();
     }
@@ -51,13 +50,12 @@ public class ExecutorOrder implements Executor {
                 System.out.println(CONSOLE_CREATE_ORDER + orderController.create(String.valueOf(orderString)));
             }
             case 4 -> {
-                System.out.print("Input Order's ID to Update -->");
-                int idUpdate = sc.nextInt();
-                Order orderUpdated = orderController.read(idUpdate);
-                List<HotelService> services = orderUpdated.getServices();
-                services = updateHotelServiceList.runMenu(services);
-                orderUpdated.setServices(services);
-                System.out.println(CONSOLE_CREATE_ORDER + orderController.update(idUpdate, String.valueOf(services)));
+                System.out.println("Update Order: ");
+//                Order orderUpdated = orderController.read(idOrderUpdate);
+//                List<HotelService> services = orderUpdated.getServices();
+//                services = updateHotelServiceList.runMenu(services);
+//                orderUpdated.setServices(services);
+                System.out.println(CONSOLE_CHANGE_ORDER + updateHotelServiceList.runMenu()); // CHECK This !!!!!!!!
             }
             case 5 -> {
                 System.out.print("Input ID Order to Delete -->");

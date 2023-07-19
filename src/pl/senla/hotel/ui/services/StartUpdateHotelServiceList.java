@@ -1,9 +1,8 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Navigator;
 
-import java.util.List;
+import java.util.Scanner;
 
 public class StartUpdateHotelServiceList {
 
@@ -15,9 +14,14 @@ public class StartUpdateHotelServiceList {
         this.executor = new ExecutorUpdateHotelServiceList();
     }
 
-    public List<HotelService> runMenu(List<HotelService> services){
+    public boolean runMenu(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Input Order's ID to Update -->");
+        int idOrderUpdate = sc.nextInt();
+
         navigator.buildMenu();
+        System.out.println("Select type of Hotel's Service you want to update.");
         int typeOsService = navigator.makeChoice();
-        return executor.updateHotelServiceList(services, typeOsService);
+        return executor.updateHotelServiceList(idOrderUpdate, typeOsService);
     }
 }

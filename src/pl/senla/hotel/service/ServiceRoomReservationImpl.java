@@ -1,6 +1,5 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;
@@ -19,13 +18,11 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private final RepositoryRoomReservation repositoryRoomReservation;
     private final RepositoryFreeRoom repositoryFreeRoom;
-    private final RepositoryGuest repositoryGuest;
     private final RepositoryRoom repositoryRoom;
 
     public ServiceRoomReservationImpl() {
         this.repositoryRoomReservation = new RepositoryRoomReservationCollection();
         this.repositoryFreeRoom = new RepositoryFreeRoomCollection();
-        this.repositoryGuest = new RepositoryGuestCollection();
         this.repositoryRoom = new RepositoryRoomCollection();
     }
 
@@ -97,8 +94,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     }
 
     @Override
-    public boolean update(int idReservation, String reservationString) {
-        RoomReservation reservationOld = repositoryRoomReservation.read(idReservation);
+    public boolean update(int idReservation, String reservationUpdatingString) {
         if(repositoryRoomReservation.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return false;
@@ -106,15 +102,30 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             System.out.println(ERROR_READ_ROOM_RESERVATION);
             return false;
         }
+        RoomReservation reservationOld = repositoryRoomReservation.read(idReservation);
+        String[] reservationData = reservationUpdatingString.split(":");
+        String dateString = reservationData[0];
+        LocalDate checkInDate = getDate(dateString);
+        LocalDateTime checkInTime = LocalDateTime.of(checkInDate, HOTEL_CHECK_IN_TIME);
+        int numberOfDaysNew = Integer.parseInt(reservationData[1]);
+        LocalDateTime checkOutTime = LocalDateTime.of(checkInDate.plusDays(numberOfDaysNew), HOTEL_CHECK_OUT_TIME);
 
-        RoomReservation reservation = read(idReservation);
-        reservation.setCost(repositoryRoom.read(reservation.getIdRoom()).getPrice() * reservation.getNumberOfDays());
+        RoomReservation reservationUpdate = new RoomReservation();
+        reservationUpdate.setIdRoomReservation(idReservation);
+        reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION.getTypeName());
+        reservationUpdate.setIdGuest(reservationOld.getIdGuest());
+        reservationUpdate.setIdRoom(reservationOld.getIdRoom());
+        reservationUpdate.setCheckInTime(checkInTime);
+        reservationUpdate.setNumberOfDays(numberOfDaysNew);
+        reservationUpdate.setCheckOutTime(checkOutTime);
+        reservationUpdate.setCost(repositoryRoom.read(reservationOld.getIdRoom()).getPrice() * numberOfDaysNew);
+
         repositoryRoomReservation.delete(idReservation);
-        if(createFromObject(reservation)){
+        if(createFromObject(reservationUpdate)){ // check if is it created?
             return true;
         } else {
             repositoryRoomReservation.create(reservationOld);
-            System.out.println("Old RoomReservation was restored.");
+            System.out.println("It is not impossible to update this RoomReservation.\nOld RoomReservation was restored.");
             return false;
         }
     }
