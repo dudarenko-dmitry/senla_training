@@ -44,4 +44,19 @@ public class ControllerFacilityCollection implements ControllerFacility{
     public List<HotelFacility> readPriceListForServicesSortByPrice() {
         return serviceFacility.readPriceListForServicesSortByPrice();
     }
+
+    @Override
+    public List<HotelFacility> readAllRoomsSortByPrice() {
+        return serviceFacility.readAllRoomsSortByPrice();
+    }
+
+    @Override
+    public List<HotelFacility> readAllRoomsSortByCapacity() {
+        return serviceFacility.readAllRoomsSortByCapacity();
+    }
+
+    @Override
+    public List<HotelFacility> readAllRoomsSortByLevel() {
+        return serviceFacility.readAllRoomsSortByLevel();
+    }
 }

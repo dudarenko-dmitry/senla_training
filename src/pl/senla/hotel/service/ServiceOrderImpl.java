@@ -1,16 +1,12 @@
 package pl.senla.hotel.service;
 
-import org.apache.commons.lang3.StringUtils;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.services.RoomReservation;
-import pl.senla.hotel.entity.services.TypeOfService;
 import pl.senla.hotel.repository.RepositoryOrder;
 import pl.senla.hotel.repository.RepositoryOrderCollection;
-import pl.senla.hotel.repository.RepositoryRoomReservation;
-import pl.senla.hotel.repository.RepositoryRoomReservationCollection;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static pl.senla.hotel.constant.OrderConstant.*;
@@ -18,66 +14,44 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 public class ServiceOrderImpl implements ServiceOrder {
 
     private final RepositoryOrder repositoryOrder;
-    private final RepositoryRoomReservation repositoryRoomReservation;
 
     public ServiceOrderImpl() {
-        this.repositoryRoomReservation = new RepositoryRoomReservationCollection();
         this.repositoryOrder = new RepositoryOrderCollection();
     }
 
     @Override
     public List<Order> readAll() {
-        if(repositoryOrder.readAll() == null){
+        if(repositoryOrder.readAll() == null  || readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ORDERS);
+            return Collections.emptyList();
         }
         return repositoryOrder.readAll();
     }
 
     @Override
     public boolean create(String orderString) {
-        String[] orderData = orderString.split(":");
-        Order order = new Order();
+        int idGuest = Integer.parseInt(orderString);
+        Order order = new Order(idGuest);
         order.setIdOrder(-1);
-        order.setIdGuest(Integer.parseInt(orderData[0]));
-        List<HotelService> servicesInOrder = new ArrayList<>();
-        String[] listOfServices = orderData[1].split("},");
-        for(String s : listOfServices){
-            String[] serviceData = s.split(", ");
-            String typeOfService = StringUtils.substringAfter(serviceData[0], "=");
-            if(typeOfService.equals(TypeOfService.ROOM_RESERVATION.getTypeName())){
-                RoomReservation roomReservation = new RoomReservation();
-
-//    public RoomReservation(int idGuest, int idRoom, LocalDate startDate, int numberOfDays) {
-//                    super(TypeOfService.ROOM_RESERVATION.getTypeName(), idGuest);
-//                    this.idRoom = idRoom;
-//                    this.numberOfDays = numberOfDays;
-//                    this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
-//                    this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
-////        this.cost = idRoom.getPrice() * numberOfDays; // REFACTOR !!!!!!!!!!!!!!!!!!!!!!!!!!
-//                    this.cost = 1000000000;
-//                }
-
-            } else if (typeOfService.equals(TypeOfService.RESTAURANT.getTypeName())){
-                //logic-restaurant
-            } else if (typeOfService.equals(TypeOfService.TRANSFER.getTypeName())){
-                //logic-transfer
-            }
-
-        }
-//        order.setServices();
+        List<HotelService> servicesInOrder = readAllServicesForGuest(idGuest);
+        order.setServices(servicesInOrder);
         setIdOrderNew(order);
         return repositoryOrder.create(order);
     }
 
     @Override
-    public Order read(int id) {
+    public Order read(int idOrder) {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ORDERS);
             return null;
-        } else if(repositoryOrder.read(id) == null){
-            System.out.println(ERROR_READ_ORDER);
         }
-        return repositoryOrder.read(id);
+        for(int i = 0; i <= readAll().size(); i++){
+            if(readAll().get(i).getIdOrder() == idOrder){
+                return repositoryOrder.read(i);
+            }
+        }
+        System.out.println(ERROR_READ_ORDER);
+        return null;
     }
 
     @Override
@@ -90,18 +64,21 @@ public class ServiceOrderImpl implements ServiceOrder {
         } else if(read(idOrder) == null){
             System.out.println(ERROR_READ_ORDER);
         }
-        return repositoryOrder.update(null);
+        return repositoryOrder.update(-1, null);
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int idOrder) {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
-        } else if(read(id) == null){
-            System.out.println(ERROR_READ_ORDER);
         }
-        return repositoryOrder.delete(id);
+        for(int i = 0; i <= readAll().size(); i++){
+            if(readAll().get(i).getIdOrder() == idOrder){
+                return repositoryOrder.delete(i);            }
+        }
+        System.out.println(ERROR_READ_ORDER);
+        return false;
     }
 
     @Override
@@ -123,7 +100,7 @@ public class ServiceOrderImpl implements ServiceOrder {
         int lastId = readAll()
                 .stream()
                 .map(Order::getIdOrder)
-                .max((o1, o2) -> o1 - o2)
+                .max(Comparator.comparingInt(o -> o))
                 .orElse(-1);
         order.setIdOrder(lastId + 1);
     }

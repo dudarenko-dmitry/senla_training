@@ -37,7 +37,7 @@ public class RepositoryGuestCollection implements RepositoryGuest {
     }
 
     @Override
-    public boolean update(Guest guest) {
+    public boolean update(int id, Guest guest) {
         int idGuest = guest.getIdGuest();
         readAll().set(idGuest, guest);
         return true;

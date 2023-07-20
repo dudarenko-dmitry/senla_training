@@ -1,7 +1,6 @@
 package pl.senla.hotel.ui.guest;
 
 import pl.senla.hotel.controller.*;
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
@@ -24,7 +23,7 @@ public class ExecutorGuest implements Executor {
             case 1 ->
                 System.out.println(CONSOLE_READ_ALL_GUESTS + guestController.readAll());
             case 2 -> {
-                System.out.print("Input ID Guest -->");
+                System.out.print("Input ID Guest --> ");
                 int id = sc.nextInt();
                 System.out.println(CONSOLE_READ_GUEST + guestController.read(id));
             }
@@ -34,20 +33,19 @@ public class ExecutorGuest implements Executor {
                 String name = sc.next();
                 System.out.print("Guest's phone number --> ");
                 int phoneNumber = sc.nextInt();
-                StringBuilder guestString = new StringBuilder()
-                        .append(name).append(":")
-                        .append(phoneNumber).append(":");
-                System.out.println(CONSOLE_CREATE_GUEST + guestController.create(String.valueOf(guestString)));
+                String guestString = name + ";" +
+                        phoneNumber;
+                System.out.println(CONSOLE_CREATE_GUEST + guestController.create(guestString));
             }
             case 4 -> {
-                System.out.print("Input ID Guest to Update -->");
+                System.out.print("Input ID Guest to Update --> ");
                 int idGuestUpdate = sc.nextInt();
                 System.out.print("Input new phoneNumber --> ");
                 String newPhoneNumber = sc.next();
                 System.out.println(CONSOLE_CHANGE_GUEST + guestController.update(idGuestUpdate, newPhoneNumber));
             }
             case 5 -> {
-                System.out.print("Input ID Guest to Delete -->");
+                System.out.print("Input ID Guest to Delete --> ");
                 int idGuestDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_GUEST + guestController.delete(idGuestDelete));
             }

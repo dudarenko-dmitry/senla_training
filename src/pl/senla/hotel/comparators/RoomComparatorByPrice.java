@@ -1,12 +1,12 @@
 package pl.senla.hotel.comparators;
 
-import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 
 import java.util.Comparator;
 
-public class RoomComparatorByPrice implements Comparator<Room> {
+public class RoomComparatorByPrice implements Comparator<HotelFacility> {
     @Override
-    public int compare(Room o1, Room o2) {
+    public int compare(HotelFacility o1, HotelFacility o2) {
         return o1.getPrice() - o2.getPrice();
     }
 }

@@ -1,33 +1,40 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.entity.facilities.CategoryFacility;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.repository.RepositoryRoom;
-import pl.senla.hotel.repository.RepositoryRoomCollection;
+import pl.senla.hotel.repository.RepositoryFacility;
+import pl.senla.hotel.repository.RepositoryFacilityCollection;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static pl.senla.hotel.constant.RoomConstant.*;
+import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 public class ServiceRoomImpl implements ServiceRoom {
 
-    private final RepositoryRoom roomRepository;
+    private final RepositoryFacility repositoryFacility;
 
     public ServiceRoomImpl() {
-        this.roomRepository = new RepositoryRoomCollection();
+        this.repositoryFacility = new RepositoryFacilityCollection();
     }
 
     @Override
-    public List<Room> readAll() {
-        if(roomRepository.readAll() == null){
+    public List<HotelFacility> readAll() {
+        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
+            return Collections.emptyList();
         }
-        return roomRepository.readAll();
+        return repositoryFacility.readAll()
+                .stream()
+                .filter(r -> r.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .toList();
     }
 
     @Override
     public boolean create(String roomString) {
-        String[] roomData = roomString.split(":");
+        String[] roomData = roomString.split(";");
         Room room = new Room();
         room.setIdFacility(-1);
         room.setCategory(roomData[0]);
@@ -37,23 +44,30 @@ public class ServiceRoomImpl implements ServiceRoom {
         room.setRoomLevel(roomData[4]);
         room.setRoomStatus(roomData[5]);
         setIdRoomNew(room);
-        return roomRepository.create(room);
+        return repositoryFacility.create(room);
     }
 
     @Override
-    public Room read(int id) {
-        if(readAll() == null){
+    public Room read(int idRoom) {
+        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
             return null;
-        } else if(roomRepository.read(id) == null){
+        } else if (idRoom < 0 || idRoom > readAll().size()){
             System.out.println(ERROR_READ_ROOM);
+            return null;
         }
-        return roomRepository.read(id);
+        for(int i = 0; i <= readAll().size(); i++){
+            if(readAll().get(i).getIdFacility() == idRoom){
+                return (Room) repositoryFacility.read(idRoom);
+            }
+        }
+        System.out.println(ERROR_READ_ROOM);
+        return null;
     }
 
     @Override
     public boolean update(int idRoom, String roomString) {
-        if(readAll() == null){
+        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if(read(idRoom) == null){
@@ -62,40 +76,25 @@ public class ServiceRoomImpl implements ServiceRoom {
         }
         Room roomUpdate = read(idRoom);
         roomUpdate.setPrice(Integer.parseInt(roomString));
-        return roomRepository.update(roomUpdate);
+        return repositoryFacility.update(idRoom, roomUpdate);
     }
 
     @Override
     public boolean delete(int id) {
-        if(readAll() == null){
+        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if(read(id) == null){
             System.out.println(ERROR_READ_ROOM);
             return false;
         }
-        return roomRepository.delete(id);
+        return repositoryFacility.delete(id);
     }
 
-    @Override
-    public List<Room> readAllRoomsSortByPrice() {
-        return roomRepository.readAllRoomsSortByPrice();
-    }
-
-    @Override
-    public List<Room> readAllRoomsSortByCapacity() {
-        return roomRepository.readAllRoomsSortByCapacity();
-    }
-
-    @Override
-    public List<Room> readAllRoomsSortByLevel() {
-        return roomRepository.readAllRoomsSortByLevel();
-    }
-
-    private void setIdRoomNew(Room room) {
+    private void setIdRoomNew(HotelFacility room) {
         int lastId = readAll()
                 .stream()
-                .map(Room::getIdFacility)
+                .map(HotelFacility::getIdFacility)
                 .max(Comparator.comparingInt(o -> o))
                 .orElse(-1);
         room.setIdFacility(lastId + 1);

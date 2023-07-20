@@ -30,18 +30,11 @@ public class RepositoryOrderCollection implements RepositoryOrder {
 
     @Override
     public Order read(int id) {
-        Order orderRead = null;
-        for(Order o : readAll()){
-            if(id == o.getIdOrder()){
-                orderRead = o;
-                break;
-            }
-        }
-        return orderRead;
+        return readAll().get(id);
     }
 
     @Override
-    public boolean update(Order order) {
+    public boolean update(int id, Order order) {
         readAll().set(order.getIdOrder(), order);
         return true;
     }

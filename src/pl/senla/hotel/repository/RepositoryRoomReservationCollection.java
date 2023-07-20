@@ -35,27 +35,19 @@ public class RepositoryRoomReservationCollection implements RepositoryRoomReserv
     }
 
     @Override
-    public RoomReservation read(int id) {
-        RoomReservation reservation = null;
-        for(RoomReservation rr : readAll()){
-            if(id == rr.getIdRoomReservation()){
-                reservation = rr;
-                break;
-            }
-        }
-        return reservation;
+    public RoomReservation read(int index) {
+        return readAll().get(index);
     }
 
     @Override
-    public boolean update(RoomReservation roomReservation) {
-        int id = roomReservation.getIdRoomReservation();
-        readAll().set(id, roomReservation);
+    public boolean update(int index, RoomReservation roomReservation) {
+        readAll().set(index, roomReservation);
         return true;
     }
 
     @Override
-    public boolean delete(int id) {
-        readAll().remove(id);
+    public boolean delete(int index) {
+        readAll().remove(index);
         return true;
     }
 

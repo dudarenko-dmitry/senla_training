@@ -32,15 +32,15 @@ public class ExecutorAnalytics implements Executor {
         switch (userSelection) {
             case 1:
                 System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE +
-                        roomController.readAllRoomsSortByPrice());
+                        facilityController.readAllRoomsSortByPrice());
                 break;
             case 2:
                 System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY +
-                        roomController.readAllRoomsSortByCapacity());
+                        facilityController.readAllRoomsSortByCapacity());
                 break;
             case 3:
                 System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL +
-                        roomController.readAllRoomsSortByLevel());
+                        facilityController.readAllRoomsSortByLevel());
                 break;
             case 4:
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +

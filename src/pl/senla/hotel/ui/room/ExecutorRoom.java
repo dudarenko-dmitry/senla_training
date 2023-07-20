@@ -1,29 +1,25 @@
 package pl.senla.hotel.ui.room;
 
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.entity.services.RoomStatus;
 
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
-import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class ExecutorRoom implements Executor {
 
     private final ControllerFacility facilityController;
     private final ControllerRoom roomController;
-    private final ControllerRoomReservation roomReservationController;
 
     public ExecutorRoom() {
         this.facilityController = new ControllerFacilityCollection();
         this.roomController = new ControllerRoomCollection();
-        this.roomReservationController = new ControllerRoomReservationCollection();
     }
 
     @Override
@@ -32,7 +28,7 @@ public class ExecutorRoom implements Executor {
         switch (userSelection) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
             case 2 -> {
-                System.out.print("Input ID Room -->");
+                System.out.print("Input ID Room --> ");
                 int id = sc.nextInt();
                 System.out.println(CONSOLE_READ_ROOM + roomController.read(id));
             }
@@ -49,29 +45,29 @@ public class ExecutorRoom implements Executor {
                     execute(userSelection);
                 }
                 StringBuilder stringRoom = new StringBuilder()
-                        .append(CategoryFacility.ROOM.getTypeName()).append(":")
-                        .append(roomNumber).append(":")
-                        .append(price).append(":")
-                        .append(capacity).append(":")
-                        .append(roomLevel).append(":")
+                        .append(CategoryFacility.ROOM.getTypeName()).append(";")
+                        .append(roomNumber).append(";")
+                        .append(price).append(";")
+                        .append(capacity).append(";")
+                        .append(roomLevel).append(";")
                         .append(RoomStatus.AVAILABLE.getStatus());
-                System.out.println(CONSOLE_CREATE_ROOM + roomController.create(String.valueOf(stringRoom)));
-//                FreeRoom freeRoom1 = new FreeRoom(room, START_DATE_YEAR, END_DATE_YEAR);
-                facilityController.create(String.valueOf(stringRoom)); // CHECK (need for creating price-list)
-//                roomReservationController.createFreeRoom(freeRoom1);
+                System.out.println(CONSOLE_CREATE_ROOM + facilityController.create(String.valueOf(stringRoom)));
             }
             case 4 -> {
-                System.out.print("Input ID Room to Update -->");
+                System.out.print("Input ID Room to Update --> ");
                 int idRoomUpdate = sc.nextInt();
                 System.out.print("Input new price --> ");
                 int newPrice = sc.nextInt();
-                Room roomUpdated = roomController.read(idRoomUpdate);
-                roomUpdated.setPrice(newPrice);
-                facilityController.update(idRoomUpdate, String.valueOf(newPrice));
-                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(idRoomUpdate, String.valueOf(newPrice)));
+                HotelFacility roomUpdated = roomController.read(idRoomUpdate);
+                if(roomUpdated != null){
+                    roomUpdated.setPrice(newPrice);
+                    System.out.println(CONSOLE_CHANGE_ROOM + facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
+                } else {
+                    System.out.println(ERROR_INPUT_NAVIGATE);
+                }
             }
             case 5 -> {
-                System.out.print("Input ID Room to Delete -->");
+                System.out.print("Input ID Room to Delete --> ");
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }

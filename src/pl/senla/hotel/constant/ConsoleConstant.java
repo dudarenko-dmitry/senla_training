@@ -38,7 +38,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_READ_ALL_SERVICES =              "\nList of all Services: ";
     public static final String CONSOLE_READ_ALL_SERVICES_FOR_GUEST =    "\nList of all Services: ";
     public static final String CONSOLE_READ_SERVICE =                   "Service: ";
-    public static final String CONSOLE_CREATE_SERVICE =                 "New Service was created: ";
+    public static final String CONSOLE_CREATE_SERVICE =                 "New Reservation was created: ";
     public static final String CONSOLE_CHANGE_SERVICE =                 "Service changed: ";
     public static final String CONSOLE_DELETE_SERVICE =                 "Service deleted: ";
 

@@ -4,6 +4,8 @@ import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.repository.RepositoryGuest;
 import pl.senla.hotel.repository.RepositoryGuestCollection;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static pl.senla.hotel.constant.ClientConstant.*;
@@ -18,8 +20,9 @@ public class ServiceGuestImpl implements ServiceGuest {
 
     @Override
     public List<Guest> readAll() {
-        if(guestRepository.readAll() == null){
+        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
+            return Collections.emptyList();
         }
         return guestRepository.readAll();
     }
@@ -27,7 +30,7 @@ public class ServiceGuestImpl implements ServiceGuest {
     @Override
     public boolean create(String guestString) {
         Guest guest = new Guest();
-        String[] guestData = guestString.split(":");
+        String[] guestData = guestString.split(";");
         guest.setIdGuest(-1);
         guest.setName(guestData[0]);
         guest.setPhoneNumber(Integer.parseInt(guestData[1]));
@@ -36,20 +39,20 @@ public class ServiceGuestImpl implements ServiceGuest {
     }
 
     @Override
-    public Guest read(int id) {
-        if(readAll() == null){
+    public Guest read(int idGuest) {
+        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return null;
-        } else if(guestRepository.read(id) == null){
+        } else if(guestRepository.read(idGuest) == null){
             System.out.println(ERROR_READ_CLIENT);
             return null;
         }
-        return guestRepository.read(id);
+        return guestRepository.read(idGuest);
     }
 
     @Override
     public boolean update(int idGuest, String guestUpdate) {
-        if(readAll() == null){
+        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
         } else if(read(idGuest) == null){
@@ -58,19 +61,19 @@ public class ServiceGuestImpl implements ServiceGuest {
         }
         Guest guest = read(idGuest);
         guest.setPhoneNumber(Integer.parseInt(guestUpdate));
-        return guestRepository.update(guest);
+        return guestRepository.update(idGuest, guest);
     }
 
     @Override
-    public boolean delete(int id) {
-        if(readAll() == null){
+    public boolean delete(int idGuest) {
+        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
-        } else if(read(id) == null){
+        } else if(read(idGuest) == null){
             System.out.println(ERROR_READ_CLIENT);
             return false;
         }
-        return guestRepository.delete(id);
+        return guestRepository.delete(idGuest);
     }
 
     @Override
@@ -82,7 +85,7 @@ public class ServiceGuestImpl implements ServiceGuest {
         int lastId = readAll()
                 .stream()
                 .map(Guest::getIdGuest)
-                .max((o1, o2) -> o1 - o2)
+                .max(Comparator.comparingInt(o -> o))
                 .orElse(-1);
         guest.setIdGuest(lastId + 1);
     }

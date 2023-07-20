@@ -34,7 +34,7 @@ public class RepositoryFreeRoomCollection implements RepositoryFreeRoom{
     }
 
     @Override
-    public boolean update(FreeRoom freeRoom) {
+    public boolean update(int id, FreeRoom freeRoom) {
         readAll().set(freeRoom.getIdFreeRoom(), freeRoom);
         return true;
     }

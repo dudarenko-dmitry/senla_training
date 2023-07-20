@@ -4,12 +4,20 @@ import pl.senla.hotel.entity.services.Transfer;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.Restaurant;
 import pl.senla.hotel.entity.services.RoomReservation;
+import pl.senla.hotel.repository.RepositoryRoom;
+import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.Comparator;
 
 import static pl.senla.hotel.constant.HotelServieConstant.ERROR_IN_SERVICE_TYPE;
 
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
+
+    private final RepositoryRoom repositoryRoom;
+
+    public HotelServicesComparatorByPrice() {
+        this.repositoryRoom = new RepositoryRoomCollection();
+    }
 
     @Override
     public int compare(HotelService o1, HotelService o2) {
@@ -23,7 +31,7 @@ public class HotelServicesComparatorByPrice implements Comparator<HotelService> 
     }
 
     private int compareRoomReservation(RoomReservation o1, RoomReservation o2){
-        return o1.getIdRoom().getPrice() - o2.getIdRoom().getPrice();
+        return repositoryRoom.read(o1.getIdRoom()).getPrice() - repositoryRoom.read(o2.getIdRoom()).getPrice();
     }
 
     private int compareRestaurant(Restaurant o1, Restaurant o2){
