@@ -32,7 +32,7 @@ public class RepositoryFacilityCollection implements RepositoryFacility{
     }
 
     @Override
-    public boolean update(HotelFacility hotelFacility) {
+    public boolean update(int id, HotelFacility hotelFacility) {
         readAll().set(hotelFacility.getIdFacility(), hotelFacility);
         return true;
     }

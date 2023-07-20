@@ -58,7 +58,7 @@ public class ServiceGuestImpl implements ServiceGuest {
         }
         Guest guest = read(idGuest);
         guest.setPhoneNumber(Integer.parseInt(guestUpdate));
-        return guestRepository.update(guest);
+        return guestRepository.update(-1, guest);
     }
 
     @Override

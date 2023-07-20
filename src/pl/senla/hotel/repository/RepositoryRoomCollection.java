@@ -40,7 +40,7 @@ public class RepositoryRoomCollection implements RepositoryRoom {
     }
 
     @Override
-    public boolean update(Room room) {
+    public boolean update(int id, Room room) {
         int roomId = room.getIdFacility();
         readAll().set(roomId, room);
         return true;

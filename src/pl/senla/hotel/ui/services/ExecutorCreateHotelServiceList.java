@@ -4,9 +4,7 @@ import pl.senla.hotel.controller.ControllerRoom;
 import pl.senla.hotel.controller.ControllerRoomCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
 import pl.senla.hotel.controller.ControllerRoomReservationCollection;
-import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.entity.services.RoomReservation;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,9 +38,9 @@ public class ExecutorCreateHotelServiceList {
                 int numberOfDays = sc.nextInt();
 
                 StringBuilder roomReservationString = new StringBuilder()
-                        .append(idGuest).append(":")
-                        .append(idRoom).append(":")
-                        .append(startDateString).append(":")
+                        .append(idGuest).append(";")
+                        .append(idRoom).append(";")
+                        .append(startDateString).append(";")
                         .append(numberOfDays);
 
                 System.out.println(CONSOLE_CREATE_ROOM_RESERVATION +
@@ -64,7 +62,7 @@ public class ExecutorCreateHotelServiceList {
                 return guestServices;
             default:
                 System.out.println(ERROR_INPUT_NAVIGATE);
-                new StartCreateHotelServiceList().runMenu(idGuest);
+                new StartCreateHotelServiceList().runMenu();
         }
         return guestServices; // return List<HotelServices>
     }

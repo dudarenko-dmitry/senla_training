@@ -4,32 +4,28 @@ import java.time.LocalDateTime;
 
 public class Transfer extends HotelService{
 
-    private int idGuideTour;
+//    private int idGuideTour;
     private LocalDateTime startDateTime;
     private String nameTour;
     private String transport;
     private int price;
 
-    public Transfer(int idGuideTour) {
-        this.idGuideTour = idGuideTour;
-    }
-
-    public Transfer(int idGuideTour, int idGuest, String nameTour, String transport, LocalDateTime startDateTime, int price) {
+    public Transfer(int idGuest, String nameTour, String transport, LocalDateTime startDateTime, int price) {
         super(TypeOfService.TRANSFER.getTypeName(), idGuest);
         this.startDateTime = startDateTime;
-        this.idGuideTour = idGuideTour;
+//        this.idGuideTour = idGuideTour;
         this.nameTour = nameTour;
         this.transport = transport;
         this.price = price;
     }
 
-    public int getIdGuideTour() {
-        return idGuideTour;
-    }
-
-    public void setIdGuideTour(int idGuideTour) {
-        this.idGuideTour = idGuideTour;
-    }
+//    public int getIdGuideTour() {
+//        return idGuideTour;
+//    }
+//
+//    public void setIdGuideTour(int idGuideTour) {
+//        this.idGuideTour = idGuideTour;
+//    }
 
     public String getNameTour() {
         return nameTour;
@@ -67,9 +63,10 @@ public class Transfer extends HotelService{
     public String toString() {
         return "\nTransfer{" +
                 "typeOfService=" + super.getTypeOfService() +
-                ", idTransfer=" + idGuideTour + "," +
+//                ", idTransfer=" + idGuideTour + "," +
+                ", idTransfer=" + super.getIdService() + "," +
                 ", idGuest=" + super.getIdGuest() + "," +
-                nameTour + "," +
+                ", Route's name=" + nameTour + "," +
                 "\nStartTime=" + startDateTime +
                 ", transport=" + transport +
                 ", cost=" + price +

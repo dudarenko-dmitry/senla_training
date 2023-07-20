@@ -41,7 +41,7 @@ public class RepositoryOrderCollection implements RepositoryOrder {
     }
 
     @Override
-    public boolean update(Order order) {
+    public boolean update(int id, Order order) {
         readAll().set(order.getIdOrder(), order);
         return true;
     }

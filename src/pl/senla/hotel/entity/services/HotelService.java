@@ -4,6 +4,7 @@ import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_
 
 public abstract class HotelService {
 
+    protected int idService = -1; // new
     protected String typeOfService;
     protected int idGuest;
 
@@ -15,8 +16,17 @@ public abstract class HotelService {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return;
         }
+        this.idService = idService; // new
         this.idGuest = idGuest;
         this.typeOfService = typeOfService;
+    }
+
+    public int getIdService() {
+        return idService;
+    }
+
+    public void setIdService(int idService) {
+        this.idService = idService;
     }
 
     public String getTypeOfService() {

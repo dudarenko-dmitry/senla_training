@@ -1,9 +1,11 @@
 package pl.senla.hotel.ui.services;
 
+import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Navigator;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class StartCreateHotelServiceList {
 
@@ -15,15 +17,19 @@ public class StartCreateHotelServiceList {
         this.executor = new ExecutorCreateHotelServiceList();
     }
 
-    //don't work with PRIVATE access modifier. WHY?
-    public List<HotelService> runMenu(int idGuest) {
+    public boolean runMenu() {
+        Scanner sc = new Scanner(System.in);
         List<HotelService> guestServices;
+        System.out.print("Input Guest's ID --> ");
+        int idGuest = sc.nextInt();
+        Order order = new Order(idGuest);
         int userChoice;
         do {
             navigator.buildMenu();
             userChoice = navigator.makeChoice();
-            guestServices = executor.createHotelServiceList(idGuest, userChoice); //
+            guestServices = executor.createHotelServiceList(idGuest, userChoice);
         } while (userChoice != 0);
-        return guestServices; //return RoomReservation
+
+        return true;
     }
 }

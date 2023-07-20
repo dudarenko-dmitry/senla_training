@@ -90,7 +90,7 @@ public class ServiceOrderImpl implements ServiceOrder {
         } else if(read(idOrder) == null){
             System.out.println(ERROR_READ_ORDER);
         }
-        return repositoryOrder.update(null);
+        return repositoryOrder.update(-1, null);
     }
 
     @Override

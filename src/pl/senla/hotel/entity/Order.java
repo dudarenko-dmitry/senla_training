@@ -10,8 +10,8 @@ public class Order {
     private int idGuest;
     private List<HotelService> services;
 
-    public Order(int idOrder) {
-        this.idOrder = idOrder;
+    public Order(int idGuest) {
+        this.idOrder = idGuest;
     }
 
     public Order(int idGuest, List<HotelService> services) {

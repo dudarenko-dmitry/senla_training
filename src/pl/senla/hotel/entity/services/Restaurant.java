@@ -6,7 +6,7 @@ import static pl.senla.hotel.constant.RestaurantConstant.*;
 
 public class Restaurant extends HotelService{
 
-    private int idRestaurant;
+//    private int idRestaurant;
     private int tableNumber;
     private int numberOfGuests;
     private LocalDateTime startTime;
@@ -14,7 +14,7 @@ public class Restaurant extends HotelService{
 
 
 
-    public Restaurant(int idRestaurant, int idGuest, int tableNumber, int numberOfGuests,
+    public Restaurant(int idGuest, int tableNumber, int numberOfGuests,
                       LocalDateTime startTime, int price) {
         super(TypeOfService.RESTAURANT.getTypeName(), idGuest);
         if(idGuest == -1){
@@ -28,20 +28,20 @@ public class Restaurant extends HotelService{
 //            System.out.println(ERROR_RESTAURANT_NOT_AVAILABLE);
 //            return;
         }
-        this.idRestaurant = idRestaurant;
+//        this.idRestaurant = idRestaurant;
         this.tableNumber = tableNumber;
         this.numberOfGuests = numberOfGuests;
         this.startTime = startTime;
         this.price = price;
     }
 
-    public int getIdRestaurant() {
-        return idRestaurant;
-    }
-
-    public void setIdRestaurant(int idRestaurant) {
-        this.idRestaurant = idRestaurant;
-    }
+//    public int getIdRestaurant() {
+//        return idRestaurant;
+//    }
+//
+//    public void setIdRestaurant(int idRestaurant) {
+//        this.idRestaurant = idRestaurant;
+//    }
 
     public int getTableNumber() {
         return tableNumber;
@@ -79,7 +79,8 @@ public class Restaurant extends HotelService{
     public String toString() {
         return "\nRestaurant {" +
                 "typeOfService=" + super.getTypeOfService() +
-                ", idRestaurant=" + idRestaurant +
+//                ", idRestaurant=" + idRestaurant +
+                ", idRestaurant=" + super.getIdService() +
                 ", idGuest=" + super.getIdGuest() + "," +
                 ", tableNumber=" + tableNumber +
                 ", numberOfGuests=" + numberOfGuests +

@@ -8,7 +8,6 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class RoomReservation extends HotelService{
 
-    private int idRoomReservation = -1;
     private int idRoom;
     private int numberOfDays;
     private LocalDateTime checkInTime;
@@ -33,13 +32,13 @@ public class RoomReservation extends HotelService{
 
     }
 
-    public int getIdRoomReservation() {
-        return idRoomReservation;
-    }
-
-    public void setIdRoomReservation(int idRoomReservation) {
-        this.idRoomReservation = idRoomReservation;
-    }
+//    public int getIdRoomReservation() {
+//        return idRoomReservation;
+//    }
+//
+//    public void setIdRoomReservation(int idRoomReservation) {
+//        this.idRoomReservation = idRoomReservation;
+//    }
 
     public int getIdRoom() {
         return idRoom;
@@ -90,7 +89,8 @@ public class RoomReservation extends HotelService{
     public String toString() {
         return "\n\nRoomReservation {" +
                 "Type of Service=" + super.getTypeOfService() +
-                ", idRoomReservation=" + idRoomReservation +
+//                ", idRoomReservation=" + idRoomReservation +
+                ", idRoomReservation=" + super.getIdService() +
                 ", idGuest=" + super.getIdGuest() +
                 ", idRoom=" + idRoom +
                 "\ncheck-in time=" + checkInTime +

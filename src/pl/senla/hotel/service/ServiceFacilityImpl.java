@@ -31,7 +31,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     @Override
     public boolean update(int id, String hotelFacilityString) {
-        return repositoryHotelFacility.update(null); // null !!!
+        return repositoryHotelFacility.update(-1, null); // null !!!
     }
 
     @Override

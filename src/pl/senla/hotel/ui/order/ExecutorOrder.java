@@ -1,14 +1,11 @@
 package pl.senla.hotel.ui.order;
 
 import pl.senla.hotel.controller.*;
-import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 import pl.senla.hotel.ui.services.StartCreateHotelServiceList;
 import pl.senla.hotel.ui.services.StartUpdateHotelServiceList;
 
-import java.util.List;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
@@ -17,15 +14,11 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT_NAVIGATE;
 public class ExecutorOrder implements Executor {
 
     private final ControllerOrder orderController;
-    private final ControllerGuest guestController;
-    private final ControllerRoomReservation roomReservationController;
     private final StartCreateHotelServiceList createHotelServiceList;
     private final StartUpdateHotelServiceList updateHotelServiceList;
 
     public ExecutorOrder() {
         this.orderController = new ControllerOrderCollection();
-        this.guestController = new ControllerGuestCollection();
-        this.roomReservationController = new ControllerRoomReservationCollection();
         this.createHotelServiceList = new StartCreateHotelServiceList();
         this.updateHotelServiceList = new StartUpdateHotelServiceList();
     }
@@ -41,20 +34,11 @@ public class ExecutorOrder implements Executor {
                 System.out.println(CONSOLE_READ_ORDER + orderController.read(id));
             }
             case 3 -> {
-                System.out.print("Input Guest's ID --> ");
-                int idGuest = sc.nextInt();
-                List<HotelService> hotelServices = createHotelServiceList.runMenu(idGuest);
-                StringBuilder orderString = new StringBuilder()
-                        .append(idGuest).append(":")
-                        .append(hotelServices);
-                System.out.println(CONSOLE_CREATE_ORDER + orderController.create(String.valueOf(orderString)));
+                System.out.println("Creation of Order is started:");
+                System.out.println(CONSOLE_CREATE_ORDER + createHotelServiceList.runMenu()); // CHECK This !!!!!!!!
             }
             case 4 -> {
-                System.out.println("Update Order: ");
-//                Order orderUpdated = orderController.read(idOrderUpdate);
-//                List<HotelService> services = orderUpdated.getServices();
-//                services = updateHotelServiceList.runMenu(services);
-//                orderUpdated.setServices(services);
+                System.out.println("Updating of Order is started: ");
                 System.out.println(CONSOLE_CHANGE_ORDER + updateHotelServiceList.runMenu()); // CHECK This !!!!!!!!
             }
             case 5 -> {

@@ -62,7 +62,7 @@ public class ServiceRoomImpl implements ServiceRoom {
         }
         Room roomUpdate = read(idRoom);
         roomUpdate.setPrice(Integer.parseInt(roomString));
-        return roomRepository.update(roomUpdate);
+        return roomRepository.update(-1, roomUpdate);
     }
 
     @Override
