@@ -11,6 +11,7 @@ import pl.senla.hotel.repository.RepositoryRoomReservation;
 import pl.senla.hotel.repository.RepositoryRoomReservationCollection;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static pl.senla.hotel.constant.OrderConstant.*;
@@ -46,16 +47,6 @@ public class ServiceOrderImpl implements ServiceOrder {
             String typeOfService = StringUtils.substringAfter(serviceData[0], "=");
             if(typeOfService.equals(TypeOfService.ROOM_RESERVATION.getTypeName())){
                 RoomReservation roomReservation = new RoomReservation();
-
-//    public RoomReservation(int idGuest, int idRoom, LocalDate startDate, int numberOfDays) {
-//                    super(TypeOfService.ROOM_RESERVATION.getTypeName(), idGuest);
-//                    this.idRoom = idRoom;
-//                    this.numberOfDays = numberOfDays;
-//                    this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
-//                    this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
-////        this.cost = idRoom.getPrice() * numberOfDays; // REFACTOR !!!!!!!!!!!!!!!!!!!!!!!!!!
-//                    this.cost = 1000000000;
-//                }
 
             } else if (typeOfService.equals(TypeOfService.RESTAURANT.getTypeName())){
                 //logic-restaurant
@@ -123,7 +114,7 @@ public class ServiceOrderImpl implements ServiceOrder {
         int lastId = readAll()
                 .stream()
                 .map(Order::getIdOrder)
-                .max((o1, o2) -> o1 - o2)
+                .max(Comparator.comparingInt(o -> o))
                 .orElse(-1);
         order.setIdOrder(lastId + 1);
     }

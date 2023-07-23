@@ -1,7 +1,5 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.controller.ControllerRoom;
-import pl.senla.hotel.controller.ControllerRoomCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
 import pl.senla.hotel.controller.ControllerRoomReservationCollection;
 import pl.senla.hotel.entity.services.HotelService;
@@ -17,11 +15,9 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT_NAVIGATE;
 
 public class ExecutorCreateHotelServiceList {
 
-    private final ControllerRoom roomController;
     private final ControllerRoomReservation roomReservationController;
 
     public ExecutorCreateHotelServiceList() {
-        this.roomController = new ControllerRoomCollection();
         this.roomReservationController = new ControllerRoomReservationCollection();
     }
 

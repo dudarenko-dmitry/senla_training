@@ -1,5 +1,8 @@
 package pl.senla.hotel.entity.services;
 
+import pl.senla.hotel.service.ServiceRoom;
+import pl.senla.hotel.service.ServiceRoomImpl;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -13,6 +16,11 @@ public class RoomReservation extends HotelService{
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
     private int cost;
+    private final ServiceRoom serviceRoom = new ServiceRoomImpl();
+
+    public RoomReservation() {
+
+    }
 
     public RoomReservation(int idGuest, int idRoom, LocalDate startDate, int numberOfDays) {
         super(TypeOfService.ROOM_RESERVATION.getTypeName(), idGuest);
@@ -24,21 +32,8 @@ public class RoomReservation extends HotelService{
         this.numberOfDays = numberOfDays;
         this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
         this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
-//        this.cost = idRoom.getPrice() * numberOfDays; // REFACTOR !!!!!!!!!!!!!!!!!!!!!!!!!!
-        this.cost = 1000000000;
+        this.cost = serviceRoom.read(idRoom).getPrice() * numberOfDays;
     }
-
-    public RoomReservation() {
-
-    }
-
-//    public int getIdRoomReservation() {
-//        return idRoomReservation;
-//    }
-//
-//    public void setIdRoomReservation(int idRoomReservation) {
-//        this.idRoomReservation = idRoomReservation;
-//    }
 
     public int getIdRoom() {
         return idRoom;
@@ -81,8 +76,7 @@ public class RoomReservation extends HotelService{
     }
 
     public void setCost() {
-//        this.cost = numberOfDays * idRoom.getPrice();
-        this.cost = 100000000;
+        this.cost = getNumberOfDays() * serviceRoom.read(idRoom).getPrice();
     }
 
     @Override
