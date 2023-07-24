@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ControllerOrderCollection implements ControllerOrder {
 
-    private final ServiceOrder orderService = new ServiceOrderImpl();
+    private final ServiceOrder orderService = ServiceOrderImpl.getServiceOrder();
 
 
     @Override

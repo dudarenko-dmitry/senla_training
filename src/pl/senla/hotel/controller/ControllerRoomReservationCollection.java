@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ControllerRoomReservationCollection implements ControllerRoomReservation {
 
-    private final ServiceRoomReservation roomReservationService = new ServiceRoomReservationImpl();
+    private final ServiceRoomReservation roomReservationService = ServiceRoomReservationImpl.getServiceRoomReservation();
 
     @Override
     public List<RoomReservation> readAll() {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ControllerFacilityCollection implements ControllerFacility{
 
-    private final ServiceFacility serviceFacility = new ServiceFacilityImpl();
+    private final ServiceFacility serviceFacility = ServiceFacilityImpl.getServiceFacility();
 
     @Override
     public List<HotelFacility> readAll() {

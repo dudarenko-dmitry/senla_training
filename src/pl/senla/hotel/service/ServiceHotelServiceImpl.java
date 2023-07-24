@@ -16,7 +16,7 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     private final RepositoryHotelService repositoryHotelService;
 
     private ServiceHotelServiceImpl() {
-        this.serviceRoomReservation = new ServiceRoomReservationImpl();
+        this.serviceRoomReservation = ServiceRoomReservationImpl.getServiceRoomReservation();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
     }
 

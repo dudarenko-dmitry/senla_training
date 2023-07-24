@@ -13,10 +13,18 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 public class ServiceGuestImpl implements ServiceGuest {
 
+    private static ServiceGuest serviceGuest;
     private final RepositoryGuest guestRepository;
 
-    public ServiceGuestImpl() {
+    private ServiceGuestImpl() {
         this.guestRepository = RepositoryGuestCollection.getRepositoryGuest();
+    }
+
+    public static ServiceGuest getServiceGuest(){
+        if (serviceGuest == null){
+            serviceGuest = new ServiceGuestImpl();
+        }
+        return serviceGuest;
     }
 
     @Override

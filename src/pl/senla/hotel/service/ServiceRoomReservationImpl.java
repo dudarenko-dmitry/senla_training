@@ -19,18 +19,26 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
+    private static ServiceRoomReservation serviceRoomReservation;
     private final RepositoryHotelService repositoryHotelService;
     private final RepositoryRoomReservation repositoryRoomReservation; // delete?
     private final RepositoryFreeRoom repositoryFreeRoom; // delete
     private final RepositoryGuest repositoryGuest;
     private final RepositoryRoom repositoryRoom;
 
-    public ServiceRoomReservationImpl() {
+    private ServiceRoomReservationImpl() {
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation(); // delete?
         this.repositoryFreeRoom = new RepositoryFreeRoomCollection(); // delete
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
+    }
+
+    public static ServiceRoomReservation getServiceRoomReservation(){
+        if (serviceRoomReservation == null) {
+            serviceRoomReservation = new ServiceRoomReservationImpl();
+        }
+        return serviceRoomReservation;
     }
 
     @Override

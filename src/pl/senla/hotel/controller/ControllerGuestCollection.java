@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ControllerGuestCollection implements ControllerGuest {
 
-    private final ServiceGuest guestService = new ServiceGuestImpl();
+    private final ServiceGuest guestService = ServiceGuestImpl.getServiceGuest();
 
     @Override
     public List<Guest> readAll() {
