@@ -28,7 +28,7 @@ public class ServiceRoomImpl implements ServiceRoom {
         }
         return repositoryFacility.readAll()
                 .stream()
-//                .filter(r -> r.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(r -> r.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
                 .toList();
     }
 
@@ -49,7 +49,7 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public Room read(int idRoom) {
-        if(readAll() == null || readAll().isEmpty()){
+        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
             return null;
         } else if (idRoom < 0 || idRoom > readAll().size()){
@@ -67,7 +67,7 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean update(int idRoom, String roomString) {
-        if(readAll() == null){
+        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if(read(idRoom) == null){
@@ -81,7 +81,7 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean delete(int id) {
-        if(readAll() == null){
+        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if(read(id) == null){

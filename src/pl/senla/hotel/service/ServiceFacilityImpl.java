@@ -21,7 +21,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     @Override
     public List<HotelFacility> readAll() {
-        if(repositoryHotelFacility.readAll() == null  || repositoryHotelFacility.readAll().isEmpty()){
+        if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
             return Collections.emptyList();
         }
@@ -45,7 +45,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     @Override
     public HotelFacility read(int idFacility) {
-        if(readAll() == null  || readAll().isEmpty()){
+        if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
             return null;
         }
@@ -60,7 +60,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     @Override
     public boolean update(int idFacility, String hotelFacilityString) {
-        if(readAll() == null){
+        if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if(read(idFacility) == null){
@@ -74,7 +74,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     @Override
     public boolean delete(int idFacility) {
-        if(readAll() == null  || readAll().isEmpty()){
+        if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
         }
         for(int i = 0; i <= readAll().size(); i++){

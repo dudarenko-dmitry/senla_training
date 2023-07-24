@@ -18,8 +18,8 @@ public class StartMenuGuest implements StartMenu {
     public void runMenu() {
         while (true) {
             navigator.buildMenu();
-            int userselection = navigator.makeChoice();
-            executor.execute(userselection);
+            int userSelection = navigator.makeChoice();
+            executor.execute(userSelection);
         }
     }
 }

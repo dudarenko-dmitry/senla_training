@@ -28,7 +28,7 @@ public class ExecutorRoom implements Executor {
         switch (userSelection) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
             case 2 -> {
-                System.out.print("Input ID Room -->");
+                System.out.print("Input ID Room --> ");
                 int id = sc.nextInt();
                 System.out.println(CONSOLE_READ_ROOM + roomController.read(id));
             }
@@ -51,12 +51,10 @@ public class ExecutorRoom implements Executor {
                         .append(capacity).append(";")
                         .append(roomLevel).append(";")
                         .append(RoomStatus.AVAILABLE.getStatus());
-//                System.out.println(CONSOLE_CREATE_ROOM + roomController.create(String.valueOf(stringRoom)) + "\nRoomController works!!!");
                 System.out.println(CONSOLE_CREATE_ROOM + facilityController.create(String.valueOf(stringRoom)));
-                System.out.println("FacilityController works!!!");
             }
             case 4 -> {
-                System.out.print("Input ID Room to Update -->");
+                System.out.print("Input ID Room to Update --> ");
                 int idRoomUpdate = sc.nextInt();
                 System.out.print("Input new price --> ");
                 int newPrice = sc.nextInt();
@@ -64,13 +62,12 @@ public class ExecutorRoom implements Executor {
                 if(roomUpdated != null){
                     roomUpdated.setPrice(newPrice);
                     System.out.println(CONSOLE_CHANGE_ROOM + facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
-//                    System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(idRoomUpdate, String.valueOf(newPrice)));
                 } else {
                     System.out.println(ERROR_INPUT_NAVIGATE);
                 }
             }
             case 5 -> {
-                System.out.print("Input ID Room to Delete -->");
+                System.out.print("Input ID Room to Delete --> ");
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }
