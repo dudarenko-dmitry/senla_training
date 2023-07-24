@@ -48,4 +48,5 @@ public class RepositoryHotelServiceCollection implements RepositoryHotelService{
         dataStorageHotelService.getDataList().remove(index);
         return true;
     }
+
 }

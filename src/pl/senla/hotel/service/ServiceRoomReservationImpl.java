@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
@@ -8,6 +9,7 @@ import pl.senla.hotel.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     public List<RoomReservation> readAll() {
         if(repositoryHotelService.readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
+            return Collections.emptyList();
         }
         return repositoryRoomReservation.readAll()
                 .stream()
@@ -91,10 +94,14 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return null;
-        } else if(repositoryHotelService.read(idReservation) == null){
-            System.out.println(ERROR_READ_ROOM_RESERVATION);
         }
-        return (RoomReservation) repositoryHotelService.read(idReservation);
+        for (int i = 0; i <= readAll().size(); i++){
+            if (readAll().get(i).getIdService() == idReservation){
+                return (RoomReservation) repositoryHotelService.read(i);
+            }
+        }
+        System.out.println(ERROR_READ_ROOM_RESERVATION);
+        return null;
     }
 
     @Override
@@ -102,12 +109,12 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return false;
-        } else if(repositoryHotelService.read(idReservation) == null){
+        } else if(read(idReservation) == null){
             System.out.println(ERROR_READ_ROOM_RESERVATION);
             return false;
         }
         RoomReservation reservationOld = read(idReservation);
-        String[] reservationData = reservationUpdatingString.split(":");
+        String[] reservationData = reservationUpdatingString.split(";");
         String dateString = reservationData[0];
         LocalDate checkInDate = getDate(dateString);
         LocalDateTime checkInTime = LocalDateTime.of(checkInDate, HOTEL_CHECK_IN_TIME);
@@ -124,11 +131,11 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         reservationUpdate.setCheckOutTime(checkOutTime);
         reservationUpdate.setCost(repositoryRoom.read(reservationOld.getIdRoom()).getPrice() * numberOfDaysNew);
 
-        repositoryHotelService.delete(idReservation);
-        if(createFromObject(reservationUpdate)){ // check if is it created?
+        delete(idReservation);
+        if(createFromObject(reservationUpdate)){ // checking if is it created
             return true;
         } else {
-            repositoryHotelService.create(reservationOld);
+            createFromObject(reservationOld);
             System.out.println("It is not impossible to update this RoomReservation.\nOld RoomReservation was restored.");
             return false;
         }
@@ -139,11 +146,14 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         if(readAll() == null){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return false;
-        } else if(repositoryHotelService.read(idReservation) == null){
-            System.out.println(ERROR_READ_ROOM_RESERVATION);
-            return false;
         }
-        return repositoryHotelService.delete(idReservation);
+        for (int i = 0; i <= readAll().size(); i++){
+            if (readAll().get(i).getIdService() == idReservation){
+                return repositoryHotelService.delete(i);
+            }
+        }
+        System.out.println(ERROR_READ_ROOM_RESERVATION);
+        return false;
     }
 
     //edit next 5 methods

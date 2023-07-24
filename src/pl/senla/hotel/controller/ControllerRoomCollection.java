@@ -1,7 +1,7 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.service.ServiceRoomImpl;
-import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.service.ServiceRoom;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public class ControllerRoomCollection implements ControllerRoom {
     private final ServiceRoom roomService = new ServiceRoomImpl();
 
     @Override
-    public List<Room> readAll() {
+    public List<HotelFacility> readAll() {
         return roomService.readAll();
     }
 
@@ -21,13 +21,13 @@ public class ControllerRoomCollection implements ControllerRoom {
     }
 
     @Override
-    public Room read(int roomId) {
+    public HotelFacility read(int roomId) {
         return roomService.read(roomId);
     }
 
     @Override
-    public boolean update(int id, String roomString) {
-        return roomService.update(id, roomString);
+    public boolean update(int roomId, String roomString) {
+        return roomService.update(roomId, roomString);
     }
 
     @Override
@@ -35,18 +35,4 @@ public class ControllerRoomCollection implements ControllerRoom {
         return roomService.delete(roomId);
     }
 
-    @Override
-    public List<Room> readAllRoomsSortByPrice() {
-        return roomService.readAllRoomsSortByPrice();
-    }
-
-    @Override
-    public List<Room> readAllRoomsSortByCapacity() {
-        return roomService.readAllRoomsSortByCapacity();
-    }
-
-    @Override
-    public List<Room> readAllRoomsSortByLevel() {
-        return roomService.readAllRoomsSortByLevel();
-    }
 }

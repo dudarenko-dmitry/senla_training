@@ -4,6 +4,7 @@ import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.repository.RepositoryHotelService;
 import pl.senla.hotel.repository.RepositoryHotelServiceCollection;
 
+import java.util.Collections;
 import java.util.List;
 
 import static pl.senla.hotel.constant.HotelServieConstant.*;
@@ -29,6 +30,10 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
 
     @Override
     public List<HotelService> readAll() {
+        if(repositoryHotelService.readAll() == null || repositoryHotelService.readAll().isEmpty()){
+            System.out.println(ERROR_READ_ALL_SERVICES);
+            return Collections.emptyList();
+        }
         return repositoryHotelService.readAll();
     }
 
@@ -46,26 +51,26 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     }
 
     @Override
-    public HotelService read(int id) {
-        HotelService hs = readAll()
-                .stream()
-                .filter(o -> o.getIdService() == id)
-                .findFirst()
-                .orElse(null);
-        if(hs != null) {
-            int index = hs.getIdService();
-            return repositoryHotelService.read(index);
+    public HotelService read(int idHotelService) {
+        if(readAll() == null || readAll().isEmpty()){
+            System.out.println(ERROR_READ_ALL_SERVICES);
+            return null;
+        }
+        for(int i = 0; i <= readAll().size(); i++){
+            if(readAll().get(i).getIdService() == idHotelService){
+                return repositoryHotelService.read(idHotelService);
+            }
         }
         System.out.println(ERROR_READ_SERVICE);
         return null;
     }
 
     @Override
-    public boolean update(int id, String hotelServiceString) {
+    public boolean update(int idHotelService, String hotelServiceString) {
         String[] hotelServiceData = hotelServiceString.split(";");
         String typeOfService = hotelServiceData[10]; // EDIT and PUT correct index
         switch (typeOfService){
-            case "RoomReservation" -> serviceRoomReservation.update(id, hotelServiceString);
+            case "RoomReservation" -> serviceRoomReservation.update(idHotelService, hotelServiceString);
             case "Restaurant" -> System.out.println("CREATE ACTION FOR RESTAURANT");
             case "Transfer" -> System.out.println("CREATE ACTION FOR TRANSFER");
             default -> System.out.println("Something went wrong ...");
@@ -74,15 +79,16 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     }
 
     @Override
-    public boolean delete(int id) {
-        HotelService hs = readAll()
-                .stream()
-                .filter(o -> o.getIdService() == id)
-                .findFirst()
-                .orElse(null);
-        if(hs != null) {
-            int index = hs.getIdService();
-            return repositoryHotelService.delete(index);        }
+    public boolean delete(int idHotelService) {
+        if(readAll() == null || readAll().isEmpty()){
+            System.out.println(ERROR_READ_ALL_SERVICES);
+            return false;
+        }
+        for(int i = 0; i <= readAll().size(); i++){
+            if(readAll().get(i).getIdService() == idHotelService){
+                return repositoryHotelService.delete(idHotelService);
+            }
+        }
         System.out.println(ERROR_READ_SERVICE);
         return false;
     }

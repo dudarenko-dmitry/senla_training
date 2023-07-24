@@ -1,13 +1,7 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 
-import java.util.List;
-
-public interface ServiceRoom extends ServiceCRUDALL<Room>{
-
-    List<Room> readAllRoomsSortByPrice();
-    List<Room> readAllRoomsSortByCapacity();
-    List<Room> readAllRoomsSortByLevel();
+public interface ServiceRoom extends ServiceCRUDALL<HotelFacility>{
 
 }

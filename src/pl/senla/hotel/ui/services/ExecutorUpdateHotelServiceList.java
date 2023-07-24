@@ -33,7 +33,7 @@ public class ExecutorUpdateHotelServiceList {
                 System.out.println(CONSOLE_READ_ALL_SERVICES + orderController.read(idOrderUpdate)
                         .getServices()
                         .stream()
-                        .filter(s -> s.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
+                        .filter(s -> s.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION.getTypeName()))
                         .toList()
                         .toString());
 
@@ -42,13 +42,10 @@ public class ExecutorUpdateHotelServiceList {
                 System.out.println("Input new Date. ");
                 String checkInDateString = inputDateString();
                 System.out.print("Input number of days to reserve --> ");
-
                 int numberOfDays = sc.nextInt();
-
-                StringBuilder roomReservationUpdateString = new StringBuilder()
-                        .append(checkInDateString).append(":")
-                        .append(numberOfDays);
-                return roomReservationController.update(idRoomReservation, String.valueOf(roomReservationUpdateString));
+                String roomReservationUpdateString = checkInDateString + ";" +
+                        numberOfDays;
+                return roomReservationController.update(idRoomReservation, roomReservationUpdateString);
             case 2:
                 System.out.println("Update Restaurant's Reservation: ");
                 // do not use

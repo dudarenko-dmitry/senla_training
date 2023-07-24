@@ -3,7 +3,7 @@ package pl.senla.hotel.ui.order;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
-import pl.senla.hotel.ui.services.StartCreateHotelServiceList;
+import pl.senla.hotel.ui.services.StartCreateHotelService;
 import pl.senla.hotel.ui.services.StartUpdateHotelServiceList;
 
 import java.util.Scanner;
@@ -14,12 +14,12 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT_NAVIGATE;
 public class ExecutorOrder implements Executor {
 
     private final ControllerOrder orderController;
-    private final StartCreateHotelServiceList createHotelServiceList;
+    private final StartCreateHotelService createHotelServiceList;
     private final StartUpdateHotelServiceList updateHotelServiceList;
 
     public ExecutorOrder() {
         this.orderController = new ControllerOrderCollection();
-        this.createHotelServiceList = new StartCreateHotelServiceList();
+        this.createHotelServiceList = new StartCreateHotelService();
         this.updateHotelServiceList = new StartUpdateHotelServiceList();
     }
 
@@ -35,7 +35,10 @@ public class ExecutorOrder implements Executor {
             }
             case 3 -> {
                 System.out.println("Creation of Order is started:");
-                System.out.println(CONSOLE_CREATE_ORDER + createHotelServiceList.runMenu()); // CHECK This !!!!!!!!
+                System.out.print("Input Guest's ID --> ");
+                int idGuest = sc.nextInt();
+                System.out.println(CONSOLE_CREATE_ORDER + orderController.create(String.valueOf(idGuest)));
+                System.out.println(CONSOLE_CREATE_ORDER + createHotelServiceList.runMenu(idGuest)); // CHECK This !!!!!!!!
             }
             case 4 -> {
                 System.out.println("Updating of Order is started: ");

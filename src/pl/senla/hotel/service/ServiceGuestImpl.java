@@ -1,6 +1,7 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.repository.RepositoryGuest;
 import pl.senla.hotel.repository.RepositoryGuestCollection;
 
@@ -18,8 +19,9 @@ public class ServiceGuestImpl implements ServiceGuest {
 
     @Override
     public List<Guest> readAll() {
-        if(guestRepository.readAll() == null){
+        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
+            return null;
         }
         return guestRepository.readAll();
     }
