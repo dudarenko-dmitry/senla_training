@@ -16,7 +16,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
     private final RepositoryFacility repositoryHotelFacility;
 
     public ServiceFacilityImpl() {
-        this.repositoryHotelFacility = new RepositoryFacilityCollection();
+        this.repositoryHotelFacility = RepositoryFacilityCollection.getRepositoryFacility();
     }
 
     @Override

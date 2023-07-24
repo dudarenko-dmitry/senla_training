@@ -15,12 +15,21 @@ import java.util.List;
 
 public class RepositoryRoomReservationCollection implements RepositoryRoomReservation {
 
+    private static RepositoryRoomReservation repositoryRoomReservation;
     private final DataStorage<RoomReservation> dataStorageRoomReservation;
     private final DataStorage<Guest> dataStorageGuest;
 
-    public RepositoryRoomReservationCollection() {
+    private RepositoryRoomReservationCollection() {
         this.dataStorageGuest = DataStorageGuest.getDataStorageGuest();
         this.dataStorageRoomReservation = DataStorageRoomReservation.getDataStorageRoomReservation();
+    }
+
+    public static RepositoryRoomReservation getRepositoryRoomReservation(){
+        if(repositoryRoomReservation == null){
+            repositoryRoomReservation = new RepositoryRoomReservationCollection();
+            System.out.println("Repository for RoomReservation was created.");
+        }
+        return repositoryRoomReservation;
     }
 
     @Override

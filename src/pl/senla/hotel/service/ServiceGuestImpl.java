@@ -9,13 +9,14 @@ import java.util.Comparator;
 import java.util.List;
 
 import static pl.senla.hotel.constant.ClientConstant.*;
+import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 public class ServiceGuestImpl implements ServiceGuest {
 
     private final RepositoryGuest guestRepository;
 
     public ServiceGuestImpl() {
-        this.guestRepository = new RepositoryGuestCollection();
+        this.guestRepository = RepositoryGuestCollection.getRepositoryGuest();
     }
 
     @Override
@@ -43,11 +44,17 @@ public class ServiceGuestImpl implements ServiceGuest {
         if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return null;
-        } else if(guestRepository.read(idGuest) == null){
-            System.out.println(ERROR_READ_CLIENT);
+        } else if(idGuest < 0 || idGuest >= guestRepository.readAll().size()){
+            System.out.println(ERROR_INPUT);
             return null;
         }
-        return guestRepository.read(idGuest);
+        for(int i = 0; i <= readAll().size(); i++){
+            if(readAll().get(i).getIdGuest() == idGuest){
+                return guestRepository.read(idGuest);
+            }
+        }
+        System.out.println(ERROR_READ_CLIENT);
+        return null;
     }
 
     @Override

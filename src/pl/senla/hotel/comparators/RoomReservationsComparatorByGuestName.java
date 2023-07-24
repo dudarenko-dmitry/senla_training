@@ -11,7 +11,7 @@ public class RoomReservationsComparatorByGuestName implements Comparator<RoomRes
     private final RepositoryGuest repositoryGuest;
 
     public RoomReservationsComparatorByGuestName() {
-        this.repositoryGuest = new RepositoryGuestCollection();
+        this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
     }
 
     @Override

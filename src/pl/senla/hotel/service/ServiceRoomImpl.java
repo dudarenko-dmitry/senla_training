@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 public class ServiceRoomImpl implements ServiceRoom {
@@ -17,7 +18,7 @@ public class ServiceRoomImpl implements ServiceRoom {
     private final RepositoryFacility repositoryFacility;
 
     public ServiceRoomImpl() {
-        this.repositoryFacility = new RepositoryFacilityCollection();
+        this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
     }
 
     @Override
@@ -53,7 +54,7 @@ public class ServiceRoomImpl implements ServiceRoom {
             System.out.println(ERROR_READ_ALL_ROOM);
             return null;
         } else if (idRoom < 0 || idRoom > readAll().size()){
-            System.out.println(ERROR_READ_ROOM);
+            System.out.println(ERROR_INPUT);
             return null;
         }
         for(int i = 0; i <= readAll().size(); i++){
