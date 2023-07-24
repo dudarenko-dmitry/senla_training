@@ -6,22 +6,31 @@ import pl.senla.hotel.controller.ControllerRoomReservation;
 import pl.senla.hotel.controller.ControllerRoomReservationCollection;
 
 import pl.senla.hotel.entity.services.TypeOfService;
+import pl.senla.hotel.ui.order.StartMenuOrder;
 
 import java.util.Scanner;
 
-import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_READ_ALL_SERVICES;
-import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_READ_ORDER;
+import static pl.senla.hotel.constant.ConsoleConstant.*;
+import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
 
 public class ExecutorUpdateHotelServiceList {
 
+    private static ExecutorUpdateHotelServiceList executorUpdateHotelServiceList;
     private final ControllerOrder orderController;
     private final ControllerRoomReservation roomReservationController;
     // add all other Controllers for different type of Hotel's Services
 
-    public ExecutorUpdateHotelServiceList() {
-        this.orderController = new ControllerOrderCollection();
-        this.roomReservationController = new ControllerRoomReservationCollection();
+    private ExecutorUpdateHotelServiceList() {
+        this.orderController = ControllerOrderCollection.getControllerOrder();
+        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
         // add all other Controllers for different type of Hotel's Services
+    }
+
+    public static ExecutorUpdateHotelServiceList getExecutorUpdateHotelServiceList(){
+        if (executorUpdateHotelServiceList == null) {
+            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList();
+        }
+        return executorUpdateHotelServiceList;
     }
 
     protected boolean updateHotelServiceList(int idOrderUpdate, int typeOfServiceInt) {
@@ -30,22 +39,29 @@ public class ExecutorUpdateHotelServiceList {
         switch (typeOfServiceInt) {
             case 1:
                 System.out.println("Update Room's Reservation: ");
-                System.out.println(CONSOLE_READ_ALL_SERVICES + orderController.read(idOrderUpdate)
-                        .getServices()
-                        .stream()
-                        .filter(s -> s.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION.getTypeName()))
-                        .toList()
-                        .toString());
+                if(orderController.read(idOrderUpdate) != null){
+                    System.out.println(CONSOLE_READ_ALL_SERVICES + orderController.read(idOrderUpdate)
+                            .getServices()
+                            .stream()
+                            .filter(s -> s.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION.getTypeName()))
+                            .toList()
+                            .toString());
 
-                System.out.print("Input RoomReservation's ID to Update --> ");
-                int idRoomReservation = sc.nextInt();
-                System.out.println("Input new Date. ");
-                String checkInDateString = inputDateString();
-                System.out.print("Input number of days to reserve --> ");
-                int numberOfDays = sc.nextInt();
-                String roomReservationUpdateString = checkInDateString + ";" +
-                        numberOfDays;
-                return roomReservationController.update(idRoomReservation, roomReservationUpdateString);
+                    System.out.print("Input RoomReservation's ID to Update --> ");
+                    int idRoomReservation = sc.nextInt();
+                    System.out.println("Input new Date. ");
+                    String checkInDateString = inputDateString();
+                    System.out.print("Input number of days to reserve --> ");
+                    int numberOfDays = sc.nextInt();
+                    String roomReservationUpdateString = checkInDateString + ";" +
+                            numberOfDays;
+                    return roomReservationController.update(idRoomReservation, roomReservationUpdateString);
+                } else {
+                    System.out.println(ERROR_READ_ORDER);
+                    System.out.println(ERROR_INPUT);
+                    StartMenuOrder.getStartMenuOrder().runMenu();
+                }
+
             case 2:
                 System.out.println("Update Restaurant's Reservation: ");
                 // do not use

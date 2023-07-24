@@ -10,19 +10,28 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 public class ServiceRoomImpl implements ServiceRoom {
 
+    private static ServiceRoom serviceRoom;
     private final RepositoryFacility repositoryFacility;
 
-    public ServiceRoomImpl() {
-        this.repositoryFacility = new RepositoryFacilityCollection();
+    private ServiceRoomImpl() {
+        this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
+    }
+
+    public static ServiceRoom getServiceRoom() {
+        if (serviceRoom == null) {
+            serviceRoom = new ServiceRoomImpl();
+        }
+        return serviceRoom;
     }
 
     @Override
     public List<HotelFacility> readAll() {
-        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
+        if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ROOM);
             return Collections.emptyList();
         }
@@ -49,15 +58,15 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public Room read(int idRoom) {
-        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
+        if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ROOM);
             return null;
-        } else if (idRoom < 0 || idRoom > readAll().size()){
-            System.out.println(ERROR_READ_ROOM);
+        } else if (idRoom < 0 || idRoom > readAll().size()) {
+            System.out.println(ERROR_INPUT);
             return null;
         }
-        for(int i = 0; i <= readAll().size(); i++){
-            if(readAll().get(i).getIdFacility() == idRoom){
+        for (int i = 0; i <= readAll().size(); i++) {
+            if (readAll().get(i).getIdFacility() == idRoom) {
                 return (Room) repositoryFacility.read(idRoom);
             }
         }
@@ -67,10 +76,10 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean update(int idRoom, String roomString) {
-        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
+        if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
-        } else if(read(idRoom) == null){
+        } else if (read(idRoom) == null) {
             System.out.println(ERROR_READ_ROOM);
             return false;
         }
@@ -81,10 +90,10 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean delete(int id) {
-        if(repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()){
+        if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
-        } else if(read(id) == null){
+        } else if (read(id) == null) {
             System.out.println(ERROR_READ_ROOM);
             return false;
         }

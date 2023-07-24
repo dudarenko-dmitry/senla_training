@@ -10,12 +10,21 @@ import java.util.List;
 
 public class RepositoryFacilityCollection implements RepositoryFacility{
 
+    private static RepositoryFacility repositoryFacility;
     private final DataStorage<HotelFacility> priceList;
 
-    public RepositoryFacilityCollection() {
+    private RepositoryFacilityCollection() {
         this.priceList = DataStorageFacility.getDataStorageFacility();
     }
 
+    public static RepositoryFacility getRepositoryFacility(){
+        if(repositoryFacility == null){
+            repositoryFacility = new RepositoryFacilityCollection();
+            System.out.println("Repository for HotelFacility was created.");
+
+        }
+        return repositoryFacility;
+    }
     @Override
     public List<HotelFacility> readAll() {
         return priceList.getDataList();

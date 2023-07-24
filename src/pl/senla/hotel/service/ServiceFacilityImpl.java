@@ -13,10 +13,18 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 public class ServiceFacilityImpl implements ServiceFacility{
 
+    private static ServiceFacility serviceFacility;
     private final RepositoryFacility repositoryHotelFacility;
 
-    public ServiceFacilityImpl() {
-        this.repositoryHotelFacility = new RepositoryFacilityCollection();
+    private ServiceFacilityImpl() {
+        this.repositoryHotelFacility = RepositoryFacilityCollection.getRepositoryFacility();
+    }
+
+    public static ServiceFacility getServiceFacility(){
+        if (serviceFacility == null){
+            serviceFacility = new ServiceFacilityImpl();
+        }
+        return serviceFacility;
     }
 
     @Override

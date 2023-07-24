@@ -7,14 +7,14 @@ import java.util.List;
 
 public class RepositoryHotelServiceCollection implements RepositoryHotelService{
 
-    private static RepositoryHotelServiceCollection repositoryHotelService;
+    private static RepositoryHotelService repositoryHotelService;
     private final DataStorageHotelService dataStorageHotelService;
 
     private RepositoryHotelServiceCollection() {
         this.dataStorageHotelService = DataStorageHotelService.getDataStorageHotelService();
     }
 
-    public static RepositoryHotelServiceCollection getRepositoryHotelService(){
+    public static RepositoryHotelService getRepositoryHotelService(){
         if(repositoryHotelService == null) {
             repositoryHotelService = new RepositoryHotelServiceCollection();
             System.out.println("Repository for Hotel's Services was created.");

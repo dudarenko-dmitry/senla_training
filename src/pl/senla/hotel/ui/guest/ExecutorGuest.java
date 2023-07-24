@@ -10,10 +10,18 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 public class ExecutorGuest implements Executor {
 
+    private static Executor executor;
     private final ControllerGuest guestController;
 
-    public ExecutorGuest() {
-        this.guestController = new ControllerGuestCollection();
+    private ExecutorGuest() {
+        this.guestController = ControllerGuestCollection.getControllerGuest();
+    }
+
+    public static Executor getExecutorGuest(){
+        if (executor == null) {
+            executor = new ExecutorGuest();
+        }
+        return executor;
     }
 
     @Override
@@ -51,8 +59,8 @@ public class ExecutorGuest implements Executor {
             }
             case 0 -> new StartMenuMain().runMenu();
             default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
-                new StartMenuGuest().runMenu();
+                System.out.println(ERROR_INPUT);
+                StartMenuGuest.getStartMenuGuest().runMenu();
             }
         }
     }

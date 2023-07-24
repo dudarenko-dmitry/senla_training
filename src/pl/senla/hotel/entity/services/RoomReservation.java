@@ -16,15 +16,15 @@ public class RoomReservation extends HotelService{
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
     private int cost;
-    private final ServiceRoom serviceRoom = new ServiceRoomImpl();
+    private final ServiceRoom serviceRoom = ServiceRoomImpl.getServiceRoom();
 
     public RoomReservation() {
 
     }
 
-    public RoomReservation(int idGuest, int idRoom, LocalDate startDate, int numberOfDays) {
-        super(TypeOfService.ROOM_RESERVATION.getTypeName(), idGuest);
-        if(idRoom == -1){
+    public RoomReservation(int idService, int idOrder, int idGuest, int idRoom, LocalDate startDate, int numberOfDays) {
+        super(idService, idOrder, TypeOfService.RESTAURANT.getTypeName(), idGuest);
+        if(idRoom < 0){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
         }
@@ -82,9 +82,9 @@ public class RoomReservation extends HotelService{
     @Override
     public String toString() {
         return "\n\nRoomReservation {" +
-                "Type of Service=" + super.getTypeOfService() +
-//                ", idRoomReservation=" + idRoomReservation +
-                ", idRoomReservation=" + super.getIdService() +
+                "idOrder= " + super.getIdOrder() +
+                ", type of Service=" + super.getTypeOfService() +
+                "\n idRoomReservation=" + super.getIdService() +
                 ", idGuest=" + super.getIdGuest() +
                 ", idRoom=" + idRoom +
                 "\ncheck-in time=" + checkInTime +

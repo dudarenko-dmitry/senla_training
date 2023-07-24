@@ -8,22 +8,30 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
-import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT_NAVIGATE;
+import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 public class ExecutorAnalytics implements Executor {
 
+    private static Executor executor;
     private final ControllerRoom roomController;
     private final ControllerFacility facilityController;
     private final ControllerRoomReservation roomReservationController;
     private final ControllerGuest guestController;
     private final ControllerOrder orderController;
 
-    public ExecutorAnalytics() {
-        this.roomController = new ControllerRoomCollection();
-        this.facilityController = new ControllerFacilityCollection();
-        this.roomReservationController = new ControllerRoomReservationCollection();
-        this.guestController = new ControllerGuestCollection();
-        this.orderController = new ControllerOrderCollection();
+    private ExecutorAnalytics() {
+        this.roomController = ControllerRoomCollection.getControllerRoom();
+        this.facilityController = ControllerFacilityCollection.getControllerFacility();
+        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
+        this.guestController = ControllerGuestCollection.getControllerGuest();
+        this.orderController = ControllerOrderCollection.getControllerOrder();
+    }
+
+    public static Executor getExecutorAnalytics(){
+        if (executor == null) {
+            executor = new ExecutorAnalytics();
+        }
+        return executor;
     }
 
     @Override
@@ -119,8 +127,8 @@ public class ExecutorAnalytics implements Executor {
             case 0:
                 new StartMenuMain().runMenu();
             default:
-                System.out.println(ERROR_INPUT_NAVIGATE);
-                new StartMenuAnalytics().runMenu();
+                System.out.println(ERROR_INPUT);
+                StartMenuAnalytics.getStartMenuAnalytics().runMenu();
         }
     }
 

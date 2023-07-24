@@ -9,19 +9,28 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.OrderConstant.*;
 
 public class ServiceOrderImpl implements ServiceOrder {
 
+    private static ServiceOrder serviceOrder;
     private final RepositoryOrder repositoryOrder;
 
-    public ServiceOrderImpl() {
-        this.repositoryOrder = new RepositoryOrderCollection();
+    private ServiceOrderImpl() {
+        this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
+    }
+
+    public static ServiceOrder getServiceOrder() {
+        if (serviceOrder == null) {
+            serviceOrder = new ServiceOrderImpl();
+        }
+        return serviceOrder;
     }
 
     @Override
     public List<Order> readAll() {
-        if(repositoryOrder.readAll() == null  || readAll().isEmpty()){
+        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return Collections.emptyList();
         }
@@ -41,12 +50,15 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public Order read(int idOrder) {
-        if(readAll() == null){
+        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return null;
+        } else if (idOrder < 0 || idOrder >= readAll().size()) {
+            System.out.println(ERROR_INPUT);
+            return null;
         }
-        for(int i = 0; i <= readAll().size(); i++){
-            if(readAll().get(i).getIdOrder() == idOrder){
+        for (int i = 0; i <= readAll().size(); i++) {
+            if (readAll().get(i).getIdOrder() == idOrder) {
                 return repositoryOrder.read(i);
             }
         }
@@ -58,26 +70,31 @@ public class ServiceOrderImpl implements ServiceOrder {
     // This method is not used in application.
     // All changes are processed in appropriate Services depending on Type of Hotel's Service.
     public boolean update(int idOrder, String orderUpdatingString) {
-        if(readAll() == null){
+        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
-        } else if(read(idOrder) == null){
+        } else if (read(idOrder) == null) {
             System.out.println(ERROR_READ_ORDER);
+            System.out.println(ERROR_INPUT);
+            return false;
         }
-        return repositoryOrder.update(-1, null);
+        Order orderUpdate = new Order(); // read from String
+        return repositoryOrder.update(idOrder, orderUpdate);
     }
 
     @Override
     public boolean delete(int idOrder) {
-        if(readAll() == null){
+        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
         }
-        for(int i = 0; i <= readAll().size(); i++){
-            if(readAll().get(i).getIdOrder() == idOrder){
-                return repositoryOrder.delete(i);            }
+        for (int i = 0; i <= readAll().size(); i++) {
+            if (readAll().get(i).getIdOrder() == idOrder) {
+                return repositoryOrder.delete(i);
+            }
         }
         System.out.println(ERROR_READ_ORDER);
+        System.out.println(ERROR_INPUT);
         return false;
     }
 

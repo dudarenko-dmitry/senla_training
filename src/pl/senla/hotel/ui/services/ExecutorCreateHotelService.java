@@ -1,35 +1,53 @@
 package pl.senla.hotel.ui.services;
 
+import pl.senla.hotel.controller.ControllerFacility;
+import pl.senla.hotel.controller.ControllerFacilityCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
 import pl.senla.hotel.controller.ControllerRoomReservationCollection;
 
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
+import static pl.senla.hotel.constant.HotelFacilityConstant.ERROR_READ_ROOM;
 
 public class ExecutorCreateHotelService {
 
+    private static ExecutorCreateHotelService executor;
     private final ControllerRoomReservation roomReservationController;
+    private final ControllerFacility controllerFacility;
 
-    public ExecutorCreateHotelService() {
-        this.roomReservationController = new ControllerRoomReservationCollection();
+    private ExecutorCreateHotelService() {
+        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
+        this.controllerFacility = ControllerFacilityCollection.getControllerFacility();
+    }
+
+    public static ExecutorCreateHotelService getExecutorCreateHotelService(){
+        if (executor == null) {
+            executor = new ExecutorCreateHotelService();
+        }
+        return executor;
     }
 
     //Later change return from RoomReservation to HotelService and refactor
-    protected boolean createHotelServiceForGuest(int idGuest, int index) { //use only (1) RoomReservation
+    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService) { //use only (1) RoomReservation
         Scanner sc = new Scanner(System.in);
-        switch (index) {
+        switch (typeOfService) {
             case 1 -> {
                 System.out.print("Input Id Room --> ");
                 int idRoom = sc.nextInt();
-                String startDateString = inputDateString();
-                System.out.print("Input number of days to reserve --> ");
-                int numberOfDays = sc.nextInt();
-                String roomReservationString = idGuest + ";" +
-                        idRoom + ";" +
-                        startDateString + ";" +
-                        numberOfDays;
-                return roomReservationController.create(roomReservationString);
+                if (controllerFacility.read(idRoom) != null) {
+                    String startDateString = inputDateString();
+                    System.out.print("Input number of days to reserve --> ");
+                    int numberOfDays = sc.nextInt();
+                    String roomReservationString = idOrder + ";" +
+                            idGuest + ";" +
+                            idRoom + ";" +
+                            startDateString + ";" +
+                            numberOfDays;
+                    return roomReservationController.create(roomReservationString);
+                }
+                System.out.println(ERROR_READ_ROOM);
+                return false;
             }
             case 2 -> {
                 System.out.println("Do not use this type of Service: Restaurant. ");
@@ -46,8 +64,8 @@ public class ExecutorCreateHotelService {
                 return true;
             }
             default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
-                new StartCreateHotelService().runMenu(idGuest);
+                System.out.println(ERROR_INPUT);
+                StartCreateHotelService.getStartCreateHotelService().runMenu(idOrder, idGuest);
             }
         }
         return true;

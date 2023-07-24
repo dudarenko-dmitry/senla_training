@@ -6,20 +6,28 @@ import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CREATE_SERVICE;
 
 public class StartCreateHotelService {
 
+    private static StartCreateHotelService startCreateHotelService;
     private final Navigator navigator;
     private final ExecutorCreateHotelService executor;
 
-    public StartCreateHotelService() {
-        this.navigator = new NavigatorHotelService();
-        this.executor = new ExecutorCreateHotelService();
+    private StartCreateHotelService() {
+        this.navigator = NavigatorHotelService.getNavigatorHotelService();
+        this.executor = ExecutorCreateHotelService.getExecutorCreateHotelService();
     }
 
-    public boolean runMenu(int idGuest) {
+    public static StartCreateHotelService getStartCreateHotelService(){
+        if (startCreateHotelService == null) {
+            startCreateHotelService = new StartCreateHotelService();
+        }
+        return startCreateHotelService;
+    }
+
+    public boolean runMenu(int idOrder, int idGuest) {
         int userChoice;
         do {
             navigator.buildMenu();
             userChoice = navigator.makeChoice();
-            System.out.println(CONSOLE_CREATE_SERVICE + executor.createHotelServiceForGuest(idGuest, userChoice));
+            System.out.println(CONSOLE_CREATE_SERVICE + executor.createHotelServiceForGuest(idOrder, idGuest, userChoice));
         } while (userChoice != 0);
         return true;
     }

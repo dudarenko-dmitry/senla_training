@@ -8,12 +8,20 @@ import java.util.List;
 
 public class RepositoryGuestCollection implements RepositoryGuest {
 
+    private static RepositoryGuest repositoryGuest;
     private final DataStorage<Guest> dataStorage;
 
-    public RepositoryGuestCollection() {
+    private RepositoryGuestCollection() {
         this.dataStorage = DataStorageGuest.getDataStorageGuest();
     }
 
+    public static RepositoryGuest getRepositoryGuest(){
+        if(repositoryGuest == null){
+            repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
+            System.out.println("Repository for Guest was created.");
+        }
+        return repositoryGuest;
+    }
     @Override
     public List<Guest> readAll() {
         return dataStorage.getDataList();

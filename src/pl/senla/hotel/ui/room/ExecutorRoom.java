@@ -3,6 +3,7 @@ package pl.senla.hotel.ui.room;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
+import pl.senla.hotel.ui.order.ExecutorOrder;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -14,12 +15,20 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 public class ExecutorRoom implements Executor {
 
+    private static Executor executorRoom;
     private final ControllerFacility facilityController;
     private final ControllerRoom roomController;
 
-    public ExecutorRoom() {
-        this.facilityController = new ControllerFacilityCollection();
-        this.roomController = new ControllerRoomCollection();
+    private ExecutorRoom() {
+        this.facilityController = ControllerFacilityCollection.getControllerFacility();
+        this.roomController = ControllerRoomCollection.getControllerRoom();
+    }
+
+    public static Executor getExecutorRoom(){
+        if (executorRoom == null) {
+            executorRoom = new ExecutorRoom();
+        }
+        return executorRoom;
     }
 
     @Override
@@ -60,10 +69,10 @@ public class ExecutorRoom implements Executor {
                 int newPrice = sc.nextInt();
                 HotelFacility roomUpdated = roomController.read(idRoomUpdate);
                 if(roomUpdated != null){
-                    roomUpdated.setPrice(newPrice);
+//                    roomUpdated.setPrice(newPrice);
                     System.out.println(CONSOLE_CHANGE_ROOM + facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
                 } else {
-                    System.out.println(ERROR_INPUT_NAVIGATE);
+                    System.out.println(ERROR_INPUT);
                 }
             }
             case 5 -> {
@@ -73,7 +82,7 @@ public class ExecutorRoom implements Executor {
             }
             case 0 -> new StartMenuMain().runMenu();
             default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
+                System.out.println(ERROR_INPUT);
                 new StartMenuMain().runMenu();
             }
         }

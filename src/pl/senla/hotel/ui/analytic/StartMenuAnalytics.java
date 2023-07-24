@@ -6,12 +6,20 @@ import pl.senla.hotel.ui.StartMenu;
 
 public class StartMenuAnalytics implements StartMenu {
 
+    private static StartMenu startMenu;
     private final Navigator navigator;
     private final Executor executor;
 
-    public StartMenuAnalytics() {
-        this.navigator = new NavigatorAnalytics();
-        this.executor = new ExecutorAnalytics();
+    private StartMenuAnalytics() {
+        this.navigator = NavigatorAnalytics.getNavigatorAnalytics();
+        this.executor = ExecutorAnalytics.getExecutorAnalytics();
+    }
+
+    public static StartMenu getStartMenuAnalytics(){
+        if (startMenu == null) {
+            startMenu = new StartMenuAnalytics();
+        }
+        return startMenu;
     }
 
     @Override

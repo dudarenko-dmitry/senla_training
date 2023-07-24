@@ -11,10 +11,19 @@ import java.util.List;
 
 public class RepositoryOrderCollection implements RepositoryOrder {
 
+    private static RepositoryOrder repositoryOrder;
     private final DataStorage<Order> orderDataStorage;
 
-    public RepositoryOrderCollection() {
+    private RepositoryOrderCollection() {
         this.orderDataStorage = DataStorageOrder.getDataStorageOrder();
+    }
+
+    public static RepositoryOrder getRepositoryOrder(){
+        if(repositoryOrder == null){
+            repositoryOrder = new RepositoryOrderCollection();
+            System.out.println("REpository for Order was created.");
+        }
+        return repositoryOrder;
     }
 
     @Override

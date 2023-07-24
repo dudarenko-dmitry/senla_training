@@ -8,7 +8,19 @@ import java.util.List;
 
 public class ControllerRoomCollection implements ControllerRoom {
 
-    private final ServiceRoom roomService = new ServiceRoomImpl();
+    private static ControllerRoom controllerRoom;
+    private final ServiceRoom roomService;
+
+    private ControllerRoomCollection() {
+        this.roomService = ServiceRoomImpl.getServiceRoom();
+    }
+
+    public static ControllerRoom getControllerRoom() {
+        if (controllerRoom == null) {
+            controllerRoom = new ControllerRoomCollection();
+        }
+        return controllerRoom;
+    }
 
     @Override
     public List<HotelFacility> readAll() {
