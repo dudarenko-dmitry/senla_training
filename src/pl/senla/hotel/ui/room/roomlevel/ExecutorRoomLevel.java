@@ -2,7 +2,7 @@ package pl.senla.hotel.ui.room.roomlevel;
 
 import pl.senla.hotel.entity.services.RoomLevel;
 
-import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT_NAVIGATE;
+import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 public class ExecutorRoomLevel {
 
@@ -15,7 +15,7 @@ public class ExecutorRoomLevel {
             case 3:
                 return RoomLevel.LUX.getLevel();
             default:
-                System.out.println(ERROR_INPUT_NAVIGATE);
+                System.out.println(ERROR_INPUT);
                 return "";
         }
     }

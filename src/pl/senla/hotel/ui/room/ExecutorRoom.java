@@ -18,8 +18,8 @@ public class ExecutorRoom implements Executor {
     private final ControllerRoom roomController;
 
     public ExecutorRoom() {
-        this.facilityController = new ControllerFacilityCollection();
-        this.roomController = new ControllerRoomCollection();
+        this.facilityController = ControllerFacilityCollection.getControllerFacility();
+        this.roomController = ControllerRoomCollection.getControllerRoom();
     }
 
     @Override
@@ -60,10 +60,10 @@ public class ExecutorRoom implements Executor {
                 int newPrice = sc.nextInt();
                 HotelFacility roomUpdated = roomController.read(idRoomUpdate);
                 if(roomUpdated != null){
-                    roomUpdated.setPrice(newPrice);
+//                    roomUpdated.setPrice(newPrice);
                     System.out.println(CONSOLE_CHANGE_ROOM + facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
                 } else {
-                    System.out.println(ERROR_INPUT_NAVIGATE);
+                    System.out.println(ERROR_INPUT);
                 }
             }
             case 5 -> {
@@ -73,7 +73,7 @@ public class ExecutorRoom implements Executor {
             }
             case 0 -> new StartMenuMain().runMenu();
             default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
+                System.out.println(ERROR_INPUT);
                 new StartMenuMain().runMenu();
             }
         }

@@ -10,7 +10,19 @@ import java.util.List;
 
 public class ControllerRoomReservationCollection implements ControllerRoomReservation {
 
-    private final ServiceRoomReservation roomReservationService = ServiceRoomReservationImpl.getServiceRoomReservation();
+    private static ControllerRoomReservation controllerRoomReservation;
+    private final ServiceRoomReservation roomReservationService;
+
+    private ControllerRoomReservationCollection() {
+        this.roomReservationService = ServiceRoomReservationImpl.getServiceRoomReservation();
+    }
+
+    public static ControllerRoomReservation getControllerRoomReservation(){
+        if(controllerRoomReservation == null){
+            controllerRoomReservation = new ControllerRoomReservationCollection();
+        }
+        return controllerRoomReservation;
+    }
 
     @Override
     public List<RoomReservation> readAll() {

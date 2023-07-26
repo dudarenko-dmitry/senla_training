@@ -13,7 +13,7 @@ public class ExecutorGuest implements Executor {
     private final ControllerGuest guestController;
 
     public ExecutorGuest() {
-        this.guestController = new ControllerGuestCollection();
+        this.guestController = ControllerGuestCollection.getControllerGuest();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ExecutorGuest implements Executor {
             }
             case 0 -> new StartMenuMain().runMenu();
             default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
+                System.out.println(ERROR_INPUT);
                 new StartMenuGuest().runMenu();
             }
         }

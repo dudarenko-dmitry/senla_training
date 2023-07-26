@@ -9,8 +9,19 @@ import java.util.List;
 
 public class ControllerOrderCollection implements ControllerOrder {
 
-    private final ServiceOrder orderService = ServiceOrderImpl.getServiceOrder();
+    private static ControllerOrder controllerOrder;
+    private final ServiceOrder orderService;
 
+    private ControllerOrderCollection() {
+        this.orderService = ServiceOrderImpl.getServiceOrder();
+    }
+
+    public static ControllerOrder getControllerOrder(){
+        if(controllerOrder == null){
+            controllerOrder = new ControllerOrderCollection();
+        }
+        return controllerOrder;
+    }
 
     @Override
     public List<Order> readAll() {

@@ -7,7 +7,7 @@ import pl.senla.hotel.ui.guest.StartMenuGuest;
 import pl.senla.hotel.ui.hotelfacilities.StartMenuHotelFacilities;
 import pl.senla.hotel.ui.order.StartMenuOrder;
 
-import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT_NAVIGATE;
+import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 public class ExecutorMain implements Executor {
 
@@ -35,7 +35,7 @@ public class ExecutorMain implements Executor {
                 System.exit(0);
             }
             default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
+                System.out.println(ERROR_INPUT);
                 new StartMenuMain().runMenu();
             }
         }

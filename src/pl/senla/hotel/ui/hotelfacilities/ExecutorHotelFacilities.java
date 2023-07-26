@@ -26,7 +26,7 @@ public class ExecutorHotelFacilities implements Executor {
             case 2 -> menuTable.runMenu();
             case 3 -> menuTransfer.runMenu();
             case 0 -> new StartMenuMain().runMenu();
-            default -> {System.out.println(ERROR_INPUT_NAVIGATE);
+            default -> {System.out.println(ERROR_INPUT);
                 new StartMenuMain().runMenu();}
         }
     }

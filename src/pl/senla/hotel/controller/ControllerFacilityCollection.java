@@ -8,7 +8,19 @@ import java.util.List;
 
 public class ControllerFacilityCollection implements ControllerFacility{
 
-    private final ServiceFacility serviceFacility = ServiceFacilityImpl.getServiceFacility();
+    private static ControllerFacility controllerFacility;
+    private final ServiceFacility serviceFacility;
+
+    private ControllerFacilityCollection() {
+        this.serviceFacility = ServiceFacilityImpl.getServiceFacility();
+    }
+
+    public static ControllerFacility getControllerFacility(){
+        if(controllerFacility == null){
+            controllerFacility = new ControllerFacilityCollection();
+        }
+        return controllerFacility;
+    }
 
     @Override
     public List<HotelFacility> readAll() {
@@ -22,7 +34,7 @@ public class ControllerFacilityCollection implements ControllerFacility{
 
     @Override
     public HotelFacility read(int id) {
-        return null;
+        return serviceFacility.read(id);
     }
 
     @Override

@@ -8,7 +8,19 @@ import java.util.List;
 
 public class ControllerGuestCollection implements ControllerGuest {
 
-    private final ServiceGuest guestService = ServiceGuestImpl.getServiceGuest();
+    private static ControllerGuest controllerGuest;
+    private final ServiceGuest guestService;
+
+    private ControllerGuestCollection() {
+        this.guestService = ServiceGuestImpl.getServiceGuest();
+    }
+
+    public static ControllerGuest getControllerGuest(){
+        if(controllerGuest == null){
+            controllerGuest = new ControllerGuestCollection();
+        }
+        return controllerGuest;
+    }
 
     @Override
     public List<Guest> readAll() {
