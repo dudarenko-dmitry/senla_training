@@ -16,7 +16,7 @@ public class HotelServicesComparatorByPrice implements Comparator<HotelService> 
     private final RepositoryRoom repositoryRoom;
 
     public HotelServicesComparatorByPrice() {
-        this.repositoryRoom = new RepositoryRoomCollection();
+        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
     }
 
     @Override

@@ -17,8 +17,7 @@ public class RepositoryGuestCollection implements RepositoryGuest {
 
     public static RepositoryGuest getRepositoryGuest(){
         if(repositoryGuest == null){
-            repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
-            System.out.println("Repository for Guest was created.");
+            repositoryGuest = new RepositoryGuestCollection();
         }
         return repositoryGuest;
     }

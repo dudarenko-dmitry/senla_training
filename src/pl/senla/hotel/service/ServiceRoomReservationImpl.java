@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CHANGE_ROOM_RESERVATION;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.FreeRoomConstant.ERROR_READ_ALL_FREE_ROOM;
 import static pl.senla.hotel.constant.HotelConstant.*;
@@ -20,18 +21,22 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private static ServiceRoomReservation serviceRoomReservation;
+//    private final ServiceOrder serviceOrder;
+//    private final RepositoryOrder repositoryOrder;
     private final RepositoryHotelService repositoryHotelService;
     private final RepositoryRoomReservation repositoryRoomReservation; // delete?
     private final RepositoryFreeRoom repositoryFreeRoom; // delete
     private final RepositoryGuest repositoryGuest;
-    private final RepositoryRoom repositoryRoom;
+    private final RepositoryFacility repositoryFacility;
 
     private ServiceRoomReservationImpl() {
+//        this.serviceOrder = ServiceOrderImpl.getServiceOrder();
+//        this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation(); // delete?
         this.repositoryFreeRoom = new RepositoryFreeRoomCollection(); // delete
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
-        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
+        this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
     }
 
     public static ServiceRoomReservation getServiceRoomReservation(){
@@ -57,39 +62,34 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     @Override
     public boolean create(String reservationString) {
         String[] reservationData = reservationString.split(";");
-        int idGuest = Integer.parseInt(reservationData[0]);
-        int idRoom = Integer.parseInt(reservationData[1]);
+        int idOrder = Integer.parseInt(reservationData[0]);
+        int idGuest = Integer.parseInt(reservationData[1]);
+        int idRoom = Integer.parseInt(reservationData[2]);
 
         if(idGuest < 0 || idGuest >= repositoryGuest.readAll().size()){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return false;
-        } else if(idRoom < 0 || idRoom >= repositoryRoom.readAll().size()){
+        } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
         } else {
-            LocalDate checkInDate = getDate(reservationData[2]);
+            LocalDate checkInDate = getDate(reservationData[3]);
             LocalDateTime checkInTime = LocalDateTime.of(checkInDate, HOTEL_CHECK_IN_TIME);
-            int numberOfDays = Integer.parseInt(reservationData[3]);
-            LocalDateTime checkOutTime = LocalDateTime.of(checkInDate.plusDays(Integer.parseInt(reservationData[3])),
+            int numberOfDays = Integer.parseInt(reservationData[4]);
+            LocalDateTime checkOutTime = LocalDateTime.of(checkInDate.plusDays(numberOfDays),
                     HOTEL_CHECK_OUT_TIME);
 
-            boolean isVacant = readAll().stream()
-                    .filter(r -> r.getIdRoom() == idRoom)
-                    .filter(r -> (r.getCheckInTime().isAfter(checkInTime) && r.getCheckInTime().isBefore(checkOutTime)) ||
-                            (r.getCheckOutTime().isAfter(checkInTime) && r.getCheckOutTime().isBefore(checkOutTime)))
-                    .toList()
-                    .isEmpty();
-
-            if(isVacant){
+            if(isVacant(idRoom, checkInTime, checkOutTime)){
                 RoomReservation reservation = new RoomReservation();
                 reservation.setIdService(-1);
+                reservation.setIdOrder(idOrder);
                 reservation.setIdGuest(idGuest);
                 reservation.setIdRoom(idRoom);
                 reservation.setCheckInTime(checkInTime);
                 reservation.setNumberOfDays(numberOfDays);
                 reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION.getTypeName());
                 reservation.setCheckOutTime(checkOutTime);
-                reservation.setCost(repositoryRoom.read(idRoom).getPrice() * numberOfDays);
+                reservation.setCost(repositoryFacility.read(idRoom).getPrice() * numberOfDays);
                 setIdRoomReservationNew(reservation);
                 return repositoryHotelService.create(reservation);
             } else {
@@ -98,6 +98,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             }
         }
     }
+
 
     @Override
     public RoomReservation read(int idReservation) {
@@ -141,11 +142,11 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         reservationUpdate.setCheckInTime(checkInTime);
         reservationUpdate.setNumberOfDays(numberOfDaysNew);
         reservationUpdate.setCheckOutTime(checkOutTime);
-        reservationUpdate.setCost(repositoryRoom.read(reservationOld.getIdRoom()).getPrice() * numberOfDaysNew);
+        reservationUpdate.setCost(repositoryFacility.read(reservationOld.getIdRoom()).getPrice() * numberOfDaysNew);
 
         delete(idReservation);
         if(createFromObject(reservationUpdate)){
-            System.out.println("CHECKING from ServiceRoomRes.");// checking if is it created
+            System.out.println(CONSOLE_CHANGE_ROOM_RESERVATION + " " + true);
             return true;
         } else {
             createFromObject(reservationOld);
@@ -257,13 +258,13 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     //all private methods for RoomReservations
     private boolean createFromObject(RoomReservation reservation) {
-        boolean notVacant = repositoryRoomReservation.readAll().stream()
-                .filter(r -> r.getIdRoom() == reservation.getIdRoom())
-                .filter(r -> !r.getCheckInTime().isBefore(reservation.getCheckInTime()) &&
-                        !r.getCheckOutTime().isAfter(reservation.getCheckOutTime()))
-                .toList()
-                .isEmpty();
-        if(!notVacant){
+//        boolean notVacant = repositoryRoomReservation.readAll().stream()
+//                .filter(r -> r.getIdRoom() == reservation.getIdRoom())
+//                .filter(r -> !r.getCheckInTime().isBefore(reservation.getCheckInTime()) &&
+//                        !r.getCheckOutTime().isAfter(reservation.getCheckOutTime()))
+//                .toList()
+//                .isEmpty();
+        if(isVacant(reservation.getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
             return repositoryRoomReservation.create(reservation);
         } else {
             System.out.println(ERROR_ROOM_NOT_AVAILABLE);
@@ -280,13 +281,13 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         reservation.setIdService(lastId + 1);
     }
 
-    private void setIdFreeRoomNew(FreeRoom freeRoom) {
-        int lastId = readAllFreeRooms()
-                .stream()
-                .map(FreeRoom::getIdFreeRoom)
-                .max((o1, o2) -> o1 - o2)
-                .orElse(-1);
-        freeRoom.setIdFreeRoom(lastId + 1);
+    private boolean isVacant(int idRoom, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
+        return readAll().stream()
+                .filter(r -> r.getIdRoom() == idRoom)
+                .filter(r -> (checkInTime.isAfter(r.getCheckInTime()) && checkInTime.isBefore(r.getCheckOutTime())) ||
+                        (checkOutTime.isAfter(r.getCheckInTime()) && checkInTime.isBefore(r.getCheckOutTime())))
+                .toList()
+                .isEmpty();
     }
 
     private LocalDate getDate(String reservationDatum) {
@@ -295,5 +296,15 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         int month = Integer.parseInt(numbers[1]);
         int day = Integer.parseInt(numbers[2]);
         return LocalDate.of(year,month,day);
+    }
+
+    //delete
+    private void setIdFreeRoomNew(FreeRoom freeRoom) {
+        int lastId = readAllFreeRooms()
+                .stream()
+                .map(FreeRoom::getIdFreeRoom)
+                .max((o1, o2) -> o1 - o2)
+                .orElse(-1);
+        freeRoom.setIdFreeRoom(lastId + 1);
     }
 }

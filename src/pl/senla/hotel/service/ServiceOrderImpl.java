@@ -2,8 +2,11 @@ package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.repository.RepositoryHotelService;
+import pl.senla.hotel.repository.RepositoryHotelServiceCollection;
 import pl.senla.hotel.repository.RepositoryOrder;
 import pl.senla.hotel.repository.RepositoryOrderCollection;
+import pl.senla.hotel.ui.services.StartCreateHotelService;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,9 +19,12 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     private static ServiceOrder serviceOrder;
     private final RepositoryOrder repositoryOrder;
+    private final RepositoryHotelService repositoryHotelService;
+
 
     private ServiceOrderImpl() {
         this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
+        this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
     }
 
     public static ServiceOrder getServiceOrder() {
@@ -42,9 +48,12 @@ public class ServiceOrderImpl implements ServiceOrder {
         int idGuest = Integer.parseInt(orderString);
         Order order = new Order(idGuest);
         order.setIdOrder(-1);
-        List<HotelService> servicesInOrder = readAllServicesForGuest(idGuest);
+        order.setIdGuest(idGuest);
+        int idOrderNew = getIdOrderNew();
+        order.setIdOrder(idOrderNew);
+        StartCreateHotelService.getStartCreateHotelService().runMenu(idOrderNew, idGuest);
+        List<HotelService> servicesInOrder = readAllServicesForOrder(idOrderNew);
         order.setServices(servicesInOrder);
-        setIdOrderNew(order);
         return repositoryOrder.create(order);
     }
 
@@ -90,6 +99,12 @@ public class ServiceOrderImpl implements ServiceOrder {
         }
         for (int i = 0; i <= readAll().size(); i++) {
             if (readAll().get(i).getIdOrder() == idOrder) {
+                List<HotelService> services = repositoryHotelService.readAll();
+                for (int j = 0; j < services.size(); j++){
+                    if (services.get(j).getIdOrder() == idOrder) {
+                        repositoryHotelService.delete(j);
+                    }
+                }
                 return repositoryOrder.delete(i);
             }
         }
@@ -113,12 +128,19 @@ public class ServiceOrderImpl implements ServiceOrder {
         return repositoryOrder.readAllServicesForGuest(idGuest);
     }
 
-    private void setIdOrderNew(Order order) {
+    private int getIdOrderNew() {
         int lastId = readAll()
                 .stream()
                 .map(Order::getIdOrder)
                 .max(Comparator.comparingInt(o -> o))
                 .orElse(-1);
-        order.setIdOrder(lastId + 1);
+        return lastId + 1;
+    }
+
+    private List<HotelService> readAllServicesForOrder(int idOrderNew) {
+        return repositoryHotelService.readAll()
+                .stream()
+                .filter(o -> o.getIdOrder() == idOrderNew)
+                .toList();
     }
 }

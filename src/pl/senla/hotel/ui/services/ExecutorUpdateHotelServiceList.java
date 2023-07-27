@@ -34,7 +34,6 @@ public class ExecutorUpdateHotelServiceList {
     }
 
     protected boolean updateHotelServiceList(int idOrderUpdate, int typeOfServiceInt) {
-        System.out.println(CONSOLE_READ_ORDER + orderController.read(idOrderUpdate));
         Scanner sc = new Scanner(System.in);
         switch (typeOfServiceInt) {
             case 1:
