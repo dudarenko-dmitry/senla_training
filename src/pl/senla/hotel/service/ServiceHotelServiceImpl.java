@@ -12,10 +12,12 @@ import static pl.senla.hotel.constant.HotelServieConstant.*;
 public class ServiceHotelServiceImpl implements ServiceHotelService{
 
     private static ServiceHotelService serviceHotelService;
+    private final ServiceOrder serviceOrder;
     private final ServiceRoomReservation serviceRoomReservation;
     private final RepositoryHotelService repositoryHotelService;
 
     private ServiceHotelServiceImpl() {
+        this.serviceOrder = ServiceOrderImpl.getServiceOrder();
         this.serviceRoomReservation = ServiceRoomReservationImpl.getServiceRoomReservation();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
     }
@@ -42,7 +44,10 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
         String[] hotelServiceData = hotelServiceString.split(";");
         String typeOfService = hotelServiceData[10]; // EDIT and PUT correct index
         switch (typeOfService){
-            case "RoomReservation" -> serviceRoomReservation.create(hotelServiceString);
+            case "RoomReservation" -> {
+                serviceRoomReservation.create(hotelServiceString);
+//                serviceOrder.readAllServicesForGuest(1);
+            }
             case "Restaurant" -> System.out.println("CREATE ACTION FOR RESTAURANT");
             case "Transfer" -> System.out.println("CREATE ACTION FOR TRANSFER");
             default -> System.out.println("Something went wrong ...");

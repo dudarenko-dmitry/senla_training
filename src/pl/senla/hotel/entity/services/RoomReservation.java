@@ -81,13 +81,12 @@ public class RoomReservation extends HotelService{
 
     @Override
     public String toString() {
-        return "\n\nRoomReservation {" +
-                "idOrder= " + super.getIdOrder() +
-                ", type of Service=" + super.getTypeOfService() +
-                "\n idRoomReservation=" + super.getIdService() +
+        return "RoomReservation {" +
+                "type of Service=" + super.getTypeOfService() +
+                ",\nidRoomReservation=" + super.getIdService() +
                 ", idGuest=" + super.getIdGuest() +
                 ", idRoom=" + idRoom +
-                "\ncheck-in time=" + checkInTime +
+                ",\ncheck-in time=" + checkInTime +
                 ", numberOfDays=" + numberOfDays +
                 ", check-out time=" + checkOutTime +
                 ", cost=" + cost +
