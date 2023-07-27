@@ -97,13 +97,4 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
         System.out.println(ERROR_READ_SERVICE);
         return false;
     }
-
-//    private void setIdHotelServiceNew(HotelService hotelService) {
-//        int lastId = readAll()
-//                .stream()
-//                .map(HotelService::getIdService)
-//                .max(Comparator.comparingInt(o -> o))
-//                .orElse(-1);
-//        hotelService.setIdService(lastId + 1);
-//    }
 }

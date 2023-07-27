@@ -63,5 +63,7 @@ public class ConsoleConstant {
     public static final String SORTED_BY_CATEGORY =   " sorted by category";
 
     public static final String ERROR_INPUT =   "ERROR!!!\nYou input is invalid. Please, repeat input.";
+    public static final String INPUT_ID_GUEST = "Input Guest's ID --> ";
+    public static final String INPUT_ID_ROOM = "Input Room's ID --> ";
 
 }
