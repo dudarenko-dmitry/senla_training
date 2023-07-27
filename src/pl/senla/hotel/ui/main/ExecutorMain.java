@@ -17,10 +17,10 @@ public class ExecutorMain implements Executor {
     private final StartMenu startMenuAnalytics;
 
     public ExecutorMain() {
-        this.startMenuHotelFacilities  = new StartMenuHotelFacilities();
-        this.startMenuGuest = new StartMenuGuest();
-        this.startMenuOrder = new StartMenuOrder();
-        this.startMenuAnalytics = new StartMenuAnalytics();
+        this.startMenuHotelFacilities  = StartMenuHotelFacilities.getStartMenuHotelFacilities();
+        this.startMenuGuest = StartMenuGuest.getStartMenuGuest();
+        this.startMenuOrder = StartMenuOrder.getStartMenuOrder();
+        this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics();
     }
 
     @Override

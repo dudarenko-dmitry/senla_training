@@ -9,14 +9,22 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 public class ExecutorHotelFacilities implements Executor {
 
+    private static Executor executor;
     private final StartMenu menuRoom;
     private StartMenu menuTable;
     private StartMenu menuTransfer;
 
-    public ExecutorHotelFacilities() {
-        this.menuRoom = new StartMenuRoom();
+    private ExecutorHotelFacilities() {
+        this.menuRoom = StartMenuRoom.getStartMenuRoom();
 //        this.menuTable = new StartMenuTable();
 //        this.menuTransfer = new StartMenuTransfer();
+    }
+
+    public static Executor getExecutorHotelFacilities(){
+        if (executor == null) {
+            executor = new ExecutorHotelFacilities();
+        }
+        return executor;
     }
 
     @Override

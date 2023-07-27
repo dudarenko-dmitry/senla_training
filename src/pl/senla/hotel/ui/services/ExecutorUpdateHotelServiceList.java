@@ -15,14 +15,22 @@ import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
 
 public class ExecutorUpdateHotelServiceList {
 
+    private static ExecutorUpdateHotelServiceList executorUpdateHotelServiceList;
     private final ControllerOrder orderController;
     private final ControllerRoomReservation roomReservationController;
     // add all other Controllers for different type of Hotel's Services
 
-    public ExecutorUpdateHotelServiceList() {
+    private ExecutorUpdateHotelServiceList() {
         this.orderController = ControllerOrderCollection.getControllerOrder();
         this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
         // add all other Controllers for different type of Hotel's Services
+    }
+
+    public static ExecutorUpdateHotelServiceList getExecutorUpdateHotelServiceList(){
+        if (executorUpdateHotelServiceList == null) {
+            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList();
+        }
+        return executorUpdateHotelServiceList;
     }
 
     protected boolean updateHotelServiceList(int idOrderUpdate, int typeOfServiceInt) {
@@ -51,7 +59,7 @@ public class ExecutorUpdateHotelServiceList {
                 } else {
                     System.out.println(ERROR_READ_ORDER);
                     System.out.println(ERROR_INPUT);
-                    new StartMenuOrder().runMenu();
+                    StartMenuOrder.getStartMenuOrder().runMenu();
                 }
 
             case 2:

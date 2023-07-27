@@ -12,18 +12,26 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 public class ExecutorAnalytics implements Executor {
 
+    private static Executor executor;
     private final ControllerRoom roomController;
     private final ControllerFacility facilityController;
     private final ControllerRoomReservation roomReservationController;
     private final ControllerGuest guestController;
     private final ControllerOrder orderController;
 
-    public ExecutorAnalytics() {
+    private ExecutorAnalytics() {
         this.roomController = ControllerRoomCollection.getControllerRoom();
         this.facilityController = ControllerFacilityCollection.getControllerFacility();
         this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
         this.guestController = ControllerGuestCollection.getControllerGuest();
         this.orderController = ControllerOrderCollection.getControllerOrder();
+    }
+
+    public static Executor getExecutorAnalytics(){
+        if (executor == null) {
+            executor = new ExecutorAnalytics();
+        }
+        return executor;
     }
 
     @Override
@@ -120,7 +128,7 @@ public class ExecutorAnalytics implements Executor {
                 new StartMenuMain().runMenu();
             default:
                 System.out.println(ERROR_INPUT);
-                new StartMenuAnalytics().runMenu();
+                StartMenuAnalytics.getStartMenuAnalytics().runMenu();
         }
     }
 

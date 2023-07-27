@@ -4,12 +4,20 @@ import pl.senla.hotel.ui.Navigator;
 
 public class StartUpdateHotelServiceList {
 
+    private static StartUpdateHotelServiceList startUpdateHotelServiceList;
     private final Navigator navigator;
     private final ExecutorUpdateHotelServiceList executor;
 
-    public StartUpdateHotelServiceList() {
-        this.navigator = new NavigatorHotelService();
-        this.executor = new ExecutorUpdateHotelServiceList();
+    private StartUpdateHotelServiceList() {
+        this.navigator = NavigatorHotelService.getNavigatorHotelService();
+        this.executor = ExecutorUpdateHotelServiceList.getExecutorUpdateHotelServiceList();
+    }
+
+    public static StartUpdateHotelServiceList getStartUpdateHotelServiceList(){
+        if (startUpdateHotelServiceList == null) {
+            startUpdateHotelServiceList = new StartUpdateHotelServiceList();
+        }
+        return startUpdateHotelServiceList;
     }
 
     public boolean runMenu(int idOrderUpdate){

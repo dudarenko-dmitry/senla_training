@@ -3,7 +3,6 @@ package pl.senla.hotel.ui.order;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
-//import pl.senla.hotel.ui.services.StartCreateHotelService;
 import pl.senla.hotel.ui.services.StartUpdateHotelServiceList;
 
 import java.util.Scanner;
@@ -13,14 +12,20 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 public class ExecutorOrder implements Executor {
 
+    private static Executor executor;
     private final ControllerOrder orderController;
-//    private final StartCreateHotelService createHotelServiceList;
     private final StartUpdateHotelServiceList updateHotelServiceList;
 
-    public ExecutorOrder() {
+    private ExecutorOrder() {
         this.orderController = ControllerOrderCollection.getControllerOrder();
-//        this.createHotelServiceList = new StartCreateHotelService();
-        this.updateHotelServiceList = new StartUpdateHotelServiceList();
+        this.updateHotelServiceList = StartUpdateHotelServiceList.getStartUpdateHotelServiceList();
+    }
+
+    public static Executor getExecutorOrder(){
+        if (executor == null) {
+            executor = new ExecutorOrder();
+        }
+        return executor;
     }
 
     @Override
@@ -37,7 +42,6 @@ public class ExecutorOrder implements Executor {
                 System.out.print("Input Guest's ID --> ");
                 int idGuest = sc.nextInt();
                 System.out.println(CONSOLE_CREATE_ORDER + orderController.create(String.valueOf(idGuest)));
-//                System.out.println(CONSOLE_CREATE_ORDER + createHotelServiceList.runMenu(idGuest)); // CHECK This !!!!!!!!
             }
             case 4 -> {
                 System.out.print("Input Order's ID to Update --> ");
@@ -52,10 +56,8 @@ public class ExecutorOrder implements Executor {
             case 0 -> new StartMenuMain().runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                new StartMenuOrder().runMenu();
+                StartMenuOrder.getStartMenuOrder().runMenu();
             }
         }
     }
-
-
 }

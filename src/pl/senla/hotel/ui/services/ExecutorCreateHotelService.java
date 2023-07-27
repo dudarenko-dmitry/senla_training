@@ -57,7 +57,7 @@ public class ExecutorCreateHotelService {
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                new StartCreateHotelService().runMenu(idOrder, idGuest);
+                StartCreateHotelService.getStartCreateHotelService().runMenu(idOrder, idGuest);
             }
         }
         return true;
