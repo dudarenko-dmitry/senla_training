@@ -99,6 +99,12 @@ public class ServiceOrderImpl implements ServiceOrder {
         }
         for (int i = 0; i <= readAll().size(); i++) {
             if (readAll().get(i).getIdOrder() == idOrder) {
+                List<HotelService> services = repositoryHotelService.readAll();
+                for (int j = 0; j < services.size(); j++){
+                    if (services.get(j).getIdOrder() == idOrder) {
+                        repositoryHotelService.delete(j);
+                    }
+                }
                 return repositoryOrder.delete(i);
             }
         }

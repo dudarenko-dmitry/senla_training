@@ -21,7 +21,6 @@ public class RepositoryOrderCollection implements RepositoryOrder {
     public static RepositoryOrder getRepositoryOrder(){
         if(repositoryOrder == null){
             repositoryOrder = new RepositoryOrderCollection();
-            System.out.println("REpository for Order was created.");
         }
         return repositoryOrder;
     }
