@@ -1,7 +1,5 @@
 package pl.senla.hotel.comparators;
 
-import pl.senla.hotel.entity.services.FreeRoom;
-
 import java.util.Comparator;
 
 public class FreeRoomComparatorByLevel implements Comparator<FreeRoom> {

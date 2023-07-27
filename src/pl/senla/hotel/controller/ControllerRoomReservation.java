@@ -1,23 +1,21 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.entity.services.FreeRoom;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.RoomReservation;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ControllerRoomReservation extends ControllerCRUDALL<RoomReservation>,
-        ControllerFreeRoomCRUDALL {
+public interface ControllerRoomReservation extends ControllerCRUDALL<RoomReservation>{
 
     List<RoomReservation> readAllRoomReservationsSortByGuestName();
     List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut();
-    int countNumberOfGuestsOnDate(LocalDateTime checkedTime);
+    int countNumberOfGuestsOnDate(String checkedTimeString);
     int countGuestPaymentForRoom(int idGuest);
     List<String> read3LastGuestAndDatesForRoom(int idRoom);
 
-    List<FreeRoom> readAllFreeRoomsSortByPrice();
-    List<FreeRoom> readAllFreeRoomsSortByCapacity();
-    List<FreeRoom> readAllFreeRoomsSortByLevel();
-    int countFreeRoomsOnTime(LocalDateTime checkedDateTime);
-    List<FreeRoom> readAllRoomsFreeAtTime(LocalDateTime checkedTime);
+    List<Room> readAllFreeRoomsSortByPrice();
+    List<Room> readAllFreeRoomsSortByCapacity();
+    List<Room> readAllFreeRoomsSortByLevel();
+    int countFreeRoomsOnTime(String checkedTimeString);
+    List<Room> readAllRoomsFreeAtTime(String checkedTimeString);
 }

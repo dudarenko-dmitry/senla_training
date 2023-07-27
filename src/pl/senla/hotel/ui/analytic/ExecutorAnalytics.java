@@ -4,7 +4,6 @@ import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
@@ -71,42 +70,42 @@ public class ExecutorAnalytics implements Executor {
                         roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
                 break;
             case 9:
-                LocalDateTime checkedTime = inputDateTime();
-                System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTime + ": " +
-                        roomReservationController.countFreeRoomsOnTime(checkedTime));
+                String checkedTimeString = inputDateTimeString();
+                System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTimeString + ": " +
+                        roomReservationController.countFreeRoomsOnTime(checkedTimeString));
                 break;
             case 10:
                 System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
                 break;
             case 11:
-                checkedTime = inputDateTime();
-                System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTime + ": " +
-                        roomReservationController.countNumberOfGuestsOnDate(checkedTime));
+                checkedTimeString = inputDateTimeString();
+                System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTimeString + ": " +
+                        roomReservationController.countNumberOfGuestsOnDate(checkedTimeString));
                 break;
             case 12:
-                checkedTime = inputDateTime();
+                checkedTimeString = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME +
-                        roomReservationController.readAllRoomsFreeAtTime(checkedTime));
+                        roomReservationController.readAllRoomsFreeAtTime(checkedTimeString));
                 break;
             case 13:
-                System.out.print("Input Guest's ID --> ");
+                System.out.print(INPUT_ID_GUEST);
                 int idGuest = sc.nextInt();
                 System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM +
                         roomReservationController.countGuestPaymentForRoom(idGuest));
                 break;
             case 14:
-                System.out.print("Input Room's ID --> ");
+                System.out.print(INPUT_ID_ROOM);
                 int idRoom = sc.nextInt();
                 System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(idRoom));
                 break;
             case 15:
-                System.out.print("Input Guest's ID --> ");
+                System.out.print(INPUT_ID_GUEST);
                 idGuest = sc.nextInt();
                 System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE +
                         orderController.readAllServicesSortByPrice(idGuest));
                 break;
             case 16:
-                System.out.print("Input Guest's ID --> ");
+                System.out.print(INPUT_ID_GUEST);
                 idGuest = sc.nextInt();
                 System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE +
                         orderController.readAllServicesSortByDate(idGuest));
@@ -120,7 +119,7 @@ public class ExecutorAnalytics implements Executor {
                         facilityController.readPriceListForServicesSortByPrice());
                 break;
             case 19:
-                System.out.print("Input Room's ID --> ");
+                System.out.print(INPUT_ID_ROOM);
                 idRoom = sc.nextInt();
                 roomController.read(idRoom);
                 break;
@@ -132,7 +131,7 @@ public class ExecutorAnalytics implements Executor {
         }
     }
 
-    private LocalDateTime inputDateTime() {
+    private String inputDateTimeString() {
         System.out.println("Select start Time of Reservation. ");
         Scanner sc = new Scanner(System.in);
         System.out.print("Input year --> ");
@@ -145,6 +144,6 @@ public class ExecutorAnalytics implements Executor {
         int hour = sc.nextInt();
         System.out.print("Input minute --> ");
         int minute = sc.nextInt();
-        return LocalDateTime.of(year, month, day, hour, minute);
-    } //ready
+        return year + "-" + month + "-" + day + "-" + hour + "-" + minute;
+    }
 }

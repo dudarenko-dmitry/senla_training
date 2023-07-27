@@ -1,6 +1,6 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.services.FreeRoom;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;
@@ -14,27 +14,20 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CHANGE_ROOM_RESERVATION;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
-import static pl.senla.hotel.constant.FreeRoomConstant.ERROR_READ_ALL_FREE_ROOM;
 import static pl.senla.hotel.constant.HotelConstant.*;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private static ServiceRoomReservation serviceRoomReservation;
-//    private final ServiceOrder serviceOrder;
-//    private final RepositoryOrder repositoryOrder;
     private final RepositoryHotelService repositoryHotelService;
     private final RepositoryRoomReservation repositoryRoomReservation; // delete?
-    private final RepositoryFreeRoom repositoryFreeRoom; // delete
     private final RepositoryGuest repositoryGuest;
     private final RepositoryFacility repositoryFacility;
 
     private ServiceRoomReservationImpl() {
-//        this.serviceOrder = ServiceOrderImpl.getServiceOrder();
-//        this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation(); // delete?
-        this.repositoryFreeRoom = new RepositoryFreeRoomCollection(); // delete
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
     }
@@ -173,7 +166,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     //edit next 5 methods
     @Override
-    public int countNumberOfGuestsOnDate(LocalDateTime checkedTime) {
+    public int countNumberOfGuestsOnDate(String checkedTimeString) {
         return repositoryRoomReservation.countNumberOfGuestsOnDate(checkedTime);
     }
 
@@ -201,56 +194,27 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     // Refactor All methods: delete using FreeRooms
     @Override
-    public List<FreeRoom> readAllFreeRooms() {
-        if(repositoryFreeRoom.readAll() == null){
-            System.out.println(ERROR_READ_ALL_FREE_ROOM);
-        }
-        return repositoryFreeRoom.readAll();
-    }
-
-    @Override
-    public boolean createFreeRoom(FreeRoom freeRoom) {
-        setIdFreeRoomNew(freeRoom);
-        return repositoryFreeRoom.create(freeRoom);
-    }
-
-    @Override
-    public FreeRoom readFreeRoom(int id) {
-        return repositoryFreeRoom.read(id);
-    }
-
-    @Override
-    public boolean updateFreeRoom(FreeRoom freeRoom) {
-        return repositoryFreeRoom.update(-1, freeRoom);
-    }
-
-    @Override
-    public boolean deleteFreeRoom(int id) {
-        return delete(id);
-    }
-
-    @Override
-    public List<FreeRoom> readAllFreeRoomsSortByPrice() {
+    public List<Room> readAllFreeRoomsSortByPrice() {
         return repositoryFreeRoom.readAllFreeRoomsSortByPrice();
     }
 
     @Override
-    public List<FreeRoom> readAllFreeRoomsSortByCapacity() {
+    public List<Room> readAllFreeRoomsSortByCapacity() {
         return repositoryFreeRoom.readAllFreeRoomsSortByCapacity();
     }
 
     @Override
-    public List<FreeRoom> readAllFreeRoomsSortByLevel() {
+    public List<Room> readAllFreeRoomsSortByLevel() {
         return repositoryFreeRoom.readAllFreeRoomsSortByLevel();
     }
 
     @Override
-    public int countFreeRoomsOnTime(LocalDateTime checkedDateTime) {
+    public int countFreeRoomsOnTime(String checkedDateTimeString) {
         return repositoryFreeRoom.countFreeRoomsOnTime(checkedDateTime);
     }
 
     @Override
-    public List<FreeRoom> readAllRoomsFreeAtTime(LocalDateTime checkedTime) {
+    public List<Room> readAllRoomsFreeAtTime(String checkedTimeString) {
         return repositoryFreeRoom.readAllRoomsFreeAtTime(checkedTime);
     }
 
@@ -258,12 +222,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     //all private methods for RoomReservations
     private boolean createFromObject(RoomReservation reservation) {
-//        boolean notVacant = repositoryRoomReservation.readAll().stream()
-//                .filter(r -> r.getIdRoom() == reservation.getIdRoom())
-//                .filter(r -> !r.getCheckInTime().isBefore(reservation.getCheckInTime()) &&
-//                        !r.getCheckOutTime().isAfter(reservation.getCheckOutTime()))
-//                .toList()
-//                .isEmpty();
         if(isVacant(reservation.getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
             return repositoryRoomReservation.create(reservation);
         } else {
@@ -296,15 +254,5 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         int month = Integer.parseInt(numbers[1]);
         int day = Integer.parseInt(numbers[2]);
         return LocalDate.of(year,month,day);
-    }
-
-    //delete
-    private void setIdFreeRoomNew(FreeRoom freeRoom) {
-        int lastId = readAllFreeRooms()
-                .stream()
-                .map(FreeRoom::getIdFreeRoom)
-                .max((o1, o2) -> o1 - o2)
-                .orElse(-1);
-        freeRoom.setIdFreeRoom(lastId + 1);
     }
 }

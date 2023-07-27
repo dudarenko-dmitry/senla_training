@@ -1,6 +1,6 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.entity.services.FreeRoom;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.service.ServiceRoomReservationImpl;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.service.ServiceRoomReservation;
@@ -50,42 +50,17 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public List<FreeRoom> readAllFreeRooms() {
-        return roomReservationService.readAllFreeRooms();
-    }
-
-    @Override
-    public boolean createFreeRoom(FreeRoom freeRoom) {
-        return roomReservationService.createFreeRoom(freeRoom);
-    }
-
-    @Override
-    public FreeRoom readFreeRoom(int id) {
-        return roomReservationService.readFreeRoom(id);
-    }
-
-    @Override
-    public boolean updateFreeRoom(FreeRoom freeRoom) {
-        return roomReservationService.updateFreeRoom(freeRoom);
-    }
-
-    @Override
-    public boolean deleteFreeRoom(int id) {
-        return roomReservationService.deleteFreeRoom(id);
-    }
-
-    @Override
-    public List<FreeRoom> readAllFreeRoomsSortByPrice() {
+    public List<Room> readAllFreeRoomsSortByPrice() {
         return roomReservationService.readAllFreeRoomsSortByPrice();
     }
 
     @Override
-    public List<FreeRoom> readAllFreeRoomsSortByCapacity() {
+    public List<Room> readAllFreeRoomsSortByCapacity() {
         return roomReservationService.readAllFreeRoomsSortByCapacity();
     }
 
     @Override
-    public List<FreeRoom> readAllFreeRoomsSortByLevel() {
+    public List<Room> readAllFreeRoomsSortByLevel() {
         return roomReservationService.readAllFreeRoomsSortByLevel();
     }
 
@@ -100,18 +75,18 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public int countFreeRoomsOnTime(LocalDateTime checkedDateTime) {
-        return roomReservationService.countFreeRoomsOnTime(checkedDateTime);
+    public int countFreeRoomsOnTime(String checkedTimeString) {
+        return roomReservationService.countFreeRoomsOnTime(checkedTimeString);
     }
 
     @Override
-    public int countNumberOfGuestsOnDate(LocalDateTime checkedTime) {
-        return roomReservationService.countNumberOfGuestsOnDate(checkedTime);
+    public int countNumberOfGuestsOnDate(String checkedTimeString) {
+        return roomReservationService.countNumberOfGuestsOnDate(checkedTimeString);
     }
 
     @Override
-    public List<FreeRoom> readAllRoomsFreeAtTime(LocalDateTime checkedTime) {
-        return roomReservationService.readAllRoomsFreeAtTime(checkedTime);
+    public List<Room> readAllRoomsFreeAtTime(String checkedTimeString) {
+        return roomReservationService.readAllRoomsFreeAtTime(checkedTimeString);
     }
 
     @Override
