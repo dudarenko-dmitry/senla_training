@@ -5,7 +5,6 @@ import pl.senla.hotel.service.ServiceRoomReservationImpl;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.service.ServiceRoomReservation;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ControllerRoomReservationCollection implements ControllerRoomReservation {
@@ -50,18 +49,18 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByPrice() {
-        return roomReservationService.readAllFreeRoomsSortByPrice();
+    public List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString) {
+        return roomReservationService.readAllFreeRoomsSortByPrice(checkedTimeString);
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByCapacity() {
-        return roomReservationService.readAllFreeRoomsSortByCapacity();
+    public List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
+        return roomReservationService.readAllFreeRoomsSortByCapacity(checkedTimeString);
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByLevel() {
-        return roomReservationService.readAllFreeRoomsSortByLevel();
+    public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
+        return roomReservationService.readAllFreeRoomsSortByLevel(checkedTimeString);
     }
 
     @Override
@@ -75,8 +74,8 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public int countFreeRoomsOnTime(String checkedTimeString) {
-        return roomReservationService.countFreeRoomsOnTime(checkedTimeString);
+    public int countFreeRoomsInTime(String checkedTimeString) {
+        return roomReservationService.countFreeRoomsInTime(checkedTimeString);
     }
 
     @Override
@@ -85,8 +84,8 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public List<Room> readAllRoomsFreeAtTime(String checkedTimeString) {
-        return roomReservationService.readAllRoomsFreeAtTime(checkedTimeString);
+    public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
+        return roomReservationService.readAllRoomsFreeInTime(checkedTimeString);
     }
 
     @Override

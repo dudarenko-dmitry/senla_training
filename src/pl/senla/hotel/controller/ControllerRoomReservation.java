@@ -13,9 +13,9 @@ public interface ControllerRoomReservation extends ControllerCRUDALL<RoomReserva
     int countGuestPaymentForRoom(int idGuest);
     List<String> read3LastGuestAndDatesForRoom(int idRoom);
 
-    List<Room> readAllFreeRoomsSortByPrice();
-    List<Room> readAllFreeRoomsSortByCapacity();
-    List<Room> readAllFreeRoomsSortByLevel();
-    int countFreeRoomsOnTime(String checkedTimeString);
-    List<Room> readAllRoomsFreeAtTime(String checkedTimeString);
+    List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString);
+    List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString);
+    List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString);
+    int countFreeRoomsInTime(String checkedTimeString);
+    List<Room> readAllRoomsFreeInTime(String checkedTimeString);
 }

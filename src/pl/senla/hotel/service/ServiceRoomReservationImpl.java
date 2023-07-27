@@ -1,5 +1,8 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.comparators.*;
+import pl.senla.hotel.entity.facilities.CategoryFacility;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
@@ -8,6 +11,7 @@ import pl.senla.hotel.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -20,12 +24,14 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private static ServiceRoomReservation serviceRoomReservation;
+    private final ServiceFacility serviceHotelFacility;
     private final RepositoryHotelService repositoryHotelService;
-    private final RepositoryRoomReservation repositoryRoomReservation; // delete?
+    private final RepositoryCRUDALL<RoomReservation> repositoryRoomReservation;
     private final RepositoryGuest repositoryGuest;
     private final RepositoryFacility repositoryFacility;
 
     private ServiceRoomReservationImpl() {
+        this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation(); // delete?
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
@@ -164,60 +170,122 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         return false;
     }
 
-    //edit next 5 methods
     @Override
-    public int countNumberOfGuestsOnDate(String checkedTimeString) {
-        return repositoryRoomReservation.countNumberOfGuestsOnDate(checkedTime);
+    public int countNumberOfGuestsOnDate(String checkedDateString) {
+        LocalDateTime checkedDateTime = getDateTime(checkedDateString);
+        return (int) readAll().stream()
+                .filter(rr -> checkedDateTime.isAfter(rr.getCheckInTime()) &&
+                        checkedDateTime.isBefore(rr.getCheckOutTime()))
+                .count();
     }
 
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
-        return repositoryRoomReservation.readAllRoomReservationsSortByGuestName();
+        return readAll().stream()
+                .sorted(new RoomReservationsComparatorByGuestName())
+                .toList();
     }
 
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
-        return repositoryRoomReservation.readAllRoomReservationsSortByGuestCheckOut();
+        return readAll().stream()
+                .sorted(new RoomReservationsComparatorByCheckOut())
+                .toList();
     }
 
     @Override
     public int countGuestPaymentForRoom(int idGuest) {
-        return repositoryRoomReservation.countGuestPaymentForRoom(idGuest);
+        List<Integer> costs = readAll()
+                .stream()
+                .filter(rr -> rr.getIdGuest() == idGuest)
+                .map(RoomReservation::getCost)
+                .toList();
+        int sum = 0;
+        for(Integer cost : costs){
+            sum = sum + cost;
+        }
+        return sum;
     }
 
     @Override
     public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
-        return repositoryRoomReservation.read3LastGuestAndDatesForRoom(idRoom);
+        List<String> guestsAndDates = new ArrayList<>();
+        List<RoomReservation> roomReservationsForRoom = readAll()
+                .stream()
+                .filter(rr -> rr.getIdRoom() == idRoom)
+                .sorted(new RoomReservationsComparatorByCheckOutReverse())
+                .limit(3)
+                .toList();
+        for (RoomReservation rr : roomReservationsForRoom){
+            if (rr != null) {
+                int idGuest = rr.getIdGuest();
+                for (int i = 0; i < repositoryGuest.readAll().size(); i++) {
+                    if (idGuest == repositoryGuest.read(i).getIdGuest()) {
+                        String guestAndDate = "\n#" + (i + 1) +
+                                ":\nGuest's name: " + repositoryGuest.read(i).getName() +
+                                ", check-in:" + rr.getCheckInTime() +
+                                ", check-out = " + rr.getCheckOutTime();
+                        guestsAndDates.add(guestAndDate);
+                    } else {
+                        guestsAndDates.add("\n#" + (i + 1) + ": no reservation");
+                    }
+                }
+            }
+        }
+        return guestsAndDates;
     }
 
+    @Override
+    public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
+        LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
+        List<HotelFacility> occupiedRooms = readAll().stream()
+                .filter(rr -> rr.getTypeOfService().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
+                .map(Room.class::cast)
+                .map(rr -> serviceHotelFacility.read(rr.getIdFacility()))
+                .toList();
+        List<HotelFacility> rooms = serviceHotelFacility.readAll().stream()
+                .filter(hs -> hs.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .toList();
+        List<Room> freeRooms = new ArrayList<>();
+        for (HotelFacility r : rooms) {
+            for (HotelFacility hs : occupiedRooms) {
+                if (r.equals(hs)) {
+                    freeRooms.add((Room) r);
+                }
+            }
+        }
+        return freeRooms;
+    }
 
+    @Override
+    public int countFreeRoomsInTime(String checkedTimeString) {
+        return readAllRoomsFreeInTime(checkedTimeString).size();
+    }
 
     // Refactor All methods: delete using FreeRooms
     @Override
-    public List<Room> readAllFreeRoomsSortByPrice() {
-        return repositoryFreeRoom.readAllFreeRoomsSortByPrice();
+    public List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString) {
+        return readAllRoomsFreeInTime(checkedTimeString).stream()
+                .sorted(new RoomComparatorByPrice())
+                .toList();
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByCapacity() {
-        return repositoryFreeRoom.readAllFreeRoomsSortByCapacity();
+    public List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
+        LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
+        return readAllRoomsFreeInTime(checkedTimeString).stream()
+                .sorted(new RoomComparatorByCapacity())
+                .toList();
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByLevel() {
-        return repositoryFreeRoom.readAllFreeRoomsSortByLevel();
+    public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
+        LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
+        return readAllRoomsFreeInTime(checkedTimeString).stream()
+                .sorted(new RoomComparatorByLevel())
+                .toList();
     }
-
-    @Override
-    public int countFreeRoomsOnTime(String checkedDateTimeString) {
-        return repositoryFreeRoom.countFreeRoomsOnTime(checkedDateTime);
-    }
-
-    @Override
-    public List<Room> readAllRoomsFreeAtTime(String checkedTimeString) {
-        return repositoryFreeRoom.readAllRoomsFreeAtTime(checkedTime);
-    }
-
 
 
     //all private methods for RoomReservations
@@ -255,4 +323,16 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         int day = Integer.parseInt(numbers[2]);
         return LocalDate.of(year,month,day);
     }
+
+    private LocalDateTime getDateTime(String checkedDateString) {
+        String[] timeData = checkedDateString.split("-");
+        int year = Integer.parseInt(timeData[0]);
+        int month = Integer.parseInt(timeData[1]);
+        int day = Integer.parseInt(timeData[2]);
+        int hour = Integer.parseInt(timeData[3]);
+        int minute = Integer.parseInt(timeData[4]);
+        return LocalDateTime.of(year,month,day, hour, minute);
+    }
+
+
 }

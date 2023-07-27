@@ -37,47 +37,50 @@ public class ExecutorAnalytics implements Executor {
     public void execute(int userSelection) {
         Scanner sc = new Scanner(System.in);
         switch (userSelection) {
-            case 1:
+            case 1: // ready
                 System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE +
                         facilityController.readAllRoomsSortByPrice());
                 break;
-            case 2:
+            case 2: // ready
                 System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_CAPACITY +
                         facilityController.readAllRoomsSortByCapacity());
                 break;
-            case 3:
+            case 3: // ready
                 System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_LEVEL +
                         facilityController.readAllRoomsSortByLevel());
                 break;
-            case 4:
+            case 4: // ready
+                String checkedTimeString = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +
-                        roomReservationController.readAllFreeRoomsSortByPrice());
+                        roomReservationController.readAllFreeRoomsSortByPrice(checkedTimeString));
                 break;
-            case 5:
+            case 5: // ready
+                checkedTimeString = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY +
-                        roomReservationController.readAllFreeRoomsSortByCapacity());
+                        roomReservationController.readAllFreeRoomsSortByCapacity(checkedTimeString));
                 break;
-            case 6:
+            case 6: // ready
+                checkedTimeString = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL +
-                        roomReservationController.readAllFreeRoomsSortByLevel());
+                        roomReservationController.readAllFreeRoomsSortByLevel(checkedTimeString));
                 break;
-            case 7:
+            case 7: // ready
                 System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_GUEST_NAME +
                         roomReservationController.readAllRoomReservationsSortByGuestName());
                 break;
-            case 8:
+            case 8: // ready
                 System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_CHECK_OUT +
                         roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
                 break;
             case 9:
-                String checkedTimeString = inputDateTimeString();
+                checkedTimeString = inputDateTimeString();
                 System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTimeString + ": " +
-                        roomReservationController.countFreeRoomsOnTime(checkedTimeString));
+                        roomReservationController.countFreeRoomsInTime(checkedTimeString));
                 break;
-            case 10:
+            case 10: // ready
                 System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
                 break;
-            case 11:
+            case 11: // ready
                 checkedTimeString = inputDateTimeString();
                 System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTimeString + ": " +
                         roomReservationController.countNumberOfGuestsOnDate(checkedTimeString));
@@ -85,15 +88,15 @@ public class ExecutorAnalytics implements Executor {
             case 12:
                 checkedTimeString = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME +
-                        roomReservationController.readAllRoomsFreeAtTime(checkedTimeString));
+                        roomReservationController.readAllRoomsFreeInTime(checkedTimeString));
                 break;
-            case 13:
+            case 13: // ready
                 System.out.print(INPUT_ID_GUEST);
                 int idGuest = sc.nextInt();
                 System.out.println(CONSOLE_GUEST_PAYMENT_FOR_ROOM +
                         roomReservationController.countGuestPaymentForRoom(idGuest));
                 break;
-            case 14:
+            case 14: // ready
                 System.out.print(INPUT_ID_ROOM);
                 int idRoom = sc.nextInt();
                 System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(idRoom));
@@ -102,13 +105,13 @@ public class ExecutorAnalytics implements Executor {
                 System.out.print(INPUT_ID_GUEST);
                 idGuest = sc.nextInt();
                 System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE +
-                        orderController.readAllServicesSortByPrice(idGuest));
+                        orderController.readAllServicesForGuestSortByPrice(idGuest));
                 break;
             case 16:
                 System.out.print(INPUT_ID_GUEST);
                 idGuest = sc.nextInt();
                 System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE +
-                        orderController.readAllServicesSortByDate(idGuest));
+                        orderController.readAllServicesForGuestSortByDate(idGuest));
                 break;
             case 17:
                 System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY +
