@@ -12,7 +12,7 @@ public class StartCreateHotelService {
 
     private StartCreateHotelService() {
         this.navigator = NavigatorHotelService.getNavigatorHotelService();
-        this.executor = new ExecutorCreateHotelService();
+        this.executor = ExecutorCreateHotelService.getExecutorCreateHotelService();
     }
 
     public static StartCreateHotelService getStartCreateHotelService(){

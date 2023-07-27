@@ -12,12 +12,20 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.ERROR_READ_ROOM;
 
 public class ExecutorCreateHotelService {
 
+    private static ExecutorCreateHotelService executor;
     private final ControllerRoomReservation roomReservationController;
     private final ControllerFacility controllerFacility;
 
-    public ExecutorCreateHotelService() {
+    private ExecutorCreateHotelService() {
         this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
         this.controllerFacility = ControllerFacilityCollection.getControllerFacility();
+    }
+
+    public static ExecutorCreateHotelService getExecutorCreateHotelService(){
+        if (executor == null) {
+            executor = new ExecutorCreateHotelService();
+        }
+        return executor;
     }
 
     //Later change return from RoomReservation to HotelService and refactor
