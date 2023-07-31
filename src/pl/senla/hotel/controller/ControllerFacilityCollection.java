@@ -8,7 +8,19 @@ import java.util.List;
 
 public class ControllerFacilityCollection implements ControllerFacility{
 
-    private final ServiceFacility serviceFacility = new ServiceFacilityImpl();
+    private static ControllerFacility controllerFacility;
+    private final ServiceFacility serviceFacility;
+
+    private ControllerFacilityCollection() {
+        this.serviceFacility = ServiceFacilityImpl.getServiceFacility();
+    }
+
+    public static ControllerFacility getControllerFacility(){
+        if(controllerFacility == null){
+            controllerFacility = new ControllerFacilityCollection();
+        }
+        return controllerFacility;
+    }
 
     @Override
     public List<HotelFacility> readAll() {
@@ -16,18 +28,18 @@ public class ControllerFacilityCollection implements ControllerFacility{
     }
 
     @Override
-    public boolean create(HotelFacility hotelFacility) {
-        return serviceFacility.create(hotelFacility);
+    public boolean create(String hotelFacilityString) {
+        return serviceFacility.create(hotelFacilityString);
     }
 
     @Override
     public HotelFacility read(int id) {
-        return null;
+        return serviceFacility.read(id);
     }
 
     @Override
-    public boolean update(HotelFacility hotelFacility) {
-        return serviceFacility.update(hotelFacility);
+    public boolean update(int id, String hotelFacilityString) {
+        return serviceFacility.update(id, hotelFacilityString);
     }
 
     @Override
@@ -43,5 +55,20 @@ public class ControllerFacilityCollection implements ControllerFacility{
     @Override
     public List<HotelFacility> readPriceListForServicesSortByPrice() {
         return serviceFacility.readPriceListForServicesSortByPrice();
+    }
+
+    @Override
+    public List<HotelFacility> readAllRoomsSortByPrice() {
+        return serviceFacility.readAllRoomsSortByPrice();
+    }
+
+    @Override
+    public List<HotelFacility> readAllRoomsSortByCapacity() {
+        return serviceFacility.readAllRoomsSortByCapacity();
+    }
+
+    @Override
+    public List<HotelFacility> readAllRoomsSortByLevel() {
+        return serviceFacility.readAllRoomsSortByLevel();
     }
 }

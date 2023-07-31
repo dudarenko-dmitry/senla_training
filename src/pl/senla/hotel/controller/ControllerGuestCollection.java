@@ -8,7 +8,19 @@ import java.util.List;
 
 public class ControllerGuestCollection implements ControllerGuest {
 
-    private final ServiceGuest guestService = new ServiceGuestImpl();
+    private static ControllerGuest controllerGuest;
+    private final ServiceGuest guestService;
+
+    private ControllerGuestCollection() {
+        this.guestService = ServiceGuestImpl.getServiceGuest();
+    }
+
+    public static ControllerGuest getControllerGuest(){
+        if(controllerGuest == null){
+            controllerGuest = new ControllerGuestCollection();
+        }
+        return controllerGuest;
+    }
 
     @Override
     public List<Guest> readAll() {
@@ -16,7 +28,7 @@ public class ControllerGuestCollection implements ControllerGuest {
     }
 
     @Override
-    public boolean create(Guest guest) {
+    public boolean create(String guest) {
         return guestService.create(guest);
     }
 
@@ -26,8 +38,8 @@ public class ControllerGuestCollection implements ControllerGuest {
     }
 
     @Override
-    public boolean update(Guest guest) {
-        return guestService.update(guest);
+    public boolean update(int id, String guestUpdate) {
+        return guestService.update(id, guestUpdate);
     }
 
     @Override

@@ -1,48 +1,27 @@
 package pl.senla.hotel.entity.services;
 
-import pl.senla.hotel.entity.Guest;
-
 import java.time.LocalDateTime;
 
 import static pl.senla.hotel.constant.RestaurantConstant.*;
 
 public class Restaurant extends HotelService{
 
-    private int idRestaurant;
     private int tableNumber;
     private int numberOfGuests;
     private LocalDateTime startTime;
     private int price;
 
-
-
-    public Restaurant(int idRestaurant, Guest guest, int tableNumber, int numberOfGuests,
+    public Restaurant(int idService, int idOrder, int idGuest, int tableNumber, int numberOfGuests,
                       LocalDateTime startTime, int price) {
-        super(TypeOfService.RESTAURANT.getTypeName(), guest);
-        if(guest == null){
-            System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_CLIENT);
-            return;
-        }
-        if(tableNumber == -1){// check if the ROOM exists // CREATE Entity TABLE and change IF !!!!!!!!!!!!!!!!!!!!!!!!
+        super(idService, idOrder, TypeOfService.RESTAURANT.getTypeName(), idGuest);
+        if(tableNumber < 0){// CREATE Entity TABLE and change IF !!!!!!!!!!!!!!!!!!!!!!!!
             System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_TABLE);
             return;
-//        } else if(!table.TableStatus.FREE.getStatus()).equals(TableStatus.FREE.getStatus())){// check if the TABLE is FREE
-//            System.out.println(ERROR_RESTAURANT_NOT_AVAILABLE);
-//            return;
         }
-        this.idRestaurant = idRestaurant;
         this.tableNumber = tableNumber;
         this.numberOfGuests = numberOfGuests;
         this.startTime = startTime;
         this.price = price;
-    }
-
-    public int getIdRestaurant() {
-        return idRestaurant;
-    }
-
-    public void setIdRestaurant(int idRestaurant) {
-        this.idRestaurant = idRestaurant;
     }
 
     public int getTableNumber() {
@@ -80,9 +59,10 @@ public class Restaurant extends HotelService{
     @Override
     public String toString() {
         return "\nRestaurant {" +
-                "typeOfService=" + super.getTypeOfService() +
-                ", idRestaurant=" + idRestaurant +
-                super.getGuest().toString() + "," +
+                "idOrder= " + super.getIdOrder() +
+                ", typeOfService=" + super.getTypeOfService() +
+                "\n idRestaurant=" + super.getIdService() +
+                ", idGuest=" + super.getIdGuest() + "," +
                 ", tableNumber=" + tableNumber +
                 ", numberOfGuests=" + numberOfGuests +
                 "\nStartTime=" + startTime +

@@ -11,7 +11,6 @@ public class DataStorageTransfer extends DataStorage<Transfer>{
     public static DataStorageTransfer getDataStorageTransfer(){
         if(dataStorageTransfer == null) {
             dataStorageTransfer = new DataStorageTransfer();
-            System.out.println("DataStorage for Transfer was created.");
         }
         return dataStorageTransfer;
     }

@@ -1,36 +1,20 @@
 package pl.senla.hotel.entity.services;
 
-import pl.senla.hotel.entity.Guest;
-
 import java.time.LocalDateTime;
 
 public class Transfer extends HotelService{
 
-    private int idGuideTour;
     private LocalDateTime startDateTime;
     private String nameTour;
     private String transport;
     private int price;
 
-    public Transfer(int idGuideTour) {
-        this.idGuideTour = idGuideTour;
-    }
-
-    public Transfer(int idGuideTour, Guest guest, String nameTour, String transport, LocalDateTime startDateTime, int price) {
-        super(TypeOfService.TRANSFER.getTypeName(), guest);
+    public Transfer(int idService, int idOrder, int idGuest, String nameTour, String transport, LocalDateTime startDateTime, int price) {
+        super(idService, idOrder, TypeOfService.TRANSFER.getTypeName(), idGuest);
         this.startDateTime = startDateTime;
-        this.idGuideTour = idGuideTour;
         this.nameTour = nameTour;
         this.transport = transport;
         this.price = price;
-    }
-
-    public int getIdGuideTour() {
-        return idGuideTour;
-    }
-
-    public void setIdGuideTour(int idGuideTour) {
-        this.idGuideTour = idGuideTour;
     }
 
     public String getNameTour() {
@@ -68,10 +52,11 @@ public class Transfer extends HotelService{
     @Override
     public String toString() {
         return "\nTransfer{" +
-                "typeOfService=" + super.getTypeOfService() +
-                ", idTransfer=" + idGuideTour + "," +
-                super.getGuest().toString() + "," +
-                nameTour + "," +
+                "idOrder= " + super.getIdOrder() +
+                ", typeOfService=" + super.getTypeOfService() +
+                "\n idTransfer=" + super.getIdService() + "," +
+                ", idGuest=" + super.getIdGuest() + "," +
+                ", Route's name=" + nameTour + "," +
                 "\nStartTime=" + startDateTime +
                 ", transport=" + transport +
                 ", cost=" + price +

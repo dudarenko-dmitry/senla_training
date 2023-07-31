@@ -6,14 +6,21 @@ import pl.senla.hotel.storage.DataStorageGuest;
 
 import java.util.List;
 
-public class RepositoryGuestCollection implements RepositoryGuest {
+public class RepositoryGuestCollection implements Repository<Guest> {
 
+    private static Repository<Guest> repositoryGuest;
     private final DataStorage<Guest> dataStorage;
 
-    public RepositoryGuestCollection() {
+    private RepositoryGuestCollection() {
         this.dataStorage = DataStorageGuest.getDataStorageGuest();
     }
 
+    public static Repository<Guest> getRepositoryGuest(){
+        if(repositoryGuest == null){
+            repositoryGuest = new RepositoryGuestCollection();
+        }
+        return repositoryGuest;
+    }
     @Override
     public List<Guest> readAll() {
         return dataStorage.getDataList();
@@ -37,7 +44,7 @@ public class RepositoryGuestCollection implements RepositoryGuest {
     }
 
     @Override
-    public boolean update(Guest guest) {
+    public boolean update(int id, Guest guest) {
         int idGuest = guest.getIdGuest();
         readAll().set(idGuest, guest);
         return true;
@@ -47,10 +54,5 @@ public class RepositoryGuestCollection implements RepositoryGuest {
     public boolean delete(int id) {
         readAll().remove(id);
         return true;
-    }
-
-    @Override
-    public int countNumberOfGuestsTotal() {
-        return readAll().size();
     }
 }

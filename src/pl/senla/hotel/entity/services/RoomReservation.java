@@ -1,7 +1,7 @@
 package pl.senla.hotel.entity.services;
 
-import pl.senla.hotel.entity.Guest;
-import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.service.ServiceRoom;
+import pl.senla.hotel.service.ServiceRoomImpl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,44 +11,36 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class RoomReservation extends HotelService{
 
-    private int idRoomReservation = -1;
-    private Room room;
+    private int idRoom;
     private int numberOfDays;
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
     private int cost;
+    private final ServiceRoom serviceRoom = ServiceRoomImpl.getServiceRoom();
 
-    public RoomReservation(int idRoomReservation) {
-        this.idRoomReservation = idRoomReservation;
+    public RoomReservation() {
+
     }
 
-    public RoomReservation(Guest guest, Room room, LocalDate startDate, int numberOfDays) {
-        super(TypeOfService.ROOM_RESERVATION.getTypeName(), guest);
-        if(room == null){
+    public RoomReservation(int idService, int idOrder, int idGuest, int idRoom, LocalDate startDate, int numberOfDays) {
+        super(idService, idOrder, TypeOfService.RESTAURANT.getTypeName(), idGuest);
+        if(idRoom < 0){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
         }
-        this.room = room;
+        this.idRoom = idRoom;
         this.numberOfDays = numberOfDays;
         this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
         this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
-        this.cost = room.getPrice() * numberOfDays;
+        this.cost = serviceRoom.read(idRoom).getPrice() * numberOfDays;
     }
 
-    public int getIdRoomReservation() {
-        return idRoomReservation;
+    public int getIdRoom() {
+        return idRoom;
     }
 
-    public void setIdRoomReservation(int idRoomReservation) {
-        this.idRoomReservation = idRoomReservation;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setIdRoom(int idRoom) {
+        this.idRoom = idRoom;
     }
 
     public LocalDateTime getCheckInTime() {
@@ -84,17 +76,17 @@ public class RoomReservation extends HotelService{
     }
 
     public void setCost() {
-        this.cost = numberOfDays * room.getPrice();
+        this.cost = getNumberOfDays() * serviceRoom.read(idRoom).getPrice();
     }
 
     @Override
     public String toString() {
-        return "\n\nRoomReservation {" +
-                "Type of Service=" + super.getTypeOfService() +
-                ", idRoomReservation=" + idRoomReservation + "," +
-                super.getGuest().toString() + "," +
-                room + "," +
-                "\ncheck-in time=" + checkInTime +
+        return "RoomReservation {" +
+                "type of Service=" + super.getTypeOfService() +
+                ",\nidRoomReservation=" + super.getIdService() +
+                ", idGuest=" + super.getIdGuest() +
+                ", idRoom=" + idRoom +
+                ",\ncheck-in time=" + checkInTime +
                 ", numberOfDays=" + numberOfDays +
                 ", check-out time=" + checkOutTime +
                 ", cost=" + cost +

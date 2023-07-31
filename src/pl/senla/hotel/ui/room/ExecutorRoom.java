@@ -1,29 +1,34 @@
 package pl.senla.hotel.ui.room;
 
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
+import pl.senla.hotel.ui.order.ExecutorOrder;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.entity.services.FreeRoom;
 import pl.senla.hotel.entity.services.RoomStatus;
 
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
-import static pl.senla.hotel.constant.HotelConstant.*;
 
 public class ExecutorRoom implements Executor {
 
+    private static Executor executorRoom;
     private final ControllerFacility facilityController;
     private final ControllerRoom roomController;
-    private final ControllerRoomReservation roomReservationController;
 
-    public ExecutorRoom() {
-        this.facilityController = new ControllerFacilityCollection();
-        this.roomController = new ControllerRoomCollection();
-        this.roomReservationController = new ControllerRoomReservationCollection();
+    private ExecutorRoom() {
+        this.facilityController = ControllerFacilityCollection.getControllerFacility();
+        this.roomController = ControllerRoomCollection.getControllerRoom();
+    }
+
+    public static Executor getExecutorRoom(){
+        if (executorRoom == null) {
+            executorRoom = new ExecutorRoom();
+        }
+        return executorRoom;
     }
 
     @Override
@@ -32,7 +37,7 @@ public class ExecutorRoom implements Executor {
         switch (userSelection) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
             case 2 -> {
-                System.out.print("Input ID Room -->");
+                System.out.print("Input ID Room --> ");
                 int id = sc.nextInt();
                 System.out.println(CONSOLE_READ_ROOM + roomController.read(id));
             }
@@ -48,31 +53,36 @@ public class ExecutorRoom implements Executor {
                 if(roomLevel.equals("")){
                     execute(userSelection);
                 }
-                Room room = new Room(CategoryFacility.ROOM.getTypeName(), roomNumber, price, capacity,
-                        roomLevel, RoomStatus.AVAILABLE.getStatus());
-                System.out.println(CONSOLE_CREATE_ROOM + roomController.create(room));
-                FreeRoom freeRoom1 = new FreeRoom(room, START_DATE_YEAR, END_DATE_YEAR);
-                facilityController.create(room); // CHECK (need for creating price-list)
-                roomReservationController.createFreeRoom(freeRoom1);
+                StringBuilder stringRoom = new StringBuilder()
+                        .append(CategoryFacility.ROOM.getTypeName()).append(";")
+                        .append(roomNumber).append(";")
+                        .append(price).append(";")
+                        .append(capacity).append(";")
+                        .append(roomLevel).append(";")
+                        .append(RoomStatus.AVAILABLE.getStatus());
+                System.out.println(CONSOLE_CREATE_ROOM + facilityController.create(String.valueOf(stringRoom)));
             }
             case 4 -> {
-                System.out.print("Input ID Room to Update -->");
+                System.out.print("Input ID Room to Update --> ");
                 int idRoomUpdate = sc.nextInt();
                 System.out.print("Input new price --> ");
                 int newPrice = sc.nextInt();
-                Room roomUpdated = roomController.read(idRoomUpdate);
-                roomUpdated.setPrice(newPrice);
-                facilityController.update(roomUpdated);
-                System.out.println(CONSOLE_CHANGE_ROOM + roomController.update(roomUpdated));
+                HotelFacility roomUpdated = roomController.read(idRoomUpdate);
+                if(roomUpdated != null){
+//                    roomUpdated.setPrice(newPrice);
+                    System.out.println(CONSOLE_CHANGE_ROOM + facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
+                } else {
+                    System.out.println(ERROR_INPUT);
+                }
             }
             case 5 -> {
-                System.out.print("Input ID Room to Delete -->");
+                System.out.print("Input ID Room to Delete --> ");
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }
             case 0 -> new StartMenuMain().runMenu();
             default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
+                System.out.println(ERROR_INPUT);
                 new StartMenuMain().runMenu();
             }
         }

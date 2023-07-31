@@ -1,7 +1,6 @@
 package pl.senla.hotel.ui.guest;
 
 import pl.senla.hotel.controller.*;
-import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
@@ -11,10 +10,18 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 public class ExecutorGuest implements Executor {
 
+    private static Executor executor;
     private final ControllerGuest guestController;
 
-    public ExecutorGuest() {
-        this.guestController = new ControllerGuestCollection();
+    private ExecutorGuest() {
+        this.guestController = ControllerGuestCollection.getControllerGuest();
+    }
+
+    public static Executor getExecutorGuest(){
+        if (executor == null) {
+            executor = new ExecutorGuest();
+        }
+        return executor;
     }
 
     @Override
@@ -24,7 +31,7 @@ public class ExecutorGuest implements Executor {
             case 1 ->
                 System.out.println(CONSOLE_READ_ALL_GUESTS + guestController.readAll());
             case 2 -> {
-                System.out.print("Input ID Guest -->");
+                System.out.print("Input ID Guest --> ");
                 int id = sc.nextInt();
                 System.out.println(CONSOLE_READ_GUEST + guestController.read(id));
             }
@@ -34,27 +41,26 @@ public class ExecutorGuest implements Executor {
                 String name = sc.next();
                 System.out.print("Guest's phone number --> ");
                 int phoneNumber = sc.nextInt();
-                Guest guestNew = new Guest(name, phoneNumber);
-                System.out.println(CONSOLE_CREATE_GUEST + guestController.create(guestNew));
+                String guestString = name + ";" +
+                        phoneNumber;
+                System.out.println(CONSOLE_CREATE_GUEST + guestController.create(guestString));
             }
             case 4 -> {
-                System.out.print("Input ID Guest to Update -->");
+                System.out.print("Input ID Guest to Update --> ");
                 int idGuestUpdate = sc.nextInt();
                 System.out.print("Input new phoneNumber --> ");
-                int newPhoneNumber = sc.nextInt();
-                Guest guestUpdated = guestController.read(idGuestUpdate);
-                guestUpdated.setPhoneNumber(newPhoneNumber);
-                System.out.println(CONSOLE_CHANGE_GUEST + guestController.update(guestUpdated));
+                String newPhoneNumber = sc.next();
+                System.out.println(CONSOLE_CHANGE_GUEST + guestController.update(idGuestUpdate, newPhoneNumber));
             }
             case 5 -> {
-                System.out.print("Input ID Guest to Delete -->");
+                System.out.print("Input ID Guest to Delete --> ");
                 int idGuestDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_GUEST + guestController.delete(idGuestDelete));
             }
             case 0 -> new StartMenuMain().runMenu();
             default -> {
-                System.out.println(ERROR_INPUT_NAVIGATE);
-                new StartMenuGuest().runMenu();
+                System.out.println(ERROR_INPUT);
+                StartMenuGuest.getStartMenuGuest().runMenu();
             }
         }
     }

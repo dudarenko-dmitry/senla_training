@@ -8,4 +8,8 @@ public interface ServiceFacility extends ServiceCRUDALL<HotelFacility> {
 
     List<HotelFacility> readPriceListForServicesSortByCategory();
     List<HotelFacility> readPriceListForServicesSortByPrice();
+
+    List<HotelFacility> readAllRoomsSortByPrice();
+    List<HotelFacility> readAllRoomsSortByCapacity();
+    List<HotelFacility> readAllRoomsSortByLevel();
 }

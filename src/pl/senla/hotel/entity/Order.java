@@ -2,24 +2,26 @@ package pl.senla.hotel.entity;
 
 import pl.senla.hotel.entity.services.HotelService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
 
     private int idOrder = -1;
-    private Guest guest;
-    private List<HotelService> services;
+    private int idGuest;
+    private List<HotelService> services = new ArrayList<>();
+
+    public Order(int idGuest) {
+        this.idOrder = idGuest;
+    }
+
+    public Order(int idGuest, List<HotelService> services) {
+        this.idGuest = idGuest;
+        this.services = services;
+    }
 
     public Order() {
-    }
 
-    public Order(int idOrder) {
-        this.idOrder = idOrder;
-    }
-
-    public Order(Guest guest, List<HotelService> services) {
-        this.guest = guest;
-        this.services = services;
     }
 
     public int getIdOrder() {
@@ -30,12 +32,12 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Guest getGuest() {
-        return guest;
+    public int getIdGuest() {
+        return idGuest;
     }
 
-    public void setGuest(Guest guest) {
-        this.guest = guest;
+    public void setIdGuest(int idGuest) {
+        this.idGuest = idGuest;
     }
 
     public List<HotelService> getServices() {
@@ -48,9 +50,10 @@ public class Order {
 
     @Override
     public String toString() {
-        return "\nOrder{" +
+        return "\n=== > Order{" +
                 "idOrder=" + idOrder +
-                ", " + services +
+                ", idGuest= " + idGuest +
+                ", services: " + services +
                 '}';
     }
 }

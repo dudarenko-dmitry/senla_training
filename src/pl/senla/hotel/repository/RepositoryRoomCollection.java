@@ -1,20 +1,25 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.comparators.RoomComparatorByCapacity;
-import pl.senla.hotel.comparators.RoomComparatorByLevel;
-import pl.senla.hotel.comparators.RoomComparatorByPrice;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageRoom;
 
 import java.util.List;
 
-public class RepositoryRoomCollection implements RepositoryRoom {
+public class RepositoryRoomCollection implements Repository<Room> {
 
+    private static Repository<Room> repositoryRoom;
     private final DataStorage<Room> dataStorage;
 
-    public RepositoryRoomCollection() {
+    private RepositoryRoomCollection() {
         this.dataStorage = DataStorageRoom.getDataStorageRoom();
+    }
+
+    public static Repository<Room> getRepositoryRoom(){
+        if(repositoryRoom == null){
+            repositoryRoom = new RepositoryRoomCollection();
+        }
+        return repositoryRoom;
     }
 
     @Override
@@ -29,41 +34,20 @@ public class RepositoryRoomCollection implements RepositoryRoom {
     }
 
     @Override
-    public Room read(int id) {
-        Room roomRead = null;
-        for(Room r : readAll()){
-            if (id == r.getIdFacility()){
-                roomRead = r;
-            }
-        }
-        return roomRead;
+    public Room read(int idRoom) {
+        return dataStorage.getDataList().get(idRoom);
     }
 
     @Override
-    public boolean update(Room room) {
-        int roomId = room.getIdFacility();
-        readAll().set(roomId, room);
+    public boolean update(int idRoom, Room room) {
+        readAll().set(idRoom, room);
         return true;
     }
 
     @Override
-    public boolean delete(int id) {
-        readAll().remove(id);
+    public boolean delete(int idRoom) {
+        readAll().remove(idRoom);
         return true;
     }
 
-    @Override
-    public List<Room> readAllRoomsSortByPrice() {
-        return readAll().stream().sorted(new RoomComparatorByPrice()).toList();
-    }
-
-    @Override
-    public List<Room> readAllRoomsSortByCapacity() {
-        return readAll().stream().sorted(new RoomComparatorByCapacity()).toList();
-    }
-
-    @Override
-    public List<Room> readAllRoomsSortByLevel() {
-        return readAll().stream().sorted(new RoomComparatorByLevel()).toList();
-    }
 }

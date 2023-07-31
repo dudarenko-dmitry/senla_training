@@ -1,33 +1,45 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.service.ServiceRoomImpl;
-import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.service.ServiceRoom;
 
 import java.util.List;
 
 public class ControllerRoomCollection implements ControllerRoom {
 
-    private final ServiceRoom roomService = new ServiceRoomImpl();
+    private static ControllerRoom controllerRoom;
+    private final ServiceRoom roomService;
+
+    private ControllerRoomCollection() {
+        this.roomService = ServiceRoomImpl.getServiceRoom();
+    }
+
+    public static ControllerRoom getControllerRoom() {
+        if (controllerRoom == null) {
+            controllerRoom = new ControllerRoomCollection();
+        }
+        return controllerRoom;
+    }
 
     @Override
-    public List<Room> readAll() {
+    public List<HotelFacility> readAll() {
         return roomService.readAll();
     }
 
     @Override
-    public boolean create(Room room) {
-        return roomService.create(room);
+    public boolean create(String roomString) {
+        return roomService.create(roomString);
     }
 
     @Override
-    public Room read(int roomId) {
+    public HotelFacility read(int roomId) {
         return roomService.read(roomId);
     }
 
     @Override
-    public boolean update(Room room) {
-        return roomService.update(room);
+    public boolean update(int roomId, String roomString) {
+        return roomService.update(roomId, roomString);
     }
 
     @Override
@@ -35,18 +47,4 @@ public class ControllerRoomCollection implements ControllerRoom {
         return roomService.delete(roomId);
     }
 
-    @Override
-    public List<Room> readAllRoomsSortByPrice() {
-        return roomService.readAllRoomsSortByPrice();
-    }
-
-    @Override
-    public List<Room> readAllRoomsSortByCapacity() {
-        return roomService.readAllRoomsSortByCapacity();
-    }
-
-    @Override
-    public List<Room> readAllRoomsSortByLevel() {
-        return roomService.readAllRoomsSortByLevel();
-    }
 }

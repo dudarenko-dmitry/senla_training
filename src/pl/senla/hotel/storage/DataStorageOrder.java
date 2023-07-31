@@ -11,7 +11,6 @@ public class DataStorageOrder extends DataStorage<Order>{
     public static DataStorageOrder getDataStorageOrder(){
         if(dataStorageOrder == null){
             dataStorageOrder = new DataStorageOrder();
-            System.out.println("DataStorage for Order was created.");
         }
         return dataStorageOrder;
     }

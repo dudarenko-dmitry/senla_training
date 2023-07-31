@@ -11,7 +11,6 @@ public class DataStorageGuest extends DataStorage<Guest>{
     public static DataStorageGuest getDataStorageGuest(){
         if(dataStorageGuest == null) {
             dataStorageGuest = new DataStorageGuest();
-            System.out.println("DataStorage for Guest was created.");
         }
         return dataStorageGuest;
     }

@@ -1,23 +1,29 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Navigator;
-
-import java.util.List;
 
 public class StartUpdateHotelServiceList {
 
+    private static StartUpdateHotelServiceList startUpdateHotelServiceList;
     private final Navigator navigator;
     private final ExecutorUpdateHotelServiceList executor;
 
-    public StartUpdateHotelServiceList() {
-        this.navigator = new NavigatorHotelService();
-        this.executor = new ExecutorUpdateHotelServiceList();
+    private StartUpdateHotelServiceList() {
+        this.navigator = NavigatorHotelService.getNavigatorHotelService();
+        this.executor = ExecutorUpdateHotelServiceList.getExecutorUpdateHotelServiceList();
     }
 
-    public List<HotelService> runMenu(List<HotelService> services){
+    public static StartUpdateHotelServiceList getStartUpdateHotelServiceList(){
+        if (startUpdateHotelServiceList == null) {
+            startUpdateHotelServiceList = new StartUpdateHotelServiceList();
+        }
+        return startUpdateHotelServiceList;
+    }
+
+    public boolean runMenu(int idOrderUpdate){
         navigator.buildMenu();
+        System.out.println("Select type of Hotel's Service you want to update.");
         int typeOsService = navigator.makeChoice();
-        return executor.updateHotelServiceList(services, typeOsService);
+        return executor.updateHotelServiceList(idOrderUpdate, typeOsService);
     }
 }

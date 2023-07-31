@@ -38,7 +38,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_READ_ALL_SERVICES =              "\nList of all Services: ";
     public static final String CONSOLE_READ_ALL_SERVICES_FOR_GUEST =    "\nList of all Services: ";
     public static final String CONSOLE_READ_SERVICE =                   "Service: ";
-    public static final String CONSOLE_CREATE_SERVICE =                 "New Service was created: ";
+    public static final String CONSOLE_CREATE_SERVICE =                 "New Reservation was created: ";
     public static final String CONSOLE_CHANGE_SERVICE =                 "Service changed: ";
     public static final String CONSOLE_DELETE_SERVICE =                 "Service deleted: ";
 
@@ -62,6 +62,8 @@ public class ConsoleConstant {
     public static final String SORTED_BY_CHECK_OUT =  " sorted by check-out time";
     public static final String SORTED_BY_CATEGORY =   " sorted by category";
 
-    public static final String ERROR_INPUT_NAVIGATE =   "ERROR!!!\nYou input is invalid. Please, repeat input.";
+    public static final String ERROR_INPUT =   "ERROR!!!\nYou input is invalid. Please, repeat input.";
+    public static final String INPUT_ID_GUEST = "Input Guest's ID --> ";
+    public static final String INPUT_ID_ROOM = "Input Room's ID --> ";
 
 }

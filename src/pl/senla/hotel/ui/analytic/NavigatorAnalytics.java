@@ -5,10 +5,12 @@ import pl.senla.hotel.ui.Navigator;
 
 public class NavigatorAnalytics implements Navigator {
 
-    private final String nameMenu = "\n===== Menu Analytics Reports =====";
+    private static Navigator navigator;
+    private final String nameMenu;
     private final MenuItem[] menuItems;
 
-    public NavigatorAnalytics() {
+    private NavigatorAnalytics() {
+        this.nameMenu = "\n===== Menu Analytics Reports =====";
         MenuItem item1 = new AnalyticItem1();
         MenuItem item2 = new AnalyticItem2();
         MenuItem item3 = new AnalyticItem3();
@@ -32,6 +34,13 @@ public class NavigatorAnalytics implements Navigator {
         this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item6,
                 item7, item8, item9, item10, item11, item12, item13,
                 item14, item15, item16, item17, item18, item19, item0};
+    }
+
+    public static Navigator getNavigatorAnalytics(){
+        if (navigator == null) {
+            navigator = new NavigatorAnalytics();
+        }
+        return navigator;
     }
 
     @Override

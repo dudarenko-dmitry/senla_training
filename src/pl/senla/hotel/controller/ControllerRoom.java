@@ -1,12 +1,7 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 
-import java.util.List;
+public interface ControllerRoom extends ControllerCRUDALL<HotelFacility> {
 
-public interface ControllerRoom extends ControllerCRUDALL<Room> {
-
-    List<Room> readAllRoomsSortByPrice();
-    List<Room> readAllRoomsSortByCapacity();
-    List<Room> readAllRoomsSortByLevel();
 }

@@ -1,21 +1,26 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.comparators.HotelFacilityComparatorByCategory;
-import pl.senla.hotel.comparators.HotelFacilityComparatorByPrice;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageFacility;
 
 import java.util.List;
 
-public class RepositoryFacilityCollection implements RepositoryFacility{
+public class RepositoryFacilityCollection implements Repository<HotelFacility> {
 
+    private static Repository<HotelFacility> repositoryFacility;
     private final DataStorage<HotelFacility> priceList;
 
-    public RepositoryFacilityCollection() {
+    private RepositoryFacilityCollection() {
         this.priceList = DataStorageFacility.getDataStorageFacility();
     }
 
+    public static Repository<HotelFacility> getRepositoryFacility(){
+        if(repositoryFacility == null){
+            repositoryFacility = new RepositoryFacilityCollection();
+        }
+        return repositoryFacility;
+    }
     @Override
     public List<HotelFacility> readAll() {
         return priceList.getDataList();
@@ -27,35 +32,19 @@ public class RepositoryFacilityCollection implements RepositoryFacility{
     }
 
     @Override
-    public HotelFacility read(int id) {
-        return readAll().get(id);
+    public HotelFacility read(int idFacility) {
+        return readAll().get(idFacility);
     }
 
     @Override
-    public boolean update(HotelFacility hotelFacility) {
-        readAll().set(hotelFacility.getIdFacility(), hotelFacility);
+    public boolean update(int idFacility, HotelFacility hotelFacility) {
+        readAll().set(idFacility, hotelFacility);
         return true;
     }
 
     @Override
-    public boolean delete(int id) {
-        readAll().remove(id);
-        return false;
-    }
-
-    @Override
-    public List<HotelFacility> readPriceListForServicesSortByCategory() {
-        return readAll()
-                .stream()
-                .sorted(new HotelFacilityComparatorByCategory())
-                .toList();
-    }
-
-    @Override
-    public List<HotelFacility> readPriceListForServicesSortByPrice() {
-        return readAll()
-                .stream()
-                .sorted(new HotelFacilityComparatorByPrice())
-                .toList();
+    public boolean delete(int idFacility) {
+        readAll().remove(idFacility);
+        return true;
     }
 }
