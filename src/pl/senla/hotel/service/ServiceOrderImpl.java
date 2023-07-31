@@ -1,11 +1,10 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
+import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.repository.RepositoryHotelService;
-import pl.senla.hotel.repository.RepositoryHotelServiceCollection;
-import pl.senla.hotel.repository.RepositoryOrder;
-import pl.senla.hotel.repository.RepositoryOrderCollection;
+import pl.senla.hotel.repository.*;
 import pl.senla.hotel.ui.services.StartCreateHotelService;
 
 import java.util.Collections;
@@ -18,8 +17,8 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 public class ServiceOrderImpl implements ServiceOrder {
 
     private static ServiceOrder serviceOrder;
-    private final RepositoryOrder repositoryOrder;
-    private final RepositoryHotelService repositoryHotelService;
+    private final Repository<Order> repositoryOrder;
+    private final Repository<HotelService> repositoryHotelService;
 
 
     private ServiceOrderImpl() {
@@ -115,17 +114,31 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public List<HotelService> readAllServicesSortByPrice(int idGuest) {
-        return repositoryOrder.readAllServicesSortByPrice(idGuest);
+        return repositoryOrder.readAll()
+                .stream()
+                .filter(o -> o.getIdGuest() == idGuest)
+                .flatMap(o -> o.getServices().stream())
+                .sorted(new HotelServicesComparatorByPrice())
+                .toList();
     }
 
     @Override
     public List<HotelService> readAllServicesSortByDate(int idGuest) {
-        return repositoryOrder.readAllServicesSortByDate(idGuest);
+        return repositoryOrder.readAll()
+                .stream()
+                .filter(o -> o.getIdGuest() == idGuest)
+                .flatMap(o -> o.getServices().stream())
+                .sorted(new HotelServicesComparatorByDate())
+                .toList();
     }
 
     @Override
     public List<HotelService> readAllServicesForGuest(int idGuest) {
-        return repositoryOrder.readAllServicesForGuest(idGuest);
+        return repositoryOrder.readAll()
+                .stream()
+                .filter(o -> o.getIdGuest() == idGuest)
+                .map(Order::getServices)
+                .findAny().orElse(null);
     }
 
     private int getIdOrderNew() {

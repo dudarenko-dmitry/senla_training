@@ -1,10 +1,11 @@
 package pl.senla.hotel.comparators;
 
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.Transfer;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.Restaurant;
 import pl.senla.hotel.entity.services.RoomReservation;
-import pl.senla.hotel.repository.RepositoryRoom;
+import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.Comparator;
@@ -13,7 +14,7 @@ import static pl.senla.hotel.constant.HotelServieConstant.ERROR_IN_SERVICE_TYPE;
 
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
-    private final RepositoryRoom repositoryRoom;
+    private final Repository<Room> repositoryRoom;
 
     public HotelServicesComparatorByPrice() {
         this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();

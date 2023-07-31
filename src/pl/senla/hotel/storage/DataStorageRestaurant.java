@@ -12,7 +12,6 @@ public class DataStorageRestaurant extends DataStorage<Restaurant> {
     public static DataStorageRestaurant getDataStorageRestaurant() {
         if (dataStorageRestaurant == null) {
             dataStorageRestaurant = new DataStorageRestaurant();
-            System.out.println("DataStorage for Restaurant was created.");
         }
         return dataStorageRestaurant;
     }

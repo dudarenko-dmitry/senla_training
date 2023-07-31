@@ -11,7 +11,6 @@ public class DataStorageHotelService extends DataStorage<HotelService>{
     public static DataStorageHotelService getDataStorageHotelService(){
         if(dataStorageHotelService == null) {
             dataStorageHotelService = new DataStorageHotelService();
-            System.out.println("DataStorage for Hotel's Services was created.");
         }
         return dataStorageHotelService;
     }

@@ -3,7 +3,7 @@ package pl.senla.hotel.service;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.repository.RepositoryFacility;
+import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryFacilityCollection;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 public class ServiceRoomImpl implements ServiceRoom {
 
     private static ServiceRoom serviceRoom;
-    private final RepositoryFacility repositoryFacility;
+    private final Repository<HotelFacility> repositoryFacility;
 
     private ServiceRoomImpl() {
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();

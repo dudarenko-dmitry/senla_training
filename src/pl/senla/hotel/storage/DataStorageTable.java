@@ -11,7 +11,6 @@ public class DataStorageTable extends DataStorage<Room>{
     public static DataStorageTable getDataStorageTable(){
         if(dataStorageTable == null) {
             dataStorageTable = new DataStorageTable();
-            System.out.println("DataStorage for Table was created.");
         }
         return dataStorageTable;
     }

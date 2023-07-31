@@ -12,7 +12,6 @@ public class DataStorageFacility extends DataStorage<HotelFacility>{
     public static DataStorageFacility getDataStorageFacility(){
         if(dataStorageFacility == null) {
             dataStorageFacility = new DataStorageFacility();
-            System.out.println("DataStorage for HotelFacility was created.");
         }
         return dataStorageFacility;
     }

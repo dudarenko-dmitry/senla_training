@@ -1,27 +1,23 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.comparators.*;
-import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageFacility;
 
 import java.util.List;
 
-public class RepositoryFacilityCollection implements RepositoryFacility{
+public class RepositoryFacilityCollection implements Repository<HotelFacility> {
 
-    private static RepositoryFacility repositoryFacility;
+    private static Repository<HotelFacility> repositoryFacility;
     private final DataStorage<HotelFacility> priceList;
 
     private RepositoryFacilityCollection() {
         this.priceList = DataStorageFacility.getDataStorageFacility();
     }
 
-    public static RepositoryFacility getRepositoryFacility(){
+    public static Repository<HotelFacility> getRepositoryFacility(){
         if(repositoryFacility == null){
             repositoryFacility = new RepositoryFacilityCollection();
-            System.out.println("Repository for HotelFacility was created.");
-
         }
         return repositoryFacility;
     }
@@ -50,45 +46,5 @@ public class RepositoryFacilityCollection implements RepositoryFacility{
     public boolean delete(int idFacility) {
         readAll().remove(idFacility);
         return true;
-    }
-
-    @Override
-    public List<HotelFacility> readPriceListForServicesSortByCategory() {
-        return readAll()
-                .stream()
-                .sorted(new HotelFacilityComparatorByCategory())
-                .toList();
-    }
-
-    @Override
-    public List<HotelFacility> readPriceListForServicesSortByPrice() {
-        return readAll()
-                .stream()
-                .sorted(new HotelFacilityComparatorByPrice())
-                .toList();
-    }
-
-    @Override
-    public List<HotelFacility> readAllRoomsSortByPrice() {
-        return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
-                .sorted(new RoomComparatorByPrice())
-                .toList();
-    }
-
-    @Override
-    public List<HotelFacility> readAllRoomsSortByCapacity() {
-        return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
-                .sorted(new RoomComparatorByCapacity())
-                .toList();
-    }
-
-    @Override
-    public List<HotelFacility> readAllRoomsSortByLevel() {
-        return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
-                .sorted(new RoomComparatorByLevel())
-                .toList();
     }
 }

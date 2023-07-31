@@ -1,24 +1,21 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
-import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.storage.DataStorage;
 import pl.senla.hotel.storage.DataStorageOrder;
 
 import java.util.List;
 
-public class RepositoryOrderCollection implements RepositoryOrder {
+public class RepositoryOrderCollection implements Repository<Order> {
 
-    private static RepositoryOrder repositoryOrder;
+    private static Repository<Order> repositoryOrder;
     private final DataStorage<Order> orderDataStorage;
 
     private RepositoryOrderCollection() {
         this.orderDataStorage = DataStorageOrder.getDataStorageOrder();
     }
 
-    public static RepositoryOrder getRepositoryOrder(){
+    public static Repository<Order> getRepositoryOrder(){
         if(repositoryOrder == null){
             repositoryOrder = new RepositoryOrderCollection();
         }
@@ -51,34 +48,5 @@ public class RepositoryOrderCollection implements RepositoryOrder {
     public boolean delete(int id) {
         readAll().remove(id);
         return true;
-    }
-
-    @Override
-    public List<HotelService> readAllServicesSortByPrice(int idGuest) {
-        return readAll()
-                .stream()
-                .filter(o -> o.getIdGuest() == idGuest)
-                .flatMap(o -> o.getServices().stream())
-                .sorted(new HotelServicesComparatorByPrice())
-                .toList();
-    }
-
-    @Override
-    public List<HotelService> readAllServicesSortByDate(int idGuest) {
-        return readAll()
-                .stream()
-                .filter(o -> o.getIdGuest() == idGuest)
-                .flatMap(o -> o.getServices().stream())
-                .sorted(new HotelServicesComparatorByDate())
-                .toList();
-    }
-
-    @Override
-    public List<HotelService> readAllServicesForGuest(int idGuest) {
-        return readAll()
-                .stream()
-                .filter(o -> o.getIdGuest() == idGuest)
-                .map(Order::getServices)
-                .findAny().orElse(null);
     }
 }

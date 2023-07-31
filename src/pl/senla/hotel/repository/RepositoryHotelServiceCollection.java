@@ -5,19 +5,18 @@ import pl.senla.hotel.storage.DataStorageHotelService;
 
 import java.util.List;
 
-public class RepositoryHotelServiceCollection implements RepositoryHotelService{
+public class RepositoryHotelServiceCollection implements Repository<HotelService> {
 
-    private static RepositoryHotelService repositoryHotelService;
+    private static Repository<HotelService> repositoryHotelService;
     private final DataStorageHotelService dataStorageHotelService;
 
     private RepositoryHotelServiceCollection() {
         this.dataStorageHotelService = DataStorageHotelService.getDataStorageHotelService();
     }
 
-    public static RepositoryHotelService getRepositoryHotelService(){
+    public static Repository<HotelService> getRepositoryHotelService(){
         if(repositoryHotelService == null) {
             repositoryHotelService = new RepositoryHotelServiceCollection();
-            System.out.println("Repository for Hotel's Services was created.");
         }
         return repositoryHotelService;
     }

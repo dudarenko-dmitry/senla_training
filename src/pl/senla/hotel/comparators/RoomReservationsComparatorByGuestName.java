@@ -1,14 +1,15 @@
 package pl.senla.hotel.comparators;
 
+import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.services.RoomReservation;
-import pl.senla.hotel.repository.RepositoryGuest;
+import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryGuestCollection;
 
 import java.util.Comparator;
 
 public class RoomReservationsComparatorByGuestName implements Comparator<RoomReservation> {
 
-    private final RepositoryGuest repositoryGuest;
+    private final Repository<Guest> repositoryGuest;
 
     public RoomReservationsComparatorByGuestName() {
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
