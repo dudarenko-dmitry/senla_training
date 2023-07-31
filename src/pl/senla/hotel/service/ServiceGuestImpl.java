@@ -1,7 +1,7 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.Guest;
-import pl.senla.hotel.repository.RepositoryGuest;
+import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryGuestCollection;
 
 import java.util.Collections;
@@ -14,7 +14,7 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 public class ServiceGuestImpl implements ServiceGuest {
 
     private static ServiceGuest serviceGuest;
-    private final RepositoryGuest guestRepository;
+    private final Repository<Guest> guestRepository;
 
     private ServiceGuestImpl() {
         this.guestRepository = RepositoryGuestCollection.getRepositoryGuest();
@@ -93,7 +93,7 @@ public class ServiceGuestImpl implements ServiceGuest {
 
     @Override
     public int countNumberOfGuestsTotal() {
-        return guestRepository.countNumberOfGuestsTotal();
+        return guestRepository.readAll().size();
     }
 
     private void setIdGuestNew(Guest guest) {

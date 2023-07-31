@@ -1,7 +1,7 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.repository.RepositoryHotelService;
+import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryHotelServiceCollection;
 
 import java.util.Collections;
@@ -9,15 +9,14 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.HotelServieConstant.*;
 
+// this Class is never used... Delete?
 public class ServiceHotelServiceImpl implements ServiceHotelService{
 
     private static ServiceHotelService serviceHotelService;
-    private final ServiceOrder serviceOrder;
     private final ServiceRoomReservation serviceRoomReservation;
-    private final RepositoryHotelService repositoryHotelService;
+    private final Repository<HotelService> repositoryHotelService;
 
     private ServiceHotelServiceImpl() {
-        this.serviceOrder = ServiceOrderImpl.getServiceOrder();
         this.serviceRoomReservation = ServiceRoomReservationImpl.getServiceRoomReservation();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
     }
@@ -25,7 +24,6 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     public static ServiceHotelService getServiceHotelService(){
         if(serviceHotelService == null){
             serviceHotelService = new ServiceHotelServiceImpl();
-            System.out.println("Service layer for Hotel's Services was created.");
         }
         return serviceHotelService;
     }
@@ -42,12 +40,9 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     @Override
     public boolean create(String hotelServiceString) {
         String[] hotelServiceData = hotelServiceString.split(";");
-        String typeOfService = hotelServiceData[10]; // EDIT and PUT correct index
+        String typeOfService = hotelServiceData[0]; // EDIT and PUT correct index
         switch (typeOfService){
-            case "RoomReservation" -> {
-                serviceRoomReservation.create(hotelServiceString);
-//                serviceOrder.readAllServicesForGuest(1);
-            }
+            case "RoomReservation" -> serviceRoomReservation.create(hotelServiceString);
             case "Restaurant" -> System.out.println("CREATE ACTION FOR RESTAURANT");
             case "Transfer" -> System.out.println("CREATE ACTION FOR TRANSFER");
             default -> System.out.println("Something went wrong ...");
@@ -73,7 +68,7 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     @Override
     public boolean update(int idHotelService, String hotelServiceString) {
         String[] hotelServiceData = hotelServiceString.split(";");
-        String typeOfService = hotelServiceData[10]; // EDIT and PUT correct index
+        String typeOfService = hotelServiceData[0]; // EDIT and PUT correct index
         switch (typeOfService){
             case "RoomReservation" -> serviceRoomReservation.update(idHotelService, hotelServiceString);
             case "Restaurant" -> System.out.println("CREATE ACTION FOR RESTAURANT");

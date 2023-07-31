@@ -1,28 +1,23 @@
 package pl.senla.hotel.repository;
 
-import pl.senla.hotel.entity.*;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.storage.DataStorage;
-import pl.senla.hotel.storage.DataStorageGuest;
 import pl.senla.hotel.storage.DataStorageRoomReservation;
 
 import java.util.List;
 
-public class RepositoryRoomReservationCollection implements RepositoryCRUDALL<RoomReservation> {
+public class RepositoryRoomReservationCollection implements Repository<RoomReservation> {
 
-    private static RepositoryCRUDALL<RoomReservation> repositoryRoomReservation;
+    private static Repository<RoomReservation> repositoryRoomReservation;
     private final DataStorage<RoomReservation> dataStorageRoomReservation;
-    private final DataStorage<Guest> dataStorageGuest;
 
     private RepositoryRoomReservationCollection() {
-        this.dataStorageGuest = DataStorageGuest.getDataStorageGuest();
         this.dataStorageRoomReservation = DataStorageRoomReservation.getDataStorageRoomReservation();
     }
 
-    public static RepositoryCRUDALL<RoomReservation> getRepositoryRoomReservation(){
+    public static Repository<RoomReservation> getRepositoryRoomReservation(){
         if(repositoryRoomReservation == null){
             repositoryRoomReservation = new RepositoryRoomReservationCollection();
-            System.out.println("Repository for RoomReservation was created.");
         }
         return repositoryRoomReservation;
     }

@@ -6,19 +6,18 @@ import pl.senla.hotel.storage.DataStorageRoom;
 
 import java.util.List;
 
-public class RepositoryRoomCollection implements RepositoryRoom {
+public class RepositoryRoomCollection implements Repository<Room> {
 
-    private static RepositoryRoom repositoryRoom;
+    private static Repository<Room> repositoryRoom;
     private final DataStorage<Room> dataStorage;
 
     private RepositoryRoomCollection() {
         this.dataStorage = DataStorageRoom.getDataStorageRoom();
     }
 
-    public static RepositoryRoom getRepositoryRoom(){
+    public static Repository<Room> getRepositoryRoom(){
         if(repositoryRoom == null){
             repositoryRoom = new RepositoryRoomCollection();
-            System.out.println("Repository for Room was created.");
         }
         return repositoryRoom;
     }

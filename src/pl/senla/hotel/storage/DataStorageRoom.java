@@ -12,7 +12,6 @@ public class DataStorageRoom extends DataStorage<Room>{
     public static DataStorageRoom getDataStorageRoom(){
         if (dataStorageRoom == null){
             dataStorageRoom = new DataStorageRoom();
-            System.out.println("DataStorage for Room was created.");
         }
         return dataStorageRoom;
     }

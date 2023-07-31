@@ -1,6 +1,7 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.comparators.*;
+import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
@@ -25,10 +26,10 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private static ServiceRoomReservation serviceRoomReservation;
     private final ServiceFacility serviceHotelFacility;
-    private final RepositoryHotelService repositoryHotelService;
-    private final RepositoryCRUDALL<RoomReservation> repositoryRoomReservation;
-    private final RepositoryGuest repositoryGuest;
-    private final RepositoryFacility repositoryFacility;
+    private final Repository<HotelService> repositoryHotelService;
+    private final Repository<RoomReservation> repositoryRoomReservation;
+    private final Repository<Guest> repositoryGuest;
+    private final Repository<HotelFacility> repositoryFacility;
 
     private ServiceRoomReservationImpl() {
         this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
@@ -149,7 +150,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             return true;
         } else {
             createFromObject(reservationOld);
-            System.out.println("It is not impossible to update this RoomReservation.\nOld RoomReservation was restored.");
+            System.out.println(ERROR_UPDATE_ROOM_RESERVATION);
             return false;
         }
     }
@@ -263,7 +264,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         return readAllRoomsFreeInTime(checkedTimeString).size();
     }
 
-    // Refactor All methods: delete using FreeRooms
     @Override
     public List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString) {
         return readAllRoomsFreeInTime(checkedTimeString).stream()
@@ -273,7 +273,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
-        LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
         return readAllRoomsFreeInTime(checkedTimeString).stream()
                 .sorted(new RoomComparatorByCapacity())
                 .toList();
@@ -281,7 +280,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
-        LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
         return readAllRoomsFreeInTime(checkedTimeString).stream()
                 .sorted(new RoomComparatorByLevel())
                 .toList();

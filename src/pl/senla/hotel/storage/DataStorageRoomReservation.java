@@ -11,7 +11,6 @@ public class DataStorageRoomReservation extends DataStorage<RoomReservation>{
     public static DataStorageRoomReservation getDataStorageRoomReservation(){
         if(dataStorageRoomReservation == null) {
             dataStorageRoomReservation = new DataStorageRoomReservation();
-            System.out.println("DataStorage for RoomReservation was created.");
         }
         return dataStorageRoomReservation;
     }

@@ -2,7 +2,7 @@ package pl.senla.hotel.repository;
 
 import java.util.List;
 
-public interface RepositoryCRUDALL<T> {
+public interface Repository<T> {
 
     List<T> readAll();
     boolean create(T t);
