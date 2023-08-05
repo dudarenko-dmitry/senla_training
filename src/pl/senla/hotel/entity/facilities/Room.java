@@ -1,11 +1,17 @@
 package pl.senla.hotel.entity.facilities;
 
-public class Room extends HotelFacility{
+import java.io.Serial;
+import java.io.Serializable;
 
-    private String roomLevel;
-    private String roomStatus;
+public class Room extends HotelFacility implements Serializable {
 
-    public Room(String category, String nameFacility, int price, int capacity, String roomLevel, String roomStatus) {
+    private RoomLevel roomLevel;
+    private RoomStatus roomStatus;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    public Room(CategoryFacility category, String nameFacility, int price, int capacity, RoomLevel roomLevel, RoomStatus roomStatus) {
         super(category, nameFacility, price, capacity);
         this.roomLevel = roomLevel;
         this.roomStatus = roomStatus;
@@ -15,19 +21,19 @@ public class Room extends HotelFacility{
         super();
     }
 
-    public String getRoomStatus() {
+    public RoomStatus getRoomStatus() {
         return roomStatus;
     }
 
-    public void setRoomStatus(String roomStatus) {
+    public void setRoomStatus(RoomStatus roomStatus) {
         this.roomStatus = roomStatus;
     }
 
-    public String getRoomLevel() {
+    public RoomLevel getRoomLevel() {
         return roomLevel;
     }
 
-    public void setRoomLevel(String roomLevel) {
+    public void setRoomLevel(RoomLevel roomLevel) {
         this.roomLevel = roomLevel;
     }
 
@@ -40,7 +46,7 @@ public class Room extends HotelFacility{
                 ", roomPrice=" + super.getPrice() +
                 ", capacity=" + super.getCapacity() +
                 ", roomLevel=" + roomLevel +
-                ", roomStatus='" + roomStatus + '\'' +
+                ", roomStatus=" + roomStatus +
                 '}';
     }
 }

@@ -10,7 +10,7 @@ public class Transfer extends HotelService{
     private int price;
 
     public Transfer(int idService, int idOrder, int idGuest, String nameTour, String transport, LocalDateTime startDateTime, int price) {
-        super(idService, idOrder, TypeOfService.TRANSFER.getTypeName(), idGuest);
+        super(idService, idOrder, TypeOfService.TRANSFER, idGuest);
         this.startDateTime = startDateTime;
         this.nameTour = nameTour;
         this.transport = transport;

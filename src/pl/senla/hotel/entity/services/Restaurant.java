@@ -13,7 +13,7 @@ public class Restaurant extends HotelService{
 
     public Restaurant(int idService, int idOrder, int idGuest, int tableNumber, int numberOfGuests,
                       LocalDateTime startTime, int price) {
-        super(idService, idOrder, TypeOfService.RESTAURANT.getTypeName(), idGuest);
+        super(idService, idOrder, TypeOfService.RESTAURANT, idGuest);
         if(tableNumber < 0){// CREATE Entity TABLE and change IF !!!!!!!!!!!!!!!!!!!!!!!!
             System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_TABLE);
             return;

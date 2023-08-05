@@ -1,11 +1,16 @@
 package pl.senla.hotel.entity;
 
-public class Guest {
+import java.io.Serial;
+import java.io.Serializable;
 
-    private int idGuest = -1;
+public class Guest implements Serializable {
+
+    private Integer idGuest;
     private String name;
     private int phoneNumber;
 
+    @Serial
+    private static final long serialVersionUID = 12L;
     public Guest() {
     }
 

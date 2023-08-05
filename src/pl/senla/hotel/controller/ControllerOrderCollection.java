@@ -49,17 +49,17 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public List<HotelService> readAllServicesForGuestSortByPrice(int idGuest) {
-        return orderService.readAllServicesSortByPrice(idGuest);
+    public List<HotelService> readAllServicesSortByPrice() {
+        return orderService.readAllServicesSortByPrice();
     }
 
     @Override
-    public List<HotelService> readAllServicesForGuestSortByDate(int idGuest) {
-        return orderService.readAllServicesSortByDate(idGuest);
+    public List<HotelService> readAllServicesSortByDate() {
+        return orderService.readAllServicesSortByDate();
     }
 
     @Override
-    public List<HotelService> readAllServicesForGuest(int guest) {
-        return orderService.readAllServicesForGuest(guest);
+    public List<HotelService> readAllServicesForOrder(int idOrder) {
+        return orderService.readAllServicesForOrder(idOrder);
     }
 }

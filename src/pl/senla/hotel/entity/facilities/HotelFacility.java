@@ -2,21 +2,23 @@ package pl.senla.hotel.entity.facilities;
 
 public abstract class HotelFacility {
 
-
-    private int idFacility = -1;
-    private String category;
+    private Integer idFacility;
+    private CategoryFacility category;
+//    private String category;
     private String nameFacility;
     private int price;
     private int capacity;
 
-    protected HotelFacility(String category, String nameFacility, int price, int capacity) {
+    private static final long serialVersionUID = 4L;
+
+    protected HotelFacility(CategoryFacility category, String nameFacility, int price, int capacity) {
         this.category = category;
         this.nameFacility = nameFacility;
         this.price = price;
         this.capacity = capacity;
     }
 
-    public HotelFacility() {
+    protected HotelFacility() {
 
     }
 
@@ -28,11 +30,11 @@ public abstract class HotelFacility {
         this.idFacility = idFacility;
     }
 
-    public String getCategory() {
+    public CategoryFacility getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryFacility category) {
         this.category = category;
     }
 

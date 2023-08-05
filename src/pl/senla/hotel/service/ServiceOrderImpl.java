@@ -17,11 +17,13 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 public class ServiceOrderImpl implements ServiceOrder {
 
     private static ServiceOrder serviceOrder;
+    private final ServiceCRUDALL<HotelService> serviceHotelService;
     private final Repository<Order> repositoryOrder;
     private final Repository<HotelService> repositoryHotelService;
 
 
     private ServiceOrderImpl() {
+        this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService();
         this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
     }
@@ -51,8 +53,8 @@ public class ServiceOrderImpl implements ServiceOrder {
         int idOrderNew = getIdOrderNew();
         order.setIdOrder(idOrderNew);
         StartCreateHotelService.getStartCreateHotelService().runMenu(idOrderNew, idGuest);
-        List<HotelService> servicesInOrder = readAllServicesForOrder(idOrderNew);
-        order.setServices(servicesInOrder);
+        List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrderNew);
+        order.setServices(idServicesInOrder);
         return repositoryOrder.create(order);
     }
 
@@ -113,32 +115,36 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     @Override
-    public List<HotelService> readAllServicesSortByPrice(int idGuest) {
+    public List<HotelService> readAllServicesSortByPrice() {
         return repositoryOrder.readAll()
                 .stream()
-                .filter(o -> o.getIdGuest() == idGuest)
-                .flatMap(o -> o.getServices().stream())
+                .flatMap(o -> o.getServices()
+                        .stream()
+                        .map(serviceHotelService::read))
                 .sorted(new HotelServicesComparatorByPrice())
                 .toList();
     }
 
     @Override
-    public List<HotelService> readAllServicesSortByDate(int idGuest) {
+    public List<HotelService> readAllServicesSortByDate() {
         return repositoryOrder.readAll()
                 .stream()
-                .filter(o -> o.getIdGuest() == idGuest)
-                .flatMap(o -> o.getServices().stream())
+                .flatMap(o -> o.getServices()
+                        .stream()
+                        .map(serviceHotelService::read))
                 .sorted(new HotelServicesComparatorByDate())
                 .toList();
     }
 
     @Override
-    public List<HotelService> readAllServicesForGuest(int idGuest) {
+    public List<HotelService> readAllServicesForOrder(int idOrder) {
         return repositoryOrder.readAll()
                 .stream()
-                .filter(o -> o.getIdGuest() == idGuest)
-                .map(Order::getServices)
-                .findAny().orElse(null);
+                .filter(o -> o.getIdOrder() == idOrder)
+                .flatMap(o -> o.getServices()
+                        .stream()
+                        .map(serviceHotelService::read))
+                .toList();
     }
 
     private int getIdOrderNew() {
@@ -150,10 +156,11 @@ public class ServiceOrderImpl implements ServiceOrder {
         return lastId + 1;
     }
 
-    private List<HotelService> readAllServicesForOrder(int idOrderNew) {
+    private List<Integer> readAllIdServicesForOrder(int idOrderNew) {
         return repositoryHotelService.readAll()
                 .stream()
                 .filter(o -> o.getIdOrder() == idOrderNew)
+                .map(HotelService::getIdService)
                 .toList();
     }
 }

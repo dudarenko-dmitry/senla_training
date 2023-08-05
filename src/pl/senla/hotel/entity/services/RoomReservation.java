@@ -1,29 +1,36 @@
 package pl.senla.hotel.entity.services;
 
+import pl.senla.hotel.entity.services.HotelService;
+import pl.senla.hotel.entity.services.TypeOfService;
 import pl.senla.hotel.service.ServiceRoom;
 import pl.senla.hotel.service.ServiceRoomImpl;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static pl.senla.hotel.constant.HotelConstant.*;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
-public class RoomReservation extends HotelService{
+public class RoomReservation extends HotelService implements Serializable {
 
     private int idRoom;
     private int numberOfDays;
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
     private int cost;
-    private final ServiceRoom serviceRoom = ServiceRoomImpl.getServiceRoom();
+    private final transient ServiceRoom serviceRoom = ServiceRoomImpl.getServiceRoom();
+
+    @Serial
+    private static final long serialVersionUID = 10L;
 
     public RoomReservation() {
 
     }
 
     public RoomReservation(int idService, int idOrder, int idGuest, int idRoom, LocalDate startDate, int numberOfDays) {
-        super(idService, idOrder, TypeOfService.RESTAURANT.getTypeName(), idGuest);
+        super(idService, idOrder, TypeOfService.RESTAURANT, idGuest);
         if(idRoom < 0){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
@@ -81,9 +88,9 @@ public class RoomReservation extends HotelService{
 
     @Override
     public String toString() {
-        return "RoomReservation {" +
+        return "\nHotelService {" +
                 "type of Service=" + super.getTypeOfService() +
-                ",\nidRoomReservation=" + super.getIdService() +
+                ",\nidHotelService=" + super.getIdService() +
                 ", idGuest=" + super.getIdGuest() +
                 ", idRoom=" + idRoom +
                 ",\ncheck-in time=" + checkInTime +

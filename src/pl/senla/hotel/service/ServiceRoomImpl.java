@@ -1,8 +1,6 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.facilities.HotelFacility;
-import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryFacilityCollection;
 
@@ -37,7 +35,7 @@ public class ServiceRoomImpl implements ServiceRoom {
         }
         return repositoryFacility.readAll()
                 .stream()
-                .filter(r -> r.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(r -> r.getCategory().equals(CategoryFacility.ROOM))
                 .toList();
     }
 
@@ -45,13 +43,12 @@ public class ServiceRoomImpl implements ServiceRoom {
     public boolean create(String roomString) {
         String[] roomData = roomString.split(";");
         Room room = new Room();
-        room.setIdFacility(-1);
-        room.setCategory(roomData[0]);
+        room.setCategory(CategoryFacility.valueOf(roomData[0]));
         room.setNameFacility(roomData[1]);
         room.setPrice(Integer.parseInt(roomData[2]));
         room.setCapacity(Integer.parseInt(roomData[3]));
-        room.setRoomLevel(roomData[4]);
-        room.setRoomStatus(roomData[5]);
+        room.setRoomLevel(RoomLevel.valueOf(roomData[4]));
+        room.setRoomStatus(RoomStatus.valueOf(roomData[5]));
         setIdRoomNew(room);
         return repositoryFacility.create(room);
     }

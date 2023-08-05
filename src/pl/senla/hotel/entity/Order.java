@@ -1,23 +1,26 @@
 package pl.senla.hotel.entity;
 
-import pl.senla.hotel.entity.services.HotelService;
-
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
 
-    private int idOrder = -1;
+    private Integer idOrder;
     private int idGuest;
-    private List<HotelService> services = new ArrayList<>();
+    private List<Integer> idServices = new ArrayList<>();
+
+    @Serial
+    private static final long serialVersionUID = 31L;
 
     public Order(int idGuest) {
         this.idOrder = idGuest;
     }
 
-    public Order(int idGuest, List<HotelService> services) {
+    public Order(int idGuest, List<Integer> idServices) {
         this.idGuest = idGuest;
-        this.services = services;
+        this.idServices = idServices;
     }
 
     public Order() {
@@ -40,12 +43,12 @@ public class Order {
         this.idGuest = idGuest;
     }
 
-    public List<HotelService> getServices() {
-        return services;
+    public List<Integer> getServices() {
+        return idServices;
     }
 
-    public void setServices(List<HotelService> services) {
-        this.services = services;
+    public void setServices(List<Integer> idServices) {
+        this.idServices = idServices;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class Order {
         return "\n=== > Order{" +
                 "idOrder=" + idOrder +
                 ", idGuest= " + idGuest +
-                ", services: " + services +
+                ", idServices= " + idServices +
                 '}';
     }
 }

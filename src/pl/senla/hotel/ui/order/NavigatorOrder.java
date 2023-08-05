@@ -2,6 +2,7 @@ package pl.senla.hotel.ui.order;
 
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
+import pl.senla.hotel.ui.Item0QuitToMain;
 
 public class NavigatorOrder implements Navigator {
 
@@ -10,12 +11,12 @@ public class NavigatorOrder implements Navigator {
     private final MenuItem[] menuItems;
 
     private NavigatorOrder() {
-        MenuItem item1 = new OrderItem1();
-        MenuItem item2 = new OrderItem2();
-        MenuItem item3 = new OrderItem3();
-        MenuItem item4 = new OrderItem4();
-        MenuItem item5 = new OrderItem5();
-        MenuItem item0 = new OrderItem0();
+        MenuItem item1 = new Item1ReadAllOrders();
+        MenuItem item2 = new Item2ReadOrder();
+        MenuItem item3 = new Item3CreateOrder();
+        MenuItem item4 = new Item4UpdateOrder();
+        MenuItem item5 = new Item5DeleteOrder();
+        MenuItem item0 = new Item0QuitToMain();
         this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item0};
     }
 

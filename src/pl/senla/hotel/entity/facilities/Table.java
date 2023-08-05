@@ -1,8 +1,14 @@
 package pl.senla.hotel.entity.facilities;
 
-public class Table extends HotelFacility{
+import java.io.Serial;
+import java.io.Serializable;
 
-    public Table(String category, String nameFacility, int price, int capacity) {
+public class Table extends HotelFacility implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 2L;
+
+    public Table(CategoryFacility category, String nameFacility, int price, int capacity) {
         super(category, nameFacility, price, capacity);
     }
 
