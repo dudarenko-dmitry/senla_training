@@ -1,9 +1,15 @@
 package pl.senla.hotel.entity.facilities;
 
-public class Room extends HotelFacility{
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Room extends HotelFacility implements Serializable {
 
     private String roomLevel;
     private String roomStatus;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public Room(String category, String nameFacility, int price, int capacity, String roomLevel, String roomStatus) {
         super(category, nameFacility, price, capacity);

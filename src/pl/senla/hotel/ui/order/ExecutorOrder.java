@@ -53,7 +53,7 @@ public class ExecutorOrder implements Executor {
                 int idOrderDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ORDER + orderController.delete(idOrderDelete));
             }
-            case 0 -> new StartMenuMain().runMenu();
+            case 0 -> StartMenuMain.getStartMenu().runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
                 StartMenuOrder.getStartMenuOrder().runMenu();

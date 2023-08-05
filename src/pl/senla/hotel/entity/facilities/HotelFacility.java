@@ -1,13 +1,18 @@
 package pl.senla.hotel.entity.facilities;
 
-public abstract class HotelFacility {
+import java.io.Serial;
+import java.io.Serializable;
 
+public abstract class HotelFacility implements Serializable {
 
     private int idFacility = -1;
     private String category;
     private String nameFacility;
     private int price;
     private int capacity;
+
+    @Serial
+    private static final long serialVersionUID = 4L;
 
     protected HotelFacility(String category, String nameFacility, int price, int capacity) {
         this.category = category;
@@ -16,7 +21,7 @@ public abstract class HotelFacility {
         this.capacity = capacity;
     }
 
-    public HotelFacility() {
+    protected HotelFacility() {
 
     }
 

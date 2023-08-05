@@ -1,6 +1,12 @@
 package pl.senla.hotel.entity.facilities;
 
-public class Transport extends HotelFacility{
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Transport extends HotelFacility implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 3L;
 
     public Transport(String category, String nameFacility, int price, int capacity) {
         super(category, nameFacility, price, capacity);

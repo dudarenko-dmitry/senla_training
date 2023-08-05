@@ -5,42 +5,27 @@ import pl.senla.hotel.ui.Navigator;
 
 public class NavigatorMainMenu implements Navigator {
 
-    private final String nameMenu = "\n<<<<< Welcome to Hotel >>>>>";
-    private final MenuItem item1 = new MainMenuItem1();
-    private final MenuItem item2 = new MainMenuItem2();
-    private final MenuItem item3 = new MainMenuItem3();
-    private final MenuItem item4 = new MainMenuItem4();
-    private final MenuItem item0 = new MainMenuItem0();
-    private final MenuItem[] menuItems = {item1, item2, item3, item4, item0};
+    private static Navigator navigator;
+    private final String nameMenu;
+    private final MenuItem[] menuItems;
 
-    public String getNameMenu() {
-        return nameMenu;
+    private NavigatorMainMenu() {
+        this.nameMenu = "\n<<<<< Welcome to Hotel >>>>>";
+        MenuItem item1 = new MainMenuItem1();
+        MenuItem item2 = new MainMenuItem2();
+        MenuItem item3 = new MainMenuItem3();
+        MenuItem item4 = new MainMenuItem4();
+        MenuItem item5 = new MainMenuItem5();
+        MenuItem item0 = new MainMenuItem0();
+        this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item0};
     }
 
-    public MenuItem getItem1() {
-        return item1;
+    public static Navigator getNavigator() {
+        if (navigator == null) {
+            navigator = new NavigatorMainMenu();
+        }
+        return navigator;
     }
-
-    public MenuItem getItem2() {
-        return item2;
-    }
-
-    public MenuItem getItem3() {
-        return item3;
-    }
-
-    public MenuItem getItem4() {
-        return item4;
-    }
-
-    public MenuItem getItem0() {
-        return item0;
-    }
-
-    public MenuItem[] getMenuItems() {
-        return menuItems;
-    }
-
     public void buildMenu() {
         System.out.println(nameMenu);
         for (MenuItem i : menuItems) {

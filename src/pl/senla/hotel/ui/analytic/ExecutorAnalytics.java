@@ -127,7 +127,7 @@ public class ExecutorAnalytics implements Executor {
                 roomController.read(idRoom);
                 break;
             case 0:
-                new StartMenuMain().runMenu();
+                StartMenuMain.getStartMenu().runMenu();
             default:
                 System.out.println(ERROR_INPUT);
                 StartMenuAnalytics.getStartMenuAnalytics().runMenu();

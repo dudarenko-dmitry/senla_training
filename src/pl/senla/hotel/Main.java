@@ -14,7 +14,7 @@ public class Main {
         consoleCollection.startMainMenu(); // version 2 (with UI)
          */
 
-        StartMenu startMenuMain = new StartMenuMain(); // version 3 (UI with separate menus for every operation)
+        StartMenu startMenuMain = StartMenuMain.getStartMenu(); // version 3 (UI with separate menus for every operation)
         startMenuMain.runMenu();
     }
 }

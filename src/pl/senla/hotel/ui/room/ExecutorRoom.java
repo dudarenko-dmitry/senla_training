@@ -3,7 +3,6 @@ package pl.senla.hotel.ui.room;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
-import pl.senla.hotel.ui.order.ExecutorOrder;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -69,7 +68,6 @@ public class ExecutorRoom implements Executor {
                 int newPrice = sc.nextInt();
                 HotelFacility roomUpdated = roomController.read(idRoomUpdate);
                 if(roomUpdated != null){
-//                    roomUpdated.setPrice(newPrice);
                     System.out.println(CONSOLE_CHANGE_ROOM + facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
                 } else {
                     System.out.println(ERROR_INPUT);
@@ -80,10 +78,10 @@ public class ExecutorRoom implements Executor {
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }
-            case 0 -> new StartMenuMain().runMenu();
+            case 0 -> StartMenuMain.getStartMenu().runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                new StartMenuMain().runMenu();
+                StartMenuMain.getStartMenu().runMenu();
             }
         }
     }

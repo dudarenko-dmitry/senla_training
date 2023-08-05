@@ -16,6 +16,7 @@ public class ExecutorRoomLevel {
                 return RoomLevel.LUX.getLevel();
             default:
                 System.out.println(ERROR_INPUT);
+                execute(userSelection);
                 return "";
         }
     }
