@@ -37,6 +37,7 @@ public class ExecutorOrder implements Executor {
                 System.out.print("Input Order's ID --> ");
                 int id = sc.nextInt();
                 System.out.println(CONSOLE_READ_ORDER + orderController.read(id));
+                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_ORDER + orderController.readAllServicesForOrder(id));
             }
             case 3 -> {
                 System.out.print("Input Guest's ID --> ");

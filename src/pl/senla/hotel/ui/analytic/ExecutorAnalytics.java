@@ -102,16 +102,12 @@ public class ExecutorAnalytics implements Executor {
                 System.out.println(CONSOLE_3_GUESTS_AND_DATES + roomReservationController.read3LastGuestAndDatesForRoom(idRoom));
                 break;
             case 15:
-                System.out.print(INPUT_ID_GUEST);
-                idGuest = sc.nextInt();
-                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_PRICE +
-                        orderController.readAllServicesForGuestSortByPrice(idGuest));
+                System.out.println(CONSOLE_READ_ALL_SERVICES + SORTED_BY_PRICE +
+                        orderController.readAllServicesSortByPrice());
                 break;
             case 16:
-                System.out.print(INPUT_ID_GUEST);
-                idGuest = sc.nextInt();
-                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_GUEST + SORTED_BY_DATE +
-                        orderController.readAllServicesForGuestSortByDate(idGuest));
+                System.out.println(CONSOLE_READ_ALL_SERVICES + SORTED_BY_DATE +
+                        orderController.readAllServicesSortByDate());
                 break;
             case 17:
                 System.out.println(CONSOLE_READ_ALL_FACILITIES + SORTED_BY_CATEGORY +

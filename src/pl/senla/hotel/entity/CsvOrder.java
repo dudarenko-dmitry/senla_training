@@ -2,28 +2,26 @@ package pl.senla.hotel.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Order implements Serializable {
+public class CsvOrder implements Serializable {
 
     private int idOrder = -1;
     private int idGuest;
-    private List<Integer> idServices = new ArrayList<>();
+    private String idServices;
 
     @Serial
-    private static final long serialVersionUID = 31L;
+    private static final long serialVersionUID = 30L;
 
-    public Order(int idGuest) {
+    public CsvOrder(int idGuest) {
         this.idOrder = idGuest;
     }
 
-    public Order(int idGuest, List<Integer> idServices) {
+    public CsvOrder(int idGuest, String idServices) {
         this.idGuest = idGuest;
         this.idServices = idServices;
     }
 
-    public Order() {
+    public CsvOrder() {
 
     }
 
@@ -43,17 +41,17 @@ public class Order implements Serializable {
         this.idGuest = idGuest;
     }
 
-    public List<Integer> getServices() {
+    public String getServices() {
         return idServices;
     }
 
-    public void setServices(List<Integer> idServices) {
+    public void setServices(String idServices) {
         this.idServices = idServices;
     }
 
     @Override
     public String toString() {
-        return "\n=== > Order{" +
+        return "\n=== > CsvOrder{" +
                 "idOrder=" + idOrder +
                 ", idGuest= " + idGuest +
                 ", idServices= " + idServices +

@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface Reader<T> {
 
-    List<T> load() throws IOException, ClassNotFoundException;
+    List<T> load() throws IOException;
 }

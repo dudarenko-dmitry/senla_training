@@ -27,14 +27,12 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private static ServiceRoomReservation serviceRoomReservation;
     private final ServiceFacility serviceHotelFacility;
     private final Repository<HotelService> repositoryHotelService;
-    private final Repository<RoomReservation> repositoryRoomReservation;
     private final Repository<Guest> repositoryGuest;
     private final Repository<HotelFacility> repositoryFacility;
 
     private ServiceRoomReservationImpl() {
         this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
-        this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation(); // delete?
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
     }
@@ -289,7 +287,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     //all private methods for RoomReservations
     private boolean createFromObject(RoomReservation reservation) {
         if(isVacant(reservation.getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
-            return repositoryRoomReservation.create(reservation);
+            return repositoryHotelService.create(reservation); // changed here
         } else {
             System.out.println(ERROR_ROOM_NOT_AVAILABLE);
             return false;

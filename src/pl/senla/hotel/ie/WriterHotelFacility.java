@@ -7,19 +7,24 @@ import pl.senla.hotel.entity.facilities.Room;
 import java.io.*;
 import java.util.List;
 
-public class WriterHotelFacility implements Writer<HotelFacility> {
+public class WriterHotelFacility implements Writer<HotelFacility> { // works only with Room.
 
     @Override
     public void save(List<HotelFacility> hotelFacilities) throws IOException {
-        String filePathName = "D://HotelFacility.csv";
-        CSVWriter writer = new CSVWriter(new FileWriter(filePathName), ';', '\'', '\\', "\n");
-        String[] header = new String[] {"id", "category", "nameFacility", "price", "capacity", "roomLevel", "roomStatus"};
+        String filePathName = "D://Документы/Личка/IT/senla_training/src/pl/senla/hotel/data/HotelFacility.csv";
+        CSVWriter writer = new CSVWriter(new FileWriter(filePathName),
+                ';',
+                '\'',
+                '\\',
+                "\n");
+        String[] header = new String[]
+                {"idFacility", "category", "nameFacility", "price", "capacity", "roomLevel", "roomStatus"};
         writer.writeNext(header);
         for (HotelFacility facility : hotelFacilities) {
             String[] textFacility = convertFacilityToString(facility);
             writer.writeNext(textFacility);
         }
-        System.out.println("Hotel's facilities is saved");
+        System.out.println("Hotel's facilities (Room) were saved");
         writer.close();
     }
 
