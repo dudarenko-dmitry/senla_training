@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class Guest implements Serializable {
 
-    private int idGuest = -1;
+    private Integer idGuest;
     private String name;
     private int phoneNumber;
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Order implements Serializable {
 
-    private int idOrder = -1;
+    private Integer idOrder;
     private int idGuest;
     private List<Integer> idServices = new ArrayList<>();
 

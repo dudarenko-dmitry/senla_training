@@ -5,7 +5,7 @@ import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_
 
 public abstract class HotelService {
 
-    protected int idService = -1;
+    protected Integer idService;
     protected int idOrder;
     protected String typeOfService;
     protected int idGuest;

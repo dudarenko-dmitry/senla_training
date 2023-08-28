@@ -5,21 +5,12 @@ import java.io.Serializable;
 
 public class CsvOrder implements Serializable {
 
-    private int idOrder = -1;
+    private Integer idOrder;
     private int idGuest;
     private String idServices;
 
     @Serial
     private static final long serialVersionUID = 30L;
-
-    public CsvOrder(int idGuest) {
-        this.idOrder = idGuest;
-    }
-
-    public CsvOrder(int idGuest, String idServices) {
-        this.idGuest = idGuest;
-        this.idServices = idServices;
-    }
 
     public CsvOrder() {
 

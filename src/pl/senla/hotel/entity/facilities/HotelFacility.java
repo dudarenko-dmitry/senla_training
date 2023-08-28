@@ -2,7 +2,7 @@ package pl.senla.hotel.entity.facilities;
 
 public abstract class HotelFacility {
 
-    private int idFacility = -1;
+    private Integer idFacility;
     private String category;
     private String nameFacility;
     private int price;
