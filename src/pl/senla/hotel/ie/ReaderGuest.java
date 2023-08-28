@@ -3,7 +3,6 @@ package pl.senla.hotel.ie;
 import com.opencsv.*;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.MappingStrategy;
 import pl.senla.hotel.entity.Guest;
 
 import java.io.FileReader;
@@ -14,7 +13,7 @@ public class ReaderGuest implements Reader<Guest> {
 
     @Override
     public List<Guest> load() throws IOException {
-        String filePathName = "D://Документы/Личка/IT/senla_training/src/pl/senla/hotel/data/Guests.csv";
+        String filePathName = "D://Документы/Личка/IT/data/Guests.csv";
         ICSVParser parser = new CSVParserBuilder()
                 .withSeparator(';')
                 .withQuoteChar('\'')
@@ -31,7 +30,7 @@ public class ReaderGuest implements Reader<Guest> {
         }
     }
 
-    private MappingStrategy<Guest> getMappingStrategy() {
+    private ColumnPositionMappingStrategy<Guest> getMappingStrategy() {
         ColumnPositionMappingStrategy<Guest> strategy = new ColumnPositionMappingStrategy<>();
         strategy.setType(Guest.class);
         String[] header = new String[]{"idGuest", "name", "phoneNumber" };

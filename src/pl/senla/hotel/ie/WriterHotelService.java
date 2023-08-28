@@ -12,7 +12,7 @@ public class WriterHotelService implements Writer<HotelService> { // works only 
 
     @Override
     public void save(List<HotelService> hotelServices) throws IOException {
-        String filePathName = "D://Документы/Личка/IT/senla_training/src/pl/senla/hotel/data/HotelServices.csv";
+        String filePathName = "D://Документы/Личка/IT/data/HotelServices.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(filePathName),
                 ';',
                 '\'',

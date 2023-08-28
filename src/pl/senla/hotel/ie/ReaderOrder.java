@@ -6,7 +6,6 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.ICSVParser;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.MappingStrategy;
 import pl.senla.hotel.entity.CsvOrder;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.utils.OrderUtil;
@@ -21,30 +20,29 @@ public class ReaderOrder implements Reader<Order> {
     @Override
     public List<Order> load() throws IOException {
         List<CsvOrder> csvList;
-        String filePathName = "D://Документы/Личка/IT/senla_training/src/pl/senla/hotel/data/Orders.csv";
-        CsvToBean<CsvOrder> orderCsvToBean = new CsvToBean<>();
+        String filePathName = "D://Документы/Личка/IT/data/Orders.csv";
         ICSVParser parser = new CSVParserBuilder()
                 .withSeparator(';')
-                .withQuoteChar('/')
+                .withQuoteChar('\'')
                 .withEscapeChar('\\')
                 .build();
         try (CSVReader reader = new CSVReaderBuilder(new FileReader(filePathName))
                 .withCSVParser(parser)
                 .withSkipLines(1)
                 .build()) {
+            CsvToBean<CsvOrder> orderCsvToBean = new CsvToBean<>();
             orderCsvToBean.setCsvReader(reader);
             orderCsvToBean.setMappingStrategy(getMappingStrategyOrder());
             csvList = orderCsvToBean.parse();
             List<Order> orders = new ArrayList<>();
             for (CsvOrder o : csvList) {
-                //check Services
                 orders.add(OrderUtil.convertCsvToOrder(o));
             }
             return orders;
         }
     }
 
-    private MappingStrategy<CsvOrder> getMappingStrategyOrder() {
+    private ColumnPositionMappingStrategy<CsvOrder> getMappingStrategyOrder() {
         ColumnPositionMappingStrategy<CsvOrder> strategy = new ColumnPositionMappingStrategy<>();
         String[] header = new String[]{"idOrder", "idGuest", "idServices"};
         strategy.setType(CsvOrder.class);

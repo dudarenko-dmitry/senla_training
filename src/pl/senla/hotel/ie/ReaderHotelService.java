@@ -3,7 +3,6 @@ package pl.senla.hotel.ie;
 import com.opencsv.*;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.MappingStrategy;
 import pl.senla.hotel.entity.services.CsvRoomReservation;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
@@ -20,7 +19,7 @@ public class ReaderHotelService implements Reader<HotelService> {
     @Override
     public List<HotelService> load() throws IOException {
         List<CsvRoomReservation> csvList;
-        String filePathName = "D://Документы/Личка/IT/senla_training/src/pl/senla/hotel/data/HotelServices.csv";
+        String filePathName = "D://Документы/Личка/IT/data/HotelServices.csv";
         CsvToBean<CsvRoomReservation> hsCsvToBean = new CsvToBean<>();
         ICSVParser parser = new CSVParserBuilder()
                 .withSeparator(';')
@@ -42,7 +41,7 @@ public class ReaderHotelService implements Reader<HotelService> {
         }
     }
 
-    private MappingStrategy<CsvRoomReservation> getMappingStrategyRoomReservation() {
+    private ColumnPositionMappingStrategy<CsvRoomReservation> getMappingStrategyRoomReservation() {
         ColumnPositionMappingStrategy<CsvRoomReservation> strategy = new ColumnPositionMappingStrategy<>();
         strategy.setType(CsvRoomReservation.class);
         String[] header = new String[]{"idService", "idOrder", "typeOfService", "idGuest",
