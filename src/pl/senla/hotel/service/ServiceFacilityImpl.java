@@ -1,9 +1,7 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.comparators.*;
-import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.facilities.HotelFacility;
-import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryFacilityCollection;
 
@@ -42,13 +40,13 @@ public class ServiceFacilityImpl implements ServiceFacility{
     public boolean create(String hotelFacilityString) {
         String[] facilityData = hotelFacilityString.split(";");
         Room hotelFacility = new Room();
-        hotelFacility.setIdFacility(-1);
-        hotelFacility.setCategory(facilityData[0]);
+//        hotelFacility.setIdFacility(-1);
+        hotelFacility.setCategory(CategoryFacility.valueOf(facilityData[0]));
         hotelFacility.setNameFacility(facilityData[1]);
         hotelFacility.setPrice(Integer.parseInt(facilityData[2]));
         hotelFacility.setCapacity(Integer.parseInt(facilityData[3]));
-        hotelFacility.setRoomLevel(facilityData[4]);
-        hotelFacility.setRoomStatus(facilityData[5]);
+        hotelFacility.setRoomLevel(RoomLevel.valueOf(facilityData[4]));
+        hotelFacility.setRoomStatus(RoomStatus.valueOf(facilityData[5]));
         setIdFacilityNew(hotelFacility);
         return repositoryHotelFacility.create(hotelFacility);
     }
@@ -115,7 +113,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
     @Override
     public List<HotelFacility> readAllRoomsSortByPrice() {
         return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
                 .sorted(new RoomComparatorByPrice())
                 .toList();
     }
@@ -123,7 +121,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
     @Override
     public List<HotelFacility> readAllRoomsSortByCapacity() {
         return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
                 .sorted(new RoomComparatorByCapacity())
                 .toList();
     }
@@ -131,7 +129,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
     @Override
     public List<HotelFacility> readAllRoomsSortByLevel() {
         return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
                 .sorted(new RoomComparatorByLevel())
                 .toList();
     }

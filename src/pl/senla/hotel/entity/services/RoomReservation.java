@@ -1,5 +1,7 @@
 package pl.senla.hotel.entity.services;
 
+import pl.senla.hotel.entity.services.HotelService;
+import pl.senla.hotel.entity.services.TypeOfService;
 import pl.senla.hotel.service.ServiceRoom;
 import pl.senla.hotel.service.ServiceRoomImpl;
 

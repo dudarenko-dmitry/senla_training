@@ -8,7 +8,7 @@ public class Transport extends HotelFacility implements Serializable {
     @Serial
     private static final long serialVersionUID = 3L;
 
-    public Transport(String category, String nameFacility, int price, int capacity) {
+    public Transport(CategoryFacility category, String nameFacility, int price, int capacity) {
         super(category, nameFacility, price, capacity);
     }
 

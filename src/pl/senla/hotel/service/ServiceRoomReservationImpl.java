@@ -238,13 +238,13 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
         LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
         List<HotelFacility> occupiedRooms = readAll().stream()
-                .filter(rr -> rr.getTypeOfService().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(rr -> rr.getTypeOfService().equals(CategoryFacility.ROOM))
                 .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
                 .map(Room.class::cast)
                 .map(rr -> serviceHotelFacility.read(rr.getIdFacility()))
                 .toList();
         List<HotelFacility> rooms = serviceHotelFacility.readAll().stream()
-                .filter(hs -> hs.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(hs -> hs.getCategory().equals(CategoryFacility.ROOM))
                 .toList();
         List<Room> freeRooms = new ArrayList<>();
         for (HotelFacility r : rooms) {

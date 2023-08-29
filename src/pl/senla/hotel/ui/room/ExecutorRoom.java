@@ -6,7 +6,7 @@ import pl.senla.hotel.ui.main.StartMenuMain;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.services.RoomStatus;
+import pl.senla.hotel.entity.facilities.RoomStatus;
 
 import java.util.Scanner;
 
@@ -53,12 +53,12 @@ public class ExecutorRoom implements Executor {
                     execute(userSelection);
                 }
                 StringBuilder stringRoom = new StringBuilder()
-                        .append(CategoryFacility.ROOM.getTypeName()).append(";")
+                        .append(CategoryFacility.ROOM).append(";")
                         .append(roomNumber).append(";")
                         .append(price).append(";")
                         .append(capacity).append(";")
                         .append(roomLevel).append(";")
-                        .append(RoomStatus.AVAILABLE.getStatus());
+                        .append(RoomStatus.AVAILABLE);
                 System.out.println(CONSOLE_CREATE_ROOM + facilityController.create(String.valueOf(stringRoom)));
             }
             case 4 -> {

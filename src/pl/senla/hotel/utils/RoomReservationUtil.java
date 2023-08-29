@@ -1,7 +1,6 @@
 package pl.senla.hotel.utils;
 
-import pl.senla.hotel.entity.facilities.HotelFacility;
-import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.entity.services.CsvRoomReservation;
 import pl.senla.hotel.entity.services.RoomReservation;
 
@@ -28,28 +27,28 @@ public final class RoomReservationUtil {
 
     public static String[] convertFacilityToString(HotelFacility facility) {
         int idFacility = facility.getIdFacility();
-        String category = facility.getCategory();
+        CategoryFacility categoryFacility = facility.getCategory();
         String nameFacility = facility.getNameFacility();
         int price = facility.getPrice();
         int capacity = facility.getCapacity();
-        switch (category) {
-            case "Room" -> {
+        switch (categoryFacility) {
+            case ROOM -> {
                 Room hsRoom = (Room) facility;
-                String roomLevel = hsRoom.getRoomLevel();
-                String roomStatus = hsRoom.getRoomStatus();
+                RoomLevel roomLevel = hsRoom.getRoomLevel();
+                RoomStatus roomStatus = hsRoom.getRoomStatus();
                 return new String[] {
                         String.valueOf(idFacility),
-                        category,
+                        categoryFacility.name(),
                         nameFacility,
                         String.valueOf(price),
                         String.valueOf(capacity),
-                        roomLevel,
-                        roomStatus
+                        roomLevel.name(),
+                        roomStatus.name()
                 };
             }
-            case "Table" -> System.out.println("This Hotel Facility (Table) was not created.");
-            case "Transport" -> System.out.println("This Hotel Facility (Transport) was not created.");
-            default -> throw new IllegalStateException("Unexpected value: " + category);
+            case TABLE -> System.out.println("This Hotel Facility (Table) was not created.");
+            case TRANSPORT -> System.out.println("This Hotel Facility (Transport) was not created.");
+            default -> throw new IllegalStateException("Unexpected value: " + categoryFacility.name());
         }
         return new String[0]; // change after creating of rest entities
     }
