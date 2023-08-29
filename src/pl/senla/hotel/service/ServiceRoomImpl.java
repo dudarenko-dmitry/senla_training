@@ -43,7 +43,6 @@ public class ServiceRoomImpl implements ServiceRoom {
     public boolean create(String roomString) {
         String[] roomData = roomString.split(";");
         Room room = new Room();
-//        room.setIdFacility(-1);
         room.setCategory(CategoryFacility.valueOf(roomData[0]));
         room.setNameFacility(roomData[1]);
         room.setPrice(Integer.parseInt(roomData[2]));

@@ -21,8 +21,8 @@ public class CsvRoomReservation extends HotelService implements Serializable {
     public CsvRoomReservation() {
     }
 
-    public CsvRoomReservation(int idService, int idOrder, String typeOfService, int idGuest, int idRoom, String checkInTime, int numberOfDays, String checkOutTime, int cost) {
-        super(idService, idOrder, typeOfService, idGuest);
+    public CsvRoomReservation(int idService, int idOrder, TypeOfService typeOfService, int idGuest, int idRoom, String checkInTime, int numberOfDays, String checkOutTime, int cost) {
+        super(idService, idOrder, TypeOfService.valueOf(typeOfService.name()), idGuest);
         this.idRoom = idRoom;
         this.numberOfDays = numberOfDays;
         this.checkInTime = checkInTime;

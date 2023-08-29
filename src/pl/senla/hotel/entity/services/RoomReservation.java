@@ -30,7 +30,7 @@ public class RoomReservation extends HotelService implements Serializable {
     }
 
     public RoomReservation(int idService, int idOrder, int idGuest, int idRoom, LocalDate startDate, int numberOfDays) {
-        super(idService, idOrder, TypeOfService.RESTAURANT.getTypeName(), idGuest);
+        super(idService, idOrder, TypeOfService.RESTAURANT, idGuest);
         if(idRoom < 0){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;

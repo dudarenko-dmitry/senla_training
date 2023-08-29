@@ -3,6 +3,7 @@ package pl.senla.hotel.ie;
 import com.opencsv.CSVWriter;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
+import pl.senla.hotel.entity.services.TypeOfService;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,10 +36,10 @@ public class WriterHotelService implements Writer<HotelService> { // works only 
     private String[] convertHotelServiceToString(HotelService hs) {
         String idService = String.valueOf(hs.getIdService());
         String idOrder = String.valueOf(hs.getIdOrder());
-        String typeOfService = hs.getTypeOfService();
+        TypeOfService typeOfService = hs.getTypeOfService();
         String idGuest = String.valueOf(hs.getIdGuest());
         switch (typeOfService) {
-            case "RoomReservation" -> {
+            case ROOM_RESERVATION -> {
                 RoomReservation hsReservation = (RoomReservation) hs;
                 String idRoom = String.valueOf(hsReservation.getIdRoom());
                 String checkInTime = String.valueOf(hsReservation.getCheckInTime());
@@ -48,7 +49,7 @@ public class WriterHotelService implements Writer<HotelService> { // works only 
                 return new String[] {
                         idService,
                         idOrder,
-                        typeOfService,
+                        typeOfService.name(),
                         idGuest,
                         idRoom,
                         checkInTime,
@@ -57,8 +58,8 @@ public class WriterHotelService implements Writer<HotelService> { // works only 
                         cost
                 };
             }
-            case "Restaurant" -> System.out.println("This Hotel Service (Restaurant) was not created.");
-            case "Transfer" -> System.out.println("This Hotel Service (Transfer) was not created.");
+            case RESTAURANT -> System.out.println("This Hotel Service (Restaurant) was not created.");
+            case TRANSFER -> System.out.println("This Hotel Service (Transfer) was not created.");
             default -> throw new IllegalStateException("Unexpected value: " + typeOfService);
         }
         return new String[0]; // change after creating of rest services

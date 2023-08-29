@@ -53,7 +53,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         return repositoryHotelService.readAll()
                 .stream()
                 .map(RoomReservation.class::cast) //check
-                .filter(o -> o.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION.getTypeName()))
+                .filter(o -> o.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .toList();
     }
 
@@ -85,7 +85,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 reservation.setIdRoom(idRoom);
                 reservation.setCheckInTime(checkInTime);
                 reservation.setNumberOfDays(numberOfDays);
-                reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION.getTypeName());
+                reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION);
                 reservation.setCheckOutTime(checkOutTime);
                 reservation.setCost(repositoryFacility.read(idRoom).getPrice() * numberOfDays);
                 setIdRoomReservationNew(reservation);
@@ -134,7 +134,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
         RoomReservation reservationUpdate = new RoomReservation();
         reservationUpdate.setIdService(idReservation);
-        reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION.getTypeName());
+        reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION);
         reservationUpdate.setIdGuest(reservationOld.getIdGuest());
         reservationUpdate.setIdRoom(reservationOld.getIdRoom());
         reservationUpdate.setCheckInTime(checkInTime);
@@ -238,7 +238,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
         LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
         List<HotelFacility> occupiedRooms = readAll().stream()
-                .filter(rr -> rr.getTypeOfService().equals(CategoryFacility.ROOM))
+                .filter(rr -> rr.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
                 .map(Room.class::cast)
                 .map(rr -> serviceHotelFacility.read(rr.getIdFacility()))

@@ -14,11 +14,11 @@ public class HotelServicesComparatorByDate implements Comparator<HotelService> {
     @Override
     public int compare(HotelService o1, HotelService o2) {
         switch (o1.getTypeOfService()){
-            case "RoomReservation":
+            case ROOM_RESERVATION:
                 return compareRoomReservation((RoomReservation) o1, (RoomReservation) o2);
-            case "Restaurant":
+            case RESTAURANT:
                 return compareRestaurant((Restaurant) o1, (Restaurant) o2);
-            case "Transfer":
+            case TRANSFER:
                 return compareTransfer((Transfer) o1, (Transfer) o2);
             default:
                 System.out.println(ERROR_IN_SERVICE_TYPE);

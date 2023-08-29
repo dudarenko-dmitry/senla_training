@@ -43,7 +43,7 @@ public class ExecutorUpdateHotelServiceList {
                             .getServices()
                             .stream()
                             .filter(s -> roomReservationController.read(s).getTypeOfService()
-                                    .equals(TypeOfService.ROOM_RESERVATION.getTypeName()))
+                                    .equals(TypeOfService.ROOM_RESERVATION))
                             .toList()
                             .toString());
 
