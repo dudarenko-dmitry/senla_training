@@ -23,8 +23,10 @@ public class WriterHotelService implements Writer<HotelService> { // works only 
                         "idRoom", "checkInTime", "numberOfDays", "checkOutTime", "cost"};
         writer.writeNext(header);
         for (HotelService hs : hotelServices) {
-            String[] textService = convertHotelServiceToString(hs);
-            writer.writeNext(textService);
+            if (hs != null) {
+                String[] textService = convertHotelServiceToString(hs);
+                writer.writeNext(textService);
+            }
         }
         System.out.println("Hotel Services' data were saved.");
         writer.close();

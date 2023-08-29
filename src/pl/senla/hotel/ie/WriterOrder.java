@@ -22,8 +22,10 @@ public class WriterOrder implements Writer<Order>{
         String[] header = new String[] {"idOrder", "idGuest", "idServices"};
         writer.writeNext(header);
         for (Order o : orders) {
-            String[] textOrder = OrderUtil.convertOrderToString(o);
-            writer.writeNext(textOrder);
+            if (o != null) {
+                String[] textOrder = OrderUtil.convertOrderToString(o);
+                writer.writeNext(textOrder);
+            }
         }
         System.out.println("Orders' data were saved.");
         writer.close();

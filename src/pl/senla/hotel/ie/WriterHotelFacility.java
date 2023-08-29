@@ -21,8 +21,10 @@ public class WriterHotelFacility implements Writer<HotelFacility> { // works onl
                 {"idFacility", "category", "nameFacility", "price", "capacity", "roomLevel", "roomStatus"};
         writer.writeNext(header);
         for (HotelFacility facility : hotelFacilities) {
-            String[] textFacility = RoomReservationUtil.convertFacilityToString(facility);
-            writer.writeNext(textFacility);
+            if (facility != null) {
+                String[] textFacility = RoomReservationUtil.convertFacilityToString(facility);
+                writer.writeNext(textFacility);
+            }
         }
         System.out.println("Hotel's facilities (Room) were saved");
         writer.close();

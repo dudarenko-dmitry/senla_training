@@ -20,11 +20,13 @@ public class WriterGuest implements Writer<Guest>{
         String[] header = new String[] {"idGuest", "name", "phoneNumber"};
         writer.writeNext(header);
         for (Guest g : guests) {
-            String[] guest = new String[]
-                    {String.valueOf(g.getIdGuest()),
-                            g.getName(),
-                            String.valueOf(g.getPhoneNumber())};
-            writer.writeNext(guest);
+            if (g != null) {
+                String[] guest = new String[]
+                        {String.valueOf(g.getIdGuest()),
+                                g.getName(),
+                                String.valueOf(g.getPhoneNumber())};
+                writer.writeNext(guest);
+            }
         }
         System.out.println("Guests' data were saved.");
         writer.close();
