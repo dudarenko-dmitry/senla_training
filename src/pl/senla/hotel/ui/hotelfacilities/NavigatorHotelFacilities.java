@@ -1,15 +1,16 @@
 package pl.senla.hotel.ui.hotelfacilities;
 
+import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.MenuItem;
 
 public class NavigatorHotelFacilities implements Navigator {
 
     private final String nameMenu = "\n===== Menu Hotel Facilities =====";
-    private final MenuItem item1 = new HotelFacilitiesItem1();
-    private final MenuItem item2 = new HotelFacilitiesItem2();
-    private final MenuItem item3 = new HotelFacilitiesItem3();
-    private final MenuItem item0 = new HotelFacilitiesItem0();
+    private final MenuItem item1 = new Item1RoomOpereation();
+    private final MenuItem item2 = new Item2TableOperation();
+    private final MenuItem item3 = new Item3TransportOperation();
+    private final MenuItem item0 = new Item0QuitToMain();
     private final MenuItem[] menuItems = {item1, item2, item3, item0};
 
     public String getNameMenu() {

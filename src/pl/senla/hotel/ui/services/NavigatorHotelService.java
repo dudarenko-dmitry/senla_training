@@ -11,10 +11,10 @@ public class NavigatorHotelService implements Navigator {
 
     private NavigatorHotelService() {
         this.nameMenu = "\n===== Hotel Services =====";
-        MenuItem item1 = new HotelServiceItem1();
-        MenuItem item2 = new HotelServiceItem2();
-        MenuItem item3 = new HotelServiceItem3();
-        MenuItem item0 = new HotelServiceItem0();
+        MenuItem item1 = new Item1RoomReservation();
+        MenuItem item2 = new Item2RestaurantReservation();
+        MenuItem item3 = new Item3TransferReservation();
+        MenuItem item0 = new Item0QuitToOrderMenu();
         this.menuItems = new MenuItem[]{item1, item2, item3, item0};
     }
 

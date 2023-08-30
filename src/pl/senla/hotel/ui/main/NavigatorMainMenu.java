@@ -11,12 +11,12 @@ public class NavigatorMainMenu implements Navigator {
 
     private NavigatorMainMenu() {
         this.nameMenu = "\n<<<<< Welcome to Hotel >>>>>";
-        MenuItem item1 = new MainMenuItem1();
-        MenuItem item2 = new MainMenuItem2();
-        MenuItem item3 = new MainMenuItem3();
-        MenuItem item4 = new MainMenuItem4();
-        MenuItem item5 = new MainMenuItem5();
-        MenuItem item0 = new MainMenuItem0();
+        MenuItem item1 = new Item1HotelFacilityOperations();
+        MenuItem item2 = new Item2GuestOperations();
+        MenuItem item3 = new Item3OrderOperations();
+        MenuItem item4 = new Item4AnaliticsReports();
+        MenuItem item5 = new Item5InputOutputData();
+        MenuItem item0 = new Item0CloseApplication();
         this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item0};
     }
 

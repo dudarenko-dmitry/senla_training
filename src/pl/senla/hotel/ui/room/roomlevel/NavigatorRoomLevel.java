@@ -6,9 +6,9 @@ import pl.senla.hotel.ui.Navigator;
 public class NavigatorRoomLevel implements Navigator {
 
     protected String nameMenu = "\n Rooms' levels: ";
-    protected MenuItem item1 = new RoomLevelItem1();
-    protected MenuItem item2 = new RoomLevelItem2();
-    protected MenuItem item3 = new RoomLevelItem3();
+    protected MenuItem item1 = new Item1RoomEconomy();
+    protected MenuItem item2 = new Item2RoomStandard();
+    protected MenuItem item3 = new Item3RoomLux();
     protected MenuItem[] menuItems = {item1, item2, item3};
 
     @Override
