@@ -11,7 +11,8 @@ public class Room extends HotelFacility implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public Room(CategoryFacility category, String nameFacility, int price, int capacity, RoomLevel roomLevel, RoomStatus roomStatus) {
+    public Room(CategoryFacility category, String nameFacility, Integer price, Integer capacity,
+                RoomLevel roomLevel, RoomStatus roomStatus) {
         super(category, nameFacility, price, capacity);
         this.roomLevel = roomLevel;
         this.roomStatus = roomStatus;

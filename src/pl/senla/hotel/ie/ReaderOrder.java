@@ -13,7 +13,7 @@ public class ReaderOrder implements Reader<Order> {
 
     @Override
     public List<Order> load() {
-        String filePathName = "D://Документы/Личка/IT/data/Orders.csv";
+        String filePathName = "C://IT/Data/Orders.csv";
         List<Order> orders = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePathName))) {
             String csvOrder;

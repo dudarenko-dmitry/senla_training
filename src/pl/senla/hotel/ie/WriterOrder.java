@@ -12,7 +12,7 @@ public class WriterOrder implements Writer<Order>{
 
     @Override
     public void save(List<Order> orders) throws IOException {
-        String filePathName = "D://Документы/Личка/IT/data/Orders.csv";
+        String filePathName = "C://IT/Data/Orders.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(filePathName)
                 ,';'
                 ,'\''

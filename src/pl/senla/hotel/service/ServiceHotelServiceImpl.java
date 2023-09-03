@@ -7,7 +7,7 @@ import pl.senla.hotel.repository.RepositoryHotelServiceCollection;
 import java.util.Collections;
 import java.util.List;
 
-import static pl.senla.hotel.constant.HotelServieConstant.*;
+import static pl.senla.hotel.constant.HotelServiceConstant.*;
 
 // this Class is never used... Delete?
 public class ServiceHotelServiceImpl implements ServiceHotelService{

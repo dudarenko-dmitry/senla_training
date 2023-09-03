@@ -7,10 +7,23 @@ public class Transfer extends HotelService{
     private LocalDateTime startDateTime;
     private String nameTour;
     private String transport;
-    private int price;
+    private Integer price;
 
-    public Transfer(int idService, int idOrder, int idGuest, String nameTour, String transport, LocalDateTime startDateTime, int price) {
+    public Transfer(Integer idService, Integer idOrder, Integer idGuest, String nameTour, String transport,
+                    LocalDateTime startDateTime, Integer price) {
         super(idService, idOrder, TypeOfService.TRANSFER, idGuest);
+        if (nameTour == null) {
+            // add ERROR_message
+            return;
+        }
+        if (startDateTime == null) {
+            // add ERROR_message
+            return;
+        }
+        if (price == null) {
+            // add ERROR_message
+            return;
+        }
         this.startDateTime = startDateTime;
         this.nameTour = nameTour;
         this.transport = transport;
@@ -33,11 +46,11 @@ public class Transfer extends HotelService{
         this.transport = transport;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

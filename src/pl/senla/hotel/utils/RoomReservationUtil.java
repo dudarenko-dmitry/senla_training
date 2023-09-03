@@ -26,11 +26,11 @@ public final class RoomReservationUtil {
     }
 
     public static String[] convertFacilityToString(HotelFacility facility) {
-        int idFacility = facility.getIdFacility();
+        Integer idFacility = facility.getIdFacility();
         CategoryFacility categoryFacility = facility.getCategory();
         String nameFacility = facility.getNameFacility();
-        int price = facility.getPrice();
-        int capacity = facility.getCapacity();
+        Integer price = facility.getPrice();
+        Integer capacity = facility.getCapacity();
         switch (categoryFacility) {
             case ROOM -> {
                 Room hsRoom = (Room) facility;

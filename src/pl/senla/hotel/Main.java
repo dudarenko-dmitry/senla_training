@@ -4,7 +4,7 @@ import pl.senla.hotel.ui.StartMenu;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
 public class Main {
-
+// !!!
     public static void main(String[] args) {
 
         /**

@@ -13,7 +13,7 @@ public class ReaderGuest implements Reader<Guest> {
 
     @Override
     public List<Guest> load() throws IOException {
-        String filePathName = "D://Документы/Личка/IT/data/Guests.csv";
+        String filePathName = "C://IT/Data/Guests.csv";
         ICSVParser parser = new CSVParserBuilder()
                 .withSeparator(';')
                 .withQuoteChar('\'')

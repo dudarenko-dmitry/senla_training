@@ -3,32 +3,46 @@ package pl.senla.hotel.entity;
 import java.io.Serial;
 import java.io.Serializable;
 
+import static pl.senla.hotel.constant.ClientConstant.*;
+
 public class Guest implements Serializable {
 
     private Integer idGuest;
     private String name;
-    private int phoneNumber;
+    private Integer phoneNumber;
 
     @Serial
     private static final long serialVersionUID = 12L;
     public Guest() {
     }
 
-    public Guest(int idGuest) {
+    public Guest(Integer idGuest) {
         this.idGuest = idGuest;
     }
 
-    public Guest(String name, int phoneNumber) {
+    public Guest(String name, Integer phoneNumber) {
+        if (name == null) {
+            System.out.printf(ERROR_NULL_NAME);
+            return;
+        }
+        if (phoneNumber == null) {
+            System.out.printf(ERROR_NULL_PHONE);
+            return;
+        }
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public int getIdGuest() {
+    public Integer getIdGuest() {
         return idGuest;
     }
 
-    public void setIdGuest(int idGuest) {
-        this.idGuest = idGuest;
+    public void setIdGuest(Integer idGuest) {
+        if (idGuest != null) {
+            this.idGuest = idGuest;
+        } else {
+            System.out.printf(ERROR_NULL_ID);
+        }
     }
 
     public String getName() {
@@ -36,15 +50,23 @@ public class Guest implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null) {
+            this.name = name;
+        } else {
+            System.out.printf(ERROR_NULL_NAME);
+        }
     }
 
-    public int getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(Integer phoneNumber) {
+        if (phoneNumber != null) {
+            this.phoneNumber = phoneNumber;
+        } else {
+            System.out.printf(ERROR_NULL_PHONE);
+        }
     }
 
     @Override

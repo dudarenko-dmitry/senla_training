@@ -19,7 +19,7 @@ public class ReaderHotelService implements Reader<HotelService> {
     @Override
     public List<HotelService> load() throws IOException {
         List<CsvRoomReservation> csvList;
-        String filePathName = "D://Документы/Личка/IT/data/HotelServices.csv";
+        String filePathName = "C://IT/Data/HotelServices.csv";
         CsvToBean<CsvRoomReservation> hsCsvToBean = new CsvToBean<>();
         ICSVParser parser = new CSVParserBuilder()
                 .withSeparator(';')

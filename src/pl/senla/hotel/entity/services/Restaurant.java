@@ -2,42 +2,63 @@ package pl.senla.hotel.entity.services;
 
 import java.time.LocalDateTime;
 
+import static pl.senla.hotel.constant.HotelServiceConstant.*;
 import static pl.senla.hotel.constant.RestaurantConstant.*;
 
 public class Restaurant extends HotelService{
 
-    private int tableNumber;
-    private int numberOfGuests;
+    private Integer idTable;
+    private Integer numberOfGuests;
     private LocalDateTime startTime;
-    private int price;
+    private Integer price;
 
-    public Restaurant(int idService, int idOrder, int idGuest, int tableNumber, int numberOfGuests,
-                      LocalDateTime startTime, int price) {
+    public Restaurant(Integer idService, Integer idOrder, Integer idGuest, Integer idTable, Integer numberOfGuests,
+                      LocalDateTime startTime, Integer price) {
         super(idService, idOrder, TypeOfService.RESTAURANT, idGuest);
-        if(tableNumber < 0){// CREATE Entity TABLE and change IF !!!!!!!!!!!!!!!!!!!!!!!!
-            System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_TABLE);
+        if(idTable == null){
+            System.out.println(ERROR_NULL_FACILITY);
             return;
         }
-        this.tableNumber = tableNumber;
+        if (numberOfGuests == null) {
+            System.out.println(ERROR_CREATE_RESTAURANT_RESERVATION_NO_CLIENT);
+            return;
+        }
+        if (startTime == null) {
+            System.out.println(ERROR_NULL_START_TIME);
+            return;
+        }
+        if (price == null) {
+            System.out.println(ERROR_NULL_PRICE);
+            return;
+        }
+        this.idTable = idTable;
         this.numberOfGuests = numberOfGuests;
         this.startTime = startTime;
         this.price = price;
     }
 
-    public int getTableNumber() {
-        return tableNumber;
+    public Integer getIdTable() {
+        return idTable;
     }
 
-    public void setTableNumber(int tableNumber) {
-        this.tableNumber = tableNumber;
+    public void setIdTable(Integer idTable) {
+        if (idTable != null) {
+            this.idTable = idTable;
+        } else {
+            System.out.println(ERROR_NULL_FACILITY);
+        }
     }
 
-    public int getNumberOfGuests() {
+    public Integer getNumberOfGuests() {
         return numberOfGuests;
     }
 
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
+    public void setNumberOfGuests(Integer numberOfGuests) {
+        if (idTable != null) {
+            this.numberOfGuests = numberOfGuests;
+        } else {
+            System.out.println(ERROR_NULL_NUMBER_OF_GUEST);
+        }
     }
 
     public LocalDateTime getStartTime() {
@@ -45,15 +66,23 @@ public class Restaurant extends HotelService{
     }
 
     public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+        if (idTable != null) {
+            this.startTime = startTime;
+        } else {
+            System.out.println(ERROR_NULL_START_TIME);
+        }
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPrice(Integer price) {
+        if (idTable != null) {
+            this.price = price;
+        } else {
+            System.out.println(ERROR_NULL_PRICE);
+        }
     }
 
     @Override
@@ -63,7 +92,7 @@ public class Restaurant extends HotelService{
                 ", typeOfService=" + super.getTypeOfService() +
                 "\n idRestaurant=" + super.getIdService() +
                 ", idGuest=" + super.getIdGuest() + "," +
-                ", tableNumber=" + tableNumber +
+                ", idTable=" + idTable +
                 ", numberOfGuests=" + numberOfGuests +
                 "\nStartTime=" + startTime +
                 ", price=" + price +

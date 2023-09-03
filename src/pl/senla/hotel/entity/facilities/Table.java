@@ -8,7 +8,7 @@ public class Table extends HotelFacility implements Serializable {
     @Serial
     private static final long serialVersionUID = 2L;
 
-    public Table(CategoryFacility category, String nameFacility, int price, int capacity) {
+    public Table(CategoryFacility category, String nameFacility, Integer price, Integer capacity) {
         super(category, nameFacility, price, capacity);
     }
 

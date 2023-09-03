@@ -14,7 +14,7 @@ public class ReaderHotelFacility implements Reader<HotelFacility> {
     // Later add possibility to work with other type of HotelFacilities (not only Room)!!!
     @Override
     public List<HotelFacility> load() throws IOException {
-        String filePathName = "D://Документы/Личка/IT/data/HotelFacility.csv";
+        String filePathName = "C://IT/Data/HotelFacility.csv";
         ICSVParser parser = new CSVParserBuilder()
                 .withSeparator(';')
                 .withQuoteChar('\'')

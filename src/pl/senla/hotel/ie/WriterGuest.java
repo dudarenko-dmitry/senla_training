@@ -11,7 +11,7 @@ public class WriterGuest implements Writer<Guest>{
 
     @Override
     public void save(List<Guest> guests) throws IOException {
-        String filePathName = "D://Документы/Личка/IT/data/Guests.csv";
+        String filePathName = "C://IT/Data/Guests.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(filePathName),
                 ';',
                 '\'',

@@ -3,10 +3,12 @@ package pl.senla.hotel.entity;
 import java.io.Serial;
 import java.io.Serializable;
 
+import static pl.senla.hotel.constant.ReaderConstant.*;
+
 public class CsvOrder implements Serializable {
 
     private Integer idOrder;
-    private int idGuest;
+    private Integer idGuest;
     private String idServices;
 
     @Serial
@@ -16,28 +18,41 @@ public class CsvOrder implements Serializable {
 
     }
 
-    public int getIdOrder() {
+    public Integer getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
+    public void setIdOrder(Integer idOrder) {
+        if (idOrder != null) {
+            this.idOrder = idOrder;
+        } else {
+            System.out.println(ERROR_READER_ID_ORDER);
+        }
     }
 
-    public int getIdGuest() {
+    public Integer getIdGuest() {
         return idGuest;
     }
 
-    public void setIdGuest(int idGuest) {
-        this.idGuest = idGuest;
+    public void setIdGuest(Integer idGuest) {
+        if (idGuest != null) {
+            this.idGuest = idGuest;
+        } else {
+            System.out.println(ERROR_READER_ID_GUEST);
+        }
     }
 
     public String getServices() {
         return idServices;
     }
 
+
     public void setServices(String idServices) {
-        this.idServices = idServices;
+        if (idServices != null) {
+            this.idServices = idServices;
+        } else {
+            System.out.println(ERROR_READER_ID_SERVICES);
+        }
     }
 
     @Override

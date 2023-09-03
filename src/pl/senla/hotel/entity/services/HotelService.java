@@ -1,25 +1,25 @@
 package pl.senla.hotel.entity.services;
 
+import static pl.senla.hotel.constant.HotelServiceConstant.*;
 import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
-import static pl.senla.hotel.constant.RoomReservationConstant.ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT;
 
 public abstract class HotelService {
 
     protected Integer idService;
-    protected int idOrder;
+    protected Integer idOrder;
     protected TypeOfService typeOfService;
-    protected int idGuest;
+    protected Integer idGuest;
 
     protected HotelService() {
     }
 
-    protected HotelService(int idService, int idOrder, TypeOfService typeOfService, int idGuest) {
-        if(idOrder < 0) {
+    protected HotelService(Integer idService, Integer idOrder, TypeOfService typeOfService, Integer idGuest) {
+        if(idOrder == null) {
             System.out.println(ERROR_READ_ORDER);
             return;
         }
-        if (idGuest < 0) {
-            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
+        if (idGuest == null) {
+            System.out.println(ERROR_NULL_GUEST);
             return;
         }
         this.idService = idService;
@@ -27,20 +27,29 @@ public abstract class HotelService {
         this.typeOfService = typeOfService;
     }
 
-    public int getIdService() {
+    public Integer getIdService() {
         return idService;
     }
 
-    public void setIdService(int idService) {
-        this.idService = idService;
+    public void setIdService(Integer idService) {
+        if (idService != null) {
+            this.idService = idService;
+        } else {
+            System.out.println(ERROR_NULL_ID);
+        }
     }
 
-    public int getIdOrder() {
+    public Integer getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
+    public void setIdOrder(Integer idOrder) {
+        if (idOrder != null) {
+            this.idOrder = idOrder;
+        } else {
+            System.out.println(ERROR_NULL_ID_ORDER);
+        }
+
     }
 
     public TypeOfService getTypeOfService() {
@@ -48,15 +57,23 @@ public abstract class HotelService {
     }
 
     public void setTypeOfService(TypeOfService typeOfService) {
-        this.typeOfService = typeOfService;
+        if (typeOfService != null) {
+            this.typeOfService = typeOfService;
+        } else {
+            System.out.println(ERROR_NULL_CATEGORY);
+        }
     }
 
-    public int getIdGuest() {
+    public Integer getIdGuest() {
         return idGuest;
     }
 
-    public void setIdGuest(int idGuest) {
-        this.idGuest = idGuest;
+    public void setIdGuest(Integer idGuest) {
+        if (idGuest != null) {
+            this.idGuest = idGuest;
+        } else {
+            System.out.println(ERROR_NULL_GUEST);
+        }
     }
 
     @Override
@@ -65,5 +82,4 @@ public abstract class HotelService {
                 ", idGuest=" + idGuest +
                 '}';
     }
-
 }

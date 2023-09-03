@@ -10,7 +10,7 @@ import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.Comparator;
 
-import static pl.senla.hotel.constant.HotelServieConstant.ERROR_IN_SERVICE_TYPE;
+import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE;
 
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
