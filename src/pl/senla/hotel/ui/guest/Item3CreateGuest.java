@@ -2,12 +2,14 @@ package pl.senla.hotel.ui.guest;
 
 import pl.senla.hotel.ui.MenuItem;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_3_CREATE_GUEST;
+
 public class Item3CreateGuest implements MenuItem {
 
     private final String nameItem;
 
     public Item3CreateGuest() {
-        this.nameItem = "3. Create new Guest.";
+        this.nameItem = MENU_ITEM_3_CREATE_GUEST;
     }
 
     @Override

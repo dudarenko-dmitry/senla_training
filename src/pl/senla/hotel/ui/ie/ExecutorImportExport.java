@@ -10,31 +10,25 @@ import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
-import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
+import static pl.senla.hotel.constant.ConsoleConstant.*;
+import static pl.senla.hotel.constant.InputOutputConstant.*;
 
 public class ExecutorImportExport implements Executor {
 
     private static Executor executor;
-    private final Writer<HotelFacility> hotelFacilityWriter;
-    private final Reader<HotelFacility> hotelFacilityReader;
-    private final Writer<Guest> guestWriter;
-    private final Reader<Guest> guestReader;
-    private final Writer<HotelService> hotelServiceWriter;
-    private final Reader<HotelService> hotelServiceReader;
-    private final Writer<Order> orderWriter;
-    private final Reader<Order> orderReader;
+    private final ReaderWriterUniversal<Guest> guestReaderWriter;
+    private final ReaderWriterUniversal<HotelFacility> hotelFacilityReaderWriter;
+    private final ReaderWriterUniversal<HotelService> hotelServiceReaderWriter;
+    private final ReaderWriterUniversal<Order> orderReaderWriter;
 
 
     private ExecutorImportExport() {
-        this.hotelFacilityReader =  new ReaderHotelFacility();
-        this.hotelFacilityWriter = new WriterHotelFacility();
-        this.guestReader = new ReaderGuest();
-        this.guestWriter = new WriterGuest();
-        this.hotelServiceWriter = new WriterHotelService();
-        this.hotelServiceReader = new ReaderHotelService();
-        this.orderWriter = new WriterOrder();
-        this.orderReader = new ReaderOrder();
+        this.guestReaderWriter = new ReaderWriter<>();
+        this.hotelFacilityReaderWriter = new ReaderWriter<>();
+        this.hotelServiceReaderWriter = new ReaderWriter<>();
+        this.orderReaderWriter = new ReaderWriter<>();
     }
 
     public static Executor getExecutor() {
@@ -81,48 +75,54 @@ public class ExecutorImportExport implements Executor {
 
     private void saveHotelFacility() {
         if (DataStorageFacility.getDataStorageFacility().getDataList().isEmpty()) {
-            System.out.println("List of Hotel's facilities is empty.");
+            System.out.println(ERROR_HOTEL_FACILITY_LIST_EMPTY);
         } else {
             try {
-                hotelFacilityWriter.save(DataStorageFacility.getDataStorageFacility().getDataList());
-            } catch (IOException e) {
-                System.out.println("Error in saving of Hotel's facilities: \n" + e.getMessage());
+                hotelFacilityReaderWriter.save(DataStorageFacility.getDataStorageFacility().getDataList());
+            } catch (IOException | InvocationTargetException | IllegalAccessException e) {
+                System.out.println(ERROR_HOTEL_FACILITY_SAVE + e.getMessage());
             }
         }
     }
 
     private void saveGuests() {
         if (DataStorageGuest.getDataStorageGuest().getDataList().isEmpty()) {
-            System.out.println("List of Guests is empty.");
+            System.out.println(ERROR_GUEST_LIST_EMPTY);
         } else {
             try {
-                guestWriter.save(DataStorageGuest.getDataStorageGuest().getDataList());
+                guestReaderWriter.save(DataStorageGuest.getDataStorageGuest().getDataList());
             } catch (IOException e) {
-                System.out.println("Error in saving of Guest: \n" + e.getMessage());
+                System.out.println(ERROR_GUEST_SAVE + e.getMessage());
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
     private void saveHotelServices() {
         if (DataStorageHotelService.getDataStorageHotelService().getDataList().isEmpty()) {
-            System.out.println("List of Services is empty.");
+            System.out.println(ERROR_SERVICES_LIST_EMPTY);
         } else {
             try {
-                hotelServiceWriter.save(DataStorageHotelService.getDataStorageHotelService().getDataList());
+                hotelServiceReaderWriter.save(DataStorageHotelService.getDataStorageHotelService().getDataList());
             } catch (IOException e) {
-                System.out.println("Error in saving of Hotel's Services:\n" + e.getMessage());
+                System.out.println(ERROR_SERVICES_SAVE + e.getMessage());
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
     private void saveOrders() {
         if (DataStorageOrder.getDataStorageOrder().getDataList().isEmpty()) {
-            System.out.println("List of Orders is empty.");
+            System.out.println(ERROR_ORDER_LIST_EMPTY);
         } else {
             try {
-                orderWriter.save(DataStorageOrder.getDataStorageOrder().getDataList());
+                orderReaderWriter.save(DataStorageOrder.getDataStorageOrder().getDataList());
             } catch (IOException e) {
-                System.out.println("Error in saving of Orders:\n" + e.getMessage());
+                System.out.println(ERROR_ORDER_SAVE + e.getMessage());
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -130,57 +130,60 @@ public class ExecutorImportExport implements Executor {
     private void loadHotelFacility() {
         try {
             if (DataStorageFacility.getDataStorageFacility().getDataList().isEmpty()) {
-                DataStorageFacility.getDataStorageFacility().getDataList().addAll(hotelFacilityReader.load());
-                System.out.println("Rooms' data were loaded.");
+                DataStorageFacility.getDataStorageFacility().getDataList()
+                        .addAll(hotelFacilityReaderWriter.load(HotelFacility.class));
+                System.out.println(LOAD_HOTEL_FACILITY_LIST);
             } else {
-                System.out.println("All HotelFacilities' data is already exist.");
+                System.out.println(ERROR_HOTEL_FACILITY_LIST_EXIST);
             }
         } catch (IOException e) {
-            System.out.println("Error in loading of Hotel's facilities: \n" + e.getMessage());
+            System.out.println(ERROR_HOTEL_FACILITY_LIST_LOAD + e.getMessage());
         }
-        System.out.println(DataStorageFacility.getDataStorageFacility().getDataList());
+        System.out.println(CONSOLE_READ_ALL_FACILITIES + DataStorageFacility.getDataStorageFacility().getDataList());
     }
 
     private void loadGuests() {
         try {
             if (DataStorageGuest.getDataStorageGuest().getDataList().isEmpty()) {
-                DataStorageGuest.getDataStorageGuest().getDataList().addAll(guestReader.load());
-                System.out.println("Guests' data were loaded.");
+                DataStorageGuest.getDataStorageGuest().getDataList()
+                        .addAll(guestReaderWriter.load(Guest.class));
+                System.out.println(LOAD_GUEST_LIST);
             } else {
-                System.out.println("All Guests' data is already exist.");
+                System.out.println(ERROR_GUEST_LIST_EXIST);
             }
         } catch (IOException e) {
-            System.out.println("Error in loading of Guests' data: " + e.getMessage());
+            System.out.println(ERROR_GUEST_LIST_LOAD + e.getMessage());
         }
-        System.out.println(DataStorageGuest.getDataStorageGuest().getDataList());
+        System.out.println(CONSOLE_READ_ALL_GUESTS + DataStorageGuest.getDataStorageGuest().getDataList());
     }
 
     private void loadHotelServices() {
         try {
             if (DataStorageHotelService.getDataStorageHotelService().getDataList().isEmpty()) {
-                DataStorageHotelService.getDataStorageHotelService().getDataList().addAll(hotelServiceReader.load());
-                System.out.println("Hotel Services' data were loaded.");
+                DataStorageHotelService.getDataStorageHotelService().getDataList()
+                        .addAll(hotelServiceReaderWriter.load(HotelService.class));
+                System.out.println(LOAD_SERVICES_LIST);
             } else {
-                System.out.println("All HotelServices' data is already exist.");
+                System.out.println(ERROR_SERVICES_LIST_EXIST);
             }
         } catch (IOException e) {
-            System.out.println("Error in loading of Hotel's Services:\n" + e.getMessage());
+            System.out.println(ERROR_SERVICES_LIST_LOAD + e.getMessage());
         }
-        System.out.println("HS: " + DataStorageHotelService.getDataStorageHotelService().getDataList());
+        System.out.println(CONSOLE_READ_ALL_SERVICES + DataStorageHotelService.getDataStorageHotelService().getDataList());
     }
 
     private void loadOrders() {
         try {
             if (DataStorageOrder.getDataStorageOrder().getDataList().isEmpty()) {
-                DataStorageOrder.getDataStorageOrder().getDataList().addAll(orderReader.load());
-                System.out.println("Orders' data were loaded.");
+                DataStorageOrder.getDataStorageOrder().getDataList()
+                        .addAll(orderReaderWriter.load(Order.class));
+                System.out.println(LOAD_ORDER_LIST);
             } else {
-                System.out.println("All Orders' data is already exist.");
+                System.out.println(ERROR_ORDER_LIST_EXIST);
             }
         } catch (IOException e) {
-            System.out.println("Error in loading of Orders:\n" + e.getMessage());
+            System.out.println(ERROR_ORDER_LIST_LOAD + e.getMessage());
         }
-        System.out.println(DataStorageOrder.getDataStorageOrder().getDataList());
-
+        System.out.println(CONSOLE_READ_ALL_ORDERS + DataStorageOrder.getDataStorageOrder().getDataList());
     }
 }

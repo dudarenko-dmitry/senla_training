@@ -2,12 +2,14 @@ package pl.senla.hotel.ui.order;
 
 import pl.senla.hotel.ui.MenuItem;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_4_UPDATE_ORDER;
+
 public class Item4UpdateOrder implements MenuItem {
 
     private final String nameItem;
 
     public Item4UpdateOrder() {
-        this.nameItem = "4. Update Order.";
+        this.nameItem = MENU_ITEM_4_UPDATE_ORDER;
     }
 
     @Override

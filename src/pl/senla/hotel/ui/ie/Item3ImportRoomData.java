@@ -2,12 +2,14 @@ package pl.senla.hotel.ui.ie;
 
 import pl.senla.hotel.ui.MenuItem;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_3_IMPORT_ROOM_DATA;
+
 public class Item3ImportRoomData implements MenuItem {
 
     private final String nameItem;
 
     public Item3ImportRoomData() {
-        this.nameItem = "3. Import (load) Rooms' information from file (works only for Hotel Facility - ROOM).";
+        this.nameItem = MENU_ITEM_3_IMPORT_ROOM_DATA;
     }
 
     @Override

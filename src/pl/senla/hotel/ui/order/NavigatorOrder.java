@@ -4,10 +4,11 @@ import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.Item0QuitToMain;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ORDER;
+
 public class NavigatorOrder implements Navigator {
 
     private static Navigator navigator;
-    private final String menuName = "\n===== Menu Orders =====";
     private final MenuItem[] menuItems;
 
     private NavigatorOrder() {
@@ -29,7 +30,7 @@ public class NavigatorOrder implements Navigator {
 
     @Override
     public void buildMenu() {
-        System.out.println(menuName);
+        System.out.println(MENU_ORDER);
         for (MenuItem i : menuItems){
             i.printItem();
         }

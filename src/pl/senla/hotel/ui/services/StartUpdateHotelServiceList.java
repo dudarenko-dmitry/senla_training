@@ -2,6 +2,8 @@ package pl.senla.hotel.ui.services;
 
 import pl.senla.hotel.ui.Navigator;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE_SELECT;
+
 public class StartUpdateHotelServiceList {
 
     private static StartUpdateHotelServiceList startUpdateHotelServiceList;
@@ -22,7 +24,7 @@ public class StartUpdateHotelServiceList {
 
     public boolean runMenu(int idOrderUpdate){
         navigator.buildMenu();
-        System.out.println("Select type of Hotel's Service you want to update.");
+        System.out.println(MENU_HOTEL_SERVICE_SELECT);
         int typeOsService = navigator.makeChoice();
         return executor.updateHotelServiceList(idOrderUpdate, typeOsService);
     }

@@ -2,12 +2,14 @@ package pl.senla.hotel.ui.analytic;
 
 import pl.senla.hotel.ui.MenuItem;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_12_AVAILABLE_ROOMS_ON_DATE;
+
 public class Item12AvailableRoomsOnDate implements MenuItem {
 
     private final String nameItem;
 
     public Item12AvailableRoomsOnDate() {
-        this.nameItem = "12. List of rooms that will be available on a certain date in the future.";
+        this.nameItem = MENU_ITEM_12_AVAILABLE_ROOMS_ON_DATE;
     }
 
     @Override

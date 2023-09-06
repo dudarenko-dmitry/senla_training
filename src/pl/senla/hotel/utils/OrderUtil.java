@@ -5,6 +5,8 @@ import pl.senla.hotel.entity.Order;
 import java.util.Arrays;
 import java.util.List;
 
+import static pl.senla.hotel.constant.OrderConstant.ERROR_EMPTY_ORDER;
+
 public final class OrderUtil {
 
     private OrderUtil() {
@@ -37,13 +39,17 @@ public final class OrderUtil {
         String idOrder = String.valueOf(o.getIdOrder());
         String idGuest = String.valueOf(o.getIdGuest());
         List<Integer> idServices = o.getServices();
-        StringBuilder services = new StringBuilder();
-        services.append(idServices.get(0));
-        if (idServices.size() > 1) {
-            for (int i = 1; i <= idServices.size() - 1; i++) {
-                services.append(",").append(idServices.get(i));
+        if (!idServices.isEmpty()) {
+            StringBuilder services = new StringBuilder();
+            services.append(idServices.get(0));
+            if (idServices.size() > 1) {
+                for (int i = 1; i <= idServices.size() - 1; i++) {
+                    services.append(",").append(idServices.get(i));
+                }
             }
+            return new String[] {idOrder, idGuest, String.valueOf(services)};
         }
-        return new String[] {idOrder, idGuest, String.valueOf(services)};
+        System.out.println(ERROR_EMPTY_ORDER);
+        return null;
     }
 }

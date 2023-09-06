@@ -4,6 +4,8 @@ import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ANALYTICS_REPORTS;
+
 public class NavigatorAnalytics implements Navigator {
 
     private static Navigator navigator;
@@ -11,7 +13,7 @@ public class NavigatorAnalytics implements Navigator {
     private final MenuItem[] menuItems;
 
     private NavigatorAnalytics() {
-        this.nameMenu = "\n===== Menu Analytics Reports =====";
+        this.nameMenu = MENU_ANALYTICS_REPORTS;
         MenuItem item1 = new Item1SortRoomsByPrice();
         MenuItem item2 = new Item2SortRoomsByCapacity();
         MenuItem item3 = new Item3SortRoomsByLevel();
@@ -24,11 +26,11 @@ public class NavigatorAnalytics implements Navigator {
         MenuItem item10 = new Item10CountGuests();
         MenuItem item11 = new Item11CountGuestsOnDate();
         MenuItem item12 = new Item12AvailableRoomsOnDate();
-        MenuItem item13 = new Item13PaimentOfGuest();
+        MenuItem item13 = new Item13PaymentOfGuest();
         MenuItem item14 = new Item14Last3GuestForRoomAndDates();
         MenuItem item15 = new Item15ListOfServicesSortedByPrice();
         MenuItem item16 = new Item16ListOfServicesSortedByDate();
-        MenuItem item17 = new Item17Item15ListOfServicesAndRoomsSortByCategory();
+        MenuItem item17 = new Item17ListOfServicesAndRoomsSortByCategory();
         MenuItem item18 = new Item18ListOfServicesAndRoomsSortByPrice();
         MenuItem item19 = new Item19RoomInformation();
         MenuItem item0  = new Item0QuitToMain();

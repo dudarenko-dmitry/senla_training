@@ -4,6 +4,8 @@ import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_INPUT_OUTPUT;
+
 public class NavigatorMenuImportExport implements Navigator {
 
     private static Navigator navigator;
@@ -11,7 +13,7 @@ public class NavigatorMenuImportExport implements Navigator {
     private final MenuItem[] menuItems;
 
     private NavigatorMenuImportExport() {
-        this.nameMenu = "\n<<<<< Data's Import-Export >>>>>";
+        this.nameMenu = MENU_INPUT_OUTPUT;
         MenuItem item1 = new Item1ImportAllData();
         MenuItem item2 = new Item2ExportAllData();
         MenuItem item3 = new Item3ImportRoomData();

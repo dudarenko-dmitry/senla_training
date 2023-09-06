@@ -2,12 +2,14 @@ package pl.senla.hotel.ui.ie;
 
 import pl.senla.hotel.ui.MenuItem;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_1_IMPORT_ALL_DATA;
+
 public class Item1ImportAllData implements MenuItem {
 
     private final String nameItem;
 
     public Item1ImportAllData() {
-        this.nameItem = "1. Import (load) all application's Entities from file (use after START application).";
+        this.nameItem = MENU_ITEM_1_IMPORT_ALL_DATA;
     }
 
     @Override

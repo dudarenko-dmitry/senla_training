@@ -2,12 +2,14 @@ package pl.senla.hotel.ui.analytic;
 
 import pl.senla.hotel.ui.MenuItem;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_3_SORT_ROOMS_BY_LEVEL;
+
 public class Item3SortRoomsByLevel implements MenuItem {
 
     private final String nameItem;
 
     public Item3SortRoomsByLevel() {
-        this.nameItem = "3. List of rooms by number of stars.";
+        this.nameItem = MENU_ITEM_3_SORT_ROOMS_BY_LEVEL;
     }
 
     @Override

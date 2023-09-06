@@ -2,12 +2,14 @@ package pl.senla.hotel.ui.ie;
 
 import pl.senla.hotel.ui.MenuItem;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_2_EXPORT_ALL_DATA;
+
 public class Item2ExportAllData implements MenuItem {
 
     private final String nameItem;
 
     public Item2ExportAllData() {
-        this.nameItem = "2. Export (save) all application's Entities to file (use before EXIT application).";
+        this.nameItem = MENU_ITEM_2_EXPORT_ALL_DATA;
     }
 
     @Override

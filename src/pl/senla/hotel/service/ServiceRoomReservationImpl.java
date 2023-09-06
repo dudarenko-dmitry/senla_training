@@ -67,7 +67,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         if(idGuest < 0 || idGuest >= repositoryGuest.readAll().size()){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return false;
-        } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()){
+        } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
         } else {
