@@ -16,7 +16,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class ReaderWriter<T> implements ReaderWriterUniversal<T>{
 
     @Override
     public void save(List<T> list) throws IOException {
-        Class clazz = list.get(0).getClass();
+        Class<?> clazz = list.get(0).getClass();
         CSVWriter writer = new CSVWriter(new FileWriter(getPath(clazz)),
                 ';',
                 '\'',
@@ -65,7 +64,7 @@ public class ReaderWriter<T> implements ReaderWriterUniversal<T>{
         writer.close();
     }
 
-    private String getPath(Class<T> clazz) {
+    private String getPath(Class<?> clazz) {
         if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
             return PATH_HOTEL_FACILITY_ROOM;
         } else if (clazz.equals(Guest.class)) {
@@ -80,7 +79,7 @@ public class ReaderWriter<T> implements ReaderWriterUniversal<T>{
         }
     }
 
-    private String[] getHeader(Class<T> clazz) {
+    private String[] getHeader(Class<?> clazz) {
         if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
             return header.getHeaderHotelFacilityRoom();
         } else if (clazz.equals(Guest.class)) {
@@ -100,7 +99,7 @@ public class ReaderWriter<T> implements ReaderWriterUniversal<T>{
             return RoomUtil.convertFacilityToString((HotelFacility) t);
         } else if (t.getClass().equals(Guest.class)) {
             return GuestUtil.convertGuestToString((Guest) t);
-        } else if (t.getClass().equals(RoomReservation.class) || t.getClass().equals(HotelService.class)) {
+        } else if (t.getClass().equals(RoomReservation.class)) {
             return RoomReservationUtil.convertHotelServiceToString((HotelService) t);
         } else if (t.getClass().equals(Order.class)) {
             return OrderUtil.convertOrderToString((Order) t);
@@ -110,7 +109,7 @@ public class ReaderWriter<T> implements ReaderWriterUniversal<T>{
         }
     }
 
-    private T convertStringToEntity(Class<T> clazz, String csvT) {
+    private T convertStringToEntity(Class<? super T> clazz, String csvT) {
         if (csvT != null) {
             if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
                 return (T) RoomUtil.convertStringToRoom(csvT);

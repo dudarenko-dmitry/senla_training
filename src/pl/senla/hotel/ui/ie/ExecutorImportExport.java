@@ -10,7 +10,6 @@ import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.InputOutputConstant.*;
@@ -79,7 +78,7 @@ public class ExecutorImportExport implements Executor {
         } else {
             try {
                 hotelFacilityReaderWriter.save(DataStorageFacility.getDataStorageFacility().getDataList());
-            } catch (IOException | InvocationTargetException | IllegalAccessException e) {
+            } catch (IOException e) {
                 System.out.println(ERROR_HOTEL_FACILITY_SAVE + e.getMessage());
             }
         }
@@ -93,8 +92,6 @@ public class ExecutorImportExport implements Executor {
                 guestReaderWriter.save(DataStorageGuest.getDataStorageGuest().getDataList());
             } catch (IOException e) {
                 System.out.println(ERROR_GUEST_SAVE + e.getMessage());
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                throw new RuntimeException(e);
             }
         }
     }
@@ -107,8 +104,6 @@ public class ExecutorImportExport implements Executor {
                 hotelServiceReaderWriter.save(DataStorageHotelService.getDataStorageHotelService().getDataList());
             } catch (IOException e) {
                 System.out.println(ERROR_SERVICES_SAVE + e.getMessage());
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                throw new RuntimeException(e);
             }
         }
     }
@@ -121,8 +116,6 @@ public class ExecutorImportExport implements Executor {
                 orderReaderWriter.save(DataStorageOrder.getDataStorageOrder().getDataList());
             } catch (IOException e) {
                 System.out.println(ERROR_ORDER_SAVE + e.getMessage());
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                throw new RuntimeException(e);
             }
         }
     }
