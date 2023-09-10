@@ -3,6 +3,8 @@ package pl.senla.hotel.ui.services;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
+import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE;
+
 public class NavigatorHotelService implements Navigator {
 
     private static Navigator navigatorHotelService;
@@ -10,11 +12,11 @@ public class NavigatorHotelService implements Navigator {
     private final MenuItem[] menuItems;
 
     private NavigatorHotelService() {
-        this.nameMenu = "\n===== Hotel Services =====";
-        MenuItem item1 = new HotelServiceItem1();
-        MenuItem item2 = new HotelServiceItem2();
-        MenuItem item3 = new HotelServiceItem3();
-        MenuItem item0 = new HotelServiceItem0();
+        this.nameMenu = MENU_HOTEL_SERVICE;
+        MenuItem item1 = new Item1RoomReservation();
+        MenuItem item2 = new Item2RestaurantReservation();
+        MenuItem item3 = new Item3TransferReservation();
+        MenuItem item0 = new Item0QuitToOrderMenu();
         this.menuItems = new MenuItem[]{item1, item2, item3, item0};
     }
 

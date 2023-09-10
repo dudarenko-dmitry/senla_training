@@ -1,39 +1,54 @@
 package pl.senla.hotel.entity.facilities;
 
-public abstract class HotelFacility {
+import java.io.Serial;
+import java.io.Serializable;
 
+import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
-    private int idFacility = -1;
-    private String category;
+public abstract class HotelFacility implements Serializable {
+
+    private Integer idFacility;
+    private CategoryFacility category;
     private String nameFacility;
-    private int price;
-    private int capacity;
+    private Integer price;
+    private Integer capacity;
 
-    protected HotelFacility(String category, String nameFacility, int price, int capacity) {
+    @Serial
+    private static final long serialVersionUID = 4L;
+
+    protected HotelFacility(CategoryFacility category, String nameFacility, Integer price, Integer capacity) {
         this.category = category;
         this.nameFacility = nameFacility;
         this.price = price;
         this.capacity = capacity;
     }
 
-    public HotelFacility() {
+    protected HotelFacility() {
 
     }
 
-    public int getIdFacility() {
+    public Integer getIdFacility() {
         return idFacility;
     }
 
-    public void setIdFacility(int idFacility) {
-        this.idFacility = idFacility;
+    public void setIdFacility(Integer idFacility) {
+        if (idFacility != null) {
+            this.idFacility = idFacility;
+        } else {
+            System.out.println(ERROR_NULL_ID);
+        }
     }
 
-    public String getCategory() {
+    public CategoryFacility getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory(CategoryFacility category) {
+        if (category != null) {
+            this.category = category;
+        } else {
+            System.out.println(ERROR_NULL_CATEGORY);
+        }
     }
 
     public String getNameFacility() {
@@ -41,23 +56,35 @@ public abstract class HotelFacility {
     }
 
     public void setNameFacility(String nameFacility) {
-        this.nameFacility = nameFacility;
+        if (nameFacility != null) {
+            this.nameFacility = nameFacility;
+        } else {
+            System.out.println(ERROR_NAME_FACILITY);
+        }
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPrice(Integer price) {
+        if (price != null) {
+            this.price = price;
+        } else {
+            System.out.println(ERROR_NULL_PRICE);
+        }
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setCapacity(Integer capacity) {
+        if (capacity != null) {
+            this.capacity = capacity;
+        } else {
+            System.out.println(ERROR_NULL_CAPACITY);
+        }
     }
 
     @Override

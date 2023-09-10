@@ -27,14 +27,12 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private static ServiceRoomReservation serviceRoomReservation;
     private final ServiceFacility serviceHotelFacility;
     private final Repository<HotelService> repositoryHotelService;
-    private final Repository<RoomReservation> repositoryRoomReservation;
     private final Repository<Guest> repositoryGuest;
     private final Repository<HotelFacility> repositoryFacility;
 
     private ServiceRoomReservationImpl() {
         this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
-        this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation(); // delete?
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
     }
@@ -55,7 +53,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         return repositoryHotelService.readAll()
                 .stream()
                 .map(RoomReservation.class::cast) //check
-                .filter(o -> o.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION.getTypeName()))
+                .filter(o -> o.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .toList();
     }
 
@@ -69,7 +67,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         if(idGuest < 0 || idGuest >= repositoryGuest.readAll().size()){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return false;
-        } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()){
+        } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
         } else {
@@ -87,7 +85,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 reservation.setIdRoom(idRoom);
                 reservation.setCheckInTime(checkInTime);
                 reservation.setNumberOfDays(numberOfDays);
-                reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION.getTypeName());
+                reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION);
                 reservation.setCheckOutTime(checkOutTime);
                 reservation.setCost(repositoryFacility.read(idRoom).getPrice() * numberOfDays);
                 setIdRoomReservationNew(reservation);
@@ -136,7 +134,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
         RoomReservation reservationUpdate = new RoomReservation();
         reservationUpdate.setIdService(idReservation);
-        reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION.getTypeName());
+        reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION);
         reservationUpdate.setIdGuest(reservationOld.getIdGuest());
         reservationUpdate.setIdRoom(reservationOld.getIdRoom());
         reservationUpdate.setCheckInTime(checkInTime);
@@ -240,13 +238,13 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
         LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
         List<HotelFacility> occupiedRooms = readAll().stream()
-                .filter(rr -> rr.getTypeOfService().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(rr -> rr.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
                 .map(Room.class::cast)
                 .map(rr -> serviceHotelFacility.read(rr.getIdFacility()))
                 .toList();
         List<HotelFacility> rooms = serviceHotelFacility.readAll().stream()
-                .filter(hs -> hs.getCategory().equals(CategoryFacility.ROOM.getTypeName()))
+                .filter(hs -> hs.getCategory().equals(CategoryFacility.ROOM))
                 .toList();
         List<Room> freeRooms = new ArrayList<>();
         for (HotelFacility r : rooms) {
@@ -289,7 +287,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     //all private methods for RoomReservations
     private boolean createFromObject(RoomReservation reservation) {
         if(isVacant(reservation.getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
-            return repositoryRoomReservation.create(reservation);
+            return repositoryHotelService.create(reservation); // changed here
         } else {
             System.out.println(ERROR_ROOM_NOT_AVAILABLE);
             return false;

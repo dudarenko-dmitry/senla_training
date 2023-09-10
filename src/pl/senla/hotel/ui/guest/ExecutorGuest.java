@@ -57,7 +57,7 @@ public class ExecutorGuest implements Executor {
                 int idGuestDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_GUEST + guestController.delete(idGuestDelete));
             }
-            case 0 -> new StartMenuMain().runMenu();
+            case 0 -> StartMenuMain.getStartMenu().runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
                 StartMenuGuest.getStartMenuGuest().runMenu();

@@ -42,7 +42,8 @@ public class ExecutorUpdateHotelServiceList {
                     System.out.println(CONSOLE_READ_ALL_SERVICES + orderController.read(idOrderUpdate)
                             .getServices()
                             .stream()
-                            .filter(s -> s.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION.getTypeName()))
+                            .filter(s -> roomReservationController.read(s).getTypeOfService()
+                                    .equals(TypeOfService.ROOM_RESERVATION))
                             .toList()
                             .toString());
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ServiceOrder extends ServiceCRUDALL<Order> {
 
-    List<HotelService> readAllServicesSortByPrice(int idGuest);
-    List<HotelService> readAllServicesSortByDate(int idGuest);
-    List<HotelService> readAllServicesForGuest(int idGuest);
+    List<HotelService> readAllServicesSortByPrice();
+    List<HotelService> readAllServicesSortByDate();
+    List<HotelService> readAllServicesForOrder(int idOrder);
 }

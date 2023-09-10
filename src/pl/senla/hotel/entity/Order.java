@@ -1,51 +1,74 @@
 package pl.senla.hotel.entity;
 
-import pl.senla.hotel.entity.services.HotelService;
-
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order {
+import static pl.senla.hotel.constant.OrderConstant.*;
 
-    private int idOrder = -1;
-    private int idGuest;
-    private List<HotelService> services = new ArrayList<>();
+public class Order implements Serializable {
 
-    public Order(int idGuest) {
+    private Integer idOrder;
+    private Integer idGuest;
+    private List<Integer> idServices = new ArrayList<>();
+
+    @Serial
+    private static final long serialVersionUID = 31L;
+
+    public Order(Integer idGuest) {
         this.idOrder = idGuest;
     }
 
-    public Order(int idGuest, List<HotelService> services) {
+    public Order(Integer idGuest, List<Integer> idServices) {
+        if (idGuest == null) {
+            System.out.println(ERROR_CREATE_ORDER_NO_CLIENT);
+            return;
+        }
         this.idGuest = idGuest;
-        this.services = services;
+        this.idServices = idServices;
     }
 
     public Order() {
 
     }
 
-    public int getIdOrder() {
+    public Integer getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
+    public void setIdOrder(Integer idOrder) {
+        if (idOrder != null) {
+            this.idOrder = idOrder;
+        } else {
+            System.out.println(ERROR_ID_ORDER);
+        }
+
     }
 
-    public int getIdGuest() {
+    public Integer getIdGuest() {
         return idGuest;
     }
 
-    public void setIdGuest(int idGuest) {
-        this.idGuest = idGuest;
+    public void setIdGuest(Integer idGuest) {
+        if (idGuest != null) {
+            this.idGuest = idGuest;
+        } else {
+            System.out.println(ERROR_ID_GUEST);
+        }
+
     }
 
-    public List<HotelService> getServices() {
-        return services;
+    public List<Integer> getServices() {
+        return idServices;
     }
 
-    public void setServices(List<HotelService> services) {
-        this.services = services;
+    public void setServices(List<Integer> idServices) {
+        if (idServices != null) {
+            this.idServices = idServices;
+        } else {
+            System.out.println(ERROR_ID_SERVICES);
+        }
     }
 
     @Override
@@ -53,7 +76,7 @@ public class Order {
         return "\n=== > Order{" +
                 "idOrder=" + idOrder +
                 ", idGuest= " + idGuest +
-                ", services: " + services +
+                ", idServices= " + idServices +
                 '}';
     }
 }

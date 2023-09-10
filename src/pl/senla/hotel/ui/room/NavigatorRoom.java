@@ -1,7 +1,10 @@
 package pl.senla.hotel.ui.room;
 
+import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
+
+import static pl.senla.hotel.constant.MenuConstant.MENU_ROOM;
 
 public class NavigatorRoom implements Navigator {
 
@@ -10,13 +13,13 @@ public class NavigatorRoom implements Navigator {
     private final MenuItem[] menuItems;
 
     private NavigatorRoom() {
-        this.nameMenu = "\n===== Menu Rooms =====";
-        MenuItem item1 = new RoomItem1();
-        MenuItem item2 = new RoomItem2();
-        MenuItem item3 = new RoomItem3();
-        MenuItem item4 = new RoomItem4();
-        MenuItem item5 = new RoomItem5();
-        MenuItem item0 = new RoomItem0();
+        this.nameMenu = MENU_ROOM;
+        MenuItem item1 = new Item1ReadAllRooms();
+        MenuItem item2 = new Item2ReadRoom();
+        MenuItem item3 = new Item3CreateRoom();
+        MenuItem item4 = new Item4UpdateRoom();
+        MenuItem item5 = new Item5DeleteRoom();
+        MenuItem item0 = new Item0QuitToMain();
         this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item0};
     }
 

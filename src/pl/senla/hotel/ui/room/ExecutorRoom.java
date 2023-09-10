@@ -3,11 +3,10 @@ package pl.senla.hotel.ui.room;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
-import pl.senla.hotel.ui.order.ExecutorOrder;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.services.RoomStatus;
+import pl.senla.hotel.entity.facilities.RoomStatus;
 
 import java.util.Scanner;
 
@@ -54,12 +53,12 @@ public class ExecutorRoom implements Executor {
                     execute(userSelection);
                 }
                 StringBuilder stringRoom = new StringBuilder()
-                        .append(CategoryFacility.ROOM.getTypeName()).append(";")
+                        .append(CategoryFacility.ROOM).append(";")
                         .append(roomNumber).append(";")
                         .append(price).append(";")
                         .append(capacity).append(";")
                         .append(roomLevel).append(";")
-                        .append(RoomStatus.AVAILABLE.getStatus());
+                        .append(RoomStatus.AVAILABLE);
                 System.out.println(CONSOLE_CREATE_ROOM + facilityController.create(String.valueOf(stringRoom)));
             }
             case 4 -> {
@@ -69,7 +68,6 @@ public class ExecutorRoom implements Executor {
                 int newPrice = sc.nextInt();
                 HotelFacility roomUpdated = roomController.read(idRoomUpdate);
                 if(roomUpdated != null){
-//                    roomUpdated.setPrice(newPrice);
                     System.out.println(CONSOLE_CHANGE_ROOM + facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
                 } else {
                     System.out.println(ERROR_INPUT);
@@ -80,10 +78,10 @@ public class ExecutorRoom implements Executor {
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }
-            case 0 -> new StartMenuMain().runMenu();
+            case 0 -> StartMenuMain.getStartMenu().runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                new StartMenuMain().runMenu();
+                StartMenuMain.getStartMenu().runMenu();
             }
         }
     }
