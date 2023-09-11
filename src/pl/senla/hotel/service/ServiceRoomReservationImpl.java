@@ -5,6 +5,7 @@ import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;
@@ -29,12 +30,14 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private final Repository<HotelService> repositoryHotelService;
     private final Repository<Guest> repositoryGuest;
     private final Repository<HotelFacility> repositoryFacility;
+    private final Repository<Room> repositoryRoom;
 
     private ServiceRoomReservationImpl() {
         this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
+        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
     }
 
     public static ServiceRoomReservation getServiceRoomReservation(){
@@ -69,6 +72,9 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             return false;
         } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
+            return false;
+        } else if ((repositoryRoom.read(idRoom)).getRoomStatus().equals(RoomStatus.REPAIRED)) {
+            System.out.println(ERROR_CREATE_ROOM_RESERVATION_REPAIRED);
             return false;
         } else {
             LocalDate checkInDate = getDate(reservationData[3]);
