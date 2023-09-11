@@ -10,6 +10,7 @@ import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
 import java.io.IOException;
+import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.InputOutputConstant.*;
@@ -17,10 +18,10 @@ import static pl.senla.hotel.constant.InputOutputConstant.*;
 public class ExecutorImportExport implements Executor {
 
     private static Executor executor;
-    private final ReaderWriterUniversal<Guest> guestReaderWriter;
-    private final ReaderWriterUniversal<HotelFacility> hotelFacilityReaderWriter;
-    private final ReaderWriterUniversal<HotelService> hotelServiceReaderWriter;
-    private final ReaderWriterUniversal<Order> orderReaderWriter;
+    private final ReaderWriterUniversal guestReaderWriter;
+    private final ReaderWriterUniversal hotelFacilityReaderWriter;
+    private final ReaderWriterUniversal hotelServiceReaderWriter;
+    private final ReaderWriterUniversal orderReaderWriter;
 
 
     private ExecutorImportExport() {
@@ -124,7 +125,7 @@ public class ExecutorImportExport implements Executor {
         try {
             if (DataStorageFacility.getDataStorageFacility().getDataList().isEmpty()) {
                 DataStorageFacility.getDataStorageFacility().getDataList()
-                        .addAll(hotelFacilityReaderWriter.load(HotelFacility.class));
+                        .addAll((List<? extends HotelFacility>) hotelFacilityReaderWriter.load(HotelFacility.class));
                 System.out.println(LOAD_HOTEL_FACILITY_LIST);
             } else {
                 System.out.println(ERROR_HOTEL_FACILITY_LIST_EXIST);
@@ -139,7 +140,7 @@ public class ExecutorImportExport implements Executor {
         try {
             if (DataStorageGuest.getDataStorageGuest().getDataList().isEmpty()) {
                 DataStorageGuest.getDataStorageGuest().getDataList()
-                        .addAll(guestReaderWriter.load(Guest.class));
+                        .addAll((List<? extends Guest>) guestReaderWriter.load(Guest.class));
                 System.out.println(LOAD_GUEST_LIST);
             } else {
                 System.out.println(ERROR_GUEST_LIST_EXIST);
@@ -154,7 +155,7 @@ public class ExecutorImportExport implements Executor {
         try {
             if (DataStorageHotelService.getDataStorageHotelService().getDataList().isEmpty()) {
                 DataStorageHotelService.getDataStorageHotelService().getDataList()
-                        .addAll(hotelServiceReaderWriter.load(HotelService.class));
+                        .addAll((List<? extends HotelService>) hotelServiceReaderWriter.load(HotelService.class));
                 System.out.println(LOAD_SERVICES_LIST);
             } else {
                 System.out.println(ERROR_SERVICES_LIST_EXIST);
@@ -169,7 +170,7 @@ public class ExecutorImportExport implements Executor {
         try {
             if (DataStorageOrder.getDataStorageOrder().getDataList().isEmpty()) {
                 DataStorageOrder.getDataStorageOrder().getDataList()
-                        .addAll(orderReaderWriter.load(Order.class));
+                        .addAll((List<? extends Order>) orderReaderWriter.load(Order.class));
                 System.out.println(LOAD_ORDER_LIST);
             } else {
                 System.out.println(ERROR_ORDER_LIST_EXIST);
