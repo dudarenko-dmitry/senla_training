@@ -80,44 +80,6 @@ public class ServiceFacilityImpl implements ServiceFacility{
         return repositoryHotelFacility.update(idFacility, hotelFacilityUpdate);
     }
 
-
-    @Override
-    public boolean updateRoomStatusAvailable(int idRoom) {
-        if (configuration.getValueIsAbleToChangeRoomStatus()){
-            if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
-                System.out.println(ERROR_READ_ALL_ROOM);
-                return false;
-            } else if (read(idRoom) == null) {
-                System.out.println(ERROR_READ_ROOM);
-                return false;
-            }
-            Room roomUpdate = read(idRoom);
-            roomUpdate.makeRoomAvailable();
-            return repositoryFacility.update(idRoom, roomUpdate);
-        }
-        System.out.println(ERROR_NO_PERMISSION);
-        return false;
-    }
-
-    @Override
-    public boolean updateRoomStatusRepaired(int idRoom) {
-        if (configuration.getValueIsAbleToChangeRoomStatus()){
-            if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
-                System.out.println(ERROR_READ_ALL_ROOM);
-                return false;
-            } else if (read(idRoom) == null) {
-                System.out.println(ERROR_READ_ROOM);
-                return false;
-            }
-            Room roomUpdate = read(idRoom);
-            roomUpdate.makeRoomRepaired();
-            return repositoryFacility.update(idRoom, roomUpdate);
-        }
-        System.out.println(ERROR_NO_PERMISSION);
-        return false;
-    }
-
-
     @Override
     public boolean delete(int idFacility) {
         if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){

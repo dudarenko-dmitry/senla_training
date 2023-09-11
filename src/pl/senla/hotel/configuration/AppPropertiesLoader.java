@@ -48,7 +48,7 @@ public class AppPropertiesLoader implements PropertiesLoader {
     public void saveConfiguration() {
         try (FileOutputStream fos = new FileOutputStream(propertiesFile)) {
             appProperties.put(KEY_ABLE_TO_CHANGE_ROOM_STATUS, "TRUE");
-            appProperties.put(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM, "3");
+            appProperties.put(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM, "10");
             appProperties.put(KEY_FILE_PATH, "C://IT/Data/");
             appProperties.put(KEY_FILE_HOTEL_FACILITIES_NAME, "HotelFacility.csv");
             appProperties.put(KEY_FILE_GUESTS_NAME, "Guests.csv");
