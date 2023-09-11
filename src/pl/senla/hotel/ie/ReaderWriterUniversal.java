@@ -3,8 +3,8 @@ package pl.senla.hotel.ie;
 import java.io.IOException;
 import java.util.List;
 
-public interface ReaderWriterUniversal<T> {
+public interface ReaderWriterUniversal {
 
-    List<T> load(Class<T> clazz) throws IOException;
-    void save(List<T> list) throws IOException;
+    List<?> load(Class<?> clazz) throws IOException;
+    void save(List<?> list) throws IOException;
 }
