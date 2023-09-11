@@ -1,5 +1,7 @@
-package pl.senla.hotel.ie;
+package pl.senla.hotel.ie.file;
 
+import pl.senla.hotel.configuration.AppConfiguration;
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.HotelFacility;
@@ -13,23 +15,25 @@ import pl.senla.hotel.utils.RoomUtil;
 
 import static pl.senla.hotel.constant.InputOutputConstant.*;
 
-public class EntitiesConverter<T> implements Converter<T>{
+public class EntitiesConverter<T> implements Converter<T> {
 
     private final Header header;
+    private final Configuration configuration;
 
     public EntitiesConverter() {
+        this.configuration = new AppConfiguration();
         this.header = new Header();
     }
 
     public String getPath(Class<?> clazz) {
         if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
-            return PATH_HOTEL_FACILITY_ROOM;
+            return configuration.getValueFilePath() + configuration.getValueFileHotelFacilitiesName();
         } else if (clazz.equals(Guest.class)) {
-            return PATH_GUEST;
+            return configuration.getValueFilePath() + configuration.getValueFileGuestsName();
         } else if (clazz.equals(RoomReservation.class) || clazz.equals(HotelService.class)) {
-            return PATH_SERVICES_ROOM_RESERVATION;
+            return configuration.getValueFilePath() + configuration.getValueFileHotelServicesName();
         } else if (clazz.equals(Order.class)) {
-            return PATH_ORDER;
+            return configuration.getValueFilePath() + configuration.getValueFileOrdersName();
         } else {
             System.out.println(ERROR_GET_PATH);
             return "";

@@ -22,7 +22,9 @@ public class MenuConstant {
     public static final String MENU_ITEM_2_READ_ROOM =                 "2. Read Room.";
     public static final String MENU_ITEM_3_CREATE_ROOM =               "3. Create new Room.";
     public static final String MENU_ITEM_4_UPDATE_ROOM =               "4. Update Room.";
-    public static final String MENU_ITEM_5_DELETE_ROOM =               "5. Delete Room.";
+    public static final String MENU_ITEM_5_UPDATE_ROOM_AVAILABLE =     "5. Update RoomStatus: Available.";
+    public static final String MENU_ITEM_6_UPDATE_ROOM_REPAIRED =      "6. Update RoomStatus: Repaired.";
+    public static final String MENU_ITEM_7_DELETE_ROOM =               "7. Delete Room.";
 
     public static final String MENU_ROOM_LEVEL =                       "\n Rooms' levels: ";
     public static final String MENU_ROOM_1 =                           "1. Economy 1*";

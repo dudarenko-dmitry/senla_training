@@ -2,11 +2,6 @@ package pl.senla.hotel.constant;
 
 public class InputOutputConstant {
 
-    public static final String PATH_HOTEL_FACILITY_ROOM =        "C://IT/Data/HotelFacility.csv";
-    public static final String PATH_GUEST =                      "C://IT/Data/Guests.csv";
-    public static final String PATH_SERVICES_ROOM_RESERVATION =  "C://IT/Data/HotelServices.csv";
-    public static final String PATH_ORDER =                      "C://IT/Data/Orders.csv";
-
     public static final String DATA_SAVED =                      "s' data were saved.";
     public static final String LOAD_HOTEL_FACILITY_LIST =        "Facilities' list was loaded.";
     public static final String LOAD_GUEST_LIST =                 "Guests' list was loaded.";
@@ -17,7 +12,9 @@ public class InputOutputConstant {
     public static final String ERROR_GET_HEADER =                "Error in classes' reading in getHeader()";
     public static final String ERROR_GET_PROPERTIES_FILE =       "Error: Properties' file was not found.";
     public static final String ERROR_READ_PROPERTIES_FILE =      "Error in reading of Properties' file.";
-    public static final String ERROR_WRITE_PROPERTIES_FILE =      "Error in writing of Properties' file.";
+    public static final String ERROR_WRITE_PROPERTIES_FILE =     "Error in writing of Properties' file.";
+    public static final String ERROR_READ_SERIALIZATION_FILE =   "Error in reading of Serialization file:\n";
+    public static final String ERROR_WRITE_SERIALIZATION_FILE =  "Error in writing of Serialization file:\n";
 
     public static final String ERROR_CONVERTER_ENTITY =          "Error in classes' reading in convertEntityToString()";
     public static final String ERROR_CONVERTER_STRING =          "Error in classes' reading in convertStringToEntity()";

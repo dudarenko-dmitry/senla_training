@@ -43,6 +43,16 @@ public class ControllerRoomCollection implements ControllerRoom {
     }
 
     @Override
+    public boolean updateRoomStatusAvailable(int idRoom){
+        return roomService.updateRoomStatusAvailable(idRoom);
+    }
+
+    @Override
+    public boolean updateRoomStatusRepaired(int idRoom){
+        return roomService.updateRoomStatusRepaired(idRoom);
+    }
+
+    @Override
     public boolean delete(int roomId) {
         return roomService.delete(roomId);
     }

@@ -61,5 +61,7 @@ public class ConsoleConstant {
     public static final String ERROR_INPUT =          "ERROR!!!\nYou input is invalid. Please, repeat input/action.";
     public static final String INPUT_ID_GUEST =       "Input Guest's ID --> ";
     public static final String INPUT_ID_ROOM =        "Input Room's ID --> ";
+    public static final String INPUT_ID_ROOM_UPDATE = "Input Room's ID to update --> ";
+    public static final String INPUT_ID_ROOM_DELETE = "Input Room's ID to delete --> ";
 
 }

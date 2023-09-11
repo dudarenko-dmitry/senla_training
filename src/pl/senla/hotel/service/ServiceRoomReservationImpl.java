@@ -1,10 +1,13 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.comparators.*;
+import pl.senla.hotel.configuration.AppConfiguration;
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;
@@ -29,12 +32,16 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private final Repository<HotelService> repositoryHotelService;
     private final Repository<Guest> repositoryGuest;
     private final Repository<HotelFacility> repositoryFacility;
+    private final Repository<Room> repositoryRoom;
+    private final Configuration configuration;
 
     private ServiceRoomReservationImpl() {
         this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
+        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
+        this.configuration = new AppConfiguration();
     }
 
     public static ServiceRoomReservation getServiceRoomReservation(){
@@ -70,6 +77,9 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
+        } else if ((repositoryRoom.read(idRoom)).getRoomStatus().equals(RoomStatus.REPAIRED)) {
+            System.out.println(ERROR_CREATE_ROOM_RESERVATION_REPAIRED);
+            return false;
         } else {
             LocalDate checkInDate = getDate(reservationData[3]);
             LocalDateTime checkInTime = LocalDateTime.of(checkInDate, HOTEL_CHECK_IN_TIME);
@@ -89,6 +99,15 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 reservation.setCheckOutTime(checkOutTime);
                 reservation.setCost(repositoryFacility.read(idRoom).getPrice() * numberOfDays);
                 setIdRoomReservationNew(reservation);
+
+                List<RoomReservation> roomReservationList = readAll().stream()
+                        .filter(rr -> rr.getIdRoom() == idRoom)
+                        .toList();
+                int numberOfRecords = roomReservationList.size();
+                if (numberOfRecords >= configuration.getValueNumberOfGuestRecordsForRoom()) {
+                    int idRoomReservationToDelete = roomReservationList.get(0).getIdService();
+                    delete(idRoomReservationToDelete);
+                }
                 return repositoryHotelService.create(reservation);
             } else {
                 System.out.println(ERROR_ROOM_NOT_AVAILABLE);
