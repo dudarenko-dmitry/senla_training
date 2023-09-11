@@ -5,5 +5,9 @@ import java.util.Map;
 public interface PropertiesLoader {
 
     Map<String, String> loadConfiguration();
-    void saveConfiguration();
+
+    /**
+     * use only for creation of new properties
+         void saveConfiguration();
+     */
 }

@@ -43,7 +43,7 @@ public class AppPropertiesLoader implements PropertiesLoader {
     /**
      * delete after first creating of properties' file
      * Later change configuration via file hotel.properties
-     */
+
     @Override
     public void saveConfiguration() {
         try (FileOutputStream fos = new FileOutputStream(propertiesFile)) {
@@ -61,4 +61,5 @@ public class AppPropertiesLoader implements PropertiesLoader {
             System.out.println(ERROR_WRITE_PROPERTIES_FILE);
         }
     }
+     */
 }

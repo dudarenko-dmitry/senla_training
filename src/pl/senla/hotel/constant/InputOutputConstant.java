@@ -2,11 +2,6 @@ package pl.senla.hotel.constant;
 
 public class InputOutputConstant {
 
-    public static final String PATH_HOTEL_FACILITY_ROOM =        "C://IT/Data/HotelFacility.csv";
-    public static final String PATH_GUEST =                      "C://IT/Data/Guests.csv";
-    public static final String PATH_SERVICES_ROOM_RESERVATION =  "C://IT/Data/HotelServices.csv";
-    public static final String PATH_ORDER =                      "C://IT/Data/Orders.csv";
-
     public static final String DATA_SAVED =                      "s' data were saved.";
     public static final String LOAD_HOTEL_FACILITY_LIST =        "Facilities' list was loaded.";
     public static final String LOAD_GUEST_LIST =                 "Guests' list was loaded.";
