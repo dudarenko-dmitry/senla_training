@@ -1,4 +1,4 @@
-package pl.senla.hotel.ie;
+package pl.senla.hotel.ie.file;
 
 import pl.senla.hotel.configuration.AppConfiguration;
 import pl.senla.hotel.configuration.Configuration;
@@ -15,7 +15,7 @@ import pl.senla.hotel.utils.RoomUtil;
 
 import static pl.senla.hotel.constant.InputOutputConstant.*;
 
-public class EntitiesConverter<T> implements Converter<T>{
+public class EntitiesConverter<T> implements Converter<T> {
 
     private final Header header;
     private final Configuration configuration;

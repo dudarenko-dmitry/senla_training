@@ -1,4 +1,4 @@
-package pl.senla.hotel.ie;
+package pl.senla.hotel.ie.file;
 
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
@@ -40,7 +40,7 @@ public class DataProcessorFile implements DataProcessor{
     }
 
     @Override
-    public void initApplication() {
+    public void loadAllEntities() {
         loadHotelFacility();
         loadGuests();
         loadHotelServices();
@@ -48,7 +48,7 @@ public class DataProcessorFile implements DataProcessor{
     }
 
     @Override
-    public void closeApplication() {
+    public void saveAllEntities() {
         saveHotelFacility();
         saveGuests();
         saveHotelServices();

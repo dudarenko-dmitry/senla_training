@@ -1,6 +1,7 @@
 package pl.senla.hotel.ui.ie;
 
-import pl.senla.hotel.ie.*;
+import pl.senla.hotel.ie.file.DataProcessor;
+import pl.senla.hotel.ie.file.DataProcessorFile;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
@@ -25,8 +26,8 @@ public class ExecutorImportExport implements Executor {
     @Override
     public void execute(int userSelection) {
         switch (userSelection) {
-            case 1 -> dataProcessor.initApplication();
-            case 2 -> dataProcessor.closeApplication();
+            case 1 -> dataProcessor.loadAllEntities();
+            case 2 -> dataProcessor.saveAllEntities();
             case 3 -> dataProcessor.loadHotelFacility();
             case 4 -> dataProcessor.saveHotelFacility();
             case 5 -> dataProcessor.loadGuests();

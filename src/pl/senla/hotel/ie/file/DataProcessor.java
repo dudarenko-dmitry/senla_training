@@ -1,9 +1,9 @@
-package pl.senla.hotel.ie;
+package pl.senla.hotel.ie.file;
 
 public interface DataProcessor {
 
-    void initApplication();
-    void closeApplication();
+    void loadAllEntities();
+    void saveAllEntities();
     void saveHotelFacility();
     void saveGuests();
     void saveHotelServices();

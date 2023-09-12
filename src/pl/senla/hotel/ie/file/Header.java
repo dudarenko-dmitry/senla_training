@@ -1,4 +1,4 @@
-package pl.senla.hotel.ie;
+package pl.senla.hotel.ie.file;
 
 public class Header {
 

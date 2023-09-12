@@ -1,7 +1,8 @@
 package pl.senla.hotel.ui.main;
 
-import pl.senla.hotel.ie.DataProcessor;
-import pl.senla.hotel.ie.DataProcessorFile;
+import pl.senla.hotel.entity.SavedHotel;
+import pl.senla.hotel.ie.serialization.Processor;
+import pl.senla.hotel.ie.serialization.ProcessorSerializable;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
 import pl.senla.hotel.ui.analytic.StartMenuAnalytics;
@@ -20,7 +21,8 @@ public class ExecutorMain implements Executor {
     private final StartMenu startMenuOrder;
     private final StartMenu startMenuAnalytics;
     private final StartMenu startMenuImportExport;
-    private final DataProcessor dataProcessor;
+//    private final DataProcessor dataProcessor;
+    private final Processor processor;
 
     private ExecutorMain() {
         this.startMenuHotelFacilities  = StartMenuHotelFacilities.getStartMenuHotelFacilities();
@@ -28,7 +30,8 @@ public class ExecutorMain implements Executor {
         this.startMenuOrder = StartMenuOrder.getStartMenuOrder();
         this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics();
         this.startMenuImportExport = StartMenuImportExport.getStartMenuImpExp();
-        this.dataProcessor = DataProcessorFile.getDataProcessor();
+//        this.dataProcessor = DataProcessorFile.getDataProcessor();
+        this.processor = new ProcessorSerializable();
     }
 
     public static Executor getExecutor() {
@@ -47,7 +50,15 @@ public class ExecutorMain implements Executor {
             case 4 -> startMenuAnalytics.runMenu();
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
-                dataProcessor.closeApplication();
+//                version 3 (save Application's state to files)
+//                System.out.println(" ===== >  save to files");
+//                dataProcessor.saveAllEntities(); // use in case of saving Application's state to files
+
+                // version 4 (save Application's state by Serialization
+                SavedHotel hotel = new SavedHotel();
+                processor.saveHotel(hotel);
+                System.out.println(" ===== >  serialization is completed.");
+
                 System.out.println("Good-bye.");
                 System.exit(0);
             }
