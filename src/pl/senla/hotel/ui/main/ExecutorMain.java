@@ -1,5 +1,7 @@
 package pl.senla.hotel.ui.main;
 
+import pl.senla.hotel.ie.DataProcessor;
+import pl.senla.hotel.ie.DataProcessorFile;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
 import pl.senla.hotel.ui.analytic.StartMenuAnalytics;
@@ -18,6 +20,7 @@ public class ExecutorMain implements Executor {
     private final StartMenu startMenuOrder;
     private final StartMenu startMenuAnalytics;
     private final StartMenu startMenuImportExport;
+    private final DataProcessor dataProcessor;
 
     private ExecutorMain() {
         this.startMenuHotelFacilities  = StartMenuHotelFacilities.getStartMenuHotelFacilities();
@@ -25,6 +28,7 @@ public class ExecutorMain implements Executor {
         this.startMenuOrder = StartMenuOrder.getStartMenuOrder();
         this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics();
         this.startMenuImportExport = StartMenuImportExport.getStartMenuImpExp();
+        this.dataProcessor = DataProcessorFile.getDataProcessor();
     }
 
     public static Executor getExecutor() {
@@ -43,6 +47,7 @@ public class ExecutorMain implements Executor {
             case 4 -> startMenuAnalytics.runMenu();
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
+                dataProcessor.closeApplication();
                 System.out.println("Good-bye.");
                 System.exit(0);
             }
