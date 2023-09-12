@@ -20,6 +20,10 @@ public class Main {
         // version 3 (load Application's state from files)
         DataProcessor dataProcessor = DataProcessorFile.getDataProcessor();
         dataProcessor.loadAllEntities();
+
+        // use to save new Properties
+        PropertiesLoader loader = new AppPropertiesLoader();
+        loader.saveConfiguration();
          */
 
         // version 4 (load Application's state by Serialization)

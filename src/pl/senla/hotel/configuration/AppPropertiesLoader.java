@@ -24,6 +24,10 @@ public class AppPropertiesLoader implements PropertiesLoader {
                     appProperties.getProperty(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM));
             configuration.put(KEY_FILE_PATH,
                     appProperties.getProperty(KEY_FILE_PATH));
+            configuration.put(KEY_FILE_PATH_SERIALIZABLE,
+                    appProperties.getProperty(KEY_FILE_PATH_SERIALIZABLE));
+            configuration.put(KEY_FILE_SERIALIZABLE_NAME,
+                    appProperties.getProperty(KEY_FILE_SERIALIZABLE_NAME));
             configuration.put(KEY_FILE_HOTEL_FACILITIES_NAME,
                     appProperties.getProperty(KEY_FILE_HOTEL_FACILITIES_NAME));
             configuration.put(KEY_FILE_GUESTS_NAME,
@@ -50,6 +54,8 @@ public class AppPropertiesLoader implements PropertiesLoader {
             appProperties.put(KEY_ABLE_TO_CHANGE_ROOM_STATUS, "TRUE");
             appProperties.put(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM, "10");
             appProperties.put(KEY_FILE_PATH, "C://IT/Data/");
+            appProperties.put(KEY_FILE_PATH_SERIALIZABLE, "C://IT/Serialization/");
+            appProperties.put(KEY_FILE_SERIALIZABLE_NAME, "hotel.ser");
             appProperties.put(KEY_FILE_HOTEL_FACILITIES_NAME, "HotelFacility.csv");
             appProperties.put(KEY_FILE_GUESTS_NAME, "Guests.csv");
             appProperties.put(KEY_FILE_HOTEL_SERVICES_NAME, "HotelServices.csv");
@@ -61,5 +67,5 @@ public class AppPropertiesLoader implements PropertiesLoader {
             System.out.println(ERROR_WRITE_PROPERTIES_FILE);
         }
     }
-     */
+  */
 }
