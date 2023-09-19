@@ -30,6 +30,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private static ServiceRoomReservation serviceRoomReservation;
     private final ServiceFacility serviceHotelFacility;
     private final Repository<HotelService> repositoryHotelService;
+    private final Repository<RoomReservation> repositoryRoomReservation;
     private final Repository<Guest> repositoryGuest;
     private final Repository<HotelFacility> repositoryFacility;
     private final Repository<Room> repositoryRoom;
@@ -38,6 +39,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private ServiceRoomReservationImpl() {
         this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
+        this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
         this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
@@ -57,10 +59,11 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return Collections.emptyList();
         }
-        return repositoryHotelService.readAll()
+//        return repositoryHotelService.readAll()
+        return repositoryRoomReservation.readAll()
                 .stream()
                 .map(RoomReservation.class::cast) //check
-                .filter(o -> o.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
+//                .filter(o -> o.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .toList();
     }
 
@@ -108,6 +111,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                     int idRoomReservationToDelete = roomReservationList.get(0).getIdService();
                     delete(idRoomReservationToDelete);
                 }
+                repositoryRoomReservation.create(reservation);
                 return repositoryHotelService.create(reservation);
             } else {
                 System.out.println(ERROR_ROOM_NOT_AVAILABLE);
@@ -180,6 +184,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         }
         for (int i = 0; i <= readAll().size(); i++){
             if (readAll().get(i).getIdService() == idReservation){
+                repositoryRoomReservation.delete(i);
                 return repositoryHotelService.delete(i);
             }
         }
@@ -314,7 +319,8 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     }
 
     private void setIdRoomReservationNew(RoomReservation reservation) {
-        int lastId = repositoryHotelService.readAll()
+//        int lastId = repositoryHotelService.readAll()
+        int lastId = repositoryRoomReservation.readAll()
                 .stream()
                 .map(HotelService::getIdService)
                 .max(Comparator.comparingInt(o -> o))

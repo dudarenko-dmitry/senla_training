@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import static pl.senla.hotel.configuration.AppConfiguration.*;
 import static pl.senla.hotel.constant.InputOutputConstant.*;
+import static pl.senla.hotel.constant.PropertiesConstant.*;
 
 public class AppPropertiesLoader implements PropertiesLoader {
 
@@ -47,25 +47,25 @@ public class AppPropertiesLoader implements PropertiesLoader {
     /**
      * delete after first creating of properties' file
      * Later change configuration via file hotel.properties
-
+     */
     @Override
     public void saveConfiguration() {
         try (FileOutputStream fos = new FileOutputStream(propertiesFile)) {
-            appProperties.put(KEY_ABLE_TO_CHANGE_ROOM_STATUS, "TRUE");
-            appProperties.put(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM, "10");
-            appProperties.put(KEY_FILE_PATH, "C://IT/Data/");
-            appProperties.put(KEY_FILE_PATH_SERIALIZABLE, "C://IT/Serialization/");
-            appProperties.put(KEY_FILE_SERIALIZABLE_NAME, "hotel.ser");
-            appProperties.put(KEY_FILE_HOTEL_FACILITIES_NAME, "HotelFacility.csv");
-            appProperties.put(KEY_FILE_GUESTS_NAME, "Guests.csv");
-            appProperties.put(KEY_FILE_HOTEL_SERVICES_NAME, "HotelServices.csv");
-            appProperties.put(KEY_FILE_ORDERS_NAME, "Orders.csv");
-            appProperties.store(fos, "");
+            appProperties.setProperty(KEY_ABLE_TO_CHANGE_ROOM_STATUS, "TRUE");
+            appProperties.setProperty(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM, "10");
+            appProperties.setProperty(KEY_FILE_PATH, "C://IT/Data/");
+            appProperties.setProperty(KEY_FILE_PATH_SERIALIZABLE, "C://IT/Serialization/");
+            appProperties.setProperty(KEY_FILE_SERIALIZABLE_NAME, "hotel.ser");
+            appProperties.setProperty(KEY_FILE_HOTEL_FACILITIES_NAME, "HotelFacility.csv");
+            appProperties.setProperty(KEY_FILE_GUESTS_NAME, "Guests.csv");
+            appProperties.setProperty(KEY_FILE_HOTEL_SERVICES_NAME, "HotelServices.csv");
+            appProperties.setProperty(KEY_FILE_ORDERS_NAME, "Orders.csv");
+            appProperties.store(fos, null);
         } catch (FileNotFoundException e) {
             System.out.println(ERROR_GET_PROPERTIES_FILE);
         } catch (IOException e) {
             System.out.println(ERROR_WRITE_PROPERTIES_FILE);
         }
     }
-  */
+
 }

@@ -9,7 +9,6 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.*;
 
-// this Class is never used... Delete?
 public class ServiceHotelServiceImpl implements ServiceHotelService{
 
     private static ServiceHotelService serviceHotelService;

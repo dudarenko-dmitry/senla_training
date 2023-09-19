@@ -4,6 +4,7 @@ import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
 import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.repository.*;
 import pl.senla.hotel.ui.services.StartCreateHotelService;
 
@@ -20,12 +21,14 @@ public class ServiceOrderImpl implements ServiceOrder {
     private final ServiceCRUDALL<HotelService> serviceHotelService;
     private final Repository<Order> repositoryOrder;
     private final Repository<HotelService> repositoryHotelService;
+    private final Repository<RoomReservation> repositoryRoomReservation;
 
 
     private ServiceOrderImpl() {
         this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService();
         this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
+        this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
     }
 
     public static ServiceOrder getServiceOrder() {
@@ -103,6 +106,7 @@ public class ServiceOrderImpl implements ServiceOrder {
                 List<HotelService> services = repositoryHotelService.readAll();
                 for (int j = 0; j < services.size(); j++){
                     if (services.get(j).getIdOrder() == idOrder) {
+                        repositoryRoomReservation.delete(j);
                         repositoryHotelService.delete(j);
                     }
                 }
@@ -138,6 +142,13 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public List<HotelService> readAllServicesForOrder(int idOrder) {
+        System.out.println(("Orders: " + repositoryOrder.readAll()
+                .stream()
+                .filter(o -> o.getIdOrder() == idOrder)
+                .flatMap(o -> o.getServices()
+                        .stream()
+                        .map(serviceHotelService::read))
+                .toList()));
         return repositoryOrder.readAll()
                 .stream()
                 .filter(o -> o.getIdOrder() == idOrder)

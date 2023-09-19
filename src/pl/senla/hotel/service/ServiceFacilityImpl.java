@@ -4,6 +4,7 @@ import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryFacilityCollection;
+import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,9 +16,11 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     private static ServiceFacility serviceFacility;
     private final Repository<HotelFacility> repositoryHotelFacility;
+    private final Repository<Room> repositoryRoom;
 
     private ServiceFacilityImpl() {
         this.repositoryHotelFacility = RepositoryFacilityCollection.getRepositoryFacility();
+        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
     }
 
     public static ServiceFacility getServiceFacility(){
@@ -40,7 +43,6 @@ public class ServiceFacilityImpl implements ServiceFacility{
     public boolean create(String hotelFacilityString) {
         String[] facilityData = hotelFacilityString.split(";");
         Room hotelFacility = new Room();
-//        hotelFacility.setIdFacility(-1);
         hotelFacility.setCategory(CategoryFacility.valueOf(facilityData[0]));
         hotelFacility.setNameFacility(facilityData[1]);
         hotelFacility.setPrice(Integer.parseInt(facilityData[2]));
@@ -48,6 +50,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
         hotelFacility.setRoomLevel(RoomLevel.valueOf(facilityData[4]));
         hotelFacility.setRoomStatus(RoomStatus.valueOf(facilityData[5]));
         setIdFacilityNew(hotelFacility);
+        repositoryRoom.create(hotelFacility);
         return repositoryHotelFacility.create(hotelFacility);
     }
 
@@ -77,6 +80,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
         }
         HotelFacility hotelFacilityUpdate = read(idFacility);
         hotelFacilityUpdate.setPrice(Integer.parseInt(hotelFacilityString));
+        repositoryRoom.update(idFacility, (Room) hotelFacilityUpdate);
         return repositoryHotelFacility.update(idFacility, hotelFacilityUpdate);
     }
 
@@ -87,6 +91,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
         }
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdFacility() == idFacility){
+                repositoryRoom.delete(idFacility);
                 return repositoryHotelFacility.delete(idFacility);
             }
         }
