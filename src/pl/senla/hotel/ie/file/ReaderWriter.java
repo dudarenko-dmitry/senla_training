@@ -15,8 +15,8 @@ public class ReaderWriter<T> implements ReaderWriterUniversal{
 
     private final Converter<T> converter;
 
-    public ReaderWriter() {
-        this.converter = new EntitiesConverter<>();
+    public ReaderWriter(Converter<T> converter) {
+        this.converter = converter;
     }
 
 

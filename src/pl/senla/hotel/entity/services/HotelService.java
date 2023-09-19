@@ -1,9 +1,15 @@
 package pl.senla.hotel.entity.services;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 import static pl.senla.hotel.constant.HotelServiceConstant.*;
 import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
 
-public abstract class HotelService {
+public abstract class HotelService implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 20L;
 
     protected Integer idService;
     protected Integer idOrder;

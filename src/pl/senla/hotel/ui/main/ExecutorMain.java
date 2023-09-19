@@ -1,6 +1,8 @@
 package pl.senla.hotel.ui.main;
 
 import pl.senla.hotel.entity.SavedHotel;
+import pl.senla.hotel.ie.file.DataProcessor;
+import pl.senla.hotel.ie.file.DataProcessorFile;
 import pl.senla.hotel.ie.serialization.Processor;
 import pl.senla.hotel.ie.serialization.ProcessorSerializable;
 import pl.senla.hotel.ui.Executor;
@@ -21,7 +23,7 @@ public class ExecutorMain implements Executor {
     private final StartMenu startMenuOrder;
     private final StartMenu startMenuAnalytics;
     private final StartMenu startMenuImportExport;
-//    private final DataProcessor dataProcessor;
+    private final DataProcessor dataProcessor; //version 3 (save Application's state to files)
     private final Processor processor;
 
     private ExecutorMain() {
@@ -30,7 +32,7 @@ public class ExecutorMain implements Executor {
         this.startMenuOrder = StartMenuOrder.getStartMenuOrder();
         this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics();
         this.startMenuImportExport = StartMenuImportExport.getStartMenuImpExp();
-//        this.dataProcessor = DataProcessorFile.getDataProcessor();
+        this.dataProcessor = DataProcessorFile.getDataProcessor(); //version 3 (save Application's state to files)
         this.processor = new ProcessorSerializable();
     }
 

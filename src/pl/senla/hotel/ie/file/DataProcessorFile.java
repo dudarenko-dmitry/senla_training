@@ -3,13 +3,13 @@ package pl.senla.hotel.ie.file;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.storage.DataStorageFacility;
-import pl.senla.hotel.storage.DataStorageGuest;
-import pl.senla.hotel.storage.DataStorageHotelService;
-import pl.senla.hotel.storage.DataStorageOrder;
+import pl.senla.hotel.entity.services.RoomReservation;
+import pl.senla.hotel.storage.*;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
@@ -26,10 +26,14 @@ public class DataProcessorFile implements DataProcessor{
     private final ReaderWriterUniversal orderReaderWriter;
 
     private DataProcessorFile() {
-        this.guestReaderWriter = new ReaderWriter<>();
-        this.hotelFacilityReaderWriter = new ReaderWriter<>();
-        this.hotelServiceReaderWriter = new ReaderWriter<>();
-        this.orderReaderWriter = new ReaderWriter<>();
+        Converter<Guest> guestConverter = new EntitiesConverter<>();
+        Converter<HotelFacility> hotelFacilityConverter = new EntitiesConverter<>();
+        Converter<RoomReservation> hotelServiceConverter = new EntitiesConverter<>();
+        Converter<Order> orderConverter = new EntitiesConverter<>();
+        this.guestReaderWriter = new ReaderWriter<>(guestConverter);
+        this.hotelFacilityReaderWriter = new ReaderWriter<>(hotelFacilityConverter);
+        this.hotelServiceReaderWriter = new ReaderWriter<>(hotelServiceConverter);
+        this.orderReaderWriter = new ReaderWriter<>(orderConverter);
     }
 
     public static DataProcessor getDataProcessor() {
@@ -88,6 +92,8 @@ public class DataProcessorFile implements DataProcessor{
         } else {
             try {
                 hotelServiceReaderWriter.save(DataStorageHotelService.getDataStorageHotelService().getDataList());
+                System.out.println("LIST OF SERVICES: " + DataStorageHotelService.getDataStorageHotelService().getDataList());
+                System.out.println("IS SAVED?");
             } catch (IOException e) {
                 System.out.println(ERROR_SERVICES_SAVE + e.getMessage());
             }
@@ -111,6 +117,8 @@ public class DataProcessorFile implements DataProcessor{
     public void loadHotelFacility() {
         try {
             if (DataStorageFacility.getDataStorageFacility().getDataList().isEmpty()) {
+                DataStorageRoom.getDataStorageRoom().getDataList()
+                                .addAll((Collection<? extends Room>) hotelFacilityReaderWriter.load(HotelFacility.class));
                 DataStorageFacility.getDataStorageFacility().getDataList()
                         .addAll((List<? extends HotelFacility>) hotelFacilityReaderWriter.load(HotelFacility.class));
                 System.out.println(LOAD_HOTEL_FACILITY_LIST);
@@ -143,6 +151,8 @@ public class DataProcessorFile implements DataProcessor{
     public void loadHotelServices() {
         try {
             if (DataStorageHotelService.getDataStorageHotelService().getDataList().isEmpty()) {
+                DataStorageRoomReservation.getDataStorageRoomReservation().getDataList()
+                        .addAll((Collection<? extends RoomReservation>) hotelServiceReaderWriter.load(HotelService.class));
                 DataStorageHotelService.getDataStorageHotelService().getDataList()
                         .addAll((List<? extends HotelService>) hotelServiceReaderWriter.load(HotelService.class));
                 System.out.println(LOAD_SERVICES_LIST);
