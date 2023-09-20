@@ -28,9 +28,10 @@ public class Factory {
             wait();
         }
         Integer number = generateNumber();
-        sleep(1000);
-        System.out.println("Produced new number: " + number);
+        sleep(800);
+        System.out.println("Produced: " + number);
         buffer.add(number);
+        System.out.println("quantity in buffer: " + buffer.size());
         notify();
     }
 
@@ -39,8 +40,8 @@ public class Factory {
             wait();
         }
         Integer number = buffer.poll();
-        sleep(900);
-        System.out.println("Consumed number: " + number);
+        sleep(1000);
+        System.out.println("Consumed: " + number);
         notify();
     }
 
