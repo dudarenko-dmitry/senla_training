@@ -1,14 +1,14 @@
 package pl.senla.task9.ex3;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import static java.lang.Thread.*;
 import static pl.senla.task9.ex3.Constant.MAX_BUFFER_CAPACITY;
 
 public class Factory {
 
-    private final Queue<Integer> buffer = new ArrayDeque<>();
+    private final BlockingQueue<Integer> buffer = new ArrayBlockingQueue<>(MAX_BUFFER_CAPACITY, true);
 
     private static Factory numberFactory;
 
@@ -23,26 +23,18 @@ public class Factory {
         return numberFactory;
     }
 
-    public synchronized void produceNumber() throws InterruptedException {
-        if (buffer.size() >= MAX_BUFFER_CAPACITY) {
-            wait();
-        }
+    public void produceNumber() throws InterruptedException {
         Integer number = generateNumber();
-        sleep(800);
         System.out.println("Produced: " + number);
-        buffer.add(number);
+        buffer.put(number);
         System.out.println("quantity in buffer: " + buffer.size());
-        notify();
+        sleep(800);
     }
 
-    public synchronized void consumeNumber() throws InterruptedException {
-        if (buffer.isEmpty()) {
-            wait();
-        }
-        Integer number = buffer.poll();
-        sleep(1000);
+    public void consumeNumber() throws InterruptedException {
+        Integer number = buffer.take();
         System.out.println("Consumed: " + number);
-        notify();
+        sleep(1000);
     }
 
     private int generateNumber() {
