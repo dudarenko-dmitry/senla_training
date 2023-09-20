@@ -7,9 +7,8 @@ public class MyClass implements Runnable{
     private final Locker locker = Locker.getLocker();
     private static final Object block = new Object();
 
-//    private boolean isBlocked = true;
-    private boolean isSleep = false;
-    private boolean isWait = false;
+    private boolean isSleep;
+    private boolean isWait;
 
     public static Object getBlock() {
         return block;
@@ -19,6 +18,7 @@ public class MyClass implements Runnable{
     public void run() {
         try {
             synchronized (block) {
+                sleep(1000);
                 block.wait();
             }
         } catch (InterruptedException e) {
@@ -27,18 +27,20 @@ public class MyClass implements Runnable{
 
         while (!interrupted()) {
             if (isSleep) {
-                synchronized (block) {
-                    try {
-                        sleep(3000);
-                        isSleep = false;
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                try {
+                    sleep(3000);
+                    isSleep = false;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
 
-            if (isWait) {
-                locker.waitThread(true);
+            if (isWait == true) {
+                locker.waitThread(isWait);
+            }
+
+            if (isWait == false) {
+                locker.waitThread(isWait);
             }
         }
     }
@@ -51,7 +53,7 @@ public class MyClass implements Runnable{
         isWait = true;
     }
 
-    public void wakeUpThread() {
+    public void notifyThread() {
         isWait = false;
     }
 
