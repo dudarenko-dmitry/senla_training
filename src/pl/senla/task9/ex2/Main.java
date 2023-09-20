@@ -1,23 +1,13 @@
 package pl.senla.task9.ex2;
 
+import java.util.concurrent.Semaphore;
+
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
-        First first = new First();
-        Second second = new Second();
+        new Thread(new MyClass(new Semaphore(1))).start();
+        new Thread(new MyClass(new Semaphore(1))).start();
 
-        Thread firstThread = new Thread(first);
-        Thread secondThread = new Thread(second);
-
-        firstThread.start();
-        secondThread.start();
-
-        firstThread.join();
-        secondThread.join();
-
-        System.out.println("Main: process is finished");
     }
-
 }
-
