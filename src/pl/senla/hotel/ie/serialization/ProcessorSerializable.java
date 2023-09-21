@@ -1,6 +1,5 @@
 package pl.senla.hotel.ie.serialization;
 
-import pl.senla.hotel.configuration.AppConfiguration;
 import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.SavedHotel;
 
@@ -11,9 +10,12 @@ import static pl.senla.hotel.constant.InputOutputConstant.ERROR_WRITE_SERIALIZAT
 
 public class ProcessorSerializable implements Processor{
 
-    private final Configuration configuration = new AppConfiguration();
-    private final String fileNameAndPath = configuration.getValueFilePathSerializable() +
-            configuration.getValueFileSerializableName();
+    private final String fileNameAndPath;
+
+    public ProcessorSerializable(Configuration appConfiguration) {
+        this.fileNameAndPath = appConfiguration.getValueFilePathSerializable() +
+            appConfiguration.getValueFileSerializableName();
+    }
 
     @Override
     public SavedHotel loadHotel() {

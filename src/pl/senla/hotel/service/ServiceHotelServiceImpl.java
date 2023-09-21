@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryHotelServiceCollection;
@@ -15,14 +16,14 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     private final ServiceRoomReservation serviceRoomReservation;
     private final Repository<HotelService> repositoryHotelService;
 
-    private ServiceHotelServiceImpl() {
-        this.serviceRoomReservation = ServiceRoomReservationImpl.getServiceRoomReservation();
+    private ServiceHotelServiceImpl(Configuration appConfiguration) {
+        this.serviceRoomReservation = ServiceRoomReservationImpl.getServiceRoomReservation(appConfiguration);
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
     }
 
-    public static ServiceHotelService getServiceHotelService(){
+    public static ServiceHotelService getServiceHotelService(Configuration appConfiguration){
         if(serviceHotelService == null){
-            serviceHotelService = new ServiceHotelServiceImpl();
+            serviceHotelService = new ServiceHotelServiceImpl(appConfiguration);
         }
         return serviceHotelService;
     }

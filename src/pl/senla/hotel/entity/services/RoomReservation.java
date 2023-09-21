@@ -1,5 +1,7 @@
 package pl.senla.hotel.entity.services;
 
+import pl.senla.hotel.configuration.AppConfiguration;
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.service.ServiceRoom;
 import pl.senla.hotel.service.ServiceRoomImpl;
 
@@ -19,18 +21,19 @@ public class RoomReservation extends HotelService implements Serializable {
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
     private Integer cost;
-    private final transient ServiceRoom serviceRoom = ServiceRoomImpl.getServiceRoom();
+    private final transient ServiceRoom serviceRoom;
 
     @Serial
     private static final long serialVersionUID = 10L;
 
     public RoomReservation() {
-
+        this.serviceRoom = ServiceRoomImpl.getServiceRoom(AppConfiguration.getAppConfiguration());
     }
 
     public RoomReservation(Integer idService, Integer idOrder, Integer idGuest, Integer idRoom,
-                           LocalDate startDate, Integer numberOfDays) {
+                           LocalDate startDate, Integer numberOfDays, Configuration appConfiguration) {
         super(idService, idOrder, TypeOfService.RESTAURANT, idGuest);
+        this.serviceRoom = ServiceRoomImpl.getServiceRoom(appConfiguration);
         if(idRoom == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
@@ -47,7 +50,7 @@ public class RoomReservation extends HotelService implements Serializable {
         this.numberOfDays = numberOfDays;
         this.checkInTime = LocalDateTime.of(startDate, HOTEL_CHECK_IN_TIME);
         this.checkOutTime = LocalDateTime.of(startDate.plusDays(numberOfDays), HOTEL_CHECK_OUT_TIME);
-        this.cost = serviceRoom.read(idRoom).getPrice() * numberOfDays;
+        this.cost = this.serviceRoom.read(idRoom).getPrice() * numberOfDays;
     }
 
     public Integer getIdRoom() {

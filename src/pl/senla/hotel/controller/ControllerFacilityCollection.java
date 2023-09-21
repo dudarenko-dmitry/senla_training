@@ -1,5 +1,6 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.service.ServiceFacility;
 import pl.senla.hotel.service.ServiceFacilityImpl;
@@ -14,14 +15,14 @@ public class ControllerFacilityCollection implements ControllerFacility{
     private final ServiceFacility serviceFacility;
     private final ServiceRoom serviceRoom;
 
-    private ControllerFacilityCollection() {
+    private ControllerFacilityCollection(Configuration appConfiguration) {
         this.serviceFacility = ServiceFacilityImpl.getServiceFacility();
-        this.serviceRoom = ServiceRoomImpl.getServiceRoom();
+        this.serviceRoom = ServiceRoomImpl.getServiceRoom(appConfiguration);
     }
 
-    public static ControllerFacility getControllerFacility(){
+    public static ControllerFacility getControllerFacility(Configuration appConfiguration){
         if(controllerFacility == null){
-            controllerFacility = new ControllerFacilityCollection();
+            controllerFacility = new ControllerFacilityCollection(appConfiguration);
         }
         return controllerFacility;
     }

@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.services;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.controller.ControllerOrderCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
@@ -18,17 +19,19 @@ public class ExecutorUpdateHotelServiceList {
     private static ExecutorUpdateHotelServiceList executorUpdateHotelServiceList;
     private final ControllerOrder orderController;
     private final ControllerRoomReservation roomReservationController;
+    private final Configuration configuration;
     // add all other Controllers for different type of Hotel's Services
 
-    private ExecutorUpdateHotelServiceList() {
+    private ExecutorUpdateHotelServiceList(Configuration appConfiguration) {
+        this.configuration = appConfiguration;
         this.orderController = ControllerOrderCollection.getControllerOrder();
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
+        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation(configuration);
         // add all other Controllers for different type of Hotel's Services
     }
 
-    public static ExecutorUpdateHotelServiceList getExecutorUpdateHotelServiceList(){
+    public static ExecutorUpdateHotelServiceList getExecutorUpdateHotelServiceList(Configuration appConfiguration){
         if (executorUpdateHotelServiceList == null) {
-            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList();
+            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList(appConfiguration);
         }
         return executorUpdateHotelServiceList;
     }
@@ -44,8 +47,7 @@ public class ExecutorUpdateHotelServiceList {
                             .stream()
                             .filter(s -> roomReservationController.read(s).getTypeOfService()
                                     .equals(TypeOfService.ROOM_RESERVATION))
-                            .toList()
-                            .toString());
+                            .toList());
 
                     System.out.print("Input RoomReservation's ID to Update --> ");
                     int idRoomReservation = sc.nextInt();
@@ -59,7 +61,7 @@ public class ExecutorUpdateHotelServiceList {
                 } else {
                     System.out.println(ERROR_READ_ORDER);
                     System.out.println(ERROR_INPUT);
-                    StartMenuOrder.getStartMenuOrder().runMenu();
+                    StartMenuOrder.getStartMenuOrder(configuration).runMenu();
                 }
 
             case 2:

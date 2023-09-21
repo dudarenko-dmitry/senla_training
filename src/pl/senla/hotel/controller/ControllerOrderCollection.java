@@ -1,5 +1,6 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.configuration.AppConfiguration;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.service.ServiceOrder;
@@ -13,7 +14,7 @@ public class ControllerOrderCollection implements ControllerOrder {
     private final ServiceOrder orderService;
 
     private ControllerOrderCollection() {
-        this.orderService = ServiceOrderImpl.getServiceOrder();
+        this.orderService = ServiceOrderImpl.getServiceOrder(AppConfiguration.getAppConfiguration());
     }
 
     public static ControllerOrder getControllerOrder(){

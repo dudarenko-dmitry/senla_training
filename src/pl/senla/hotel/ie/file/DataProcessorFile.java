@@ -93,7 +93,6 @@ public class DataProcessorFile implements DataProcessor{
             try {
                 hotelServiceReaderWriter.save(DataStorageHotelService.getDataStorageHotelService().getDataList());
                 System.out.println("LIST OF SERVICES: " + DataStorageHotelService.getDataStorageHotelService().getDataList());
-                System.out.println("IS SAVED?");
             } catch (IOException e) {
                 System.out.println(ERROR_SERVICES_SAVE + e.getMessage());
             }

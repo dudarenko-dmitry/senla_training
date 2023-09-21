@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.room;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
@@ -17,15 +18,17 @@ public class ExecutorRoom implements Executor {
     private static Executor executorRoom;
     private final ControllerFacility facilityController;
     private final ControllerRoom roomController;
+    private final Configuration configuration;
 
-    private ExecutorRoom() {
-        this.facilityController = ControllerFacilityCollection.getControllerFacility();
-        this.roomController = ControllerRoomCollection.getControllerRoom();
+    private ExecutorRoom(Configuration appConfiguration) {
+        this.configuration = appConfiguration;
+        this.facilityController = ControllerFacilityCollection.getControllerFacility(configuration);
+        this.roomController = ControllerRoomCollection.getControllerRoom(configuration);
     }
 
-    public static Executor getExecutorRoom(){
+    public static Executor getExecutorRoom(Configuration appConfiguration){
         if (executorRoom == null) {
-            executorRoom = new ExecutorRoom();
+            executorRoom = new ExecutorRoom(appConfiguration);
         }
         return executorRoom;
     }
@@ -59,7 +62,7 @@ public class ExecutorRoom implements Executor {
                         roomLevel + ";" +
                         RoomStatus.AVAILABLE;
                 System.out.println(CONSOLE_CREATE_ROOM +
-                        facilityController.create(String.valueOf(stringRoom)));
+                        facilityController.create(stringRoom));
             }
             case 4 -> {
                 System.out.print(INPUT_ID_ROOM_UPDATE);
@@ -101,10 +104,10 @@ public class ExecutorRoom implements Executor {
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu().runMenu();
+            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuMain.getStartMenu().runMenu();
+                StartMenuMain.getStartMenu(configuration).runMenu();
             }
         }
     }

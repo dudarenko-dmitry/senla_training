@@ -2,6 +2,7 @@ package pl.senla.hotel.service;
 
 import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
 import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.services.RoomReservation;
@@ -22,18 +23,20 @@ public class ServiceOrderImpl implements ServiceOrder {
     private final Repository<Order> repositoryOrder;
     private final Repository<HotelService> repositoryHotelService;
     private final Repository<RoomReservation> repositoryRoomReservation;
+    private final Configuration configuration;
 
 
-    private ServiceOrderImpl() {
-        this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService();
+    private ServiceOrderImpl(Configuration appConfiguration) {
+        this.configuration = appConfiguration;
+        this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService(configuration);
         this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
     }
 
-    public static ServiceOrder getServiceOrder() {
+    public static ServiceOrder getServiceOrder(Configuration appConfiguration) {
         if (serviceOrder == null) {
-            serviceOrder = new ServiceOrderImpl();
+            serviceOrder = new ServiceOrderImpl(appConfiguration);
         }
         return serviceOrder;
     }
@@ -51,11 +54,10 @@ public class ServiceOrderImpl implements ServiceOrder {
     public boolean create(String orderString) {
         int idGuest = Integer.parseInt(orderString);
         Order order = new Order(idGuest);
-        order.setIdOrder(-1);
         order.setIdGuest(idGuest);
         int idOrderNew = getIdOrderNew();
         order.setIdOrder(idOrderNew);
-        StartCreateHotelService.getStartCreateHotelService().runMenu(idOrderNew, idGuest);
+        StartCreateHotelService.getStartCreateHotelService(configuration).runMenu(idOrderNew, idGuest);
         List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrderNew);
         order.setServices(idServicesInOrder);
         return repositoryOrder.create(order);

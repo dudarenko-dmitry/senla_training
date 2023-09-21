@@ -1,5 +1,6 @@
 package pl.senla.hotel;
 
+import pl.senla.hotel.configuration.AppConfiguration;
 import pl.senla.hotel.configuration.AppPropertiesLoader;
 import pl.senla.hotel.configuration.PropertiesLoader;
 import pl.senla.hotel.entity.SavedHotel;
@@ -7,6 +8,8 @@ import pl.senla.hotel.ie.file.DataProcessor;
 import pl.senla.hotel.ie.file.DataProcessorFile;
 import pl.senla.hotel.ui.StartMenu;
 import pl.senla.hotel.ui.main.StartMenuMain;
+
+import java.util.Properties;
 
 public class Main {
 
@@ -16,6 +19,9 @@ public class Main {
         PropertiesLoader loader = new AppPropertiesLoader();
         loader.saveConfiguration();
 
+        // load Properties while starting program
+        AppConfiguration appConfiguration = AppConfiguration.getAppConfiguration();
+        System.out.println("config: " + appConfiguration.toString());
         /*
         !!!!!!!!!!     USE ONLY ONE VERSION at once      !!!!!!!!!!
 
@@ -28,15 +34,15 @@ public class Main {
         consoleCollection.startMainMenu(); // version 2 (with UI)
         */
 
-        // version 3 (load Application's state from files)
+        // version 3 (load Application's data from files)
 //        DataProcessor dataProcessor = DataProcessorFile.getDataProcessor();
 //        dataProcessor.loadAllEntities();
 
         // version 4 (load Application's state by Serialization)
-        SavedHotel hotel = new SavedHotel();
+        SavedHotel hotel = new SavedHotel(appConfiguration);
         hotel.initializeHotel();
 
-        StartMenu startMenuMain = StartMenuMain.getStartMenu(); // version 3 (UI with separate menus for every operation)
+        StartMenu startMenuMain = StartMenuMain.getStartMenu(appConfiguration); // version 3 (UI with separate menus for every operation)
         startMenuMain.runMenu();
     }
 }

@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.hotelfacilities;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
 import pl.senla.hotel.ui.main.StartMenuMain;
@@ -13,16 +14,18 @@ public class ExecutorHotelFacilities implements Executor {
     private final StartMenu menuRoom;
     private StartMenu menuTable;
     private StartMenu menuTransfer;
+    private final Configuration configuration;
 
-    private ExecutorHotelFacilities() {
-        this.menuRoom = StartMenuRoom.getStartMenuRoom();
+    private ExecutorHotelFacilities(Configuration appConfiguration) {
+        this.configuration = appConfiguration;
+        this.menuRoom = StartMenuRoom.getStartMenuRoom(configuration);
 //        this.menuTable = new StartMenuTable();
 //        this.menuTransfer = new StartMenuTransfer();
     }
 
-    public static Executor getExecutorHotelFacilities(){
+    public static Executor getExecutorHotelFacilities(Configuration appConfiguration){
         if (executor == null) {
-            executor = new ExecutorHotelFacilities();
+            executor = new ExecutorHotelFacilities(appConfiguration);
         }
         return executor;
     }
@@ -33,9 +36,9 @@ public class ExecutorHotelFacilities implements Executor {
             case 1 -> menuRoom.runMenu();
             case 2 -> menuTable.runMenu();
             case 3 -> menuTransfer.runMenu();
-            case 0 -> StartMenuMain.getStartMenu().runMenu();
+            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
             default -> {System.out.println(ERROR_INPUT);
-                StartMenuMain.getStartMenu().runMenu();}
+                StartMenuMain.getStartMenu(configuration).runMenu();}
         }
     }
 }

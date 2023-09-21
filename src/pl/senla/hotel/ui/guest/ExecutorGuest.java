@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.guest;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
@@ -12,14 +13,16 @@ public class ExecutorGuest implements Executor {
 
     private static Executor executor;
     private final ControllerGuest guestController;
+    private final Configuration configuration;
 
-    private ExecutorGuest() {
+    private ExecutorGuest(Configuration appConfiguration) {
+        this.configuration = appConfiguration;
         this.guestController = ControllerGuestCollection.getControllerGuest();
     }
 
-    public static Executor getExecutorGuest(){
+    public static Executor getExecutorGuest(Configuration appConfiguration){
         if (executor == null) {
-            executor = new ExecutorGuest();
+            executor = new ExecutorGuest(appConfiguration);
         }
         return executor;
     }
@@ -57,10 +60,10 @@ public class ExecutorGuest implements Executor {
                 int idGuestDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_GUEST + guestController.delete(idGuestDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu().runMenu();
+            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuGuest.getStartMenuGuest().runMenu();
+                StartMenuGuest.getStartMenuGuest(configuration).runMenu();
             }
         }
     }

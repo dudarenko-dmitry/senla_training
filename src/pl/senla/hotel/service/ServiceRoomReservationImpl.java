@@ -1,7 +1,6 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.comparators.*;
-import pl.senla.hotel.configuration.AppConfiguration;
 import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -36,19 +35,19 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private final Repository<Room> repositoryRoom;
     private final Configuration configuration;
 
-    private ServiceRoomReservationImpl() {
+    private ServiceRoomReservationImpl(Configuration appConfiguration) {
         this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
         this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
-        this.configuration = new AppConfiguration();
+        this.configuration = appConfiguration;
     }
 
-    public static ServiceRoomReservation getServiceRoomReservation(){
+    public static ServiceRoomReservation getServiceRoomReservation(Configuration appConfiguration){
         if (serviceRoomReservation == null) {
-            serviceRoomReservation = new ServiceRoomReservationImpl();
+            serviceRoomReservation = new ServiceRoomReservationImpl(appConfiguration);
         }
         return serviceRoomReservation;
     }

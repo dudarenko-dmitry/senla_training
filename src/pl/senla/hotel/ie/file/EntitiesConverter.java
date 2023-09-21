@@ -21,7 +21,7 @@ public class EntitiesConverter<T> implements Converter<T> {
     private final Configuration configuration;
 
     public EntitiesConverter() {
-        this.configuration = new AppConfiguration();
+        this.configuration = AppConfiguration.getAppConfiguration(); // !!! --->
         this.header = new Header();
     }
 

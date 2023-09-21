@@ -1,6 +1,5 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.configuration.AppConfiguration;
 import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
@@ -19,14 +18,14 @@ public class ServiceRoomImpl implements ServiceRoom {
     private final Repository<HotelFacility> repositoryFacility;
     private final Configuration configuration;
 
-    private ServiceRoomImpl() {
+    private ServiceRoomImpl(Configuration appConfiguration) {
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
-        this.configuration = new AppConfiguration();
+        this.configuration = appConfiguration;
     }
 
-    public static ServiceRoom getServiceRoom() {
+    public static ServiceRoom getServiceRoom(Configuration appConfiguration) {
         if (serviceRoom == null) {
-            serviceRoom = new ServiceRoomImpl();
+            serviceRoom = new ServiceRoomImpl(appConfiguration);
         }
         return serviceRoom;
     }

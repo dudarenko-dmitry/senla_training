@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.ie;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
@@ -10,14 +11,14 @@ public class StartMenuImportExport implements StartMenu {
     private final Navigator navigator;
     private final Executor executor;
 
-    private StartMenuImportExport() {
+    private StartMenuImportExport(Configuration appConfiguration) {
         this.navigator = NavigatorMenuImportExport.getNavigator();
-        this.executor = ExecutorImportExport.getExecutor();
+        this.executor = ExecutorImportExport.getExecutor(appConfiguration);
     }
 
-    public static StartMenu getStartMenuImpExp() {
+    public static StartMenu getStartMenuImpExp(Configuration appConfiguration) {
         if (startMenuImpExp == null) {
-            startMenuImpExp = new StartMenuImportExport();
+            startMenuImpExp = new StartMenuImportExport(appConfiguration);
         }
         return startMenuImpExp;
     }

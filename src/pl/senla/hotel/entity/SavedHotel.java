@@ -1,5 +1,6 @@
 package pl.senla.hotel.entity;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
@@ -26,8 +27,8 @@ public class SavedHotel implements Serializable {
     private final List<Order> orderList;
 
 
-    public SavedHotel() {
-        processor = new ProcessorSerializable();
+    public SavedHotel(Configuration appConfiguration) {
+        processor = new ProcessorSerializable(appConfiguration);
         this.hotelFacilityList = DataStorageFacility.getDataStorageFacility().getDataList();
         this.roomList = DataStorageRoom.getDataStorageRoom().getDataList();
         this.guestList = DataStorageGuest.getDataStorageGuest().getDataList();
