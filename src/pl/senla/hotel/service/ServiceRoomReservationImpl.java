@@ -32,7 +32,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private final Repository<RoomReservation> repositoryRoomReservation;
     private final Repository<Guest> repositoryGuest;
     private final Repository<HotelFacility> repositoryFacility;
-    private final Repository<Room> repositoryRoom;
     private final Configuration configuration;
 
     private ServiceRoomReservationImpl(Configuration appConfiguration) {
@@ -41,7 +40,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
-        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
         this.configuration = appConfiguration;
     }
 
@@ -79,7 +77,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
-        } else if ((repositoryRoom.read(idRoom)).getRoomStatus().equals(RoomStatus.REPAIRED)) {
+        } else if (((Room)repositoryFacility.read(idRoom)).getRoomStatus().equals(RoomStatus.REPAIRED)) { // edit later!!!
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_REPAIRED);
             return false;
         } else {
@@ -318,8 +316,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     }
 
     private void setIdRoomReservationNew(RoomReservation reservation) {
-//        int lastId = repositoryHotelService.readAll()
-        int lastId = repositoryRoomReservation.readAll()
+        int lastId = repositoryHotelService.readAll()
                 .stream()
                 .map(HotelService::getIdService)
                 .max(Comparator.comparingInt(o -> o))

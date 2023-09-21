@@ -73,11 +73,13 @@ public class EntitiesConverter<T> implements Converter<T> {
 
     public T convertStringToEntity(Class<T> clazz, String csvT) {
         if (csvT != null) {
-            if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
+//            if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
+            if (clazz.equals(HotelFacility.class)) {
                 return (T) RoomUtil.convertStringToRoom(csvT);
             } else if (clazz.equals(Guest.class)) {
                 return (T) GuestUtil.convertStringToOrder(csvT);
-            } else if (clazz.equals(RoomReservation.class) || clazz.equals(HotelService.class)) {
+//            } else if (clazz.equals(RoomReservation.class) || clazz.equals(HotelService.class)) {
+            } else if (clazz.equals(HotelService.class)) {
                 return (T) RoomReservationUtil.convertCsvToRoomReservation(csvT);
             } else if (clazz.equals(Order.class)) {
                 return (T) OrderUtil.convertStringToOrder(csvT);

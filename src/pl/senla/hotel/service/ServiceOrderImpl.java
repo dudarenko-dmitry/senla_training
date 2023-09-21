@@ -5,7 +5,6 @@ import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.repository.*;
 import pl.senla.hotel.ui.services.StartCreateHotelService;
 
@@ -19,10 +18,8 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 public class ServiceOrderImpl implements ServiceOrder {
 
     private static ServiceOrder serviceOrder;
-    private final ServiceCRUDALL<HotelService> serviceHotelService;
+    private final ServiceHotelService serviceHotelService;
     private final Repository<Order> repositoryOrder;
-    private final Repository<HotelService> repositoryHotelService;
-    private final Repository<RoomReservation> repositoryRoomReservation;
     private final Configuration configuration;
 
 
@@ -30,8 +27,6 @@ public class ServiceOrderImpl implements ServiceOrder {
         this.configuration = appConfiguration;
         this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService(configuration);
         this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
-        this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
-        this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
     }
 
     public static ServiceOrder getServiceOrder(Configuration appConfiguration) {
@@ -82,8 +77,6 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     @Override
-    // This method is not used in application.
-    // All changes are processed in appropriate Services depending on Type of Hotel's Service.
     public boolean update(int idOrder, String orderUpdatingString) {
         if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
@@ -105,12 +98,9 @@ public class ServiceOrderImpl implements ServiceOrder {
         }
         for (int i = 0; i <= readAll().size(); i++) {
             if (readAll().get(i).getIdOrder() == idOrder) {
-                List<HotelService> services = repositoryHotelService.readAll();
-                for (int j = 0; j < services.size(); j++){
-                    if (services.get(j).getIdOrder() == idOrder) {
-                        repositoryRoomReservation.delete(j);
-                        repositoryHotelService.delete(j);
-                    }
+                List<HotelService> services = readAllServicesForOrder(idOrder);
+                for (HotelService hs : services) {
+                    serviceHotelService.delete(hs.getIdService());
                 }
                 return repositoryOrder.delete(i);
             }
@@ -144,13 +134,6 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public List<HotelService> readAllServicesForOrder(int idOrder) {
-        System.out.println(("Orders: " + repositoryOrder.readAll()
-                .stream()
-                .filter(o -> o.getIdOrder() == idOrder)
-                .flatMap(o -> o.getServices()
-                        .stream()
-                        .map(serviceHotelService::read))
-                .toList()));
         return repositoryOrder.readAll()
                 .stream()
                 .filter(o -> o.getIdOrder() == idOrder)
@@ -170,7 +153,7 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     private List<Integer> readAllIdServicesForOrder(int idOrderNew) {
-        return repositoryHotelService.readAll()
+        return serviceHotelService.readAll()
                 .stream()
                 .filter(o -> o.getIdOrder() == idOrderNew)
                 .map(HotelService::getIdService)
