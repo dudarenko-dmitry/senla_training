@@ -23,12 +23,12 @@ public class AppConfiguration implements Configuration{
 
     @Override
     public Boolean getValueIsAbleToChangeRoomStatus() {
-        return (Boolean) properties.get(KEY_ABLE_TO_CHANGE_ROOM_STATUS);
+        return Boolean.valueOf((String) properties.get(KEY_ABLE_TO_CHANGE_ROOM_STATUS));
     }
 
     @Override
     public Integer getValueNumberOfGuestRecordsForRoom() {
-        return (Integer) properties.get(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM);
+        return Integer.valueOf((String) properties.get(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM));
     }
 
     @Override
@@ -65,4 +65,6 @@ public class AppConfiguration implements Configuration{
     public String getValueFileOrdersName() {
         return String.valueOf(properties.get(KEY_FILE_ORDERS_NAME));
     }
+
+
 }

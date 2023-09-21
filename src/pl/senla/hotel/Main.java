@@ -21,7 +21,6 @@ public class Main {
 
         // load Properties while starting program
         AppConfiguration appConfiguration = AppConfiguration.getAppConfiguration();
-        System.out.println("config: " + appConfiguration.toString());
         /*
         !!!!!!!!!!     USE ONLY ONE VERSION at once      !!!!!!!!!!
 

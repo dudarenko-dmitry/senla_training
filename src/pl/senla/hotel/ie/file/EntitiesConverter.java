@@ -21,26 +21,27 @@ public class EntitiesConverter<T> implements Converter<T> {
     private final Configuration configuration;
 
     public EntitiesConverter() {
-        this.configuration = AppConfiguration.getAppConfiguration(); // !!! --->
+        this.configuration = AppConfiguration.getAppConfiguration();
         this.header = new Header();
     }
 
-    public String getPath(Class<?> clazz) {
+    public String getPath(Class<T> clazz) {
+        String valueFilePath = configuration.getValueFilePath();
         if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
-            return configuration.getValueFilePath() + configuration.getValueFileHotelFacilitiesName();
+            return valueFilePath + configuration.getValueFileHotelFacilitiesName();
         } else if (clazz.equals(Guest.class)) {
-            return configuration.getValueFilePath() + configuration.getValueFileGuestsName();
+            return valueFilePath + configuration.getValueFileGuestsName();
         } else if (clazz.equals(RoomReservation.class) || clazz.equals(HotelService.class)) {
-            return configuration.getValueFilePath() + configuration.getValueFileHotelServicesName();
+            return valueFilePath + configuration.getValueFileHotelServicesName();
         } else if (clazz.equals(Order.class)) {
-            return configuration.getValueFilePath() + configuration.getValueFileOrdersName();
+            return valueFilePath + configuration.getValueFileOrdersName();
         } else {
             System.out.println(ERROR_GET_PATH);
             return "";
         }
     }
 
-    public String[] getHeader(Class<?> clazz) {
+    public String[] getHeader(Class<T> clazz) {
         if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
             return header.getHeaderHotelFacilityRoom();
         } else if (clazz.equals(Guest.class)) {
@@ -70,7 +71,7 @@ public class EntitiesConverter<T> implements Converter<T> {
         }
     }
 
-    public T convertStringToEntity(Class<?> clazz, String csvT) {
+    public T convertStringToEntity(Class<T> clazz, String csvT) {
         if (csvT != null) {
             if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
                 return (T) RoomUtil.convertStringToRoom(csvT);
