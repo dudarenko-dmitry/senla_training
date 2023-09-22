@@ -19,7 +19,7 @@ public class MyClass implements Runnable{
             try {
                 semaphore.acquire();
                 System.out.println(name);
-                sleep(1000);
+                sleep(1);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -6,8 +6,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        new Thread(new MyClass(new Semaphore(1))).start();
-        new Thread(new MyClass(new Semaphore(1))).start();
+        Semaphore semaphore = new Semaphore(1, true);
+        new Thread(new MyClass(semaphore)).start();
+        new Thread(new MyClass(semaphore)).start();
 
     }
 }
