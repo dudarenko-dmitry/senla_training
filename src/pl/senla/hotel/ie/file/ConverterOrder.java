@@ -5,6 +5,9 @@ import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.utils.OrderUtil;
 
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_ORDERS_NAME;
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_PATH;
+
 public class ConverterOrder implements ConverterEntity<Order> {
 
     private final Configuration configuration;
@@ -14,7 +17,7 @@ public class ConverterOrder implements ConverterEntity<Order> {
     }
 
     public String getPath() {
-        return configuration.getValueFilePath() + configuration.getValueFileOrdersName();
+        return configuration.getStringProperty(KEY_FILE_PATH) + configuration.getStringProperty(KEY_FILE_ORDERS_NAME);
     }
 
     public String[] getHeader() {

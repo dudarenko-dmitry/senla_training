@@ -7,6 +7,9 @@ import pl.senla.hotel.entity.services.RoomReservation;
 
 import pl.senla.hotel.utils.RoomReservationUtil;
 
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_HOTEL_SERVICES_NAME;
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_PATH;
+
 public class ConverterRoomReservation implements ConverterEntity<HotelService> {
 
     private final Configuration configuration;
@@ -16,7 +19,7 @@ public class ConverterRoomReservation implements ConverterEntity<HotelService> {
     }
 
     public String getPath() {
-        return configuration.getValueFilePath() + configuration.getValueFileHotelServicesName();
+        return configuration.getStringProperty(KEY_FILE_PATH) + configuration.getStringProperty(KEY_FILE_HOTEL_SERVICES_NAME);
     }
 
     public String[] getHeader() {

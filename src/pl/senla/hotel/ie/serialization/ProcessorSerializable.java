@@ -7,14 +7,16 @@ import java.io.*;
 
 import static pl.senla.hotel.constant.InputOutputConstant.ERROR_READ_SERIALIZATION_FILE;
 import static pl.senla.hotel.constant.InputOutputConstant.ERROR_WRITE_SERIALIZATION_FILE;
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_PATH_SERIALIZABLE;
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_SERIALIZABLE_NAME;
 
 public class ProcessorSerializable implements Processor{
 
     private final String fileNameAndPath;
 
     public ProcessorSerializable(Configuration appConfiguration) {
-        this.fileNameAndPath = appConfiguration.getValueFilePathSerializable() +
-            appConfiguration.getValueFileSerializableName();
+        this.fileNameAndPath = appConfiguration.getStringProperty(KEY_FILE_PATH_SERIALIZABLE) +
+            appConfiguration.getStringProperty(KEY_FILE_SERIALIZABLE_NAME);
     }
 
     @Override

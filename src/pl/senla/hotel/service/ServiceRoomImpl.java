@@ -11,6 +11,7 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_ABLE_TO_CHANGE_ROOM_STATUS;
 
 public class ServiceRoomImpl implements ServiceRoom {
 
@@ -90,7 +91,8 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean updateRoomStatusAvailable(int idRoom) {
-        if (configuration.getValueIsAbleToChangeRoomStatus()){
+//      if (configuration.getValueIsAbleToChangeRoomStatus()){
+        if (configuration.getBooleanProperty(KEY_ABLE_TO_CHANGE_ROOM_STATUS)){
             if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
                 System.out.println(ERROR_READ_ALL_ROOM);
                 return false;
@@ -108,7 +110,7 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean updateRoomStatusRepaired(int idRoom) {
-        if (configuration.getValueIsAbleToChangeRoomStatus()){
+        if (configuration.getBooleanProperty(KEY_ABLE_TO_CHANGE_ROOM_STATUS)){
             if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
                 System.out.println(ERROR_READ_ALL_ROOM);
                 return false;

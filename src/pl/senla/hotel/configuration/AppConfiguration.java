@@ -2,8 +2,6 @@ package pl.senla.hotel.configuration;
 
 import java.util.Properties;
 
-import static pl.senla.hotel.constant.PropertiesConstant.*;
-
 public class AppConfiguration implements Configuration{
 
     private static AppConfiguration appConfiguration;
@@ -22,49 +20,17 @@ public class AppConfiguration implements Configuration{
     }
 
     @Override
-    public Boolean getValueIsAbleToChangeRoomStatus() {
-        return Boolean.valueOf((String) properties.get(KEY_ABLE_TO_CHANGE_ROOM_STATUS));
+    public Boolean getBooleanProperty(String propertyName) {
+        return Boolean.valueOf(properties.getProperty(propertyName));
     }
 
     @Override
-    public Integer getValueNumberOfGuestRecordsForRoom() {
-        return Integer.valueOf((String) properties.get(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM));
+    public String getStringProperty(String propertyName) {
+        return properties.getProperty(propertyName);
     }
 
     @Override
-    public String getValueFilePath() {
-        return String.valueOf(properties.get(KEY_FILE_PATH));
+    public int getIntegerProperty(String propertyName) {
+        return Integer.parseInt(properties.getProperty(propertyName));
     }
-
-    @Override
-    public String getValueFilePathSerializable() {
-        return String.valueOf(properties.get(KEY_FILE_PATH_SERIALIZABLE));
-    }
-
-    @Override
-    public String getValueFileSerializableName() {
-        return String.valueOf(properties.get(KEY_FILE_SERIALIZABLE_NAME));
-    }
-
-    @Override
-    public String getValueFileHotelFacilitiesName() {
-        return String.valueOf(properties.get(KEY_FILE_HOTEL_FACILITIES_NAME));
-    }
-
-    @Override
-    public String getValueFileGuestsName() {
-        return String.valueOf(properties.get(KEY_FILE_GUESTS_NAME));
-    }
-
-    @Override
-    public String getValueFileHotelServicesName() {
-        return String.valueOf(properties.get(KEY_FILE_HOTEL_SERVICES_NAME));
-    }
-
-    @Override
-    public String getValueFileOrdersName() {
-        return String.valueOf(properties.get(KEY_FILE_ORDERS_NAME));
-    }
-
-
 }

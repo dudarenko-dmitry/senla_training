@@ -6,6 +6,9 @@ import pl.senla.hotel.entity.facilities.HotelFacility;
 
 import pl.senla.hotel.utils.RoomUtil;
 
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_HOTEL_FACILITIES_NAME;
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_PATH;
+
 public class ConverterHotelFacility implements ConverterEntity<HotelFacility> {
 
     private final Configuration configuration;
@@ -15,7 +18,7 @@ public class ConverterHotelFacility implements ConverterEntity<HotelFacility> {
     }
 
     public String getPath() {
-        return configuration.getValueFilePath() + configuration.getValueFileHotelFacilitiesName();
+        return configuration.getStringProperty(KEY_FILE_PATH) + configuration.getStringProperty(KEY_FILE_HOTEL_FACILITIES_NAME);
     }
 
     public String[] getHeader() {

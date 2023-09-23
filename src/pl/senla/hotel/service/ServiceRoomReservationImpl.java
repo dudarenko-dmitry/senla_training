@@ -22,6 +22,7 @@ import java.util.List;
 import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CHANGE_ROOM_RESERVATION;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelConstant.*;
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
@@ -104,7 +105,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                         .filter(rr -> rr.getIdRoom() == idRoom)
                         .toList();
                 int numberOfRecords = roomReservationList.size();
-                if (numberOfRecords >= configuration.getValueNumberOfGuestRecordsForRoom()) {
+                if (numberOfRecords >= configuration.getIntegerProperty(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM)) {
                     int idRoomReservationToDelete = roomReservationList.get(0).getIdService();
                     delete(idRoomReservationToDelete);
                 }

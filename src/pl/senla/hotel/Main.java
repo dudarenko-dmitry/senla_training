@@ -1,8 +1,6 @@
 package pl.senla.hotel;
 
 import pl.senla.hotel.configuration.AppConfiguration;
-import pl.senla.hotel.configuration.AppPropertiesLoader;
-import pl.senla.hotel.configuration.PropertiesLoader;
 import pl.senla.hotel.ie.file.DataProcessorFileEntity;
 import pl.senla.hotel.ie.file.DataProcessor;
 import pl.senla.hotel.ui.StartMenu;
@@ -13,8 +11,8 @@ public class Main {
     public static void main(String[] args) {
 
         // use to save new Properties
-        PropertiesLoader loader = new AppPropertiesLoader();
-        loader.saveConfiguration();
+//        PropertiesLoader loader = new AppPropertiesLoader();
+//        loader.saveConfiguration();
 
         // load Properties while starting program
         AppConfiguration appConfiguration = AppConfiguration.getAppConfiguration();

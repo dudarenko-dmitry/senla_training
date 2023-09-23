@@ -14,6 +14,7 @@ import pl.senla.hotel.utils.RoomReservationUtil;
 import pl.senla.hotel.utils.RoomUtil;
 
 import static pl.senla.hotel.constant.InputOutputConstant.*;
+import static pl.senla.hotel.constant.PropertiesConstant.*;
 
 public class EntitiesConverter<T> implements Converter<T> {
 
@@ -26,15 +27,15 @@ public class EntitiesConverter<T> implements Converter<T> {
     }
 
     public String getPath(Class<T> clazz) {
-        String valueFilePath = configuration.getValueFilePath();
+        String valueFilePath = configuration.getStringProperty(KEY_FILE_PATH);
         if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
-            return valueFilePath + configuration.getValueFileHotelFacilitiesName();
+            return valueFilePath + configuration.getStringProperty(KEY_FILE_HOTEL_FACILITIES_NAME);
         } else if (clazz.equals(Guest.class)) {
-            return valueFilePath + configuration.getValueFileGuestsName();
+            return valueFilePath + configuration.getStringProperty(KEY_FILE_GUESTS_NAME);
         } else if (clazz.equals(RoomReservation.class) || clazz.equals(HotelService.class)) {
-            return valueFilePath + configuration.getValueFileHotelServicesName();
+            return valueFilePath + configuration.getStringProperty(KEY_FILE_HOTEL_SERVICES_NAME);
         } else if (clazz.equals(Order.class)) {
-            return valueFilePath + configuration.getValueFileOrdersName();
+            return valueFilePath + configuration.getStringProperty(KEY_FILE_ORDERS_NAME);
         } else {
             System.out.println(ERROR_GET_PATH);
             return "";
@@ -73,12 +74,10 @@ public class EntitiesConverter<T> implements Converter<T> {
 
     public T convertStringToEntity(Class<T> clazz, String csvT) {
         if (csvT != null) {
-//            if (clazz.equals(Room.class) || clazz.equals(HotelFacility.class)) {
             if (clazz.equals(HotelFacility.class)) {
                 return (T) RoomUtil.convertStringToRoom(csvT);
             } else if (clazz.equals(Guest.class)) {
                 return (T) GuestUtil.convertStringToOrder(csvT);
-//            } else if (clazz.equals(RoomReservation.class) || clazz.equals(HotelService.class)) {
             } else if (clazz.equals(HotelService.class)) {
                 return (T) RoomReservationUtil.convertCsvToRoomReservation(csvT);
             } else if (clazz.equals(Order.class)) {
