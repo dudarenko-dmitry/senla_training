@@ -1,9 +1,8 @@
 package pl.senla.hotel.ui.main;
 
 import pl.senla.hotel.configuration.Configuration;
-import pl.senla.hotel.entity.SavedHotel;
 import pl.senla.hotel.ie.file.DataProcessor;
-import pl.senla.hotel.ie.file.DataProcessorFile;
+import pl.senla.hotel.ie.file.DataProcessorFileEntity;
 import pl.senla.hotel.ie.serialization.Processor;
 import pl.senla.hotel.ie.serialization.ProcessorSerializable;
 import pl.senla.hotel.ui.Executor;
@@ -35,7 +34,7 @@ public class ExecutorMain implements Executor {
         this.startMenuOrder = StartMenuOrder.getStartMenuOrder(configuration);
         this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics(configuration);
         this.startMenuImportExport = StartMenuImportExport.getStartMenuImpExp(configuration);
-        this.dataProcessor = DataProcessorFile.getDataProcessor(); //version 3 (save Application's state to files)
+        this.dataProcessor = DataProcessorFileEntity.getDataProcessor(); //version 3 (save Application's state to files)
         this.processor = new ProcessorSerializable(configuration);
     }
 
@@ -56,13 +55,13 @@ public class ExecutorMain implements Executor {
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
 //                version 3 (save Application's state to files)
-//                System.out.println(" ===== >  save to files");
-//                dataProcessor.saveAllEntities(); // use in case of saving Application's state to files
+                System.out.println(" ===== >  save to files");
+                dataProcessor.saveAllEntities(); // use in case of saving Application's state to files
 
                 // version 4 (save Application's state by Serialization
-                SavedHotel hotel = new SavedHotel(configuration);
-                processor.saveHotel(hotel);
-                System.out.println(" ===== >  serialization is completed.");
+//                SavedHotel hotel = new SavedHotel(configuration);
+//                processor.saveHotel(hotel);
+//                System.out.println(" ===== >  serialization is completed.");
 
                 System.out.println("Good-bye.");
                 System.exit(0);

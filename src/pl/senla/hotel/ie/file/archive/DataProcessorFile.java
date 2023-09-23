@@ -1,9 +1,10 @@
-package pl.senla.hotel.ie.file;
+package pl.senla.hotel.ie.file.archive;
 
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.services.HotelService;
+import pl.senla.hotel.ie.file.DataProcessor;
 import pl.senla.hotel.storage.*;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_READ_ALL_ORDERS;
 import static pl.senla.hotel.constant.InputOutputConstant.*;
 import static pl.senla.hotel.constant.InputOutputConstant.ERROR_ORDER_LIST_LOAD;
 
-public class DataProcessorFile implements DataProcessor{
+public class DataProcessorFile implements DataProcessor {
 
     private static DataProcessor dataProcessor;
     private final ReaderWriterUniversal<Guest> guestReaderWriter;

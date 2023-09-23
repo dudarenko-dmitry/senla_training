@@ -2,7 +2,7 @@ package pl.senla.hotel.ui.ie;
 
 import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ie.file.DataProcessor;
-import pl.senla.hotel.ie.file.DataProcessorFile;
+import pl.senla.hotel.ie.file.archive.DataProcessorFile;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 

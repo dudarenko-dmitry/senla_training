@@ -1,4 +1,4 @@
-package pl.senla.hotel.ie.file;
+package pl.senla.hotel.ie.file.archive;
 
 import java.io.IOException;
 import java.util.List;

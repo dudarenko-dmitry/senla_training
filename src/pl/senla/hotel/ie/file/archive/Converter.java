@@ -1,4 +1,4 @@
-package pl.senla.hotel.ie.file;
+package pl.senla.hotel.ie.file.archive;
 
 public interface Converter<T> {
 

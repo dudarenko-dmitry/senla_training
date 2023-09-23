@@ -1,4 +1,4 @@
-package pl.senla.hotel.ie.file;
+package pl.senla.hotel.ie.file.archive;
 
 import pl.senla.hotel.configuration.AppConfiguration;
 import pl.senla.hotel.configuration.Configuration;
