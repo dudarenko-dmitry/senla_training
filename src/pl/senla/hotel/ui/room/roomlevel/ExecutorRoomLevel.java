@@ -1,20 +1,19 @@
 package pl.senla.hotel.ui.room.roomlevel;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.entity.facilities.RoomLevel;
-import pl.senla.hotel.ui.room.StartMenuRoom;
+
+import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
+@AppComponent
 public class ExecutorRoomLevel {
 
-    private final Configuration configuration;
+    public ExecutorRoomLevel() {}
 
-    public ExecutorRoomLevel(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-    }
-
-    public String execute(int userSelection) {
+    public String execute() throws IllegalAccessException {
+        int userSelection = makeChoice();
         switch (userSelection) {
             case 1 -> {
                 return String.valueOf(RoomLevel.ECONOM);
@@ -27,9 +26,16 @@ public class ExecutorRoomLevel {
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuRoom.getStartMenuRoom(configuration).runMenu();
+                execute();
                 return "";
             }
         }
     }
+
+    private int makeChoice(){
+        System.out.print("Input your choice --> ");
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
+    }
+
 }

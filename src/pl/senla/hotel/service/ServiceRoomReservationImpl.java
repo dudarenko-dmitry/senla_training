@@ -1,7 +1,9 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.application.annotation.ConfigProperty;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.comparators.*;
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.HotelFacility;
@@ -22,34 +24,27 @@ import java.util.List;
 import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CHANGE_ROOM_RESERVATION;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelConstant.*;
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
+@AppComponent
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
-    private static ServiceRoomReservation serviceRoomReservation;
-    private final ServiceFacility serviceHotelFacility;
-    private final Repository<HotelService> repositoryHotelService;
-    private final Repository<RoomReservation> repositoryRoomReservation;
-    private final Repository<Guest> repositoryGuest;
-    private final Repository<HotelFacility> repositoryFacility;
-    private final Configuration configuration;
+    @GetInstance(beanName = "ServiceFacilityImpl")
+    private ServiceFacility serviceHotelFacility;
+    @GetInstance(beanName = "RepositoryHotelServiceCollection")
+    private Repository<HotelService> repositoryHotelService;
+    @GetInstance(beanName = "RepositoryRoomReservationCollection")
+    private Repository<RoomReservation> repositoryRoomReservation;
+    @GetInstance(beanName = "RepositoryGuestCollection")
+    private Repository<Guest> repositoryGuest;
+    @GetInstance(beanName = "RepositoryFacilityCollection")
+    private Repository<HotelFacility> repositoryFacility;
+    @GetInstance(beanName = "ServiceRoomImpl")
+    private transient ServiceRoom serviceRoom;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
+    private Integer roomRecordsNumber;
 
-    private ServiceRoomReservationImpl(Configuration appConfiguration) {
-        this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
-        this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
-        this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
-        this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
-        this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
-        this.configuration = appConfiguration;
-    }
-
-    public static ServiceRoomReservation getServiceRoomReservation(Configuration appConfiguration){
-        if (serviceRoomReservation == null) {
-            serviceRoomReservation = new ServiceRoomReservationImpl(appConfiguration);
-        }
-        return serviceRoomReservation;
-    }
+    public ServiceRoomReservationImpl() {}
 
     @Override
     public List<RoomReservation> readAll() {
@@ -57,11 +52,9 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return Collections.emptyList();
         }
-//        return repositoryHotelService.readAll()
         return repositoryRoomReservation.readAll()
                 .stream()
                 .map(RoomReservation.class::cast) //check
-//                .filter(o -> o.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .toList();
     }
 
@@ -89,7 +82,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                     HOTEL_CHECK_OUT_TIME);
 
             if(isVacant(idRoom, checkInTime, checkOutTime)){
-                RoomReservation reservation = new RoomReservation();
+                RoomReservation reservation = new RoomReservation(serviceRoom);
                 reservation.setIdService(-1);
                 reservation.setIdOrder(idOrder);
                 reservation.setIdGuest(idGuest);
@@ -105,7 +98,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                         .filter(rr -> rr.getIdRoom() == idRoom)
                         .toList();
                 int numberOfRecords = roomReservationList.size();
-                if (numberOfRecords >= configuration.getIntegerProperty(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM)) {
+                if (numberOfRecords >= roomRecordsNumber) {
                     int idRoomReservationToDelete = roomReservationList.get(0).getIdService();
                     delete(idRoomReservationToDelete);
                 }
@@ -153,7 +146,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         int numberOfDaysNew = Integer.parseInt(reservationData[1]);
         LocalDateTime checkOutTime = LocalDateTime.of(checkInDate.plusDays(numberOfDaysNew), HOTEL_CHECK_OUT_TIME);
 
-        RoomReservation reservationUpdate = new RoomReservation();
+        RoomReservation reservationUpdate = new RoomReservation(serviceRoom);
         reservationUpdate.setIdService(idReservation);
         reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION);
         reservationUpdate.setIdGuest(reservationOld.getIdGuest());
@@ -203,7 +196,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
         return readAll().stream()
-                .sorted(new RoomReservationsComparatorByGuestName())
+                .sorted(new RoomReservationsComparatorByGuestName(repositoryGuest))
                 .toList();
     }
 
@@ -305,8 +298,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 .toList();
     }
 
-
-    //all private methods for RoomReservations
     private boolean createFromObject(RoomReservation reservation) {
         if(isVacant(reservation.getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
             return repositoryHotelService.create(reservation); // changed here
@@ -351,6 +342,5 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         int minute = Integer.parseInt(timeData[4]);
         return LocalDateTime.of(year,month,day, hour, minute);
     }
-
 
 }

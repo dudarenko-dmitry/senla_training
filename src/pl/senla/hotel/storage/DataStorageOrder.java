@@ -1,19 +1,12 @@
 package pl.senla.hotel.storage;
 
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.entity.Order;
 
+@AppComponent
 public class DataStorageOrder extends DataStorage<Order>{
 
-    private static DataStorageOrder dataStorageOrder;
-
-    private DataStorageOrder(){}
-
-    public static DataStorageOrder getDataStorageOrder(){
-        if(dataStorageOrder == null){
-            dataStorageOrder = new DataStorageOrder();
-        }
-        return dataStorageOrder;
-    }
+    public DataStorageOrder(){}
 
     @Override
     public String toString() {

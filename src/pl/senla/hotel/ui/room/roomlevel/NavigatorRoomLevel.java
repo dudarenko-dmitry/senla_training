@@ -1,21 +1,24 @@
 package pl.senla.hotel.ui.room.roomlevel;
 
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_ROOM_LEVEL;
 
+@AppComponent
 public class NavigatorRoomLevel implements Navigator {
 
-    protected String nameMenu = MENU_ROOM_LEVEL;
-    protected MenuItem item1 = new Item1RoomEconomy();
-    protected MenuItem item2 = new Item2RoomStandard();
-    protected MenuItem item3 = new Item3RoomLux();
-    protected MenuItem[] menuItems = {item1, item2, item3};
+    public NavigatorRoomLevel() {
+    }
 
     @Override
     public void buildMenu() {
-        System.out.println(nameMenu);
+        System.out.println(MENU_ROOM_LEVEL);
+        MenuItem item1 = new Item1RoomEconomy();
+        MenuItem item2 = new Item2RoomStandard();
+        MenuItem item3 = new Item3RoomLux();
+        MenuItem[] menuItems = {item1, item2, item3};
         for (MenuItem i : menuItems) {
             i.printItem();
         }

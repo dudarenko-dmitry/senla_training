@@ -1,24 +1,25 @@
 package pl.senla.hotel.comparators;
 
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.Transfer;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.Restaurant;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.Comparator;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE;
 
+@AppComponent
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
-    private final Repository<Room> repositoryRoom;
+    @GetInstance(beanName = "RepositoryRoomCollection")
+    private Repository<Room> repositoryRoom;
 
-    public HotelServicesComparatorByPrice() {
-        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
-    }
+    public HotelServicesComparatorByPrice() {}
 
     @Override
     public int compare(HotelService o1, HotelService o2) {

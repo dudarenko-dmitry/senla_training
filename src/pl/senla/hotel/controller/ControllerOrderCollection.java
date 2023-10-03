@@ -1,27 +1,20 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.configuration.AppConfiguration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.service.ServiceOrder;
-import pl.senla.hotel.service.ServiceOrderImpl;
 
 import java.util.List;
 
+@AppComponent
 public class ControllerOrderCollection implements ControllerOrder {
 
-    private static ControllerOrder controllerOrder;
-    private final ServiceOrder orderService;
+    @GetInstance(beanName = "ServiceOrderImpl")
+    private ServiceOrder orderService;
 
-    private ControllerOrderCollection() {
-        this.orderService = ServiceOrderImpl.getServiceOrder(AppConfiguration.getAppConfiguration());
-    }
-
-    public static ControllerOrder getControllerOrder(){
-        if(controllerOrder == null){
-            controllerOrder = new ControllerOrderCollection();
-        }
-        return controllerOrder;
+    public ControllerOrderCollection() {
     }
 
     @Override
@@ -30,7 +23,7 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public boolean create(String orderString) {
+    public boolean create(String orderString) throws IllegalAccessException {
         return orderService.create(orderString);
     }
 
@@ -62,5 +55,10 @@ public class ControllerOrderCollection implements ControllerOrder {
     @Override
     public List<HotelService> readAllServicesForOrder(int idOrder) {
         return orderService.readAllServicesForOrder(idOrder);
+    }
+
+    @Override
+    public boolean addServicesToOrder(int idOrder) {
+        return orderService.addServicesToOrder(idOrder);
     }
 }

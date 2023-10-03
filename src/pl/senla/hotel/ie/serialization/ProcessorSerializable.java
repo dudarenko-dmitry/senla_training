@@ -1,30 +1,31 @@
 package pl.senla.hotel.ie.serialization;
 
-import pl.senla.hotel.configuration.Configuration;
-import pl.senla.hotel.entity.SavedHotel;
+import pl.senla.hotel.application.annotation.ConfigProperty;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.entity.Hotel;
 
 import java.io.*;
 
 import static pl.senla.hotel.constant.InputOutputConstant.ERROR_READ_SERIALIZATION_FILE;
 import static pl.senla.hotel.constant.InputOutputConstant.ERROR_WRITE_SERIALIZATION_FILE;
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_PATH_SERIALIZABLE;
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_SERIALIZABLE_NAME;
 
+@AppComponent
 public class ProcessorSerializable implements Processor{
 
-    private final String fileNameAndPath;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.serialization")
+    private String filePathSerialization;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-name.serialization")
+    private String fileNameSerialization;
 
-    public ProcessorSerializable(Configuration appConfiguration) {
-        this.fileNameAndPath = appConfiguration.getStringProperty(KEY_FILE_PATH_SERIALIZABLE) +
-            appConfiguration.getStringProperty(KEY_FILE_SERIALIZABLE_NAME);
+    public ProcessorSerializable() {
     }
 
     @Override
-    public SavedHotel loadHotel() {
-        try (FileInputStream fis = new FileInputStream(fileNameAndPath);
+    public Hotel loadHotel() {
+        try (FileInputStream fis = new FileInputStream(filePathSerialization + fileNameSerialization);
              ObjectInputStream ois = new ObjectInputStream(fis))
         {
-            return (SavedHotel) ois.readObject();
+            return (Hotel) ois.readObject();
         } catch (IOException e) {
             System.out.println(ERROR_READ_SERIALIZATION_FILE + e);
         } catch (ClassNotFoundException e) {
@@ -34,8 +35,8 @@ public class ProcessorSerializable implements Processor{
     }
 
     @Override
-    public void saveHotel(SavedHotel hotel) {
-        try (FileOutputStream fos = new FileOutputStream(fileNameAndPath);
+    public void saveHotel(Hotel hotel) {
+        try (FileOutputStream fos = new FileOutputStream(filePathSerialization + fileNameSerialization);
         ObjectOutputStream oos = new ObjectOutputStream(fos))
         {
             oos.writeObject(hotel);

@@ -1,36 +1,26 @@
 package pl.senla.hotel.ui.guest;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.main.StartMenuMain;
 
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
+@AppComponent
 public class ExecutorGuest implements Executor {
 
-    private static Executor executor;
-    private final ControllerGuest guestController;
-    private final Configuration configuration;
+    @GetInstance(beanName = "ControllerGuestCollection")
+    private ControllerGuest guestController;
 
-    private ExecutorGuest(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.guestController = ControllerGuestCollection.getControllerGuest();
-    }
-
-    public static Executor getExecutorGuest(Configuration appConfiguration){
-        if (executor == null) {
-            executor = new ExecutorGuest(appConfiguration);
-        }
-        return executor;
-    }
+    public ExecutorGuest() {}
 
     @Override
-    public void execute(int userSelection) {
+    public void execute(int menuPoint) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
-        switch (userSelection) {
+        switch (menuPoint) {
             case 1 ->
                 System.out.println(CONSOLE_READ_ALL_GUESTS + guestController.readAll());
             case 2 -> {
@@ -60,10 +50,10 @@ public class ExecutorGuest implements Executor {
                 int idGuestDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_GUEST + guestController.delete(idGuestDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
+//            case 0 -> startMenuMain.runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuGuest.getStartMenuGuest(configuration).runMenu();
+                execute(menuPoint);
             }
         }
     }

@@ -1,40 +1,35 @@
 package pl.senla.hotel.ui.order;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.*;
+import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.main.StartMenuMain;
+import pl.senla.hotel.ui.services.StartCreateHotelService;
 import pl.senla.hotel.ui.services.StartUpdateHotelServiceList;
 
+import java.util.Comparator;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
+@AppComponent
 public class ExecutorOrder implements Executor {
 
-    private static Executor executor;
-    private final ControllerOrder orderController;
-    private final StartUpdateHotelServiceList updateHotelServiceList;
-    private final Configuration configuration;
+    @GetInstance(beanName = "StartCreateHotelService")
+    private StartCreateHotelService startCreateHotelService;
+    @GetInstance(beanName = "ControllerOrderCollection")
+    private ControllerOrder orderController;
+    @GetInstance(beanName = "StartUpdateHotelServiceList")
+    private StartUpdateHotelServiceList startUpdateHotelServiceList;
 
-    private ExecutorOrder(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.orderController = ControllerOrderCollection.getControllerOrder();
-        this.updateHotelServiceList = StartUpdateHotelServiceList.getStartUpdateHotelServiceList(configuration);
-    }
-
-    public static Executor getExecutorOrder(Configuration appConfiguration){
-        if (executor == null) {
-            executor = new ExecutorOrder(appConfiguration);
-        }
-        return executor;
-    }
+    public ExecutorOrder() {}
 
     @Override
-    public void execute(int userSelection) {
+    public void execute(int menuPoint) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
-        switch (userSelection) {
+        switch (menuPoint) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
             case 2 -> {
                 System.out.print("Input Order's ID --> ");
@@ -45,21 +40,27 @@ public class ExecutorOrder implements Executor {
                 System.out.print("Input Guest's ID --> ");
                 int idGuest = sc.nextInt();
                 System.out.println(CONSOLE_CREATE_ORDER + orderController.create(String.valueOf(idGuest)));
+                int idOrder = orderController.readAll()
+                        .stream()
+                        .map(Order::getIdOrder)
+                        .max(Comparator.comparingInt(o -> o))
+                        .orElse(-1);
+                startCreateHotelService.runMenu(idOrder, idGuest);
+                System.out.println("Add new services to order: " + orderController.addServicesToOrder(idOrder));
             }
             case 4 -> {
                 System.out.print("Input Order's ID to Update --> ");
                 int idOrderUpdate = sc.nextInt();
-                System.out.println(CONSOLE_CHANGE_ORDER + updateHotelServiceList.runMenu(idOrderUpdate)); // CHECK This !!!!!!!!
+                System.out.println(CONSOLE_CHANGE_ORDER + startUpdateHotelServiceList.runMenu(idOrderUpdate));
             }
             case 5 -> {
                 System.out.print("Input ID Order to Delete --> ");
                 int idOrderDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ORDER + orderController.delete(idOrderDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuOrder.getStartMenuOrder(configuration).runMenu();
+                execute(menuPoint);
             }
         }
     }

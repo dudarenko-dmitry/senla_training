@@ -1,19 +1,12 @@
 package pl.senla.hotel.storage;
 
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.entity.services.Transfer;
 
+@AppComponent
 public class DataStorageTransport extends DataStorage<Transfer>{
 
-    private static DataStorageTransport dataStorageTransport;
-
-    private DataStorageTransport(){}
-
-    public static DataStorageTransport getDataStorageTransport(){
-        if (dataStorageTransport == null) {
-            dataStorageTransport = new DataStorageTransport();
-        }
-        return dataStorageTransport;
-    }
+    public DataStorageTransport(){}
 
     @Override
     public String toString() {

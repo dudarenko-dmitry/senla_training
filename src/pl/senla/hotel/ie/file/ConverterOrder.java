@@ -1,23 +1,20 @@
 package pl.senla.hotel.ie.file;
 
-import pl.senla.hotel.configuration.AppConfiguration;
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.utils.OrderUtil;
 
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_ORDERS_NAME;
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_PATH;
-
+@AppComponent
 public class ConverterOrder implements ConverterEntity<Order> {
 
-    private final Configuration configuration;
-
-    public ConverterOrder() {
-        this.configuration = AppConfiguration.getAppConfiguration();
-    }
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.directory")
+    private String filePathDirectory;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-name.order")
+    private String fileNameOrder;
 
     public String getPath() {
-        return configuration.getStringProperty(KEY_FILE_PATH) + configuration.getStringProperty(KEY_FILE_ORDERS_NAME);
+        return filePathDirectory + fileNameOrder;
     }
 
     public String[] getHeader() {

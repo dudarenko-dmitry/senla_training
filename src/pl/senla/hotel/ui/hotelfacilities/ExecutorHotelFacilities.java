@@ -1,44 +1,30 @@
 package pl.senla.hotel.ui.hotelfacilities;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
-import pl.senla.hotel.ui.main.StartMenuMain;
-import pl.senla.hotel.ui.room.StartMenuRoom;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
+@AppComponent
 public class ExecutorHotelFacilities implements Executor {
 
-    private static Executor executor;
-    private final StartMenu menuRoom;
-    private StartMenu menuTable;
-    private StartMenu menuTransfer;
-    private final Configuration configuration;
+    @GetInstance(beanName = "StartMenuRoom")
+    private StartMenu menuRoom;
+//    private StartMenu menuTable;
+//    private StartMenu menuTransfer;
 
-    private ExecutorHotelFacilities(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.menuRoom = StartMenuRoom.getStartMenuRoom(configuration);
-//        this.menuTable = new StartMenuTable();
-//        this.menuTransfer = new StartMenuTransfer();
-    }
-
-    public static Executor getExecutorHotelFacilities(Configuration appConfiguration){
-        if (executor == null) {
-            executor = new ExecutorHotelFacilities(appConfiguration);
-        }
-        return executor;
-    }
+    public ExecutorHotelFacilities() {}
 
     @Override
-    public void execute(int userSelection) {
-        switch (userSelection) {
+    public void execute(int menuPoint) throws IllegalAccessException {
+        switch (menuPoint) {
             case 1 -> menuRoom.runMenu();
-            case 2 -> menuTable.runMenu();
-            case 3 -> menuTransfer.runMenu();
-            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
+//            case 2 -> menuTable.runMenu();
+//            case 3 -> menuTransfer.runMenu();
             default -> {System.out.println(ERROR_INPUT);
-                StartMenuMain.getStartMenu(configuration).runMenu();}
+                execute(menuPoint);}
         }
     }
 }
