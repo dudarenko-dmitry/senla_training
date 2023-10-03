@@ -155,88 +155,27 @@ select products.code as code from
 SELECT max(speed) FROM 
 	pc
 JOIN
-	(product p
+		(product p
 	 JOIN 	
-	(
-		SELECT p.maker FROM pc JOIN product p USING (model)
+		(SELECT p.maker FROM pc JOIN product p USING (model)
 		INTERSECT 
 		SELECT p.maker FROM printer pr JOIN product p USING (model)
-	) 
+		) AS intersectedmakers
 	USING (maker)
-	AS intersectmakers
-	) 
-USING (model) AS makers
-;
-	
-	
-SELECT min(ram) FROM 
-	pc
-JOIN
-	(
-	SELECT p.maker FROM pc JOIN product p USING (model)
-	INTERSECT 
-	SELECT p.maker FROM printer pr JOIN product p USING (model)
-	) AS makers
-;
-
-SELECT max(speed) FROM 
-	pc
-JOIN
-	(SELECT p.maker, pc.model, pc.speed, pc.ram FROM 
-		pc
-	JOIN 
-		product p
-	USING (model)
-	WHERE p.maker IN  
-		(
-		SELECT p.maker FROM 
-			pc
-		JOIN 
-			product p
-		USING (model)
-	  	INTERSECT 
-		SELECT p.maker FROM 
-			printer pr
-		JOIN 
-			product p
-		USING (model)
-		) AS makers
-	)
-;
-	
-	
-	WHERE  pc.ram =
-		(SELECT  min(ram) FROM 
-			pc
-			LEFT JOIN 
-			(SELECT p.maker AS maker, pc.ram FROM 
-				pc
-				JOIN 
-				SELECT p.maker FROM 
-					pc
-				JOIN 
-					product p
-				USING (model)
-		  		INTERSECT 
-				SELECT p.maker FROM 
-					printer pr
-				JOIN 
-					product p
-				USING (model)
-			USING (model)
-			)
-		);
-	);
-	
-		
-	
-	(select p.maker as maker, pc.speed, pc.ram as ram from
-	pc join product p using (model)
-		where p.maker in (select p.maker from pc join product p using (model)
-		  				intersect
-						select p.maker from printer pr join product p using (model)));
-
-	
+		)
+USING (model)
+WHERE pc.ram = (SELECT min(ram) FROM 
+	      			pc
+				JOIN
+					(product p
+					JOIN 	
+						(SELECT p.maker FROM pc JOIN product p USING (model)
+						INTERSECT 
+						SELECT p.maker FROM printer pr JOIN product p USING (model)
+						) AS intersectedmakers
+					USING (maker)
+					)
+				USING (model));
 	
 	
 	
