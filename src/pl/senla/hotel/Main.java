@@ -21,6 +21,9 @@ public class Main {
         // SavedHotel hotel = new SavedHotel(appConfiguration);
         // hotel.initializeHotel();
 
+        // version 5 (Load configuration using Annotations)
+
+
         StartMenu startMenuMain = StartMenuMain.getStartMenu(appConfiguration);
         startMenuMain.runMenu();
     }
