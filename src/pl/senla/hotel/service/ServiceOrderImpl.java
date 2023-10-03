@@ -2,6 +2,7 @@ package pl.senla.hotel.service;
 
 import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
 import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.repository.*;
@@ -17,20 +18,20 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 public class ServiceOrderImpl implements ServiceOrder {
 
     private static ServiceOrder serviceOrder;
-    private final ServiceCRUDALL<HotelService> serviceHotelService;
+    private final ServiceHotelService serviceHotelService;
     private final Repository<Order> repositoryOrder;
-    private final Repository<HotelService> repositoryHotelService;
+    private final Configuration configuration;
 
 
-    private ServiceOrderImpl() {
-        this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService();
+    private ServiceOrderImpl(Configuration appConfiguration) {
+        this.configuration = appConfiguration;
+        this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService(configuration);
         this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
-        this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
     }
 
-    public static ServiceOrder getServiceOrder() {
+    public static ServiceOrder getServiceOrder(Configuration appConfiguration) {
         if (serviceOrder == null) {
-            serviceOrder = new ServiceOrderImpl();
+            serviceOrder = new ServiceOrderImpl(appConfiguration);
         }
         return serviceOrder;
     }
@@ -48,11 +49,10 @@ public class ServiceOrderImpl implements ServiceOrder {
     public boolean create(String orderString) {
         int idGuest = Integer.parseInt(orderString);
         Order order = new Order(idGuest);
-        order.setIdOrder(-1);
         order.setIdGuest(idGuest);
         int idOrderNew = getIdOrderNew();
         order.setIdOrder(idOrderNew);
-        StartCreateHotelService.getStartCreateHotelService().runMenu(idOrderNew, idGuest);
+        StartCreateHotelService.getStartCreateHotelService(configuration).runMenu(idOrderNew, idGuest);
         List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrderNew);
         order.setServices(idServicesInOrder);
         return repositoryOrder.create(order);
@@ -77,8 +77,6 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     @Override
-    // This method is not used in application.
-    // All changes are processed in appropriate Services depending on Type of Hotel's Service.
     public boolean update(int idOrder, String orderUpdatingString) {
         if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
@@ -100,11 +98,9 @@ public class ServiceOrderImpl implements ServiceOrder {
         }
         for (int i = 0; i <= readAll().size(); i++) {
             if (readAll().get(i).getIdOrder() == idOrder) {
-                List<HotelService> services = repositoryHotelService.readAll();
-                for (int j = 0; j < services.size(); j++){
-                    if (services.get(j).getIdOrder() == idOrder) {
-                        repositoryHotelService.delete(j);
-                    }
+                List<HotelService> services = readAllServicesForOrder(idOrder);
+                for (HotelService hs : services) {
+                    serviceHotelService.delete(hs.getIdService());
                 }
                 return repositoryOrder.delete(i);
             }
@@ -157,7 +153,7 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     private List<Integer> readAllIdServicesForOrder(int idOrderNew) {
-        return repositoryHotelService.readAll()
+        return serviceHotelService.readAll()
                 .stream()
                 .filter(o -> o.getIdOrder() == idOrderNew)
                 .map(HotelService::getIdService)

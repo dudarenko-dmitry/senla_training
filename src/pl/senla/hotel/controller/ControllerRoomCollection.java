@@ -1,5 +1,6 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.service.ServiceRoomImpl;
 import pl.senla.hotel.service.ServiceRoom;
@@ -11,13 +12,13 @@ public class ControllerRoomCollection implements ControllerRoom {
     private static ControllerRoom controllerRoom;
     private final ServiceRoom roomService;
 
-    private ControllerRoomCollection() {
-        this.roomService = ServiceRoomImpl.getServiceRoom();
+    private ControllerRoomCollection(Configuration appConfiguration) {
+        this.roomService = ServiceRoomImpl.getServiceRoom(appConfiguration);
     }
 
-    public static ControllerRoom getControllerRoom() {
+    public static ControllerRoom getControllerRoom(Configuration appConfiguration) {
         if (controllerRoom == null) {
-            controllerRoom = new ControllerRoomCollection();
+            controllerRoom = new ControllerRoomCollection(appConfiguration);
         }
         return controllerRoom;
     }
@@ -40,6 +41,16 @@ public class ControllerRoomCollection implements ControllerRoom {
     @Override
     public boolean update(int roomId, String roomString) {
         return roomService.update(roomId, roomString);
+    }
+
+    @Override
+    public boolean updateRoomStatusAvailable(int idRoom){
+        return roomService.updateRoomStatusAvailable(idRoom);
+    }
+
+    @Override
+    public boolean updateRoomStatusRepaired(int idRoom){
+        return roomService.updateRoomStatusRepaired(idRoom);
     }
 
     @Override

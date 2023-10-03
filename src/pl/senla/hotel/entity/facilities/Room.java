@@ -38,6 +38,14 @@ public class Room extends HotelFacility implements Serializable {
         this.roomLevel = roomLevel;
     }
 
+    public void makeRoomAvailable() {
+        roomStatus = RoomStatus.AVAILABLE;
+    }
+
+    public void makeRoomRepaired() {
+        roomStatus = RoomStatus.REPAIRED;
+    }
+
     @Override
     public String toString() {
         return "\nRoom{" +

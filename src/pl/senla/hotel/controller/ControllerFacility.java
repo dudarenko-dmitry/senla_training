@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface ControllerFacility extends ControllerCRUDALL<HotelFacility> {
 
+    boolean updateRoomStatusAvailable(int idRoom);
+
+    boolean updateRoomStatusRepaired(int idRoom);
+
     List<HotelFacility> readPriceListForServicesSortByCategory();
     List<HotelFacility> readPriceListForServicesSortByPrice();
 

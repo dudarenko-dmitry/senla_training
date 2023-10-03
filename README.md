@@ -130,3 +130,22 @@ The UI should be supplemented with new menu items that allow importing and expor
 Task 2 (difficulty 2)
 Add high-quality exception handling for possible errors in the application.
 The program must adequately inform the user about the problems that have arisen.
+
+-----------------------------------------------------------------------------
+
+Tasks for lecture No. 7
+Electronic hotel administrator.
+
+Task 1 (difficulty 3)
+Add the ability to configure the program from the previous task using the property file:
+Electronic hotel administrator:
+- Enabling/disabling the ability to change the status of a number;
+- Number of guest records in the room history.
+
+Task 2 (difficulty 5)
+Implement program state preservation by serializing its objects to a file.
+Restore the saved state at the start, and write the new state to a file at the end.
+
+It implies the use of standard serialization mechanisms (Serializable or Externalizable),
+but it is permissible to use other ones (for example, Jackson as a serializer in JSON).
+

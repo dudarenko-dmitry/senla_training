@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.services;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE_SELECT;
@@ -10,14 +11,14 @@ public class StartUpdateHotelServiceList {
     private final Navigator navigator;
     private final ExecutorUpdateHotelServiceList executor;
 
-    private StartUpdateHotelServiceList() {
+    private StartUpdateHotelServiceList(Configuration appConfiguration) {
         this.navigator = NavigatorHotelService.getNavigatorHotelService();
-        this.executor = ExecutorUpdateHotelServiceList.getExecutorUpdateHotelServiceList();
+        this.executor = ExecutorUpdateHotelServiceList.getExecutorUpdateHotelServiceList(appConfiguration);
     }
 
-    public static StartUpdateHotelServiceList getStartUpdateHotelServiceList(){
+    public static StartUpdateHotelServiceList getStartUpdateHotelServiceList(Configuration appConfiguration){
         if (startUpdateHotelServiceList == null) {
-            startUpdateHotelServiceList = new StartUpdateHotelServiceList();
+            startUpdateHotelServiceList = new StartUpdateHotelServiceList(appConfiguration);
         }
         return startUpdateHotelServiceList;
     }

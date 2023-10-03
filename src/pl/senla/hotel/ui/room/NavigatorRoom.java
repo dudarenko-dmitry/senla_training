@@ -18,9 +18,11 @@ public class NavigatorRoom implements Navigator {
         MenuItem item2 = new Item2ReadRoom();
         MenuItem item3 = new Item3CreateRoom();
         MenuItem item4 = new Item4UpdateRoom();
-        MenuItem item5 = new Item5DeleteRoom();
+        MenuItem item5 = new Item5UpdateRoomAvailable();
+        MenuItem item6 = new Item6UpdateRoomRepaired();
+        MenuItem item7 = new Item7DeleteRoom();
         MenuItem item0 = new Item0QuitToMain();
-        this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item0};
+        this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item6, item7, item0};
     }
 
     public static Navigator getNavigatorRoom(){

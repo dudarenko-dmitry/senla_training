@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryFacilityCollection;
@@ -10,19 +11,22 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
+import static pl.senla.hotel.constant.PropertiesConstant.KEY_ABLE_TO_CHANGE_ROOM_STATUS;
 
 public class ServiceRoomImpl implements ServiceRoom {
 
     private static ServiceRoom serviceRoom;
     private final Repository<HotelFacility> repositoryFacility;
+    private final Configuration configuration;
 
-    private ServiceRoomImpl() {
+    private ServiceRoomImpl(Configuration appConfiguration) {
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
+        this.configuration = appConfiguration;
     }
 
-    public static ServiceRoom getServiceRoom() {
+    public static ServiceRoom getServiceRoom(Configuration appConfiguration) {
         if (serviceRoom == null) {
-            serviceRoom = new ServiceRoomImpl();
+            serviceRoom = new ServiceRoomImpl(appConfiguration);
         }
         return serviceRoom;
     }
@@ -83,6 +87,43 @@ public class ServiceRoomImpl implements ServiceRoom {
         Room roomUpdate = read(idRoom);
         roomUpdate.setPrice(Integer.parseInt(roomString));
         return repositoryFacility.update(idRoom, roomUpdate);
+    }
+
+    @Override
+    public boolean updateRoomStatusAvailable(int idRoom) {
+//      if (configuration.getValueIsAbleToChangeRoomStatus()){
+        if (configuration.getBooleanProperty(KEY_ABLE_TO_CHANGE_ROOM_STATUS)){
+            if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
+                System.out.println(ERROR_READ_ALL_ROOM);
+                return false;
+            } else if (read(idRoom) == null) {
+                System.out.println(ERROR_READ_ROOM);
+                return false;
+            }
+            Room roomUpdate = read(idRoom);
+            roomUpdate.makeRoomAvailable();
+            return repositoryFacility.update(idRoom, roomUpdate);
+        }
+        System.out.println(ERROR_NO_PERMISSION);
+        return false;
+    }
+
+    @Override
+    public boolean updateRoomStatusRepaired(int idRoom) {
+        if (configuration.getBooleanProperty(KEY_ABLE_TO_CHANGE_ROOM_STATUS)){
+            if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
+                System.out.println(ERROR_READ_ALL_ROOM);
+                return false;
+            } else if (read(idRoom) == null) {
+                System.out.println(ERROR_READ_ROOM);
+                return false;
+            }
+            Room roomUpdate = read(idRoom);
+            roomUpdate.makeRoomRepaired();
+            return repositoryFacility.update(idRoom, roomUpdate);
+        }
+        System.out.println(ERROR_NO_PERMISSION);
+        return false;
     }
 
     @Override

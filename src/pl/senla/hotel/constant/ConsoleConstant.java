@@ -16,10 +16,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_NUMBER_OF_FREE_ROOMS =        "Number of Free rooms on ";
 
     public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS = "\nList of all room's reservations: ";
-    public static final String CONSOLE_READ_ROOM_RESERVATION =      "Room's reservation: ";
-    public static final String CONSOLE_CREATE_ROOM_RESERVATION =    "New room's reservation was created: ";
     public static final String CONSOLE_CHANGE_ROOM_RESERVATION =    "Room reservation was changed: ";
-    public static final String CONSOLE_DELETE_ROOM_RESERVATION =    "Room reservation was deleted: ";
     public static final String CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW =  "Number of Guest in Hotel at time ";
     public static final String CONSOLE_GUEST_PAYMENT_FOR_ROOM =     "Guest's payment for the room: ";
 
@@ -33,19 +30,11 @@ public class ConsoleConstant {
 
     public static final String CONSOLE_READ_ALL_SERVICES =              "\nList of Services: ";
     public static final String CONSOLE_READ_ALL_SERVICES_FOR_ORDER =    "\nList of all Services for Order: ";
-    public static final String CONSOLE_READ_SERVICE =                   "Service: ";
     public static final String CONSOLE_CREATE_SERVICE =                 "New Reservation was created: ";
-    public static final String CONSOLE_CHANGE_SERVICE =                 "Service changed: ";
-    public static final String CONSOLE_DELETE_SERVICE =                 "Service deleted: ";
 
     public static final String CONSOLE_READ_ALL_FACILITIES =        "\nHotel's facilities' list: ";
-    public static final String CONSOLE_READ_FACILITY =              "Hotel's facility: ";
-    public static final String CONSOLE_CREATE_FACILITY =            "New Hotel's facility was created: ";
-    public static final String CONSOLE_CHANGE_FACILITY =            "Hotel's facility changed: ";
-    public static final String CONSOLE_DELETE_FACILITY =            "Hotel's facility deleted: ";
 
     public static final String CONSOLE_READ_ALL_ORDERS = "\nList of Orders: ";
-    public static final String CONSOLE_READ_ORDER =   "Order: ";
     public static final String CONSOLE_CREATE_ORDER = "New Order was created: ";
     public static final String CONSOLE_CHANGE_ORDER = "Order changed: ";
     public static final String CONSOLE_DELETE_ORDER = "Order deleted: ";
@@ -61,5 +50,7 @@ public class ConsoleConstant {
     public static final String ERROR_INPUT =          "ERROR!!!\nYou input is invalid. Please, repeat input/action.";
     public static final String INPUT_ID_GUEST =       "Input Guest's ID --> ";
     public static final String INPUT_ID_ROOM =        "Input Room's ID --> ";
+    public static final String INPUT_ID_ROOM_UPDATE = "Input Room's ID to update --> ";
+    public static final String INPUT_ID_ROOM_DELETE = "Input Room's ID to delete --> ";
 
 }

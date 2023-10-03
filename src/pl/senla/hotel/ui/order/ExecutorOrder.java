@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.order;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
@@ -15,15 +16,17 @@ public class ExecutorOrder implements Executor {
     private static Executor executor;
     private final ControllerOrder orderController;
     private final StartUpdateHotelServiceList updateHotelServiceList;
+    private final Configuration configuration;
 
-    private ExecutorOrder() {
+    private ExecutorOrder(Configuration appConfiguration) {
+        this.configuration = appConfiguration;
         this.orderController = ControllerOrderCollection.getControllerOrder();
-        this.updateHotelServiceList = StartUpdateHotelServiceList.getStartUpdateHotelServiceList();
+        this.updateHotelServiceList = StartUpdateHotelServiceList.getStartUpdateHotelServiceList(configuration);
     }
 
-    public static Executor getExecutorOrder(){
+    public static Executor getExecutorOrder(Configuration appConfiguration){
         if (executor == null) {
-            executor = new ExecutorOrder();
+            executor = new ExecutorOrder(appConfiguration);
         }
         return executor;
     }
@@ -36,7 +39,6 @@ public class ExecutorOrder implements Executor {
             case 2 -> {
                 System.out.print("Input Order's ID --> ");
                 int id = sc.nextInt();
-                System.out.println(CONSOLE_READ_ORDER + orderController.read(id));
                 System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_ORDER + orderController.readAllServicesForOrder(id));
             }
             case 3 -> {
@@ -54,10 +56,10 @@ public class ExecutorOrder implements Executor {
                 int idOrderDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ORDER + orderController.delete(idOrderDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu().runMenu();
+            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuOrder.getStartMenuOrder().runMenu();
+                StartMenuOrder.getStartMenuOrder(configuration).runMenu();
             }
         }
     }

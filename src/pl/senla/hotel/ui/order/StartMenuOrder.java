@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.order;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
@@ -10,14 +11,14 @@ public class StartMenuOrder implements StartMenu {
     private final Navigator navigator;
     private final Executor executor;
 
-    private StartMenuOrder() {
+    private StartMenuOrder(Configuration appConfiguration) {
         this.navigator = NavigatorOrder.getNavigatorOrder();
-        this.executor = ExecutorOrder.getExecutorOrder();
+        this.executor = ExecutorOrder.getExecutorOrder(appConfiguration);
     }
 
-    public static StartMenu getStartMenuOrder(){
+    public static StartMenu getStartMenuOrder(Configuration appConfiguration){
         if (startMenu == null) {
-            startMenu = new StartMenuOrder();
+            startMenu = new StartMenuOrder(appConfiguration);
         }
         return startMenu;
     }

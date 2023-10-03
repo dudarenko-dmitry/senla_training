@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.analytic;
 
+import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
@@ -17,18 +18,20 @@ public class ExecutorAnalytics implements Executor {
     private final ControllerRoomReservation roomReservationController;
     private final ControllerGuest guestController;
     private final ControllerOrder orderController;
+    private final Configuration configuration;
 
-    private ExecutorAnalytics() {
-        this.roomController = ControllerRoomCollection.getControllerRoom();
-        this.facilityController = ControllerFacilityCollection.getControllerFacility();
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
+    private ExecutorAnalytics(Configuration appConfiguration) {
+        this.configuration = appConfiguration;
+        this.roomController = ControllerRoomCollection.getControllerRoom(configuration);
+        this.facilityController = ControllerFacilityCollection.getControllerFacility(configuration);
+        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation(configuration);
         this.guestController = ControllerGuestCollection.getControllerGuest();
         this.orderController = ControllerOrderCollection.getControllerOrder();
     }
 
-    public static Executor getExecutorAnalytics(){
+    public static Executor getExecutorAnalytics(Configuration appConfiguration){
         if (executor == null) {
-            executor = new ExecutorAnalytics();
+            executor = new ExecutorAnalytics(appConfiguration);
         }
         return executor;
     }
@@ -123,10 +126,10 @@ public class ExecutorAnalytics implements Executor {
                 roomController.read(idRoom);
                 break;
             case 0:
-                StartMenuMain.getStartMenu().runMenu();
+                StartMenuMain.getStartMenu(configuration).runMenu();
             default:
                 System.out.println(ERROR_INPUT);
-                StartMenuAnalytics.getStartMenuAnalytics().runMenu();
+                StartMenuAnalytics.getStartMenuAnalytics(configuration).runMenu();
         }
     }
 
