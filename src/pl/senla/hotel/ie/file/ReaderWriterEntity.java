@@ -11,7 +11,7 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.InputOutputConstant.DATA_SAVED;
 
-public class ReaderWriterEntity<T> implements ReaderWriterUniversalEntity<T> {
+public class ReaderWriterEntity<T> {
 
     private final ConverterEntity<T> converter;
 
@@ -19,9 +19,7 @@ public class ReaderWriterEntity<T> implements ReaderWriterUniversalEntity<T> {
         this.converter = converter;
     }
 
-
-    @Override
-    public List<T> load(Class<T> clazz) throws IOException {
+    public List<T> load() throws IOException {
         List<T> list = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(converter.getPath()))) {
             String csvT;
@@ -36,7 +34,6 @@ public class ReaderWriterEntity<T> implements ReaderWriterUniversalEntity<T> {
         return list;
     }
 
-    @Override
     public void save(List<T> list) throws IOException {
         Class<T> clazz = (Class<T>) list.get(0).getClass();
         CSVWriter writer = new CSVWriter(new FileWriter(converter.getPath()),

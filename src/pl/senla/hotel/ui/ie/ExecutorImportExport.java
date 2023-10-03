@@ -2,7 +2,7 @@ package pl.senla.hotel.ui.ie;
 
 import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ie.file.DataProcessor;
-import pl.senla.hotel.ie.file.archive.DataProcessorFile;
+import pl.senla.hotel.ie.file.DataProcessorFileEntity;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
@@ -16,7 +16,7 @@ public class ExecutorImportExport implements Executor {
 
     private ExecutorImportExport(Configuration appConfiguration) {
         this.configuration = appConfiguration;
-        this.dataProcessor = DataProcessorFile.getDataProcessor();
+        this.dataProcessor = DataProcessorFileEntity.getDataProcessor();
     }
 
     public static Executor getExecutor(Configuration appConfiguration) {

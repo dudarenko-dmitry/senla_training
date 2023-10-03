@@ -8,16 +8,10 @@ public class InputOutputConstant {
     public static final String LOAD_SERVICES_LIST =              "Hotel Services' list was loaded.";
     public static final String LOAD_ORDER_LIST =                 "Orders' list was loaded.";
 
-    public static final String ERROR_GET_PATH =                  "Error in classes' reading in getPath()";
-    public static final String ERROR_GET_HEADER =                "Error in classes' reading in getHeader()";
     public static final String ERROR_GET_PROPERTIES_FILE =       "Error: Properties' file was not found.";
     public static final String ERROR_READ_PROPERTIES_FILE =      "Error in reading of Properties' file.";
-    public static final String ERROR_WRITE_PROPERTIES_FILE =     "Error in writing of Properties' file.";
     public static final String ERROR_READ_SERIALIZATION_FILE =   "Error in reading of Serialization file:\n";
     public static final String ERROR_WRITE_SERIALIZATION_FILE =  "Error in writing of Serialization file:\n";
-
-    public static final String ERROR_CONVERTER_ENTITY =          "Error in classes' reading in convertEntityToString()";
-    public static final String ERROR_CONVERTER_STRING =          "Error in classes' reading in convertStringToEntity()";
 
     public static final String ERROR_HOTEL_FACILITY_LIST_EMPTY = "List of Hotel's facilities is empty.";
     public static final String ERROR_GUEST_LIST_EMPTY =          "List of Guests is empty.";

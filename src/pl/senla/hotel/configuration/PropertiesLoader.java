@@ -5,6 +5,5 @@ import java.util.Properties;
 public interface PropertiesLoader {
 
     Properties loadConfiguration();
-    void saveConfiguration();
 
 }

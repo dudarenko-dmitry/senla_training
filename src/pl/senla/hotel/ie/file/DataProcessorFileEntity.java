@@ -17,10 +17,10 @@ import static pl.senla.hotel.constant.InputOutputConstant.*;
 public class DataProcessorFileEntity implements DataProcessor {
 
     private static DataProcessor dataProcessor;
-    private final ReaderWriterUniversalEntity<Guest> guestReaderWriter;
-    private final ReaderWriterUniversalEntity<HotelFacility> hotelFacilityReaderWriter;
-    private final ReaderWriterUniversalEntity<HotelService> hotelServiceReaderWriter;
-    private final ReaderWriterUniversalEntity<Order> orderReaderWriter;
+    private final ReaderWriterEntity<Guest> guestReaderWriter;
+    private final ReaderWriterEntity<HotelFacility> hotelFacilityReaderWriter;
+    private final ReaderWriterEntity<HotelService> hotelServiceReaderWriter;
+    private final ReaderWriterEntity<Order> orderReaderWriter;
 
     private DataProcessorFileEntity() {
         ConverterEntity<Guest> guestConverter = new ConverterGuest();
@@ -112,10 +112,8 @@ public class DataProcessorFileEntity implements DataProcessor {
     public void loadHotelFacility() {
         try {
             if (DataStorageFacility.getDataStorageFacility().getDataList().isEmpty()) {
-//                DataStorageRoom.getDataStorageRoom().getDataList()
-//                                .addAll((List<Room>) hotelFacilityReaderWriter.load(HotelFacility.class));
                 DataStorageFacility.getDataStorageFacility().getDataList()
-                        .addAll(hotelFacilityReaderWriter.load(HotelFacility.class));
+                        .addAll(hotelFacilityReaderWriter.load());
                 System.out.println(LOAD_HOTEL_FACILITY_LIST);
             } else {
                 System.out.println(ERROR_HOTEL_FACILITY_LIST_EXIST);
@@ -131,7 +129,7 @@ public class DataProcessorFileEntity implements DataProcessor {
         try {
             if (DataStorageGuest.getDataStorageGuest().getDataList().isEmpty()) {
                 DataStorageGuest.getDataStorageGuest().getDataList()
-                        .addAll(guestReaderWriter.load(Guest.class));
+                        .addAll(guestReaderWriter.load());
                 System.out.println(LOAD_GUEST_LIST);
             } else {
                 System.out.println(ERROR_GUEST_LIST_EXIST);
@@ -146,10 +144,8 @@ public class DataProcessorFileEntity implements DataProcessor {
     public void loadHotelServices() {
         try {
             if (DataStorageHotelService.getDataStorageHotelService().getDataList().isEmpty()) {
-//                DataStorageRoomReservation.getDataStorageRoomReservation().getDataList()
-//                        .addAll((List<RoomReservation>) hotelServiceReaderWriter.load(HotelService.class));
                 DataStorageHotelService.getDataStorageHotelService().getDataList()
-                        .addAll(hotelServiceReaderWriter.load(HotelService.class));
+                        .addAll(hotelServiceReaderWriter.load());
                 System.out.println(LOAD_SERVICES_LIST);
             } else {
                 System.out.println(ERROR_SERVICES_LIST_EXIST);
@@ -165,7 +161,7 @@ public class DataProcessorFileEntity implements DataProcessor {
         try {
             if (DataStorageOrder.getDataStorageOrder().getDataList().isEmpty()) {
                 DataStorageOrder.getDataStorageOrder().getDataList()
-                        .addAll(orderReaderWriter.load(Order.class));
+                        .addAll(orderReaderWriter.load());
                 System.out.println(LOAD_ORDER_LIST);
             } else {
                 System.out.println(ERROR_ORDER_LIST_EXIST);
