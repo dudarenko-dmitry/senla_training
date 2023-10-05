@@ -1,8 +1,6 @@
 package pl.senla.hotel.ui.main;
 
-import pl.senla.hotel.configuration.Configuration;
-import pl.senla.hotel.ie.file.DataProcessor;
-import pl.senla.hotel.ie.file.DataProcessorFileEntity;
+import pl.senla.hotel.entity.SavedHotel;
 import pl.senla.hotel.ie.serialization.Processor;
 import pl.senla.hotel.ie.serialization.ProcessorSerializable;
 import pl.senla.hotel.ui.Executor;
@@ -23,30 +21,28 @@ public class ExecutorMain implements Executor {
     private final StartMenu startMenuOrder;
     private final StartMenu startMenuAnalytics;
     private final StartMenu startMenuImportExport;
-    private final DataProcessor dataProcessor; //version 3 (save Application's state to files)
+//    private final DataProcessor dataProcessor; //version 3 (save Application's state to files)
     private final Processor processor;
-    private final Configuration configuration;
 
-    private ExecutorMain(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.startMenuHotelFacilities  = StartMenuHotelFacilities.getStartMenuHotelFacilities(configuration);
-        this.startMenuGuest = StartMenuGuest.getStartMenuGuest(configuration);
-        this.startMenuOrder = StartMenuOrder.getStartMenuOrder(configuration);
-        this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics(configuration);
-        this.startMenuImportExport = StartMenuImportExport.getStartMenuImpExp(configuration);
-        this.dataProcessor = DataProcessorFileEntity.getDataProcessor(); //version 3 (save Application's state to files)
-        this.processor = new ProcessorSerializable(configuration);
+    private ExecutorMain() {
+        this.startMenuHotelFacilities  = StartMenuHotelFacilities.getStartMenuHotelFacilities();
+        this.startMenuGuest = StartMenuGuest.getStartMenuGuest();
+        this.startMenuOrder = StartMenuOrder.getStartMenuOrder();
+        this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics();
+        this.startMenuImportExport = StartMenuImportExport.getStartMenuImpExp();
+//        this.dataProcessor = DataProcessorFileEntity.getDataProcessor(); //version 3 (save Application's state to files)
+        this.processor = new ProcessorSerializable();
     }
 
-    public static Executor getExecutor(Configuration appConfiguration) {
+    public static Executor getExecutor() {
         if (executor == null) {
-            executor = new ExecutorMain(appConfiguration);
+            executor = new ExecutorMain();
         }
         return executor;
     }
 
     @Override
-    public void execute(int userSelection) {
+    public void execute(int userSelection) throws IllegalAccessException {
         switch (userSelection) {
             case 1 -> startMenuHotelFacilities.runMenu();
             case 2 -> startMenuGuest.runMenu();
@@ -55,20 +51,20 @@ public class ExecutorMain implements Executor {
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
 //                version 3 (save Application's state to files)
-                System.out.println(" ===== >  save to files");
-                dataProcessor.saveAllEntities(); // use in case of saving Application's state to files
+//                System.out.println(" ===== >  save to files");
+//                dataProcessor.saveAllEntities(); // use in case of saving Application's state to files
 
                 // version 4 (save Application's state by Serialization
-//                SavedHotel hotel = new SavedHotel(configuration);
-//                processor.saveHotel(hotel);
-//                System.out.println(" ===== >  serialization is completed.");
+                SavedHotel hotel = new SavedHotel();
+                processor.saveHotel(hotel);
+                System.out.println(" ===== >  serialization is completed.");
 
                 System.out.println("Good-bye.");
                 System.exit(0);
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuMain.getStartMenu(configuration).runMenu();
+                StartMenuMain.getStartMenu().runMenu();
             }
         }
     }

@@ -1,25 +1,20 @@
 package pl.senla.hotel.ie.file;
 
-import pl.senla.hotel.configuration.AppConfiguration;
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.annotations.config.ConfigProperty;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
 
 import pl.senla.hotel.utils.RoomReservationUtil;
 
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_HOTEL_SERVICES_NAME;
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_PATH;
-
 public class ConverterRoomReservation implements ConverterEntity<HotelService> {
 
-    private final Configuration configuration;
-
-    public ConverterRoomReservation() {
-        this.configuration = AppConfiguration.getAppConfiguration();
-    }
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.directory")
+    private String filePathDirectory;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-name.services")
+    private String fileNameServices;
 
     public String getPath() {
-        return configuration.getStringProperty(KEY_FILE_PATH) + configuration.getStringProperty(KEY_FILE_HOTEL_SERVICES_NAME);
+        return filePathDirectory + fileNameServices;
     }
 
     public String[] getHeader() {

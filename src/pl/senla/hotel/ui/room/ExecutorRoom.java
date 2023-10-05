@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.room;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
@@ -18,23 +17,21 @@ public class ExecutorRoom implements Executor {
     private static Executor executorRoom;
     private final ControllerFacility facilityController;
     private final ControllerRoom roomController;
-    private final Configuration configuration;
 
-    private ExecutorRoom(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.facilityController = ControllerFacilityCollection.getControllerFacility(configuration);
-        this.roomController = ControllerRoomCollection.getControllerRoom(configuration);
+    private ExecutorRoom() {
+        this.facilityController = ControllerFacilityCollection.getControllerFacility();
+        this.roomController = ControllerRoomCollection.getControllerRoom();
     }
 
-    public static Executor getExecutorRoom(Configuration appConfiguration){
+    public static Executor getExecutorRoom(){
         if (executorRoom == null) {
-            executorRoom = new ExecutorRoom(appConfiguration);
+            executorRoom = new ExecutorRoom();
         }
         return executorRoom;
     }
 
     @Override
-    public void execute(int userSelection) {
+    public void execute(int userSelection) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
         switch (userSelection) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
@@ -104,10 +101,10 @@ public class ExecutorRoom implements Executor {
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
+            case 0 -> StartMenuMain.getStartMenu().runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuMain.getStartMenu(configuration).runMenu();
+                StartMenuMain.getStartMenu().runMenu();
             }
         }
     }

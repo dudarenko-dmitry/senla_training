@@ -1,7 +1,5 @@
 package pl.senla.hotel.entity.services;
 
-import pl.senla.hotel.configuration.AppConfiguration;
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.service.ServiceRoom;
 import pl.senla.hotel.service.ServiceRoomImpl;
 
@@ -27,13 +25,13 @@ public class RoomReservation extends HotelService implements Serializable {
     private static final long serialVersionUID = 10L;
 
     public RoomReservation() {
-        this.serviceRoom = ServiceRoomImpl.getServiceRoom(AppConfiguration.getAppConfiguration());
+        this.serviceRoom = ServiceRoomImpl.getServiceRoom();
     }
 
     public RoomReservation(Integer idService, Integer idOrder, Integer idGuest, Integer idRoom,
-                           LocalDate startDate, Integer numberOfDays, Configuration appConfiguration) {
+                           LocalDate startDate, Integer numberOfDays) {
         super(idService, idOrder, TypeOfService.RESTAURANT, idGuest);
-        this.serviceRoom = ServiceRoomImpl.getServiceRoom(appConfiguration);
+        this.serviceRoom = ServiceRoomImpl.getServiceRoom();
         if(idRoom == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;

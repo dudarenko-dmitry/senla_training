@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.order;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
@@ -16,23 +15,21 @@ public class ExecutorOrder implements Executor {
     private static Executor executor;
     private final ControllerOrder orderController;
     private final StartUpdateHotelServiceList updateHotelServiceList;
-    private final Configuration configuration;
 
-    private ExecutorOrder(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
+    private ExecutorOrder() {
         this.orderController = ControllerOrderCollection.getControllerOrder();
-        this.updateHotelServiceList = StartUpdateHotelServiceList.getStartUpdateHotelServiceList(configuration);
+        this.updateHotelServiceList = StartUpdateHotelServiceList.getStartUpdateHotelServiceList();
     }
 
-    public static Executor getExecutorOrder(Configuration appConfiguration){
+    public static Executor getExecutorOrder(){
         if (executor == null) {
-            executor = new ExecutorOrder(appConfiguration);
+            executor = new ExecutorOrder();
         }
         return executor;
     }
 
     @Override
-    public void execute(int userSelection) {
+    public void execute(int userSelection) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
         switch (userSelection) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
@@ -56,10 +53,10 @@ public class ExecutorOrder implements Executor {
                 int idOrderDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ORDER + orderController.delete(idOrderDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
+            case 0 -> StartMenuMain.getStartMenu().runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuOrder.getStartMenuOrder(configuration).runMenu();
+                StartMenuOrder.getStartMenuOrder().runMenu();
             }
         }
     }

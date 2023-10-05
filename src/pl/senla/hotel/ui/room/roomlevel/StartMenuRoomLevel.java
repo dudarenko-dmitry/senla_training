@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.room.roomlevel;
 
-import pl.senla.hotel.configuration.AppConfiguration;
 import pl.senla.hotel.ui.Navigator;
 
 public class StartMenuRoomLevel {
@@ -10,10 +9,10 @@ public class StartMenuRoomLevel {
 
     public StartMenuRoomLevel() {
         this.navigator = new NavigatorRoomLevel();
-        this.executor = new ExecutorRoomLevel(AppConfiguration.getAppConfiguration());
+        this.executor = new ExecutorRoomLevel();
     }
 
-    public String runMenu() {
+    public String runMenu() throws IllegalAccessException {
         navigator.buildMenu();
         int userSelection = navigator.makeChoice();
         return executor.execute(userSelection);

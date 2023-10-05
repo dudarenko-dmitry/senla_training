@@ -1,7 +1,7 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.annotations.config.ConfigProperty;
 import pl.senla.hotel.comparators.*;
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.HotelFacility;
@@ -22,7 +22,6 @@ import java.util.List;
 import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CHANGE_ROOM_RESERVATION;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelConstant.*;
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
@@ -33,20 +32,20 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     private final Repository<RoomReservation> repositoryRoomReservation;
     private final Repository<Guest> repositoryGuest;
     private final Repository<HotelFacility> repositoryFacility;
-    private final Configuration configuration;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
+    private Integer roomRecordsNumber;
 
-    private ServiceRoomReservationImpl(Configuration appConfiguration) {
+    private ServiceRoomReservationImpl() {
         this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
         this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
         this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
         this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
-        this.configuration = appConfiguration;
     }
 
-    public static ServiceRoomReservation getServiceRoomReservation(Configuration appConfiguration){
+    public static ServiceRoomReservation getServiceRoomReservation(){
         if (serviceRoomReservation == null) {
-            serviceRoomReservation = new ServiceRoomReservationImpl(appConfiguration);
+            serviceRoomReservation = new ServiceRoomReservationImpl();
         }
         return serviceRoomReservation;
     }
@@ -105,7 +104,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                         .filter(rr -> rr.getIdRoom() == idRoom)
                         .toList();
                 int numberOfRecords = roomReservationList.size();
-                if (numberOfRecords >= configuration.getIntegerProperty(KEY_NUMBER_OF_GUEST_RECORDS_FOR_ROOM)) {
+                if (numberOfRecords >= roomRecordsNumber) {
                     int idRoomReservationToDelete = roomReservationList.get(0).getIdService();
                     delete(idRoomReservationToDelete);
                 }
@@ -305,8 +304,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 .toList();
     }
 
-
-    //all private methods for RoomReservations
     private boolean createFromObject(RoomReservation reservation) {
         if(isVacant(reservation.getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
             return repositoryHotelService.create(reservation); // changed here
@@ -351,6 +348,5 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         int minute = Integer.parseInt(timeData[4]);
         return LocalDateTime.of(year,month,day, hour, minute);
     }
-
 
 }

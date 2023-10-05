@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.controller.ControllerFacilityCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
@@ -16,17 +15,15 @@ public class ExecutorCreateHotelService {
     private static ExecutorCreateHotelService executor;
     private final ControllerRoomReservation roomReservationController;
     private final ControllerFacility controllerFacility;
-    private final Configuration configuration;
 
-    private ExecutorCreateHotelService(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation(configuration);
-        this.controllerFacility = ControllerFacilityCollection.getControllerFacility(configuration);
+    private ExecutorCreateHotelService() {
+        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
+        this.controllerFacility = ControllerFacilityCollection.getControllerFacility();
     }
 
-    public static ExecutorCreateHotelService getExecutorCreateHotelService(Configuration appConfiguration){
+    public static ExecutorCreateHotelService getExecutorCreateHotelService(){
         if (executor == null) {
-            executor = new ExecutorCreateHotelService(appConfiguration);
+            executor = new ExecutorCreateHotelService();
         }
         return executor;
     }
@@ -68,7 +65,7 @@ public class ExecutorCreateHotelService {
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartCreateHotelService.getStartCreateHotelService(configuration).runMenu(idOrder, idGuest);
+                StartCreateHotelService.getStartCreateHotelService().runMenu(idOrder, idGuest);
             }
         }
         return true;

@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.guest;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
@@ -11,20 +10,20 @@ public class StartMenuGuest implements StartMenu {
     private final Navigator navigator;
     private final Executor executor;
 
-    private StartMenuGuest(Configuration appConfiguration) {
+    private StartMenuGuest() {
         this.navigator = NavigatorGuest.getNavigatorGuest();
-        this.executor = ExecutorGuest.getExecutorGuest(appConfiguration);
+        this.executor = ExecutorGuest.getExecutorGuest();
     }
 
-    public static StartMenu getStartMenuGuest(Configuration appConfiguration){
+    public static StartMenu getStartMenuGuest(){
         if (startMenu == null) {
-            startMenu = new StartMenuGuest(appConfiguration);
+            startMenu = new StartMenuGuest();
         }
         return startMenu;
     }
 
     @Override
-    public void runMenu() {
+    public void runMenu() throws IllegalAccessException {
         while (true) {
             navigator.buildMenu();
             int userSelection = navigator.makeChoice();

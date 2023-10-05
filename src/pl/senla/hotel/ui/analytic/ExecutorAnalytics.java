@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.analytic;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.main.StartMenuMain;
@@ -18,26 +17,24 @@ public class ExecutorAnalytics implements Executor {
     private final ControllerRoomReservation roomReservationController;
     private final ControllerGuest guestController;
     private final ControllerOrder orderController;
-    private final Configuration configuration;
 
-    private ExecutorAnalytics(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.roomController = ControllerRoomCollection.getControllerRoom(configuration);
-        this.facilityController = ControllerFacilityCollection.getControllerFacility(configuration);
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation(configuration);
+    private ExecutorAnalytics() {
+        this.roomController = ControllerRoomCollection.getControllerRoom();
+        this.facilityController = ControllerFacilityCollection.getControllerFacility();
+        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
         this.guestController = ControllerGuestCollection.getControllerGuest();
         this.orderController = ControllerOrderCollection.getControllerOrder();
     }
 
-    public static Executor getExecutorAnalytics(Configuration appConfiguration){
+    public static Executor getExecutorAnalytics(){
         if (executor == null) {
-            executor = new ExecutorAnalytics(appConfiguration);
+            executor = new ExecutorAnalytics();
         }
         return executor;
     }
 
     @Override
-    public void execute(int userSelection) {
+    public void execute(int userSelection) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
         switch (userSelection) {
             case 1: // ready
@@ -53,19 +50,19 @@ public class ExecutorAnalytics implements Executor {
                         facilityController.readAllRoomsSortByLevel());
                 break;
             case 4: // ready
-                String checkedTimeString = inputDateTimeString();
+                String checkedTimeString4 = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_PRICE +
-                        roomReservationController.readAllFreeRoomsSortByPrice(checkedTimeString));
+                        roomReservationController.readAllFreeRoomsSortByPrice(checkedTimeString4));
                 break;
             case 5: // ready
-                checkedTimeString = inputDateTimeString();
+                String checkedTimeString5 = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_CAPACITY +
-                        roomReservationController.readAllFreeRoomsSortByCapacity(checkedTimeString));
+                        roomReservationController.readAllFreeRoomsSortByCapacity(checkedTimeString5));
                 break;
             case 6: // ready
-                checkedTimeString = inputDateTimeString();
+                String checkedTimeString6 = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS + SORTED_BY_LEVEL +
-                        roomReservationController.readAllFreeRoomsSortByLevel(checkedTimeString));
+                        roomReservationController.readAllFreeRoomsSortByLevel(checkedTimeString6));
                 break;
             case 7: // ready
                 System.out.println(CONSOLE_READ_ALL_ROOM_RESERVATIONS + SORTED_BY_GUEST_NAME +
@@ -76,22 +73,22 @@ public class ExecutorAnalytics implements Executor {
                         roomReservationController.readAllRoomReservationsSortByGuestCheckOut());
                 break;
             case 9:
-                checkedTimeString = inputDateTimeString();
-                System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTimeString + ": " +
-                        roomReservationController.countFreeRoomsInTime(checkedTimeString));
+                String checkedTimeString9 = inputDateTimeString();
+                System.out.println(CONSOLE_NUMBER_OF_FREE_ROOMS + checkedTimeString9 + ": " +
+                        roomReservationController.countFreeRoomsInTime(checkedTimeString9));
                 break;
             case 10: // ready
                 System.out.println(CONSOLE_NUMBER_GUEST_TOTAL + guestController.countNumberOfGuestsTotal());
                 break;
             case 11: // ready
-                checkedTimeString = inputDateTimeString();
-                System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTimeString + ": " +
-                        roomReservationController.countNumberOfGuestsOnDate(checkedTimeString));
+                String checkedTimeString11 = inputDateTimeString();
+                System.out.println(CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW + checkedTimeString11 + ": " +
+                        roomReservationController.countNumberOfGuestsOnDate(checkedTimeString11));
                 break;
             case 12:
-                checkedTimeString = inputDateTimeString();
+                String checkedTimeString12 = inputDateTimeString();
                 System.out.println(CONSOLE_READ_ALL_FREE_ROOMS_TIME +
-                        roomReservationController.readAllRoomsFreeInTime(checkedTimeString));
+                        roomReservationController.readAllRoomsFreeInTime(checkedTimeString12));
                 break;
             case 13: // ready
                 System.out.print(INPUT_ID_GUEST);
@@ -126,10 +123,10 @@ public class ExecutorAnalytics implements Executor {
                 roomController.read(idRoom);
                 break;
             case 0:
-                StartMenuMain.getStartMenu(configuration).runMenu();
+                StartMenuMain.getStartMenu().runMenu();
             default:
                 System.out.println(ERROR_INPUT);
-                StartMenuAnalytics.getStartMenuAnalytics(configuration).runMenu();
+                StartMenuAnalytics.getStartMenuAnalytics().runMenu();
         }
     }
 

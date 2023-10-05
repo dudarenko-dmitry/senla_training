@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.ie;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ie.file.DataProcessor;
 import pl.senla.hotel.ie.file.DataProcessorFileEntity;
 import pl.senla.hotel.ui.Executor;
@@ -12,22 +11,20 @@ public class ExecutorImportExport implements Executor {
 
     private static Executor executor;
     private final DataProcessor dataProcessor;
-    private final Configuration configuration;
 
-    private ExecutorImportExport(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
+    private ExecutorImportExport() {
         this.dataProcessor = DataProcessorFileEntity.getDataProcessor();
     }
 
-    public static Executor getExecutor(Configuration appConfiguration) {
+    public static Executor getExecutor() {
         if (executor == null) {
-            executor = new ExecutorImportExport(appConfiguration);
+            executor = new ExecutorImportExport();
         }
         return executor;
     }
 
     @Override
-    public void execute(int userSelection) {
+    public void execute(int userSelection) throws IllegalAccessException {
         switch (userSelection) {
             case 1 -> dataProcessor.loadAllEntities();
             case 2 -> dataProcessor.saveAllEntities();
@@ -43,10 +40,10 @@ public class ExecutorImportExport implements Executor {
                 dataProcessor.saveHotelServices();
                 dataProcessor.saveOrders();
             }
-            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
+            case 0 -> StartMenuMain.getStartMenu().runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuImportExport.getStartMenuImpExp(configuration).runMenu();
+                StartMenuImportExport.getStartMenuImpExp().runMenu();
             }
         }
     }

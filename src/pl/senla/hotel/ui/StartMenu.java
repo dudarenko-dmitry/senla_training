@@ -2,6 +2,6 @@ package pl.senla.hotel.ui;
 
 public interface StartMenu {
 
-    void runMenu();
+    void runMenu() throws IllegalAccessException;
 
 }

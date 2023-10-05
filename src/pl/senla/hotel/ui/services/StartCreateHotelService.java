@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CREATE_SERVICE;
@@ -11,14 +10,14 @@ public class StartCreateHotelService {
     private final Navigator navigator;
     private final ExecutorCreateHotelService executor;
 
-    private StartCreateHotelService(Configuration appConfiguration) {
+    private StartCreateHotelService() {
         this.navigator = NavigatorHotelService.getNavigatorHotelService();
-        this.executor = ExecutorCreateHotelService.getExecutorCreateHotelService(appConfiguration);
+        this.executor = ExecutorCreateHotelService.getExecutorCreateHotelService();
     }
 
-    public static StartCreateHotelService getStartCreateHotelService(Configuration appConfiguration){
+    public static StartCreateHotelService getStartCreateHotelService(){
         if (startCreateHotelService == null) {
-            startCreateHotelService = new StartCreateHotelService(appConfiguration);
+            startCreateHotelService = new StartCreateHotelService();
         }
         return startCreateHotelService;
     }

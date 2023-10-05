@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.controller.ControllerOrderCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
@@ -19,24 +18,22 @@ public class ExecutorUpdateHotelServiceList {
     private static ExecutorUpdateHotelServiceList executorUpdateHotelServiceList;
     private final ControllerOrder orderController;
     private final ControllerRoomReservation roomReservationController;
-    private final Configuration configuration;
     // add all other Controllers for different type of Hotel's Services
 
-    private ExecutorUpdateHotelServiceList(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
+    private ExecutorUpdateHotelServiceList() {
         this.orderController = ControllerOrderCollection.getControllerOrder();
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation(configuration);
+        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
         // add all other Controllers for different type of Hotel's Services
     }
 
-    public static ExecutorUpdateHotelServiceList getExecutorUpdateHotelServiceList(Configuration appConfiguration){
+    public static ExecutorUpdateHotelServiceList getExecutorUpdateHotelServiceList(){
         if (executorUpdateHotelServiceList == null) {
-            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList(appConfiguration);
+            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList();
         }
         return executorUpdateHotelServiceList;
     }
 
-    protected boolean updateHotelServiceList(int idOrderUpdate, int typeOfServiceInt) {
+    protected boolean updateHotelServiceList(int idOrderUpdate, int typeOfServiceInt) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
         switch (typeOfServiceInt) {
             case 1:
@@ -61,7 +58,7 @@ public class ExecutorUpdateHotelServiceList {
                 } else {
                     System.out.println(ERROR_READ_ORDER);
                     System.out.println(ERROR_INPUT);
-                    StartMenuOrder.getStartMenuOrder(configuration).runMenu();
+                    StartMenuOrder.getStartMenuOrder().runMenu();
                 }
 
             case 2:

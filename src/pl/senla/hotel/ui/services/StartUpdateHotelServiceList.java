@@ -1,6 +1,5 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE_SELECT;
@@ -11,19 +10,19 @@ public class StartUpdateHotelServiceList {
     private final Navigator navigator;
     private final ExecutorUpdateHotelServiceList executor;
 
-    private StartUpdateHotelServiceList(Configuration appConfiguration) {
+    private StartUpdateHotelServiceList() {
         this.navigator = NavigatorHotelService.getNavigatorHotelService();
-        this.executor = ExecutorUpdateHotelServiceList.getExecutorUpdateHotelServiceList(appConfiguration);
+        this.executor = ExecutorUpdateHotelServiceList.getExecutorUpdateHotelServiceList();
     }
 
-    public static StartUpdateHotelServiceList getStartUpdateHotelServiceList(Configuration appConfiguration){
+    public static StartUpdateHotelServiceList getStartUpdateHotelServiceList(){
         if (startUpdateHotelServiceList == null) {
-            startUpdateHotelServiceList = new StartUpdateHotelServiceList(appConfiguration);
+            startUpdateHotelServiceList = new StartUpdateHotelServiceList();
         }
         return startUpdateHotelServiceList;
     }
 
-    public boolean runMenu(int idOrderUpdate){
+    public boolean runMenu(int idOrderUpdate) throws IllegalAccessException {
         navigator.buildMenu();
         System.out.println(MENU_HOTEL_SERVICE_SELECT);
         int typeOsService = navigator.makeChoice();

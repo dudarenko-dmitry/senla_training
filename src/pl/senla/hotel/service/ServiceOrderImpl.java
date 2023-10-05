@@ -2,7 +2,6 @@ package pl.senla.hotel.service;
 
 import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
 import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
-import pl.senla.hotel.configuration.Configuration;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.repository.*;
@@ -20,18 +19,15 @@ public class ServiceOrderImpl implements ServiceOrder {
     private static ServiceOrder serviceOrder;
     private final ServiceHotelService serviceHotelService;
     private final Repository<Order> repositoryOrder;
-    private final Configuration configuration;
 
-
-    private ServiceOrderImpl(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService(configuration);
+    private ServiceOrderImpl() {
+        this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService();
         this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
     }
 
-    public static ServiceOrder getServiceOrder(Configuration appConfiguration) {
+    public static ServiceOrder getServiceOrder() {
         if (serviceOrder == null) {
-            serviceOrder = new ServiceOrderImpl(appConfiguration);
+            serviceOrder = new ServiceOrderImpl();
         }
         return serviceOrder;
     }
@@ -52,7 +48,7 @@ public class ServiceOrderImpl implements ServiceOrder {
         order.setIdGuest(idGuest);
         int idOrderNew = getIdOrderNew();
         order.setIdOrder(idOrderNew);
-        StartCreateHotelService.getStartCreateHotelService(configuration).runMenu(idOrderNew, idGuest);
+        StartCreateHotelService.getStartCreateHotelService().runMenu(idOrderNew, idGuest);
         List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrderNew);
         order.setServices(idServicesInOrder);
         return repositoryOrder.create(order);

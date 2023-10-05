@@ -1,6 +1,6 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.annotations.config.ConfigProperty;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
 import pl.senla.hotel.repository.RepositoryFacilityCollection;
@@ -11,22 +11,21 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_ABLE_TO_CHANGE_ROOM_STATUS;
 
 public class ServiceRoomImpl implements ServiceRoom {
 
     private static ServiceRoom serviceRoom;
     private final Repository<HotelFacility> repositoryFacility;
-    private final Configuration configuration;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
+    private Boolean changeRoomStatusEnabled;
 
-    private ServiceRoomImpl(Configuration appConfiguration) {
+    private ServiceRoomImpl() {
         this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
-        this.configuration = appConfiguration;
     }
 
-    public static ServiceRoom getServiceRoom(Configuration appConfiguration) {
+    public static ServiceRoom getServiceRoom() {
         if (serviceRoom == null) {
-            serviceRoom = new ServiceRoomImpl(appConfiguration);
+            serviceRoom = new ServiceRoomImpl();
         }
         return serviceRoom;
     }
@@ -91,8 +90,7 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean updateRoomStatusAvailable(int idRoom) {
-//      if (configuration.getValueIsAbleToChangeRoomStatus()){
-        if (configuration.getBooleanProperty(KEY_ABLE_TO_CHANGE_ROOM_STATUS)){
+        if (changeRoomStatusEnabled){
             if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
                 System.out.println(ERROR_READ_ALL_ROOM);
                 return false;
@@ -110,7 +108,7 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean updateRoomStatusRepaired(int idRoom) {
-        if (configuration.getBooleanProperty(KEY_ABLE_TO_CHANGE_ROOM_STATUS)){
+        if (changeRoomStatusEnabled){
             if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
                 System.out.println(ERROR_READ_ALL_ROOM);
                 return false;

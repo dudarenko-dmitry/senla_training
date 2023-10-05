@@ -1,23 +1,18 @@
 package pl.senla.hotel.ie.file;
 
-import pl.senla.hotel.configuration.AppConfiguration;
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.annotations.config.ConfigProperty;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.utils.GuestUtil;
 
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_GUESTS_NAME;
-import static pl.senla.hotel.constant.PropertiesConstant.KEY_FILE_PATH;
-
 public class ConverterGuest implements ConverterEntity<Guest> {
 
-    private final Configuration configuration;
-
-    public ConverterGuest() {
-        this.configuration = AppConfiguration.getAppConfiguration();
-    }
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.directory")
+    private String filePathDirectory;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-name.guest")
+    private String fileNameGuest;
 
     public String getPath() {
-        return configuration.getStringProperty(KEY_FILE_PATH) + configuration.getStringProperty(KEY_FILE_GUESTS_NAME);
+        return filePathDirectory + fileNameGuest;
     }
 
     public String[] getHeader() {
