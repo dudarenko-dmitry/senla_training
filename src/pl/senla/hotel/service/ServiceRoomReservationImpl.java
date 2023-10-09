@@ -1,6 +1,8 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.annotations.config.ConfigProperty;
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -24,28 +26,52 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelConstant.*;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
+@AppComponent
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private static ServiceRoomReservation serviceRoomReservation;
+    @GetInstance(beanName = "ServiceFacilityImpl")
     private final ServiceFacility serviceHotelFacility;
+    @GetInstance(beanName = "RepositoryHotelServiceCollection")
     private final Repository<HotelService> repositoryHotelService;
+    @GetInstance(beanName = "RepositoryRoomReservationCollection")
     private final Repository<RoomReservation> repositoryRoomReservation;
+    @GetInstance(beanName = "RepositoryGuestCollection")
     private final Repository<Guest> repositoryGuest;
+    @GetInstance(beanName = "RepositoryFacilityCollection")
     private final Repository<HotelFacility> repositoryFacility;
+    @GetInstance(beanName = "ServiceRoomImpl")
+    private final transient ServiceRoom serviceRoom;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
     private Integer roomRecordsNumber;
 
-    private ServiceRoomReservationImpl() {
-        this.serviceHotelFacility = ServiceFacilityImpl.getServiceFacility();
-        this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
-        this.repositoryRoomReservation = RepositoryRoomReservationCollection.getRepositoryRoomReservation();
-        this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
-        this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
+    private ServiceRoomReservationImpl(ServiceFacility serviceHotelFacility,
+                                       Repository<HotelService> repositoryHotelService,
+                                       Repository<RoomReservation> repositoryRoomReservation,
+                                       Repository<Guest> repositoryGuest,
+                                       Repository<HotelFacility> repositoryFacility,
+                                       ServiceRoom serviceRoom) {
+        this.serviceHotelFacility = serviceHotelFacility;
+        this.repositoryHotelService = repositoryHotelService;
+        this.repositoryRoomReservation = repositoryRoomReservation;
+        this.repositoryGuest = repositoryGuest;
+        this.repositoryFacility = repositoryFacility;
+        this.serviceRoom = serviceRoom;
     }
 
-    public static ServiceRoomReservation getServiceRoomReservation(){
+    public static ServiceRoomReservation getSingletonInstance(ServiceFacility serviceHotelFacility,
+                                                              Repository<HotelService> repositoryHotelService,
+                                                              Repository<RoomReservation> repositoryRoomReservation,
+                                                              Repository<Guest> repositoryGuest,
+                                                              Repository<HotelFacility> repositoryFacility,
+                                                              ServiceRoom serviceRoom){
         if (serviceRoomReservation == null) {
-            serviceRoomReservation = new ServiceRoomReservationImpl();
+            serviceRoomReservation = new ServiceRoomReservationImpl(serviceHotelFacility,
+                    repositoryHotelService,
+                    repositoryRoomReservation,
+                    repositoryGuest,
+                    repositoryFacility,
+                    serviceRoom);
         }
         return serviceRoomReservation;
     }
@@ -56,7 +82,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return Collections.emptyList();
         }
-//        return repositoryHotelService.readAll()
         return repositoryRoomReservation.readAll()
                 .stream()
                 .map(RoomReservation.class::cast) //check
@@ -88,7 +113,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                     HOTEL_CHECK_OUT_TIME);
 
             if(isVacant(idRoom, checkInTime, checkOutTime)){
-                RoomReservation reservation = new RoomReservation();
+                RoomReservation reservation = new RoomReservation(serviceRoom);
                 reservation.setIdService(-1);
                 reservation.setIdOrder(idOrder);
                 reservation.setIdGuest(idGuest);
@@ -152,7 +177,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         int numberOfDaysNew = Integer.parseInt(reservationData[1]);
         LocalDateTime checkOutTime = LocalDateTime.of(checkInDate.plusDays(numberOfDaysNew), HOTEL_CHECK_OUT_TIME);
 
-        RoomReservation reservationUpdate = new RoomReservation();
+        RoomReservation reservationUpdate = new RoomReservation(serviceRoom);
         reservationUpdate.setIdService(idReservation);
         reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION);
         reservationUpdate.setIdGuest(reservationOld.getIdGuest());
@@ -202,7 +227,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
         return readAll().stream()
-                .sorted(new RoomReservationsComparatorByGuestName())
+                .sorted(new RoomReservationsComparatorByGuestName(repositoryGuest))
                 .toList();
     }
 

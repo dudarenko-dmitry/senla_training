@@ -1,23 +1,26 @@
 package pl.senla.hotel.repository;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.storage.DataStorage;
-import pl.senla.hotel.storage.DataStorageGuest;
 
 import java.util.List;
 
+@AppComponent
 public class RepositoryGuestCollection implements Repository<Guest> {
 
     private static Repository<Guest> repositoryGuest;
+    @GetInstance(beanName = "DataStorageGuest")
     private final DataStorage<Guest> dataStorage;
 
-    private RepositoryGuestCollection() {
-        this.dataStorage = DataStorageGuest.getDataStorageGuest();
+    private RepositoryGuestCollection(DataStorage<Guest> dataStorage) {
+        this.dataStorage = dataStorage;
     }
 
-    public static Repository<Guest> getRepositoryGuest(){
+    public static Repository<Guest> getSingletonInstance(DataStorage<Guest> dataStorage){
         if(repositoryGuest == null){
-            repositoryGuest = new RepositoryGuestCollection();
+            repositoryGuest = new RepositoryGuestCollection(dataStorage);
         }
         return repositoryGuest;
     }

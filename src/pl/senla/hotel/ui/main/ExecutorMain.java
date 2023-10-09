@@ -1,42 +1,67 @@
 package pl.senla.hotel.ui.main;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.SavedHotel;
 import pl.senla.hotel.ie.serialization.Processor;
-import pl.senla.hotel.ie.serialization.ProcessorSerializable;
 import pl.senla.hotel.ui.Executor;
+import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
-import pl.senla.hotel.ui.analytic.StartMenuAnalytics;
-import pl.senla.hotel.ui.guest.StartMenuGuest;
-import pl.senla.hotel.ui.hotelfacilities.StartMenuHotelFacilities;
-import pl.senla.hotel.ui.ie.StartMenuImportExport;
-import pl.senla.hotel.ui.order.StartMenuOrder;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
+@AppComponent
 public class ExecutorMain implements Executor {
 
     private static Executor executor;
+    @GetInstance(beanName = "StartMenuHotelFacilities")
     private final StartMenu startMenuHotelFacilities;
+    @GetInstance(beanName = "StartMenuGuest")
     private final StartMenu startMenuGuest;
+    @GetInstance(beanName = "StartMenuOrder")
     private final StartMenu startMenuOrder;
+    @GetInstance(beanName = "StartMenuAnalytics")
     private final StartMenu startMenuAnalytics;
+    @GetInstance(beanName = "StartMenuImportExport")
     private final StartMenu startMenuImportExport;
 //    private final DataProcessor dataProcessor; //version 3 (save Application's state to files)
+    @GetInstance(beanName = "ProcessorSerializable")
     private final Processor processor;
+    @GetInstance(beanName = "NavigatorMainMenu")
+    private final Navigator navigatorMain;
+    @GetInstance(beanName = "ExecutorMain")
+    private final Executor executorMain;
 
-    private ExecutorMain() {
-        this.startMenuHotelFacilities  = StartMenuHotelFacilities.getStartMenuHotelFacilities();
-        this.startMenuGuest = StartMenuGuest.getStartMenuGuest();
-        this.startMenuOrder = StartMenuOrder.getStartMenuOrder();
-        this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics();
-        this.startMenuImportExport = StartMenuImportExport.getStartMenuImpExp();
+    private ExecutorMain(StartMenu startMenuHotelFacilities,
+                         StartMenu startMenuGuest,
+                         StartMenu startMenuOrder,
+                         StartMenu startMenuAnalytics,
+                         StartMenu startMenuImportExport,
+                         Processor processor,
+                         Navigator navigatorMain,
+                         Executor executorMain) {
+        this.startMenuHotelFacilities  = startMenuHotelFacilities;
+        this.startMenuGuest = startMenuGuest;
+        this.startMenuOrder = startMenuOrder;
+        this.startMenuAnalytics = startMenuAnalytics;
+        this.startMenuImportExport = startMenuImportExport;
 //        this.dataProcessor = DataProcessorFileEntity.getDataProcessor(); //version 3 (save Application's state to files)
-        this.processor = new ProcessorSerializable();
+        this.processor = processor;
+        this.navigatorMain = navigatorMain;
+        this.executorMain = executorMain;
     }
 
-    public static Executor getExecutor() {
+    public static Executor getSingletonInstance(StartMenu startMenuHotelFacilities,
+                                                StartMenu startMenuGuest,
+                                                StartMenu startMenuOrder,
+                                                StartMenu startMenuAnalytics,
+                                                StartMenu startMenuImportExport,
+                                                Processor processor,
+                                                Navigator navigatorMain,
+                                                Executor executorMain) {
         if (executor == null) {
-            executor = new ExecutorMain();
+            executor = new ExecutorMain(startMenuHotelFacilities, startMenuGuest, startMenuOrder, startMenuAnalytics,
+                                        startMenuImportExport, processor, navigatorMain, executorMain);
         }
         return executor;
     }
@@ -64,7 +89,7 @@ public class ExecutorMain implements Executor {
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuMain.getStartMenu().runMenu();
+                StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
             }
         }
     }

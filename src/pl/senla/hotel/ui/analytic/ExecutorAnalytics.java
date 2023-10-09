@@ -1,7 +1,10 @@
 package pl.senla.hotel.ui.analytic;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
+import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
 import java.util.Scanner;
@@ -9,26 +12,56 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
+@AppComponent
 public class ExecutorAnalytics implements Executor {
 
     private static Executor executor;
+    @GetInstance(beanName = "ControllerRoomCollection")
     private final ControllerRoom roomController;
+    @GetInstance(beanName = "ControllerFacilityCollection")
     private final ControllerFacility facilityController;
+    @GetInstance(beanName = "ControllerRoomReservationCollection")
     private final ControllerRoomReservation roomReservationController;
+    @GetInstance(beanName = "ControllerGuestCollection")
     private final ControllerGuest guestController;
+    @GetInstance(beanName = "ControllerOrderCollection")
     private final ControllerOrder orderController;
+    @GetInstance(beanName = "NavigatorMainMenu")
+    private final Navigator navigatorMain;
+    @GetInstance(beanName = "ExecutorMain")
+    private final Executor executorMain;
+    @GetInstance(beanName = "NavigatorAnalytics")
+    private final Navigator navigator;
 
-    private ExecutorAnalytics() {
-        this.roomController = ControllerRoomCollection.getControllerRoom();
-        this.facilityController = ControllerFacilityCollection.getControllerFacility();
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
-        this.guestController = ControllerGuestCollection.getControllerGuest();
-        this.orderController = ControllerOrderCollection.getControllerOrder();
+    private ExecutorAnalytics(ControllerRoom roomController,
+                              ControllerFacility facilityController,
+                              ControllerRoomReservation roomReservationController,
+                              ControllerGuest guestController,
+                              ControllerOrder orderController,
+                              Navigator navigatorMain,
+                              Executor executorMain,
+                              Navigator navigator) {
+        this.roomController = roomController;
+        this.facilityController = facilityController;
+        this.roomReservationController = roomReservationController;
+        this.guestController = guestController;
+        this.orderController = orderController;
+        this.navigatorMain = navigatorMain;
+        this.executorMain = executorMain;
+        this.navigator = navigator;
     }
 
-    public static Executor getExecutorAnalytics(){
+    public static Executor getSingletonInstance(ControllerRoom roomController,
+                                                ControllerFacility facilityController,
+                                                ControllerRoomReservation roomReservationController,
+                                                ControllerGuest guestController,
+                                                ControllerOrder orderController,
+                                                Navigator navigatorMain,
+                                                Executor executorMain,
+                                                Navigator navigator){
         if (executor == null) {
-            executor = new ExecutorAnalytics();
+            executor = new ExecutorAnalytics(roomController, facilityController, roomReservationController,
+                    guestController, orderController, navigatorMain, executorMain, navigator);
         }
         return executor;
     }
@@ -123,10 +156,10 @@ public class ExecutorAnalytics implements Executor {
                 roomController.read(idRoom);
                 break;
             case 0:
-                StartMenuMain.getStartMenu().runMenu();
+                StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
             default:
                 System.out.println(ERROR_INPUT);
-                StartMenuAnalytics.getStartMenuAnalytics().runMenu();
+                StartMenuAnalytics.getSingletonInstance(navigator, executor).runMenu();
         }
     }
 

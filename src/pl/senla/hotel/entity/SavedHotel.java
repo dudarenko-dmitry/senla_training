@@ -24,18 +24,18 @@ public class SavedHotel implements Serializable {
 
     public SavedHotel() {
         processor = new ProcessorSerializable();
-        this.hotelFacilityList = DataStorageFacility.getDataStorageFacility().getDataList();
-        this.guestList = DataStorageGuest.getDataStorageGuest().getDataList();
-        this.hotelServiceList = DataStorageHotelService.getDataStorageHotelService().getDataList();
-        this.orderList = DataStorageOrder.getDataStorageOrder().getDataList();
+        this.hotelFacilityList = DataStorageFacility.getSingletonInstance().getDataList();
+        this.guestList = DataStorageGuest.getSingletonInstance().getDataList();
+        this.hotelServiceList = DataStorageHotelService.getSingletonInstance().getDataList();
+        this.orderList = DataStorageOrder.getSingletonInstance().getDataList();
     }
 
     public void initializeHotel() {
         SavedHotel loadedHotel = processor.loadHotel();
-        DataStorageFacility.getDataStorageFacility().getDataList().addAll(loadedHotel.getHotelFacilityList());
-        DataStorageGuest.getDataStorageGuest().getDataList().addAll(loadedHotel.getGuestList());
-        DataStorageHotelService.getDataStorageHotelService().getDataList().addAll(loadedHotel.getHotelServiceList());
-        DataStorageOrder.getDataStorageOrder().getDataList().addAll(loadedHotel.getOrderList());
+        DataStorageFacility.getSingletonInstance().getDataList().addAll(loadedHotel.getHotelFacilityList());
+        DataStorageGuest.getSingletonInstance().getDataList().addAll(loadedHotel.getGuestList());
+        DataStorageHotelService.getSingletonInstance().getDataList().addAll(loadedHotel.getHotelServiceList());
+        DataStorageOrder.getSingletonInstance().getDataList().addAll(loadedHotel.getOrderList());
         System.out.println("Hotel was loaded" + loadedHotel);
     }
 

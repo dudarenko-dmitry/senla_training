@@ -1,28 +1,34 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RepositoryHotelServiceCollection;
 
 import java.util.Collections;
 import java.util.List;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.*;
 
+@AppComponent
 public class ServiceHotelServiceImpl implements ServiceHotelService{
 
     private static ServiceHotelService serviceHotelService;
+    @GetInstance(beanName = "ServiceRoomReservationImpl")
     private final ServiceRoomReservation serviceRoomReservation;
+    @GetInstance(beanName = "RepositoryHotelServiceCollection")
     private final Repository<HotelService> repositoryHotelService;
 
-    private ServiceHotelServiceImpl() {
-        this.serviceRoomReservation = ServiceRoomReservationImpl.getServiceRoomReservation();
-        this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
+    private ServiceHotelServiceImpl(ServiceRoomReservation serviceRoomReservation,
+                                    Repository<HotelService> repositoryHotelService) {
+        this.serviceRoomReservation = serviceRoomReservation;
+        this.repositoryHotelService = repositoryHotelService;
     }
 
-    public static ServiceHotelService getServiceHotelService(){
+    public static ServiceHotelService getSingletonInstance(ServiceRoomReservation serviceRoomReservation,
+                                                           Repository<HotelService> repositoryHotelService){
         if(serviceHotelService == null){
-            serviceHotelService = new ServiceHotelServiceImpl();
+            serviceHotelService = new ServiceHotelServiceImpl(serviceRoomReservation, repositoryHotelService);
         }
         return serviceHotelService;
     }

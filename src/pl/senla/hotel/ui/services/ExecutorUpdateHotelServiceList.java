@@ -1,11 +1,13 @@
 package pl.senla.hotel.ui.services;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.controller.ControllerOrder;
-import pl.senla.hotel.controller.ControllerOrderCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
-import pl.senla.hotel.controller.ControllerRoomReservationCollection;
 
 import pl.senla.hotel.entity.services.TypeOfService;
+import pl.senla.hotel.ui.Executor;
+import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.order.StartMenuOrder;
 
 import java.util.Scanner;
@@ -13,22 +15,36 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
 
+@AppComponent
 public class ExecutorUpdateHotelServiceList {
 
     private static ExecutorUpdateHotelServiceList executorUpdateHotelServiceList;
+    @GetInstance(beanName = "ControllerOrderCollection")
     private final ControllerOrder orderController;
+    @GetInstance(beanName = "ControllerRoomReservationCollection")
     private final ControllerRoomReservation roomReservationController;
+    @GetInstance(beanName = "NavigatorOrder")
+    private final Navigator navigator;
+    @GetInstance(beanName = "ExecutorOrder")
+    private final Executor executor;
     // add all other Controllers for different type of Hotel's Services
 
-    private ExecutorUpdateHotelServiceList() {
-        this.orderController = ControllerOrderCollection.getControllerOrder();
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
+    private ExecutorUpdateHotelServiceList(ControllerOrder orderController,
+                                           ControllerRoomReservation roomReservationController,
+                                           Navigator navigator, Executor executor) {
+        this.orderController = orderController;
+        this.roomReservationController = roomReservationController;
+        this.navigator = navigator;
+        this.executor = executor;
         // add all other Controllers for different type of Hotel's Services
     }
 
-    public static ExecutorUpdateHotelServiceList getExecutorUpdateHotelServiceList(){
+    public static ExecutorUpdateHotelServiceList getSingletonInstance(ControllerOrder orderController,
+                                                                      ControllerRoomReservation roomReservationController,
+                                                                      Navigator navigator, Executor executor){
         if (executorUpdateHotelServiceList == null) {
-            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList();
+            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList(orderController,
+                                                                        roomReservationController, navigator, executor);
         }
         return executorUpdateHotelServiceList;
     }
@@ -58,7 +74,7 @@ public class ExecutorUpdateHotelServiceList {
                 } else {
                     System.out.println(ERROR_READ_ORDER);
                     System.out.println(ERROR_INPUT);
-                    StartMenuOrder.getStartMenuOrder().runMenu();
+                    StartMenuOrder.getSingletonInstance(navigator, executor).runMenu();
                 }
 
             case 2:

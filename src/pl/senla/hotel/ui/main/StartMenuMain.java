@@ -1,33 +1,28 @@
 package pl.senla.hotel.ui.main;
 
-import pl.senla.hotel.annotations.config.ConfigPropertyAnnotated;
-import pl.senla.hotel.annotations.config.ConfigPropertyAnnotationLoader;
-import pl.senla.hotel.entity.SavedHotel;
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
 
+@AppComponent
 public class StartMenuMain implements StartMenu {
 
     private static StartMenu startMenu;
+    @GetInstance(beanName = "NavigatorMainMenu")
     private final Navigator navigator;
+    @GetInstance(beanName = "ExecutorMain")
     private final Executor executor;
 
-    private StartMenuMain() throws IllegalAccessException {
-        ConfigPropertyAnnotated appConfigAnnotated = ConfigPropertyAnnotated.getConfigPropertyAnnotated();
-        ConfigPropertyAnnotationLoader configLoader =
-                new ConfigPropertyAnnotationLoader("C://IT/senla_training/src/pl/senla/hotel/resources/",
-                        "hotel.properties");
-        configLoader.load(appConfigAnnotated);
-        SavedHotel hotel = new SavedHotel();
-        hotel.initializeHotel();
-        this.navigator = NavigatorMainMenu.getNavigator();
-        this.executor = ExecutorMain.getExecutor();
+    private StartMenuMain(Navigator navigator, Executor executor) {
+        this.navigator = navigator;
+        this.executor = executor;
     }
 
-    public static StartMenu getStartMenu() throws IllegalAccessException {
+    public static StartMenu getSingletonInstance(Navigator navigator, Executor executor) throws IllegalAccessException {
         if (startMenu == null) {
-            startMenu = new StartMenuMain();
+            startMenu = new StartMenuMain(navigator, executor);
         }
         return startMenu;
     }

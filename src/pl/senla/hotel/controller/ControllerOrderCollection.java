@@ -1,24 +1,27 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.service.ServiceOrder;
-import pl.senla.hotel.service.ServiceOrderImpl;
 
 import java.util.List;
 
+@AppComponent
 public class ControllerOrderCollection implements ControllerOrder {
 
     private static ControllerOrder controllerOrder;
+    @GetInstance(beanName = "ServiceOrderImpl")
     private final ServiceOrder orderService;
 
-    private ControllerOrderCollection() {
-        this.orderService = ServiceOrderImpl.getServiceOrder();
+    private ControllerOrderCollection(ServiceOrder orderService) {
+        this.orderService = orderService;
     }
 
-    public static ControllerOrder getControllerOrder(){
+    public static ControllerOrder getSingletonInstance(ServiceOrder orderService){
         if(controllerOrder == null){
-            controllerOrder = new ControllerOrderCollection();
+            controllerOrder = new ControllerOrderCollection(orderService);
         }
         return controllerOrder;
     }

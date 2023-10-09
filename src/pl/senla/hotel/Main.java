@@ -5,13 +5,21 @@ import pl.senla.hotel.annotations.config.ConfigPropertyAnnotationLoader;
 import pl.senla.hotel.annotations.di.ClassCollector;
 import pl.senla.hotel.annotations.di.DI;
 import pl.senla.hotel.annotations.di.DIContainer;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.SavedHotel;
+import pl.senla.hotel.ui.Executor;
+import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
 import java.lang.reflect.InvocationTargetException;
 
 public class Main {
+
+    @GetInstance(beanName = "NavigatorMainMenu")
+    private static Executor executor;
+    @GetInstance(beanName = "ExecutorMain")
+    private static Navigator navigator;
 
     public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
@@ -43,9 +51,9 @@ public class Main {
         beanContainer.createDI();
         DI injector = DI.getSingletonInstance();
 
-        injector.inject(appClasses.getAllClassesFrom("pl.senla.hotel"), beanContainer);
+        injector.inject(appClasses.getAllClassesFrom("pl.senla.hotel"));
 
-        StartMenu startMenuMain = StartMenuMain.getSingletonInstance(); // using annotations
+        StartMenu startMenuMain = StartMenuMain.getSingletonInstance(navigator, executor); // using annotations
         startMenuMain.runMenu();
     }
 }

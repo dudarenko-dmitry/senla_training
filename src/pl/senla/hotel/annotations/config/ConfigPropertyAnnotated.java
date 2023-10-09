@@ -1,5 +1,8 @@
 package pl.senla.hotel.annotations.config;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+
+@AppComponent
 public class ConfigPropertyAnnotated {
 
     private static ConfigPropertyAnnotated configProperty;
@@ -7,7 +10,7 @@ public class ConfigPropertyAnnotated {
     public ConfigPropertyAnnotated() {
     }
 
-    public static ConfigPropertyAnnotated getConfigPropertyAnnotated() {
+    public static ConfigPropertyAnnotated getSingletonInstance() {
         if (configProperty == null) {
             configProperty = new ConfigPropertyAnnotated();
         }

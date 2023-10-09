@@ -58,11 +58,11 @@ public class DataProcessorFileEntity implements DataProcessor {
 
     @Override
     public void saveHotelFacility() {
-        if (DataStorageFacility.getDataStorageFacility().getDataList().isEmpty()) {
+        if (DataStorageFacility.getSingletonInstance().getDataList().isEmpty()) {
             System.out.println(ERROR_HOTEL_FACILITY_LIST_EMPTY);
         } else {
             try {
-                hotelFacilityReaderWriter.save(DataStorageFacility.getDataStorageFacility().getDataList());
+                hotelFacilityReaderWriter.save(DataStorageFacility.getSingletonInstance().getDataList());
             } catch (IOException e) {
                 System.out.println(ERROR_HOTEL_FACILITY_SAVE + e.getMessage());
             }
@@ -71,11 +71,11 @@ public class DataProcessorFileEntity implements DataProcessor {
 
     @Override
     public void saveGuests() {
-        if (DataStorageGuest.getDataStorageGuest().getDataList().isEmpty()) {
+        if (DataStorageGuest.getSingletonInstance().getDataList().isEmpty()) {
             System.out.println(ERROR_GUEST_LIST_EMPTY);
         } else {
             try {
-                guestReaderWriter.save(DataStorageGuest.getDataStorageGuest().getDataList());
+                guestReaderWriter.save(DataStorageGuest.getSingletonInstance().getDataList());
             } catch (IOException e) {
                 System.out.println(ERROR_GUEST_SAVE + e.getMessage());
             }
@@ -84,11 +84,11 @@ public class DataProcessorFileEntity implements DataProcessor {
 
     @Override
     public void saveHotelServices() {
-        if (DataStorageHotelService.getDataStorageHotelService().getDataList().isEmpty()) {
+        if (DataStorageHotelService.getSingletonInstance().getDataList().isEmpty()) {
             System.out.println(ERROR_SERVICES_LIST_EMPTY);
         } else {
             try {
-                hotelServiceReaderWriter.save(DataStorageHotelService.getDataStorageHotelService().getDataList());
+                hotelServiceReaderWriter.save(DataStorageHotelService.getSingletonInstance().getDataList());
             } catch (IOException e) {
                 System.out.println(ERROR_SERVICES_SAVE + e.getMessage());
             }
@@ -97,11 +97,11 @@ public class DataProcessorFileEntity implements DataProcessor {
 
     @Override
     public void saveOrders() {
-        if (DataStorageOrder.getDataStorageOrder().getDataList().isEmpty()) {
+        if (DataStorageOrder.getSingletonInstance().getDataList().isEmpty()) {
             System.out.println(ERROR_ORDER_LIST_EMPTY);
         } else {
             try {
-                orderReaderWriter.save(DataStorageOrder.getDataStorageOrder().getDataList());
+                orderReaderWriter.save(DataStorageOrder.getSingletonInstance().getDataList());
             } catch (IOException e) {
                 System.out.println(ERROR_ORDER_SAVE + e.getMessage());
             }
@@ -111,8 +111,8 @@ public class DataProcessorFileEntity implements DataProcessor {
     @Override
     public void loadHotelFacility() {
         try {
-            if (DataStorageFacility.getDataStorageFacility().getDataList().isEmpty()) {
-                DataStorageFacility.getDataStorageFacility().getDataList()
+            if (DataStorageFacility.getSingletonInstance().getDataList().isEmpty()) {
+                DataStorageFacility.getSingletonInstance().getDataList()
                         .addAll(hotelFacilityReaderWriter.load());
                 System.out.println(LOAD_HOTEL_FACILITY_LIST);
             } else {
@@ -121,14 +121,14 @@ public class DataProcessorFileEntity implements DataProcessor {
         } catch (IOException e) {
             System.out.println(ERROR_HOTEL_FACILITY_LIST_LOAD + e.getMessage());
         }
-        System.out.println(CONSOLE_READ_ALL_FACILITIES + DataStorageFacility.getDataStorageFacility().getDataList());
+        System.out.println(CONSOLE_READ_ALL_FACILITIES + DataStorageFacility.getSingletonInstance().getDataList());
     }
 
     @Override
     public void loadGuests() {
         try {
-            if (DataStorageGuest.getDataStorageGuest().getDataList().isEmpty()) {
-                DataStorageGuest.getDataStorageGuest().getDataList()
+            if (DataStorageGuest.getSingletonInstance().getDataList().isEmpty()) {
+                DataStorageGuest.getSingletonInstance().getDataList()
                         .addAll(guestReaderWriter.load());
                 System.out.println(LOAD_GUEST_LIST);
             } else {
@@ -137,14 +137,14 @@ public class DataProcessorFileEntity implements DataProcessor {
         } catch (IOException e) {
             System.out.println(ERROR_GUEST_LIST_LOAD + e.getMessage());
         }
-        System.out.println(CONSOLE_READ_ALL_GUESTS + DataStorageGuest.getDataStorageGuest().getDataList());
+        System.out.println(CONSOLE_READ_ALL_GUESTS + DataStorageGuest.getSingletonInstance().getDataList());
     }
 
     @Override
     public void loadHotelServices() {
         try {
-            if (DataStorageHotelService.getDataStorageHotelService().getDataList().isEmpty()) {
-                DataStorageHotelService.getDataStorageHotelService().getDataList()
+            if (DataStorageHotelService.getSingletonInstance().getDataList().isEmpty()) {
+                DataStorageHotelService.getSingletonInstance().getDataList()
                         .addAll(hotelServiceReaderWriter.load());
                 System.out.println(LOAD_SERVICES_LIST);
             } else {
@@ -153,14 +153,14 @@ public class DataProcessorFileEntity implements DataProcessor {
         } catch (IOException e) {
             System.out.println(ERROR_SERVICES_LIST_LOAD + e.getMessage());
         }
-        System.out.println(CONSOLE_READ_ALL_SERVICES + DataStorageHotelService.getDataStorageHotelService().getDataList());
+        System.out.println(CONSOLE_READ_ALL_SERVICES + DataStorageHotelService.getSingletonInstance().getDataList());
     }
 
     @Override
     public void loadOrders() {
         try {
-            if (DataStorageOrder.getDataStorageOrder().getDataList().isEmpty()) {
-                DataStorageOrder.getDataStorageOrder().getDataList()
+            if (DataStorageOrder.getSingletonInstance().getDataList().isEmpty()) {
+                DataStorageOrder.getSingletonInstance().getDataList()
                         .addAll(orderReaderWriter.load());
                 System.out.println(LOAD_ORDER_LIST);
             } else {
@@ -169,7 +169,7 @@ public class DataProcessorFileEntity implements DataProcessor {
         } catch (IOException e) {
             System.out.println(ERROR_ORDER_LIST_LOAD + e.getMessage());
         }
-        System.out.println(CONSOLE_READ_ALL_ORDERS + DataStorageOrder.getDataStorageOrder().getDataList());
+        System.out.println(CONSOLE_READ_ALL_ORDERS + DataStorageOrder.getSingletonInstance().getDataList());
     }
 
 }

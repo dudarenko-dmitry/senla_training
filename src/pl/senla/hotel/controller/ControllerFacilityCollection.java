@@ -1,27 +1,30 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.service.ServiceFacility;
-import pl.senla.hotel.service.ServiceFacilityImpl;
 import pl.senla.hotel.service.ServiceRoom;
-import pl.senla.hotel.service.ServiceRoomImpl;
 
 import java.util.List;
 
+@AppComponent
 public class ControllerFacilityCollection implements ControllerFacility{
 
     private static ControllerFacility controllerFacility;
+    @GetInstance(beanName = "ServiceFacilityImpl")
     private final ServiceFacility serviceFacility;
+    @GetInstance(beanName = "ServiceRoomImpl")
     private final ServiceRoom serviceRoom;
 
-    private ControllerFacilityCollection() {
-        this.serviceFacility = ServiceFacilityImpl.getServiceFacility();
-        this.serviceRoom = ServiceRoomImpl.getServiceRoom();
+    private ControllerFacilityCollection(ServiceFacility serviceFacility, ServiceRoom serviceRoom) {
+        this.serviceFacility = serviceFacility;
+        this.serviceRoom = serviceRoom;
     }
 
-    public static ControllerFacility getControllerFacility(){
+    public static ControllerFacility getSingletonInstance(ServiceFacility serviceFacility, ServiceRoom serviceRoom){
         if(controllerFacility == null){
-            controllerFacility = new ControllerFacilityCollection();
+            controllerFacility = new ControllerFacilityCollection(serviceFacility, serviceRoom);
         }
         return controllerFacility;
     }

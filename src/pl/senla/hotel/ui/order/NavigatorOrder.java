@@ -1,11 +1,13 @@
 package pl.senla.hotel.ui.order;
 
+import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.Item0QuitToMain;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_ORDER;
 
+@AppComponent
 public class NavigatorOrder implements Navigator {
 
     private static Navigator navigator;
@@ -21,7 +23,7 @@ public class NavigatorOrder implements Navigator {
         this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item0};
     }
 
-    public static Navigator getNavigatorOrder(){
+    public static Navigator getSingletonInstance(){
         if (navigator == null) {
             navigator = new NavigatorOrder();
         }

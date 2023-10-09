@@ -1,25 +1,37 @@
 package pl.senla.hotel.ui.guest;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
+import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.main.StartMenuMain;
 
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
+@AppComponent
 public class ExecutorGuest implements Executor {
 
     private static Executor executor;
+    @GetInstance(beanName = "ControllerGuestCollection")
     private final ControllerGuest guestController;
+    @GetInstance(beanName = "NavigatorMainMenu")
+    private final Navigator navigatorMain;
+    @GetInstance(beanName = "ExecutorMain")
+    private final Executor executorMain;
 
-    private ExecutorGuest() {
-        this.guestController = ControllerGuestCollection.getControllerGuest();
+    private ExecutorGuest(ControllerGuest guestController, Navigator navigatorMain, Executor executorMain) {
+        this.guestController = guestController;
+        this.navigatorMain = navigatorMain;
+        this.executorMain = executorMain;
     }
 
-    public static Executor getExecutorGuest(){
+    public static Executor getSingletonInstance(ControllerGuest guestController,
+                                                Navigator navigatorMain, Executor executorMain){
         if (executor == null) {
-            executor = new ExecutorGuest();
+            executor = new ExecutorGuest(guestController, navigatorMain, executorMain);
         }
         return executor;
     }
@@ -57,10 +69,10 @@ public class ExecutorGuest implements Executor {
                 int idGuestDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_GUEST + guestController.delete(idGuestDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu().runMenu();
+            case 0 -> StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuGuest.getStartMenuGuest().runMenu();
+                StartMenuGuest.getSingletonInstance(navigatorMain, executorMain).runMenu();
             }
         }
     }

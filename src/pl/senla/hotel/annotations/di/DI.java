@@ -17,20 +17,20 @@ public class DI {
         return injector;
     }
 
-    public void inject(List<Class<?>> classes, DIContainer container) {
+    public void inject(List<Class<?>> classes) {
         try {
-            Map<Class<?>, Object> context = container.getSingletonContainer();
+//            Map<Class<?>, Object> context = container.getSingletonContainer();
             for (Class<?> c : classes) {
                 Field[] fields = c.getDeclaredFields();
                 for (Field field : fields) {
                     GetInstance annotation = field.getAnnotation(GetInstance.class);
                     if (annotation != null) {
                         field.setAccessible(true);
-//                        String implName = annotation.beanName();
-//                        String packageName = field.getType().getPackage().getName();
-//                        Object instance = Class.forName(packageName + '.' + implName).getConstructor().newInstance();
-//                        field.set(c, instance);
-                        field.set(c, context.get(c));
+                        String implName = annotation.beanName();
+                        String packageName = field.getType().getPackage().getName();
+                        Object instance = Class.forName(packageName + '.' + implName).getConstructor().newInstance();
+                        field.set(c, instance);
+//                        field.set(c, context.get(c));
                     }
                 }
             }

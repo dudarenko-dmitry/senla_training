@@ -1,23 +1,26 @@
 package pl.senla.hotel.repository;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.storage.DataStorage;
-import pl.senla.hotel.storage.DataStorageOrder;
 
 import java.util.List;
 
+@AppComponent
 public class RepositoryOrderCollection implements Repository<Order> {
 
     private static Repository<Order> repositoryOrder;
+    @GetInstance(beanName = "DataStorageOrder")
     private final DataStorage<Order> orderDataStorage;
 
-    private RepositoryOrderCollection() {
-        this.orderDataStorage = DataStorageOrder.getDataStorageOrder();
+    private RepositoryOrderCollection(DataStorage<Order> orderDataStorage) {
+        this.orderDataStorage = orderDataStorage;
     }
 
-    public static Repository<Order> getRepositoryOrder(){
+    public static Repository<Order> getSingletonInstance(DataStorage<Order> orderDataStorage){
         if(repositoryOrder == null){
-            repositoryOrder = new RepositoryOrderCollection();
+            repositoryOrder = new RepositoryOrderCollection(orderDataStorage);
         }
         return repositoryOrder;
     }

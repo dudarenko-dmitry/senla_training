@@ -1,10 +1,12 @@
 package pl.senla.hotel.ui.services;
 
+import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE;
 
+@AppComponent
 public class NavigatorHotelService implements Navigator {
 
     private static Navigator navigatorHotelService;
@@ -20,7 +22,7 @@ public class NavigatorHotelService implements Navigator {
         this.menuItems = new MenuItem[]{item1, item2, item3, item0};
     }
 
-    public static Navigator getNavigatorHotelService() {
+    public static Navigator getSingletonInstance() {
         if (navigatorHotelService == null) {
             navigatorHotelService = new NavigatorHotelService();
         }

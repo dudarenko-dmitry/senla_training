@@ -1,7 +1,10 @@
 package pl.senla.hotel.configuration;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+
 import java.util.Properties;
 
+@AppComponent
 public class AppConfiguration implements Configuration{
 
     private static AppConfiguration appConfiguration;
@@ -12,7 +15,7 @@ public class AppConfiguration implements Configuration{
         properties = propertiesLoader.loadConfiguration();
     }
 
-    public static AppConfiguration getAppConfiguration() {
+    public static AppConfiguration getSingletonInstance() {
         if (appConfiguration == null) {
             appConfiguration = new AppConfiguration();
         }

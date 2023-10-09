@@ -1,6 +1,7 @@
 package pl.senla.hotel.ie.serialization;
 
 import pl.senla.hotel.annotations.config.ConfigProperty;
+import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.entity.SavedHotel;
 
 import java.io.*;
@@ -8,6 +9,7 @@ import java.io.*;
 import static pl.senla.hotel.constant.InputOutputConstant.ERROR_READ_SERIALIZATION_FILE;
 import static pl.senla.hotel.constant.InputOutputConstant.ERROR_WRITE_SERIALIZATION_FILE;
 
+@AppComponent
 public class ProcessorSerializable implements Processor{
 
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.serialization")
@@ -17,7 +19,7 @@ public class ProcessorSerializable implements Processor{
 
     @Override
     public SavedHotel loadHotel() {
-        try (FileInputStream fis = new FileInputStream(filePathSerialization + fileNameSerialization);
+        try (FileInputStream fis = new FileInputStream("C://IT/Serialization/" + "hotel.ser");
              ObjectInputStream ois = new ObjectInputStream(fis))
         {
             return (SavedHotel) ois.readObject();

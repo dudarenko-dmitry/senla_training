@@ -1,24 +1,27 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.service.ServiceRoomReservationImpl;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.service.ServiceRoomReservation;
 
 import java.util.List;
 
+@AppComponent
 public class ControllerRoomReservationCollection implements ControllerRoomReservation {
 
     private static ControllerRoomReservation controllerRoomReservation;
+    @GetInstance(beanName = "ServiceRoomReservationImpl")
     private final ServiceRoomReservation roomReservationService;
 
-    private ControllerRoomReservationCollection() {
-        this.roomReservationService = ServiceRoomReservationImpl.getServiceRoomReservation();
+    private ControllerRoomReservationCollection(ServiceRoomReservation roomReservationService) {
+        this.roomReservationService = roomReservationService;
     }
 
-    public static ControllerRoomReservation getControllerRoomReservation(){
+    public static ControllerRoomReservation getSingletonInstance(ServiceRoomReservation roomReservationService){
         if(controllerRoomReservation == null){
-            controllerRoomReservation = new ControllerRoomReservationCollection();
+            controllerRoomReservation = new ControllerRoomReservationCollection(roomReservationService);
         }
         return controllerRoomReservation;
     }

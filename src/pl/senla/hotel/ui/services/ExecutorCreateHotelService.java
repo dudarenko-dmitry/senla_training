@@ -1,29 +1,40 @@
 package pl.senla.hotel.ui.services;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.controller.ControllerFacility;
-import pl.senla.hotel.controller.ControllerFacilityCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
-import pl.senla.hotel.controller.ControllerRoomReservationCollection;
+import pl.senla.hotel.ui.Navigator;
 
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.HotelFacilityConstant.ERROR_READ_ROOM;
 
+@AppComponent
 public class ExecutorCreateHotelService {
 
     private static ExecutorCreateHotelService executor;
+    @GetInstance(beanName = "ControllerRoomReservationCollection")
     private final ControllerRoomReservation roomReservationController;
+    @GetInstance(beanName = "ControllerFacilityCollection")
     private final ControllerFacility controllerFacility;
+    @GetInstance(beanName = "NavigatorHotelService")
+    private final Navigator navigator;
 
-    private ExecutorCreateHotelService() {
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation();
-        this.controllerFacility = ControllerFacilityCollection.getControllerFacility();
+    private ExecutorCreateHotelService(ControllerRoomReservation roomReservationController,
+                                       ControllerFacility controllerFacility,
+                                       Navigator navigator) {
+        this.roomReservationController = roomReservationController;
+        this.controllerFacility = controllerFacility;
+        this.navigator = navigator;
     }
 
-    public static ExecutorCreateHotelService getExecutorCreateHotelService(){
+    public static ExecutorCreateHotelService getSingletonInstance(ControllerRoomReservation roomReservationController,
+                                                                  ControllerFacility controllerFacility,
+                                                                  Navigator navigator){
         if (executor == null) {
-            executor = new ExecutorCreateHotelService();
+            executor = new ExecutorCreateHotelService(roomReservationController, controllerFacility, navigator);
         }
         return executor;
     }
@@ -65,7 +76,7 @@ public class ExecutorCreateHotelService {
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartCreateHotelService.getStartCreateHotelService().runMenu(idOrder, idGuest);
+                StartCreateHotelService.getSingletonInstance(navigator, executor).runMenu(idOrder, idGuest);
             }
         }
         return true;

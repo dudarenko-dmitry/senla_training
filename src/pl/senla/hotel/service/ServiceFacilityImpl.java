@@ -1,10 +1,10 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RepositoryFacilityCollection;
-import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,20 +12,25 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
+@AppComponent
 public class ServiceFacilityImpl implements ServiceFacility{
 
     private static ServiceFacility serviceFacility;
+    @GetInstance(beanName = "RepositoryFacilityCollection")
     private final Repository<HotelFacility> repositoryHotelFacility;
+    @GetInstance(beanName = "RepositoryRoomCollection")
     private final Repository<Room> repositoryRoom;
 
-    private ServiceFacilityImpl() {
-        this.repositoryHotelFacility = RepositoryFacilityCollection.getRepositoryFacility();
-        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
+    private ServiceFacilityImpl(Repository<HotelFacility> repositoryHotelFacility,
+                                Repository<Room> repositoryRoom) {
+        this.repositoryHotelFacility = repositoryHotelFacility;
+        this.repositoryRoom = repositoryRoom;
     }
 
-    public static ServiceFacility getServiceFacility(){
+    public static ServiceFacility getSingletonInstance(Repository<HotelFacility> repositoryHotelFacility,
+                                                       Repository<Room> repositoryRoom){
         if (serviceFacility == null){
-            serviceFacility = new ServiceFacilityImpl();
+            serviceFacility = new ServiceFacilityImpl(repositoryHotelFacility, repositoryRoom);
         }
         return serviceFacility;
     }

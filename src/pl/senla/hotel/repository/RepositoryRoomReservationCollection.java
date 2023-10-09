@@ -1,23 +1,26 @@
 package pl.senla.hotel.repository;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.storage.DataStorage;
-import pl.senla.hotel.storage.DataStorageRoomReservation;
 
 import java.util.List;
 
+@AppComponent
 public class RepositoryRoomReservationCollection implements Repository<RoomReservation> {
 
     private static Repository<RoomReservation> repositoryRoomReservation;
+    @GetInstance(beanName = "DataStorageRoomReservation")
     private final DataStorage<RoomReservation> dataStorageRoomReservation;
 
-    private RepositoryRoomReservationCollection() {
-        this.dataStorageRoomReservation = DataStorageRoomReservation.getDataStorageRoomReservation();
+    private RepositoryRoomReservationCollection(DataStorage<RoomReservation> dataStorageRoomReservation) {
+        this.dataStorageRoomReservation = dataStorageRoomReservation;
     }
 
-    public static Repository<RoomReservation> getRepositoryRoomReservation(){
+    public static Repository<RoomReservation> getSingletonInstance(DataStorage<RoomReservation> dataStorageRoomReservation){
         if(repositoryRoomReservation == null){
-            repositoryRoomReservation = new RepositoryRoomReservationCollection();
+            repositoryRoomReservation = new RepositoryRoomReservationCollection(dataStorageRoomReservation);
         }
         return repositoryRoomReservation;
     }

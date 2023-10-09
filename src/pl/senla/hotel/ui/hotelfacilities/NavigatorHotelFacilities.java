@@ -1,19 +1,30 @@
 package pl.senla.hotel.ui.hotelfacilities;
 
+import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.MenuItem;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_FACILITY;
 
+@AppComponent
 public class NavigatorHotelFacilities implements Navigator {
 
+    private static NavigatorHotelFacilities navigatorHotelFacilities;
+    private NavigatorHotelFacilities(){}
     private final String nameMenu = MENU_HOTEL_FACILITY;
     private final MenuItem item1 = new Item1RoomOperation();
     private final MenuItem item2 = new Item2TableOperation();
     private final MenuItem item3 = new Item3TransportOperation();
     private final MenuItem item0 = new Item0QuitToMain();
     private final MenuItem[] menuItems = {item1, item2, item3, item0};
+
+    public static NavigatorHotelFacilities getSingletonInstance() {
+        if (navigatorHotelFacilities == null) {
+            navigatorHotelFacilities = new NavigatorHotelFacilities();
+        }
+        return navigatorHotelFacilities;
+    }
 
     public String getNameMenu() {
         return nameMenu;

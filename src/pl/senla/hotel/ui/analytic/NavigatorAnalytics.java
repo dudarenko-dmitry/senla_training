@@ -1,11 +1,13 @@
 package pl.senla.hotel.ui.analytic;
 
+import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_ANALYTICS_REPORTS;
 
+@AppComponent
 public class NavigatorAnalytics implements Navigator {
 
     private static Navigator navigator;
@@ -39,7 +41,7 @@ public class NavigatorAnalytics implements Navigator {
                 item14, item15, item16, item17, item18, item19, item0};
     }
 
-    public static Navigator getNavigatorAnalytics(){
+    public static Navigator getSingletonInstance(){
         if (navigator == null) {
             navigator = new NavigatorAnalytics();
         }

@@ -9,6 +9,7 @@ import java.util.Map;
 @AppComponent
 public class DIContainer {
 
+    @GetInstance
     private final ClassCollector classCollector = ClassCollector.getInstanceLoader();
     private final String packageName = "pl.senla.hotel";
     private final Map<Class<?>, Object> singletonInstances = new HashMap<>();

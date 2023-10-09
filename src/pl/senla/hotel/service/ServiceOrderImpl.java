@@ -1,10 +1,15 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
 import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.repository.*;
+import pl.senla.hotel.ui.Navigator;
+import pl.senla.hotel.ui.services.ExecutorCreateHotelService;
 import pl.senla.hotel.ui.services.StartCreateHotelService;
 
 import java.util.Collections;
@@ -14,20 +19,40 @@ import java.util.List;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.OrderConstant.*;
 
+@AppComponent
 public class ServiceOrderImpl implements ServiceOrder {
 
     private static ServiceOrder serviceOrder;
+    @GetInstance(beanName = "ServiceHotelServiceImpl")
     private final ServiceHotelService serviceHotelService;
+    @GetInstance(beanName = "RepositoryOrderCollection")
     private final Repository<Order> repositoryOrder;
+    @GetInstance(beanName = "RepositoryRoomCollection")
+    private final Repository<Room> repositoryRoom;
+    @GetInstance(beanName = "NavigatorHotelService")
+    private final Navigator navigator;
+    @GetInstance(beanName = "ExecutorCreateHotelService")
+    private final ExecutorCreateHotelService executor;
 
-    private ServiceOrderImpl() {
-        this.serviceHotelService = ServiceHotelServiceImpl.getServiceHotelService();
-        this.repositoryOrder = RepositoryOrderCollection.getRepositoryOrder();
+    private ServiceOrderImpl(ServiceHotelService serviceHotelService,
+                             Repository<Order> repositoryOrder,
+                             Repository<Room> repositoryRoom,
+                             Navigator navigator,
+                             ExecutorCreateHotelService executor) {
+        this.serviceHotelService = serviceHotelService;
+        this.navigator = navigator;
+        this.executor = executor;
+        this.repositoryOrder = repositoryOrder;
+        this.repositoryRoom = repositoryRoom;
     }
 
-    public static ServiceOrder getServiceOrder() {
+    public static ServiceOrder getSingletonInstance(ServiceHotelService serviceHotelService,
+                                                    Repository<Order> repositoryOrder,
+                                                    Repository<Room> repositoryRoom,
+                                                    Navigator navigator,
+                                                    ExecutorCreateHotelService executor) {
         if (serviceOrder == null) {
-            serviceOrder = new ServiceOrderImpl();
+            serviceOrder = new ServiceOrderImpl(serviceHotelService, repositoryOrder, repositoryRoom, navigator, executor);
         }
         return serviceOrder;
     }
@@ -48,7 +73,7 @@ public class ServiceOrderImpl implements ServiceOrder {
         order.setIdGuest(idGuest);
         int idOrderNew = getIdOrderNew();
         order.setIdOrder(idOrderNew);
-        StartCreateHotelService.getStartCreateHotelService().runMenu(idOrderNew, idGuest);
+        StartCreateHotelService.getSingletonInstance(navigator, executor).runMenu(idOrderNew, idGuest);
         List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrderNew);
         order.setServices(idServicesInOrder);
         return repositoryOrder.create(order);
@@ -113,7 +138,7 @@ public class ServiceOrderImpl implements ServiceOrder {
                 .flatMap(o -> o.getServices()
                         .stream()
                         .map(serviceHotelService::read))
-                .sorted(new HotelServicesComparatorByPrice())
+                .sorted(new HotelServicesComparatorByPrice(repositoryRoom))
                 .toList();
     }
 

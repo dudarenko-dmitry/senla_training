@@ -1,19 +1,25 @@
 package pl.senla.hotel.utils;
 
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;
+import pl.senla.hotel.service.ServiceRoom;
 
 import java.time.LocalDateTime;
 
 public final class RoomReservationUtil {
 
-    private RoomReservationUtil() {
+    @GetInstance(beanName = "ServiceRoomImpl")
+    private final ServiceRoom serviceRoom;
+
+    private RoomReservationUtil(ServiceRoom serviceRoom) {
+        this.serviceRoom = serviceRoom;
     }
 
-    public static RoomReservation convertCsvToRoomReservation(String csv) {
+    public static RoomReservation convertCsvToRoomReservation(String csv, ServiceRoom serviceRoom) {
         String[] text = csv.split(";");
-        RoomReservation reservation = new RoomReservation();
+        RoomReservation reservation = new RoomReservation(serviceRoom);
         reservation.setIdService(Integer.valueOf(text[0].substring(1,text[0].length() - 1)));
         reservation.setIdOrder(Integer.valueOf(text[1].substring(1,text[1].length() - 1)));
         reservation.setTypeOfService(TypeOfService.valueOf(text[2].substring(1,text[2].length() - 1)));

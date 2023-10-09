@@ -1,10 +1,14 @@
 package pl.senla.hotel.annotations.config;
 
+import org.reflections.Reflections;
+import org.reflections.scanners.FieldAnnotationsScanner;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Properties;
+import java.util.Set;
 
 public class ConfigPropertyAnnotationLoader {
 
@@ -19,6 +23,26 @@ public class ConfigPropertyAnnotationLoader {
 
     public void load(Object configProperties) throws IllegalAccessException {
         Field[] fields = configProperties.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            ConfigProperty annotation = field.getAnnotation(ConfigProperty.class);
+            if (annotation != null) {
+                field.setAccessible(true);
+                String configFileName = annotation.configFileName();
+                String propertyName = annotation.propertyName();
+                String type = annotation.type();
+                if (configName.equals(EMPTY)) {
+                    setField(this.configDirectory, this.configName, field, propertyName, type, configProperties);
+                } else {
+                    setField(configDirectory, configFileName, field, propertyName, type, configProperties);
+                }
+            }
+        }
+    }
+
+    public void loadConfiguration(Object configProperties) throws IllegalAccessException {
+        Reflections reflections = new Reflections("pl.senla.hotel", new FieldAnnotationsScanner());
+
+        Set<Field> fields = reflections.getFieldsAnnotatedWith(ConfigProperty.class);
         for (Field field : fields) {
             ConfigProperty annotation = field.getAnnotation(ConfigProperty.class);
             if (annotation != null) {

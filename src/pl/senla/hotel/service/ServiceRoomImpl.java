@@ -1,9 +1,10 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.annotations.config.ConfigProperty;
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RepositoryFacilityCollection;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,20 +13,22 @@ import java.util.List;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
+@AppComponent
 public class ServiceRoomImpl implements ServiceRoom {
 
     private static ServiceRoom serviceRoom;
+    @GetInstance(beanName = "RepositoryFacilityCollection")
     private final Repository<HotelFacility> repositoryFacility;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
     private Boolean changeRoomStatusEnabled;
 
-    private ServiceRoomImpl() {
-        this.repositoryFacility = RepositoryFacilityCollection.getRepositoryFacility();
+    private ServiceRoomImpl(Repository<HotelFacility> repositoryFacility) {
+        this.repositoryFacility = repositoryFacility;
     }
 
-    public static ServiceRoom getServiceRoom() {
+    public static ServiceRoom getSingletonInstance(Repository<HotelFacility> repositoryFacility) {
         if (serviceRoom == null) {
-            serviceRoom = new ServiceRoomImpl();
+            serviceRoom = new ServiceRoomImpl(repositoryFacility);
         }
         return serviceRoom;
     }

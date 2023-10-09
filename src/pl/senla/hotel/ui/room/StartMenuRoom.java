@@ -1,23 +1,27 @@
 package pl.senla.hotel.ui.room;
 
+import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
 
+@AppComponent
 public class StartMenuRoom implements StartMenu {
 
     private static StartMenu startMenuRoom;
     private final Navigator navigator;
+    @GetInstance(beanName = "ExecutorRoom")
     private final Executor executor;
 
-    private StartMenuRoom() {
-        this.navigator = NavigatorRoom.getNavigatorRoom();
-        this.executor = ExecutorRoom.getExecutorRoom();
+    private StartMenuRoom(Executor executor) {
+        this.navigator = NavigatorRoom.getSingletonInstance();
+        this.executor = executor;
     }
 
-    public static StartMenu getStartMenuRoom(){
+    public static StartMenu getSingletonInstance(Executor executor){
         if (startMenuRoom == null) {
-            startMenuRoom = new StartMenuRoom();
+            startMenuRoom = new StartMenuRoom(executor);
         }
         return startMenuRoom;
     }

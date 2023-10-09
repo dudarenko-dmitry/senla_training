@@ -1,18 +1,19 @@
 package pl.senla.hotel.comparators;
 
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RepositoryGuestCollection;
 
 import java.util.Comparator;
 
 public class RoomReservationsComparatorByGuestName implements Comparator<RoomReservation> {
 
+    @GetInstance(beanName = "RepositoryGuestCollection")
     private final Repository<Guest> repositoryGuest;
 
-    public RoomReservationsComparatorByGuestName() {
-        this.repositoryGuest = RepositoryGuestCollection.getRepositoryGuest();
+    public RoomReservationsComparatorByGuestName(Repository<Guest> repositoryGuest) {
+        this.repositoryGuest = repositoryGuest;
     }
 
     @Override

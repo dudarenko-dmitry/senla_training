@@ -1,11 +1,13 @@
 package pl.senla.hotel.ui.ie;
 
+import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_INPUT_OUTPUT;
 
+@AppComponent
 public class NavigatorMenuImportExport implements Navigator {
 
     private static Navigator navigator;
@@ -26,7 +28,7 @@ public class NavigatorMenuImportExport implements Navigator {
         this.menuItems = new MenuItem[] {item1, item2, item3, item4, item5, item6, item7, item8, item0};
     }
 
-    public static Navigator getNavigator() {
+    public static Navigator getSingletonInstance() {
         if (navigator == null) {
             navigator = new NavigatorMenuImportExport();
         }

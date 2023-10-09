@@ -1,14 +1,16 @@
 package pl.senla.hotel.storage;
 
+import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.entity.services.RoomReservation;
 
+@AppComponent
 public class DataStorageRoomReservation extends DataStorage<RoomReservation>{
 
     private static DataStorageRoomReservation dataStorageRoomReservation;
 
     private DataStorageRoomReservation(){}
 
-    public static DataStorageRoomReservation getDataStorageRoomReservation(){
+    public static DataStorageRoomReservation getSingletonInstance(){
         if(dataStorageRoomReservation == null) {
             dataStorageRoomReservation = new DataStorageRoomReservation();
         }

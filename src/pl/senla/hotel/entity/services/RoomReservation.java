@@ -1,7 +1,7 @@
 package pl.senla.hotel.entity.services;
 
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.service.ServiceRoom;
-import pl.senla.hotel.service.ServiceRoomImpl;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,19 +19,20 @@ public class RoomReservation extends HotelService implements Serializable {
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
     private Integer cost;
+    @GetInstance(beanName = "ServiceRoomImpl")
     private final transient ServiceRoom serviceRoom;
 
     @Serial
     private static final long serialVersionUID = 10L;
 
-    public RoomReservation() {
-        this.serviceRoom = ServiceRoomImpl.getServiceRoom();
+    public RoomReservation(ServiceRoom serviceRoom) {
+        this.serviceRoom = serviceRoom;
     }
 
     public RoomReservation(Integer idService, Integer idOrder, Integer idGuest, Integer idRoom,
-                           LocalDate startDate, Integer numberOfDays) {
+                           LocalDate startDate, Integer numberOfDays, ServiceRoom serviceRoom) {
         super(idService, idOrder, TypeOfService.RESTAURANT, idGuest);
-        this.serviceRoom = ServiceRoomImpl.getServiceRoom();
+        this.serviceRoom = serviceRoom;
         if(idRoom == null){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
