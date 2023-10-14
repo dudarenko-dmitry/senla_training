@@ -12,14 +12,15 @@ import static pl.senla.hotel.constant.InputOutputConstant.ERROR_WRITE_SERIALIZAT
 @AppComponent
 public class ProcessorSerializable implements Processor{
 
+    // не считывает данные аннотации без Static!!!
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.serialization")
-    private String filePathSerialization;
+    private static String filePathSerialization;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-name.serialization")
-    private String fileNameSerialization;
+    private static String fileNameSerialization;
 
     @Override
     public SavedHotel loadHotel() {
-        try (FileInputStream fis = new FileInputStream("C://IT/Serialization/" + "hotel.ser");
+        try (FileInputStream fis = new FileInputStream(filePathSerialization + fileNameSerialization);
              ObjectInputStream ois = new ObjectInputStream(fis))
         {
             return (SavedHotel) ois.readObject();

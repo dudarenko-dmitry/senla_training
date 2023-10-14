@@ -43,7 +43,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     @GetInstance(beanName = "ServiceRoomImpl")
     private final transient ServiceRoom serviceRoom;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
-    private Integer roomRecordsNumber;
+    private static Integer roomRecordsNumber;
 
     private ServiceRoomReservationImpl(ServiceFacility serviceHotelFacility,
                                        Repository<HotelService> repositoryHotelService,

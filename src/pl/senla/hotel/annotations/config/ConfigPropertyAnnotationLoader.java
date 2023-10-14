@@ -1,12 +1,11 @@
 package pl.senla.hotel.annotations.config;
 
-import org.reflections.Reflections;
-import org.reflections.scanners.FieldAnnotationsScanner;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 import java.util.Set;
 
@@ -21,46 +20,33 @@ public class ConfigPropertyAnnotationLoader {
         this.configDirectory = configDirectory;
     }
 
-    public void load(Object configProperties) throws IllegalAccessException {
-        Field[] fields = configProperties.getClass().getDeclaredFields();
+    public void load(Set<Field> fields) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         for (Field field : fields) {
             ConfigProperty annotation = field.getAnnotation(ConfigProperty.class);
             if (annotation != null) {
-                field.setAccessible(true);
-                String configFileName = annotation.configFileName();
-                String propertyName = annotation.propertyName();
-                String type = annotation.type();
-                if (configName.equals(EMPTY)) {
-                    setField(this.configDirectory, this.configName, field, propertyName, type, configProperties);
-                } else {
-                    setField(configDirectory, configFileName, field, propertyName, type, configProperties);
+                Class<?> declaringClass = field.getDeclaringClass();
+                Object object;
+                try {
+                    Constructor<?> constructor = declaringClass.getConstructor();
+                    object = constructor.newInstance();
+                } catch (NoSuchMethodException e) {
+                    object = null;
                 }
-            }
-        }
-    }
-
-    public void loadConfiguration(Object configProperties) throws IllegalAccessException {
-        Reflections reflections = new Reflections("pl.senla.hotel", new FieldAnnotationsScanner());
-
-        Set<Field> fields = reflections.getFieldsAnnotatedWith(ConfigProperty.class);
-        for (Field field : fields) {
-            ConfigProperty annotation = field.getAnnotation(ConfigProperty.class);
-            if (annotation != null) {
                 field.setAccessible(true);
                 String configFileName = annotation.configFileName();
                 String propertyName = annotation.propertyName();
                 String type = annotation.type();
                 if (configName.equals(EMPTY)) {
-                    setField(this.configDirectory, this.configName, field, propertyName, type, configProperties);
+                    setField(this.configDirectory, this.configName, field, propertyName, type, object);
                 } else {
-                    setField(configDirectory, configFileName, field, propertyName, type, configProperties);
+                    setField(configDirectory, configFileName, field, propertyName, type, object);
                 }
             }
         }
     }
 
     private void setField(String configDirectory, String configName, Field field, String propertyName, String type,
-                          Object configProperties) throws IllegalAccessException {
+                          Object object) throws IllegalAccessException {
         Properties properties = loadProperty(configDirectory, configName);
         String fieldName = field.getName();
         String propertyValue;
@@ -69,7 +55,7 @@ public class ConfigPropertyAnnotationLoader {
         } else {
             propertyValue = properties.getProperty(propertyName);
         }
-        setFieldValue(field, propertyValue, type, configProperties);
+        setFieldValue(field, propertyValue, type, object);
     }
 
     private Properties loadProperty(String configDirectory, String configName) {
@@ -83,10 +69,10 @@ public class ConfigPropertyAnnotationLoader {
     }
 
     private void setFieldValue(Field field, String propertyValue, String type,
-                               Object configProperties) throws IllegalAccessException {
+                               Object object) throws IllegalAccessException {
         String typeEnum = type.toUpperCase();
         TypeOfField typeOfField = TypeOfField.valueOf(typeEnum);
-        typeOfField.setField(field, propertyValue, configProperties);
+        typeOfField.setField(field, propertyValue, object);
     }
 
 }

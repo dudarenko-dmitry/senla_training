@@ -5,52 +5,52 @@ import java.lang.reflect.Field;
 public enum TypeOfField {
     STRING {
         @Override
-        public void setField(Field field, String propertyValue, Object config) throws IllegalAccessException {
-            field.set(config, propertyValue);
+        public void setField(Field field, String propertyValue, Object object) throws IllegalAccessException {
+            field.set(object, propertyValue);
         }
     },
     INTEGER {
         @Override
-        public void setField(Field field, String propertyValue, Object config) throws IllegalAccessException {
-            field.set(config, Integer.valueOf(propertyValue));
+        public void setField(Field field, String propertyValue, Object object) throws IllegalAccessException {
+            field.set(object, Integer.valueOf(propertyValue));
         }
     },
     BOOLEAN {
         @Override
-        public void setField(Field field, String propertyValue, Object config) throws IllegalAccessException {
-            field.set(config, Boolean.valueOf(propertyValue));
+        public void setField(Field field, String propertyValue, Object object) throws IllegalAccessException {
+            field.set(object, Boolean.valueOf(propertyValue));
         }
     },
     BYTE {
         @Override
-        public void setField(Field field, String propertyValue, Object config) throws IllegalAccessException {
-            field.set(config, Byte.valueOf(propertyValue));
+        public void setField(Field field, String propertyValue, Object object) throws IllegalAccessException {
+            field.set(object, Byte.valueOf(propertyValue));
         }
     },
     SHORT {
         @Override
-        public void setField(Field field, String propertyValue, Object config) throws IllegalAccessException {
-            field.set(config, Short.valueOf(propertyValue));
+        public void setField(Field field, String propertyValue, Object object) throws IllegalAccessException {
+            field.set(object, Short.valueOf(propertyValue));
         }
     },
     LONG {
         @Override
-        public void setField(Field field, String propertyValue, Object config) throws IllegalAccessException {
-            field.set(config, Long.valueOf(propertyValue));
+        public void setField(Field field, String propertyValue, Object object) throws IllegalAccessException {
+            field.set(object, Long.valueOf(propertyValue));
         }
     },
     FLOAT {
         @Override
-        public void setField(Field field, String propertyValue, Object config) throws IllegalAccessException {
-            field.set(config, Float.valueOf(propertyValue));
+        public void setField(Field field, String propertyValue, Object object) throws IllegalAccessException {
+            field.set(object, Float.valueOf(propertyValue));
         }
     },
     DOUBLE {
         @Override
-        public void setField(Field field, String propertyValue, Object config) throws IllegalAccessException {
-            field.set(config, Double.valueOf(propertyValue));
+        public void setField(Field field, String propertyValue, Object object) throws IllegalAccessException {
+            field.set(object, Double.valueOf(propertyValue));
         }
     };
 
-    public abstract void setField(Field field, String propertyValue, Object config) throws IllegalAccessException;
+    public abstract void setField(Field field, String propertyValue, Object object) throws IllegalAccessException;
 }

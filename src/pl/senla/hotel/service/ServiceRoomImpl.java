@@ -19,8 +19,9 @@ public class ServiceRoomImpl implements ServiceRoom {
     private static ServiceRoom serviceRoom;
     @GetInstance(beanName = "RepositoryFacilityCollection")
     private final Repository<HotelFacility> repositoryFacility;
+    // не считывает данную аннотацию без Static!!!
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
-    private Boolean changeRoomStatusEnabled;
+    private static Boolean changeRoomStatusEnabled;
 
     private ServiceRoomImpl(Repository<HotelFacility> repositoryFacility) {
         this.repositoryFacility = repositoryFacility;
