@@ -17,12 +17,8 @@ public class StartCreateHotelService {
     public StartCreateHotelService() {}
 
     public boolean runMenu(int idOrder, int idGuest) throws IllegalAccessException {
-        int userChoice;
-        do {
-            navigator.buildMenu();
-            userChoice = navigator.makeChoice();
-            System.out.println(CONSOLE_CREATE_SERVICE + executor.createHotelServiceForGuest(idOrder, idGuest, userChoice));
-        } while (userChoice != 0);
+        navigator.buildMenu();
+        System.out.println(CONSOLE_CREATE_SERVICE + executor.createHotelServiceForGuest(idOrder, idGuest));
         return true;
     }
 }

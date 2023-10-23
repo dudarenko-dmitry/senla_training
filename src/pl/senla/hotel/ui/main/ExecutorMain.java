@@ -12,8 +12,6 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 @AppComponent
 public class ExecutorMain implements Executor {
 
-    @GetInstance(beanName = "StartMenuMain")
-    private StartMenu startMenuMain;
     @GetInstance(beanName = "StartMenuHotelFacilities")
     private StartMenu startMenuHotelFacilities;
     @GetInstance(beanName = "StartMenuGuest")
@@ -30,8 +28,8 @@ public class ExecutorMain implements Executor {
     public ExecutorMain(){}
 
     @Override
-    public void execute(int userSelection) throws IllegalAccessException {
-        switch (userSelection) {
+    public void execute(int menuPoint) throws IllegalAccessException {
+        switch (menuPoint) {
             case 1 -> startMenuHotelFacilities.runMenu();
             case 2 -> startMenuGuest.runMenu();
             case 3 -> startMenuOrder.runMenu();
@@ -41,13 +39,12 @@ public class ExecutorMain implements Executor {
                 SavedHotel hotel = new SavedHotel();
                 processor.saveHotel(hotel);
                 System.out.println(" ===== >  serialization is completed.");
-
                 System.out.println("Good-bye.");
                 System.exit(0);
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                startMenuMain.runMenu();
+                execute(menuPoint);
             }
         }
     }

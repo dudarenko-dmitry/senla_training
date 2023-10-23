@@ -4,25 +4,20 @@ import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.ie.file.DataProcessor;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.StartMenu;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @AppComponent
 public class ExecutorImportExport implements Executor {
 
-    @GetInstance(beanName = "StartMenuMain")
-    private StartMenu startMenuMain;
-    @GetInstance(beanName = "StartMenuImportExport")
-    private StartMenu startMenuImportExport;
     @GetInstance(beanName = "DataProcessorFileEntity")
     private DataProcessor dataProcessor;
 
     public ExecutorImportExport(){}
 
     @Override
-    public void execute(int userSelection) throws IllegalAccessException {
-        switch (userSelection) {
+    public void execute(int menuPoint) throws IllegalAccessException {
+        switch (menuPoint) {
             case 1 -> dataProcessor.loadAllEntities();
             case 2 -> dataProcessor.saveAllEntities();
             case 3 -> dataProcessor.loadHotelFacility();
@@ -37,10 +32,9 @@ public class ExecutorImportExport implements Executor {
                 dataProcessor.saveHotelServices();
                 dataProcessor.saveOrders();
             }
-            case 0 -> startMenuMain.runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                startMenuImportExport.runMenu();
+                execute(menuPoint);
             }
         }
     }

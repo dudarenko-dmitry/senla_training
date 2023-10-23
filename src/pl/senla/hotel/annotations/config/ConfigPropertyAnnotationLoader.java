@@ -13,15 +13,24 @@ import java.util.Set;
 
 public class ConfigPropertyAnnotationLoader {
 
+    private static ConfigPropertyAnnotationLoader configPropertyAnnotationLoader;
     private static final String EMPTY = "";
     private final AnnotationScanner annotationScanner;
     private final String configDirectory;
     private final String configName;
 
-    public ConfigPropertyAnnotationLoader(String configDirectory, String configName) {
+    private ConfigPropertyAnnotationLoader(String configDirectory, String configName) {
         this.annotationScanner = new AnnotationScanner();
         this.configName = configName;
         this.configDirectory = configDirectory;
+    }
+
+    public static synchronized ConfigPropertyAnnotationLoader getConfigPropertyAnnotationLoader
+            (String configDirectory, String configName) {
+        if (configPropertyAnnotationLoader == null) {
+            configPropertyAnnotationLoader = new ConfigPropertyAnnotationLoader(configDirectory, configName);
+        }
+        return configPropertyAnnotationLoader;
     }
 
     public void load() throws IllegalAccessException, InvocationTargetException, InstantiationException {

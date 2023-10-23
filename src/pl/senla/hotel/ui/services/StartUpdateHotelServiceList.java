@@ -19,7 +19,6 @@ public class StartUpdateHotelServiceList {
     public boolean runMenu(int idOrderUpdate) throws IllegalAccessException {
         navigator.buildMenu();
         System.out.println(MENU_HOTEL_SERVICE_SELECT);
-        int typeOsService = navigator.makeChoice();
-        return executor.updateHotelServiceList(idOrderUpdate, typeOsService);
+        return executor.updateHotelServiceList(idOrderUpdate);
     }
 }

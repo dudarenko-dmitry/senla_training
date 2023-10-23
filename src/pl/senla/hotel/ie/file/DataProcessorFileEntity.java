@@ -27,20 +27,8 @@ public class DataProcessorFileEntity implements DataProcessor {
     private DataStorageHotelService dataStorageHotelService;
     @GetInstance(beanName = "DataStorageOrder")
     private DataStorageOrder dataStorageOrder;
-//    private ReaderWriterEntity<Guest> guestReaderWriter;
-//    private ReaderWriterEntity<HotelFacility> hotelFacilityReaderWriter;
-//    private ReaderWriterEntity<HotelService> hotelServiceReaderWriter;
-//    private ReaderWriterEntity<Order> orderReaderWriter;
 
     public DataProcessorFileEntity() {
-//        ConverterEntity<Guest> guestConverter = new ConverterGuest();
-//        ConverterEntity<HotelFacility> hotelFacilityConverter = new ConverterHotelFacility();
-//        ConverterEntity<HotelService> hotelServiceConverter = new ConverterRoomReservation();
-//        ConverterEntity<Order> orderConverter = new ConverterOrder();
-//        this.guestReaderWriter = new ReaderWriterEntity<>(guestConverter);
-//        this.hotelFacilityReaderWriter = new ReaderWriterEntity<>(hotelFacilityConverter);
-//        this.hotelServiceReaderWriter = new ReaderWriterEntity<>(hotelServiceConverter);
-//        this.orderReaderWriter = new ReaderWriterEntity<>(orderConverter);
     }
 
     @Override

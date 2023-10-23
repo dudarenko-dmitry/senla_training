@@ -2,6 +2,7 @@ package pl.senla.hotel.ui.ie;
 
 import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
@@ -11,22 +12,22 @@ public class StartMenuImportExport implements StartMenu {
 
     @GetInstance(beanName = "NavigatorMenuImportExport")
     private Navigator navigator;
+    @GetInstance(beanName = "UserChoice")
+    private Choice userChoice;
     @GetInstance(beanName = "ExecutorImportExport")
     private Executor executor;
 
     public StartMenuImportExport() {}
 
-    public StartMenuImportExport(Navigator navigator, Executor executor) {
-        this.navigator = navigator;
-        this.executor = executor;
-    }
-
     @Override
     public void runMenu() throws IllegalAccessException {
-        while(true){
+        int menuPoint = 1;
+        while (menuPoint != 0) {
             navigator.buildMenu();
-            int userSelection = navigator.makeChoice();
-            executor.execute(userSelection);
+            menuPoint = userChoice.makeChoice();
+            if (menuPoint != 0) {
+                executor.execute(menuPoint);
+            }
         }
     }
 }

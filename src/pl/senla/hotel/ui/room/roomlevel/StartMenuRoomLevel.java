@@ -2,6 +2,7 @@ package pl.senla.hotel.ui.room.roomlevel;
 
 import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Navigator;
 
 @AppComponent
@@ -15,7 +16,6 @@ public class StartMenuRoomLevel {
 
     public String runMenu() throws IllegalAccessException {
         navigator.buildMenu();
-        int userSelection = navigator.makeChoice();
-        return executor.execute(userSelection);
+        return executor.execute();
     }
 }

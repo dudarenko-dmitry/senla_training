@@ -4,7 +4,6 @@ import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.StartMenu;
 
 import java.util.Scanner;
 
@@ -14,10 +13,6 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 @AppComponent
 public class ExecutorAnalytics implements Executor {
 
-    @GetInstance(beanName = "StartMenuMain")
-    private StartMenu startMenuMain;
-    @GetInstance(beanName = "StartMenuAnalytics")
-    private StartMenu startMenuAnalytics;
     @GetInstance(beanName = "ControllerRoomCollection")
     private ControllerRoom roomController;
     @GetInstance(beanName = "ControllerFacilityCollection")
@@ -28,23 +23,13 @@ public class ExecutorAnalytics implements Executor {
     private ControllerGuest guestController;
     @GetInstance(beanName = "ControllerOrderCollection")
     private ControllerOrder orderController;
-//    @GetInstance(beanName = "NavigatorMainMenu")
-//    private Navigator navigatorMain;
-//    @GetInstance(beanName = "ExecutorMain")
-//    private Executor executorMain;
-//    @GetInstance(beanName = "NavigatorAnalytics")
-//    private Navigator navigator;
 
     public ExecutorAnalytics(){}
 
-//    public void setNavigator(Navigator navigator) {
-//        this.navigator = navigator;
-//    }
-
     @Override
-    public void execute(int userSelection) throws IllegalAccessException {
+    public void execute(int menuPoint) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
-        switch (userSelection) {
+        switch (menuPoint) {
             case 1: // ready
                 System.out.println(CONSOLE_READ_ALL_ROOMS + SORTED_BY_PRICE +
                         facilityController.readAllRoomsSortByPrice());
@@ -130,11 +115,9 @@ public class ExecutorAnalytics implements Executor {
                 idRoom = sc.nextInt();
                 roomController.read(idRoom);
                 break;
-            case 0:
-                startMenuMain.runMenu();
             default:
                 System.out.println(ERROR_INPUT);
-                startMenuAnalytics.runMenu();
+                execute(menuPoint);
         }
     }
 
