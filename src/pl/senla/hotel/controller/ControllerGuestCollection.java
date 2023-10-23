@@ -10,20 +10,10 @@ import java.util.List;
 @AppComponent
 public class ControllerGuestCollection implements ControllerGuest {
 
-    private static ControllerGuest controllerGuest;
     @GetInstance(beanName = "ServiceGuestImpl")
-    private final ServiceGuest guestService;
+    private ServiceGuest guestService;
 
-    private ControllerGuestCollection(ServiceGuest guestService) {
-        this.guestService = guestService;
-    }
-
-    public static ControllerGuest getSingletonInstance(ServiceGuest guestService){
-        if(controllerGuest == null){
-            controllerGuest = new ControllerGuestCollection(guestService);
-        }
-        return controllerGuest;
-    }
+    public ControllerGuestCollection() {}
 
     @Override
     public List<Guest> readAll() {
@@ -31,7 +21,7 @@ public class ControllerGuestCollection implements ControllerGuest {
     }
 
     @Override
-    public boolean create(String guest) {
+    public boolean create(String guest) throws IllegalAccessException {
         return guestService.create(guest);
     }
 

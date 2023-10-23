@@ -18,36 +18,15 @@ import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
 @AppComponent
 public class ExecutorUpdateHotelServiceList {
 
-    private static ExecutorUpdateHotelServiceList executorUpdateHotelServiceList;
+    @GetInstance(beanName = "StartMenuOrder")
+    private StartMenuOrder startMenuOrder;
     @GetInstance(beanName = "ControllerOrderCollection")
-    private final ControllerOrder orderController;
+    private ControllerOrder orderController;
     @GetInstance(beanName = "ControllerRoomReservationCollection")
-    private final ControllerRoomReservation roomReservationController;
-    @GetInstance(beanName = "NavigatorOrder")
-    private final Navigator navigator;
-    @GetInstance(beanName = "ExecutorOrder")
-    private final Executor executor;
+    private ControllerRoomReservation roomReservationController;
     // add all other Controllers for different type of Hotel's Services
 
-    private ExecutorUpdateHotelServiceList(ControllerOrder orderController,
-                                           ControllerRoomReservation roomReservationController,
-                                           Navigator navigator, Executor executor) {
-        this.orderController = orderController;
-        this.roomReservationController = roomReservationController;
-        this.navigator = navigator;
-        this.executor = executor;
-        // add all other Controllers for different type of Hotel's Services
-    }
-
-    public static ExecutorUpdateHotelServiceList getSingletonInstance(ControllerOrder orderController,
-                                                                      ControllerRoomReservation roomReservationController,
-                                                                      Navigator navigator, Executor executor){
-        if (executorUpdateHotelServiceList == null) {
-            executorUpdateHotelServiceList = new ExecutorUpdateHotelServiceList(orderController,
-                                                                        roomReservationController, navigator, executor);
-        }
-        return executorUpdateHotelServiceList;
-    }
+    public ExecutorUpdateHotelServiceList() {}
 
     protected boolean updateHotelServiceList(int idOrderUpdate, int typeOfServiceInt) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
@@ -74,7 +53,7 @@ public class ExecutorUpdateHotelServiceList {
                 } else {
                     System.out.println(ERROR_READ_ORDER);
                     System.out.println(ERROR_INPUT);
-                    StartMenuOrder.getSingletonInstance(navigator, executor).runMenu();
+                    startMenuOrder.runMenu();
                 }
 
             case 2:

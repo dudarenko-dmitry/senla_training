@@ -6,19 +6,10 @@ import pl.senla.hotel.entity.services.Transfer;
 @AppComponent
 public class DataStorageTransfer extends DataStorage<Transfer>{
 
-    private static DataStorageTransfer dataStorageTransfer;
-
-    private DataStorageTransfer(){}
-
-    public static DataStorageTransfer getSingletonInstance(){
-        if(dataStorageTransfer == null) {
-            dataStorageTransfer = new DataStorageTransfer();
-        }
-        return dataStorageTransfer;
-    }
+    public DataStorageTransfer(){}
 
     @Override
     public String toString() {
-        return "Accommodation {" + super.toString();
+        return "Transfers {" + super.toString();
     }
 }

@@ -10,12 +10,12 @@ import static pl.senla.hotel.constant.MenuConstant.MENU_ANALYTICS_REPORTS;
 @AppComponent
 public class NavigatorAnalytics implements Navigator {
 
-    private static Navigator navigator;
-    private final String nameMenu;
-    private final MenuItem[] menuItems;
+    public NavigatorAnalytics() {
+    }
 
-    private NavigatorAnalytics() {
-        this.nameMenu = MENU_ANALYTICS_REPORTS;
+    @Override
+    public void buildMenu() {
+        System.out.println(MENU_ANALYTICS_REPORTS);
         MenuItem item1 = new Item1SortRoomsByPrice();
         MenuItem item2 = new Item2SortRoomsByCapacity();
         MenuItem item3 = new Item3SortRoomsByLevel();
@@ -36,21 +36,9 @@ public class NavigatorAnalytics implements Navigator {
         MenuItem item18 = new Item18ListOfServicesAndRoomsSortByPrice();
         MenuItem item19 = new Item19RoomInformation();
         MenuItem item0  = new Item0QuitToMain();
-        this.menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item6,
+        MenuItem[] menuItems = new MenuItem[]{item1, item2, item3, item4, item5, item6,
                 item7, item8, item9, item10, item11, item12, item13,
                 item14, item15, item16, item17, item18, item19, item0};
-    }
-
-    public static Navigator getSingletonInstance(){
-        if (navigator == null) {
-            navigator = new NavigatorAnalytics();
-        }
-        return navigator;
-    }
-
-    @Override
-    public void buildMenu() {
-        System.out.println(nameMenu);
         for (MenuItem i : menuItems){
             i.printItem();
         }

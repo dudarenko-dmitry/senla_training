@@ -1,5 +1,6 @@
 package pl.senla.hotel.comparators;
 
+import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.Transfer;
@@ -12,14 +13,13 @@ import java.util.Comparator;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE;
 
+@AppComponent
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
     @GetInstance(beanName = "RepositoryRoomCollection")
-    private final Repository<Room> repositoryRoom;
+    private Repository<Room> repositoryRoom;
 
-    public HotelServicesComparatorByPrice(Repository<Room> repositoryRoom) {
-        this.repositoryRoom = repositoryRoom;
-    }
+    public HotelServicesComparatorByPrice() {}
 
     @Override
     public int compare(HotelService o1, HotelService o2) {

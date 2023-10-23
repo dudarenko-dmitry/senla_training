@@ -29,52 +29,22 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 @AppComponent
 public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
-    private static ServiceRoomReservation serviceRoomReservation;
     @GetInstance(beanName = "ServiceFacilityImpl")
-    private final ServiceFacility serviceHotelFacility;
+    private ServiceFacility serviceHotelFacility;
     @GetInstance(beanName = "RepositoryHotelServiceCollection")
-    private final Repository<HotelService> repositoryHotelService;
+    private Repository<HotelService> repositoryHotelService;
     @GetInstance(beanName = "RepositoryRoomReservationCollection")
-    private final Repository<RoomReservation> repositoryRoomReservation;
+    private Repository<RoomReservation> repositoryRoomReservation;
     @GetInstance(beanName = "RepositoryGuestCollection")
-    private final Repository<Guest> repositoryGuest;
+    private Repository<Guest> repositoryGuest;
     @GetInstance(beanName = "RepositoryFacilityCollection")
-    private final Repository<HotelFacility> repositoryFacility;
+    private Repository<HotelFacility> repositoryFacility;
     @GetInstance(beanName = "ServiceRoomImpl")
-    private final transient ServiceRoom serviceRoom;
+    private transient ServiceRoom serviceRoom;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
     private static Integer roomRecordsNumber;
 
-    private ServiceRoomReservationImpl(ServiceFacility serviceHotelFacility,
-                                       Repository<HotelService> repositoryHotelService,
-                                       Repository<RoomReservation> repositoryRoomReservation,
-                                       Repository<Guest> repositoryGuest,
-                                       Repository<HotelFacility> repositoryFacility,
-                                       ServiceRoom serviceRoom) {
-        this.serviceHotelFacility = serviceHotelFacility;
-        this.repositoryHotelService = repositoryHotelService;
-        this.repositoryRoomReservation = repositoryRoomReservation;
-        this.repositoryGuest = repositoryGuest;
-        this.repositoryFacility = repositoryFacility;
-        this.serviceRoom = serviceRoom;
-    }
-
-    public static ServiceRoomReservation getSingletonInstance(ServiceFacility serviceHotelFacility,
-                                                              Repository<HotelService> repositoryHotelService,
-                                                              Repository<RoomReservation> repositoryRoomReservation,
-                                                              Repository<Guest> repositoryGuest,
-                                                              Repository<HotelFacility> repositoryFacility,
-                                                              ServiceRoom serviceRoom){
-        if (serviceRoomReservation == null) {
-            serviceRoomReservation = new ServiceRoomReservationImpl(serviceHotelFacility,
-                    repositoryHotelService,
-                    repositoryRoomReservation,
-                    repositoryGuest,
-                    repositoryFacility,
-                    serviceRoom);
-        }
-        return serviceRoomReservation;
-    }
+    public ServiceRoomReservationImpl() {}
 
     @Override
     public List<RoomReservation> readAll() {
@@ -85,7 +55,6 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         return repositoryRoomReservation.readAll()
                 .stream()
                 .map(RoomReservation.class::cast) //check
-//                .filter(o -> o.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .toList();
     }
 

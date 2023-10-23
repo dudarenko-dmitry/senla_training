@@ -9,24 +9,12 @@ import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE_SELECT;
 @AppComponent
 public class StartUpdateHotelServiceList {
 
-    private static StartUpdateHotelServiceList startUpdateHotelServiceList;
     @GetInstance(beanName = "NavigatorHotelService")
-    private final Navigator navigator;
+    private Navigator navigator;
     @GetInstance(beanName = "ExecutorUpdateHotelServiceList")
-    private final ExecutorUpdateHotelServiceList executor;
+    private ExecutorUpdateHotelServiceList executor;
 
-    private StartUpdateHotelServiceList(Navigator navigator, ExecutorUpdateHotelServiceList executor) {
-        this.navigator = navigator;
-        this.executor = executor;
-    }
-
-    public static StartUpdateHotelServiceList getSingletonInstance(Navigator navigator,
-                                                                   ExecutorUpdateHotelServiceList executor){
-        if (startUpdateHotelServiceList == null) {
-            startUpdateHotelServiceList = new StartUpdateHotelServiceList(navigator, executor);
-        }
-        return startUpdateHotelServiceList;
-    }
+    public StartUpdateHotelServiceList() {}
 
     public boolean runMenu(int idOrderUpdate) throws IllegalAccessException {
         navigator.buildMenu();

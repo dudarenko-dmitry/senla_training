@@ -4,8 +4,7 @@ import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.Navigator;
-import pl.senla.hotel.ui.main.StartMenuMain;
+import pl.senla.hotel.ui.StartMenu;
 
 import java.util.Scanner;
 
@@ -15,56 +14,32 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 @AppComponent
 public class ExecutorAnalytics implements Executor {
 
-    private static Executor executor;
+    @GetInstance(beanName = "StartMenuMain")
+    private StartMenu startMenuMain;
+    @GetInstance(beanName = "StartMenuAnalytics")
+    private StartMenu startMenuAnalytics;
     @GetInstance(beanName = "ControllerRoomCollection")
-    private final ControllerRoom roomController;
+    private ControllerRoom roomController;
     @GetInstance(beanName = "ControllerFacilityCollection")
-    private final ControllerFacility facilityController;
+    private ControllerFacility facilityController;
     @GetInstance(beanName = "ControllerRoomReservationCollection")
-    private final ControllerRoomReservation roomReservationController;
+    private ControllerRoomReservation roomReservationController;
     @GetInstance(beanName = "ControllerGuestCollection")
-    private final ControllerGuest guestController;
+    private ControllerGuest guestController;
     @GetInstance(beanName = "ControllerOrderCollection")
-    private final ControllerOrder orderController;
-    @GetInstance(beanName = "NavigatorMainMenu")
-    private final Navigator navigatorMain;
-    @GetInstance(beanName = "ExecutorMain")
-    private final Executor executorMain;
-    @GetInstance(beanName = "NavigatorAnalytics")
-    private final Navigator navigator;
+    private ControllerOrder orderController;
+//    @GetInstance(beanName = "NavigatorMainMenu")
+//    private Navigator navigatorMain;
+//    @GetInstance(beanName = "ExecutorMain")
+//    private Executor executorMain;
+//    @GetInstance(beanName = "NavigatorAnalytics")
+//    private Navigator navigator;
 
-    private ExecutorAnalytics(ControllerRoom roomController,
-                              ControllerFacility facilityController,
-                              ControllerRoomReservation roomReservationController,
-                              ControllerGuest guestController,
-                              ControllerOrder orderController,
-                              Navigator navigatorMain,
-                              Executor executorMain,
-                              Navigator navigator) {
-        this.roomController = roomController;
-        this.facilityController = facilityController;
-        this.roomReservationController = roomReservationController;
-        this.guestController = guestController;
-        this.orderController = orderController;
-        this.navigatorMain = navigatorMain;
-        this.executorMain = executorMain;
-        this.navigator = navigator;
-    }
+    public ExecutorAnalytics(){}
 
-    public static Executor getSingletonInstance(ControllerRoom roomController,
-                                                ControllerFacility facilityController,
-                                                ControllerRoomReservation roomReservationController,
-                                                ControllerGuest guestController,
-                                                ControllerOrder orderController,
-                                                Navigator navigatorMain,
-                                                Executor executorMain,
-                                                Navigator navigator){
-        if (executor == null) {
-            executor = new ExecutorAnalytics(roomController, facilityController, roomReservationController,
-                    guestController, orderController, navigatorMain, executorMain, navigator);
-        }
-        return executor;
-    }
+//    public void setNavigator(Navigator navigator) {
+//        this.navigator = navigator;
+//    }
 
     @Override
     public void execute(int userSelection) throws IllegalAccessException {
@@ -156,10 +131,10 @@ public class ExecutorAnalytics implements Executor {
                 roomController.read(idRoom);
                 break;
             case 0:
-                StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
+                startMenuMain.runMenu();
             default:
                 System.out.println(ERROR_INPUT);
-                StartMenuAnalytics.getSingletonInstance(navigator, executor).runMenu();
+                startMenuAnalytics.runMenu();
         }
     }
 

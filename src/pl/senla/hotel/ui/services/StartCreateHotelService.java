@@ -9,26 +9,14 @@ import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CREATE_SERVICE;
 @AppComponent
 public class StartCreateHotelService {
 
-    private static StartCreateHotelService startCreateHotelService;
     @GetInstance(beanName = "NavigatorHotelService")
-    private final Navigator navigator;
+    private Navigator navigator;
     @GetInstance(beanName = "ExecutorCreateHotelService")
-    private final ExecutorCreateHotelService executor;
+    private ExecutorCreateHotelService executor;
 
-    private StartCreateHotelService(Navigator navigator, ExecutorCreateHotelService executor) {
-        this.navigator = navigator;
-        this.executor = executor;
-    }
+    public StartCreateHotelService() {}
 
-    public static StartCreateHotelService getSingletonInstance(Navigator navigator,
-                                                               ExecutorCreateHotelService executor){
-        if (startCreateHotelService == null) {
-            startCreateHotelService = new StartCreateHotelService(navigator, executor);
-        }
-        return startCreateHotelService;
-    }
-
-    public boolean runMenu(int idOrder, int idGuest) {
+    public boolean runMenu(int idOrder, int idGuest) throws IllegalAccessException {
         int userChoice;
         do {
             navigator.buildMenu();

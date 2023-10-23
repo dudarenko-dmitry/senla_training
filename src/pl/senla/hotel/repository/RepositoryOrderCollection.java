@@ -10,20 +10,10 @@ import java.util.List;
 @AppComponent
 public class RepositoryOrderCollection implements Repository<Order> {
 
-    private static Repository<Order> repositoryOrder;
     @GetInstance(beanName = "DataStorageOrder")
-    private final DataStorage<Order> orderDataStorage;
+    private DataStorage<Order> orderDataStorage;
 
-    private RepositoryOrderCollection(DataStorage<Order> orderDataStorage) {
-        this.orderDataStorage = orderDataStorage;
-    }
-
-    public static Repository<Order> getSingletonInstance(DataStorage<Order> orderDataStorage){
-        if(repositoryOrder == null){
-            repositoryOrder = new RepositoryOrderCollection(orderDataStorage);
-        }
-        return repositoryOrder;
-    }
+    public RepositoryOrderCollection() {}
 
     @Override
     public List<Order> readAll() {

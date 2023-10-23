@@ -10,20 +10,11 @@ import java.util.List;
 @AppComponent
 public class RepositoryFacilityCollection implements Repository<HotelFacility> {
 
-    private static Repository<HotelFacility> repositoryFacility;
     @GetInstance(beanName = "DataStorageFacility")
-    private final DataStorage<HotelFacility> priceList;
+    private DataStorage<HotelFacility> priceList;
 
-    private RepositoryFacilityCollection(DataStorage<HotelFacility> priceList) {
-        this.priceList = priceList;
-    }
+    public RepositoryFacilityCollection() {    }
 
-    public static Repository<HotelFacility> getSingletonInstance(DataStorage<HotelFacility> priceList){
-        if(repositoryFacility == null){
-            repositoryFacility = new RepositoryFacilityCollection(priceList);
-        }
-        return repositoryFacility;
-    }
     @Override
     public List<HotelFacility> readAll() {
         return priceList.getDataList();

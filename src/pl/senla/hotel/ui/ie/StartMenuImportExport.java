@@ -9,22 +9,16 @@ import pl.senla.hotel.ui.StartMenu;
 @AppComponent
 public class StartMenuImportExport implements StartMenu {
 
-    private static StartMenu startMenuImpExp;
     @GetInstance(beanName = "NavigatorMenuImportExport")
-    private final Navigator navigator;
+    private Navigator navigator;
     @GetInstance(beanName = "ExecutorImportExport")
-    private final Executor executor;
+    private Executor executor;
 
-    private StartMenuImportExport(Navigator navigator, Executor executor) {
+    public StartMenuImportExport() {}
+
+    public StartMenuImportExport(Navigator navigator, Executor executor) {
         this.navigator = navigator;
         this.executor = executor;
-    }
-
-    public static StartMenu getSingletonInstance(Navigator navigator, Executor executor) {
-        if (startMenuImpExp == null) {
-            startMenuImpExp = new StartMenuImportExport(navigator, executor);
-        }
-        return startMenuImpExp;
     }
 
     @Override

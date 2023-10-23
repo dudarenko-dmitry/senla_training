@@ -1,5 +1,7 @@
 package pl.senla.hotel.annotations.config;
 
+import pl.senla.hotel.annotations.AnnotationScanner;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,15 +14,18 @@ import java.util.Set;
 public class ConfigPropertyAnnotationLoader {
 
     private static final String EMPTY = "";
+    private final AnnotationScanner annotationScanner;
     private final String configDirectory;
     private final String configName;
 
     public ConfigPropertyAnnotationLoader(String configDirectory, String configName) {
+        this.annotationScanner = new AnnotationScanner();
         this.configName = configName;
         this.configDirectory = configDirectory;
     }
 
-    public void load(Set<Field> fields) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void load() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Set<Field> fields = annotationScanner.getAnnotatedPropertyFields();
         for (Field field : fields) {
             ConfigProperty annotation = field.getAnnotation(ConfigProperty.class);
             if (annotation != null) {

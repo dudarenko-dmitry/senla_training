@@ -11,20 +11,10 @@ import java.util.List;
 @AppComponent
 public class ControllerOrderCollection implements ControllerOrder {
 
-    private static ControllerOrder controllerOrder;
     @GetInstance(beanName = "ServiceOrderImpl")
-    private final ServiceOrder orderService;
+    private ServiceOrder orderService;
 
-    private ControllerOrderCollection(ServiceOrder orderService) {
-        this.orderService = orderService;
-    }
-
-    public static ControllerOrder getSingletonInstance(ServiceOrder orderService){
-        if(controllerOrder == null){
-            controllerOrder = new ControllerOrderCollection(orderService);
-        }
-        return controllerOrder;
-    }
+    public ControllerOrderCollection() {}
 
     @Override
     public List<Order> readAll() {
@@ -32,7 +22,7 @@ public class ControllerOrderCollection implements ControllerOrder {
     }
 
     @Override
-    public boolean create(String orderString) {
+    public boolean create(String orderString) throws IllegalAccessException {
         return orderService.create(orderString);
     }
 

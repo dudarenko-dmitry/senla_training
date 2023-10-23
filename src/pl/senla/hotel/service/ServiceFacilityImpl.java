@@ -15,25 +15,12 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 @AppComponent
 public class ServiceFacilityImpl implements ServiceFacility{
 
-    private static ServiceFacility serviceFacility;
     @GetInstance(beanName = "RepositoryFacilityCollection")
-    private final Repository<HotelFacility> repositoryHotelFacility;
+    private Repository<HotelFacility> repositoryHotelFacility;
     @GetInstance(beanName = "RepositoryRoomCollection")
-    private final Repository<Room> repositoryRoom;
+    private Repository<Room> repositoryRoom;
 
-    private ServiceFacilityImpl(Repository<HotelFacility> repositoryHotelFacility,
-                                Repository<Room> repositoryRoom) {
-        this.repositoryHotelFacility = repositoryHotelFacility;
-        this.repositoryRoom = repositoryRoom;
-    }
-
-    public static ServiceFacility getSingletonInstance(Repository<HotelFacility> repositoryHotelFacility,
-                                                       Repository<Room> repositoryRoom){
-        if (serviceFacility == null){
-            serviceFacility = new ServiceFacilityImpl(repositoryHotelFacility, repositoryRoom);
-        }
-        return serviceFacility;
-    }
+    public ServiceFacilityImpl() {}
 
     @Override
     public List<HotelFacility> readAll() {

@@ -13,25 +13,12 @@ import static pl.senla.hotel.constant.HotelServiceConstant.*;
 @AppComponent
 public class ServiceHotelServiceImpl implements ServiceHotelService{
 
-    private static ServiceHotelService serviceHotelService;
     @GetInstance(beanName = "ServiceRoomReservationImpl")
-    private final ServiceRoomReservation serviceRoomReservation;
+    private ServiceRoomReservation serviceRoomReservation;
     @GetInstance(beanName = "RepositoryHotelServiceCollection")
-    private final Repository<HotelService> repositoryHotelService;
+    private Repository<HotelService> repositoryHotelService;
 
-    private ServiceHotelServiceImpl(ServiceRoomReservation serviceRoomReservation,
-                                    Repository<HotelService> repositoryHotelService) {
-        this.serviceRoomReservation = serviceRoomReservation;
-        this.repositoryHotelService = repositoryHotelService;
-    }
-
-    public static ServiceHotelService getSingletonInstance(ServiceRoomReservation serviceRoomReservation,
-                                                           Repository<HotelService> repositoryHotelService){
-        if(serviceHotelService == null){
-            serviceHotelService = new ServiceHotelServiceImpl(serviceRoomReservation, repositoryHotelService);
-        }
-        return serviceHotelService;
-    }
+    public ServiceHotelServiceImpl() {}
 
     @Override
     public List<HotelService> readAll() {
@@ -43,7 +30,7 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     }
 
     @Override
-    public boolean create(String hotelServiceString) {
+    public boolean create(String hotelServiceString) throws IllegalAccessException {
         String[] hotelServiceData = hotelServiceString.split(";");
         String typeOfService = hotelServiceData[0]; // EDIT and PUT correct index
         switch (typeOfService){

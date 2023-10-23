@@ -18,6 +18,9 @@ public class ProcessorSerializable implements Processor{
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-name.serialization")
     private static String fileNameSerialization;
 
+    public ProcessorSerializable() {
+    }
+
     @Override
     public SavedHotel loadHotel() {
         try (FileInputStream fis = new FileInputStream(filePathSerialization + fileNameSerialization);

@@ -4,41 +4,21 @@ import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.ie.file.DataProcessor;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.Navigator;
-import pl.senla.hotel.ui.main.StartMenuMain;
+import pl.senla.hotel.ui.StartMenu;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @AppComponent
 public class ExecutorImportExport implements Executor {
 
-    private static Executor executor;
+    @GetInstance(beanName = "StartMenuMain")
+    private StartMenu startMenuMain;
+    @GetInstance(beanName = "StartMenuImportExport")
+    private StartMenu startMenuImportExport;
     @GetInstance(beanName = "DataProcessorFileEntity")
-    private final DataProcessor dataProcessor;
-    @GetInstance(beanName = "NavigatorMainMenu")
-    private final Navigator navigatorMain;
-    @GetInstance(beanName = "ExecutorMain")
-    private final Executor executorMain;
-    @GetInstance(beanName = "NavigatorMenuImportExport")
-    private final Navigator navigator;
+    private DataProcessor dataProcessor;
 
-    private ExecutorImportExport(DataProcessor dataProcessor,
-                                 Navigator navigatorMain, Executor executorMain,
-                                 Navigator navigator) {
-        this.dataProcessor = dataProcessor;
-        this.navigatorMain = navigatorMain;
-        this.executorMain = executorMain;
-        this.navigator = navigator;
-    }
-
-    public static Executor getSingletonInstance(DataProcessor dataProcessor,
-                                                Navigator navigatorMain, Executor executorMain,
-                                                Navigator navigator) {
-        if (executor == null) {
-            executor = new ExecutorImportExport(dataProcessor, navigatorMain, executorMain, navigator);
-        }
-        return executor;
-    }
+    public ExecutorImportExport(){}
 
     @Override
     public void execute(int userSelection) throws IllegalAccessException {
@@ -57,10 +37,10 @@ public class ExecutorImportExport implements Executor {
                 dataProcessor.saveHotelServices();
                 dataProcessor.saveOrders();
             }
-            case 0 -> StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
+            case 0 -> startMenuMain.runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuImportExport.getSingletonInstance(navigator, executor).runMenu();
+                startMenuImportExport.runMenu();
             }
         }
     }

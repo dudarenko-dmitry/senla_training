@@ -4,8 +4,7 @@ import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.Navigator;
-import pl.senla.hotel.ui.main.StartMenuMain;
+import pl.senla.hotel.ui.StartMenu;
 
 import java.util.Scanner;
 
@@ -14,27 +13,14 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 @AppComponent
 public class ExecutorGuest implements Executor {
 
-    private static Executor executor;
+    @GetInstance(beanName = "StartMenuMain")
+    private StartMenu startMenuMain;
+    @GetInstance(beanName = "StartMenuGuest")
+    private StartMenu startMenuGuest;
     @GetInstance(beanName = "ControllerGuestCollection")
-    private final ControllerGuest guestController;
-    @GetInstance(beanName = "NavigatorMainMenu")
-    private final Navigator navigatorMain;
-    @GetInstance(beanName = "ExecutorMain")
-    private final Executor executorMain;
+    private ControllerGuest guestController;
 
-    private ExecutorGuest(ControllerGuest guestController, Navigator navigatorMain, Executor executorMain) {
-        this.guestController = guestController;
-        this.navigatorMain = navigatorMain;
-        this.executorMain = executorMain;
-    }
-
-    public static Executor getSingletonInstance(ControllerGuest guestController,
-                                                Navigator navigatorMain, Executor executorMain){
-        if (executor == null) {
-            executor = new ExecutorGuest(guestController, navigatorMain, executorMain);
-        }
-        return executor;
-    }
+    public ExecutorGuest() {}
 
     @Override
     public void execute(int userSelection) throws IllegalAccessException {
@@ -69,10 +55,10 @@ public class ExecutorGuest implements Executor {
                 int idGuestDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_GUEST + guestController.delete(idGuestDelete));
             }
-            case 0 -> StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
+            case 0 -> startMenuMain.runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuGuest.getSingletonInstance(navigatorMain, executorMain).runMenu();
+                startMenuGuest.runMenu();
             }
         }
     }

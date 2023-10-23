@@ -10,20 +10,10 @@ import java.util.List;
 @AppComponent
 public class RepositoryRoomReservationCollection implements Repository<RoomReservation> {
 
-    private static Repository<RoomReservation> repositoryRoomReservation;
     @GetInstance(beanName = "DataStorageRoomReservation")
-    private final DataStorage<RoomReservation> dataStorageRoomReservation;
+    private DataStorage<RoomReservation> dataStorageRoomReservation;
 
-    private RepositoryRoomReservationCollection(DataStorage<RoomReservation> dataStorageRoomReservation) {
-        this.dataStorageRoomReservation = dataStorageRoomReservation;
-    }
-
-    public static Repository<RoomReservation> getSingletonInstance(DataStorage<RoomReservation> dataStorageRoomReservation){
-        if(repositoryRoomReservation == null){
-            repositoryRoomReservation = new RepositoryRoomReservationCollection(dataStorageRoomReservation);
-        }
-        return repositoryRoomReservation;
-    }
+    public RepositoryRoomReservationCollection() {}
 
     @Override
     public List<RoomReservation> readAll() {

@@ -5,7 +5,6 @@ import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.SavedHotel;
 import pl.senla.hotel.ie.serialization.Processor;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
@@ -13,58 +12,22 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 @AppComponent
 public class ExecutorMain implements Executor {
 
-    private static Executor executor;
+    @GetInstance(beanName = "StartMenuMain")
+    private StartMenu startMenuMain;
     @GetInstance(beanName = "StartMenuHotelFacilities")
-    private final StartMenu startMenuHotelFacilities;
+    private StartMenu startMenuHotelFacilities;
     @GetInstance(beanName = "StartMenuGuest")
-    private final StartMenu startMenuGuest;
+    private StartMenu startMenuGuest;
     @GetInstance(beanName = "StartMenuOrder")
-    private final StartMenu startMenuOrder;
+    private StartMenu startMenuOrder;
     @GetInstance(beanName = "StartMenuAnalytics")
-    private final StartMenu startMenuAnalytics;
+    private StartMenu startMenuAnalytics;
     @GetInstance(beanName = "StartMenuImportExport")
-    private final StartMenu startMenuImportExport;
-//    private final DataProcessor dataProcessor; //version 3 (save Application's state to files)
+    private StartMenu startMenuImportExport;
     @GetInstance(beanName = "ProcessorSerializable")
-    private final Processor processor;
-    @GetInstance(beanName = "NavigatorMainMenu")
-    private final Navigator navigatorMain;
-    @GetInstance(beanName = "ExecutorMain")
-    private final Executor executorMain;
+    private Processor processor;
 
-    private ExecutorMain(StartMenu startMenuHotelFacilities,
-                         StartMenu startMenuGuest,
-                         StartMenu startMenuOrder,
-                         StartMenu startMenuAnalytics,
-                         StartMenu startMenuImportExport,
-                         Processor processor,
-                         Navigator navigatorMain,
-                         Executor executorMain) {
-        this.startMenuHotelFacilities  = startMenuHotelFacilities;
-        this.startMenuGuest = startMenuGuest;
-        this.startMenuOrder = startMenuOrder;
-        this.startMenuAnalytics = startMenuAnalytics;
-        this.startMenuImportExport = startMenuImportExport;
-//        this.dataProcessor = DataProcessorFileEntity.getDataProcessor(); //version 3 (save Application's state to files)
-        this.processor = processor;
-        this.navigatorMain = navigatorMain;
-        this.executorMain = executorMain;
-    }
-
-    public static Executor getSingletonInstance(StartMenu startMenuHotelFacilities,
-                                                StartMenu startMenuGuest,
-                                                StartMenu startMenuOrder,
-                                                StartMenu startMenuAnalytics,
-                                                StartMenu startMenuImportExport,
-                                                Processor processor,
-                                                Navigator navigatorMain,
-                                                Executor executorMain) {
-        if (executor == null) {
-            executor = new ExecutorMain(startMenuHotelFacilities, startMenuGuest, startMenuOrder, startMenuAnalytics,
-                                        startMenuImportExport, processor, navigatorMain, executorMain);
-        }
-        return executor;
-    }
+    public ExecutorMain(){}
 
     @Override
     public void execute(int userSelection) throws IllegalAccessException {
@@ -75,11 +38,6 @@ public class ExecutorMain implements Executor {
             case 4 -> startMenuAnalytics.runMenu();
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
-//                version 3 (save Application's state to files)
-//                System.out.println(" ===== >  save to files");
-//                dataProcessor.saveAllEntities(); // use in case of saving Application's state to files
-
-                // version 4 (save Application's state by Serialization
                 SavedHotel hotel = new SavedHotel();
                 processor.saveHotel(hotel);
                 System.out.println(" ===== >  serialization is completed.");
@@ -89,7 +47,7 @@ public class ExecutorMain implements Executor {
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
+                startMenuMain.runMenu();
             }
         }
     }

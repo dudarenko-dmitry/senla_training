@@ -11,20 +11,10 @@ import java.util.List;
 @AppComponent
 public class ControllerRoomReservationCollection implements ControllerRoomReservation {
 
-    private static ControllerRoomReservation controllerRoomReservation;
     @GetInstance(beanName = "ServiceRoomReservationImpl")
-    private final ServiceRoomReservation roomReservationService;
+    private ServiceRoomReservation roomReservationService;
 
-    private ControllerRoomReservationCollection(ServiceRoomReservation roomReservationService) {
-        this.roomReservationService = roomReservationService;
-    }
-
-    public static ControllerRoomReservation getSingletonInstance(ServiceRoomReservation roomReservationService){
-        if(controllerRoomReservation == null){
-            controllerRoomReservation = new ControllerRoomReservationCollection(roomReservationService);
-        }
-        return controllerRoomReservation;
-    }
+    public ControllerRoomReservationCollection() {}
 
     @Override
     public List<RoomReservation> readAll() {
@@ -32,7 +22,7 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public boolean create(String reservationString) {
+    public boolean create(String reservationString) throws IllegalAccessException {
         return roomReservationService.create(reservationString);
     }
 

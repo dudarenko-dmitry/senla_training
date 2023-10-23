@@ -1,5 +1,6 @@
 package pl.senla.hotel.entity;
 
+import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ie.serialization.Processor;
@@ -15,27 +16,35 @@ public class SavedHotel implements Serializable {
     @Serial
     private static final long serialVersionUID = 100L;
 
-    private static Processor processor;
+    @GetInstance(beanName = "ProcessorSerializable")
+    private Processor processor;
+    @GetInstance(beanName = "DataStorageFacility")
+    private DataStorageFacility dataStorageFacility;
+    @GetInstance(beanName = "DataStorageGuest")
+    private DataStorageGuest dataStorageGuest;
+    @GetInstance(beanName = "DataStorageHotelService")
+    private DataStorageHotelService dataStorageHotelService;
+    @GetInstance(beanName = "DataStorageOrder")
+    private DataStorageOrder dataStorageOrder;
+
     private final List<HotelFacility> hotelFacilityList;
     private final List<Guest> guestList;
     private final List<HotelService> hotelServiceList;
     private final List<Order> orderList;
 
-
     public SavedHotel() {
-        processor = new ProcessorSerializable();
-        this.hotelFacilityList = DataStorageFacility.getSingletonInstance().getDataList();
-        this.guestList = DataStorageGuest.getSingletonInstance().getDataList();
-        this.hotelServiceList = DataStorageHotelService.getSingletonInstance().getDataList();
-        this.orderList = DataStorageOrder.getSingletonInstance().getDataList();
+        this.hotelFacilityList = dataStorageFacility.getDataList();
+        this.guestList = dataStorageGuest.getDataList();
+        this.hotelServiceList = dataStorageHotelService.getDataList();
+        this.orderList = dataStorageOrder.getDataList();
     }
 
     public void initializeHotel() {
         SavedHotel loadedHotel = processor.loadHotel();
-        DataStorageFacility.getSingletonInstance().getDataList().addAll(loadedHotel.getHotelFacilityList());
-        DataStorageGuest.getSingletonInstance().getDataList().addAll(loadedHotel.getGuestList());
-        DataStorageHotelService.getSingletonInstance().getDataList().addAll(loadedHotel.getHotelServiceList());
-        DataStorageOrder.getSingletonInstance().getDataList().addAll(loadedHotel.getOrderList());
+        hotelFacilityList.addAll(loadedHotel.getHotelFacilityList());
+        guestList.addAll(loadedHotel.getGuestList());
+        hotelServiceList.addAll(loadedHotel.getHotelServiceList());
+        orderList.addAll(loadedHotel.getOrderList());
         System.out.println("Hotel was loaded" + loadedHotel);
     }
 

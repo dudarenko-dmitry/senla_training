@@ -16,23 +16,13 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 @AppComponent
 public class ServiceRoomImpl implements ServiceRoom {
 
-    private static ServiceRoom serviceRoom;
     @GetInstance(beanName = "RepositoryFacilityCollection")
-    private final Repository<HotelFacility> repositoryFacility;
+    private Repository<HotelFacility> repositoryFacility;
     // не считывает данную аннотацию без Static!!!
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
     private static Boolean changeRoomStatusEnabled;
 
-    private ServiceRoomImpl(Repository<HotelFacility> repositoryFacility) {
-        this.repositoryFacility = repositoryFacility;
-    }
-
-    public static ServiceRoom getSingletonInstance(Repository<HotelFacility> repositoryFacility) {
-        if (serviceRoom == null) {
-            serviceRoom = new ServiceRoomImpl(repositoryFacility);
-        }
-        return serviceRoom;
-    }
+    public ServiceRoomImpl() {}
 
     @Override
     public List<HotelFacility> readAll() {

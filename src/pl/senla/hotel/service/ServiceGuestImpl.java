@@ -15,20 +15,10 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 @AppComponent
 public class ServiceGuestImpl implements ServiceGuest {
 
-    private static ServiceGuest serviceGuest;
     @GetInstance(beanName = "RepositoryGuestCollection")
-    private final Repository<Guest> guestRepository;
+    private Repository<Guest> guestRepository;
 
-    private ServiceGuestImpl(Repository<Guest> guestRepository) {
-        this.guestRepository = guestRepository;
-    }
-
-    public static ServiceGuest getSingletonInstance(Repository<Guest> guestRepository){
-        if (serviceGuest == null){
-            serviceGuest = new ServiceGuestImpl(guestRepository);
-        }
-        return serviceGuest;
-    }
+    public ServiceGuestImpl() {}
 
     @Override
     public List<Guest> readAll() {

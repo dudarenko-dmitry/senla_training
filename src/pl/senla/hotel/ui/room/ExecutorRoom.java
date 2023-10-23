@@ -4,9 +4,7 @@ import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.Navigator;
-import pl.senla.hotel.ui.main.StartMenuMain;
-import pl.senla.hotel.ui.room.roomlevel.ExecutorRoomLevel;
+import pl.senla.hotel.ui.StartMenu;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -19,35 +17,18 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 @AppComponent
 public class ExecutorRoom implements Executor {
 
-    private static Executor executorRoom;
+    @GetInstance(beanName = "StartMenuMain")
+    private StartMenu startMenuMain;
+    @GetInstance(beanName = "StartMenuRoom")
+    private StartMenu startMenuRoom;
+    @GetInstance(beanName = "StartMenuRoomLevel")
+    private StartMenuRoomLevel startMenuRoomLevel;
     @GetInstance(beanName = "ControllerFacilityCollection")
-    private final ControllerFacility facilityController;
+    private ControllerFacility facilityController;
     @GetInstance(beanName = "ControllerRoomCollection")
-    private final ControllerRoom roomController;
-    @GetInstance(beanName = "ExecutorRoomLevel")
-    private final ExecutorRoomLevel executor;
-    @GetInstance(beanName = "NavigatorMainMenu")
-    private final Navigator navigatorMain;
-    @GetInstance(beanName = "ExecutorMain")
-    private final Executor executorMain;
+    private ControllerRoom roomController;
 
-    private ExecutorRoom(ControllerFacility facilityController, ControllerRoom roomController,
-                         ExecutorRoomLevel executor, Navigator navigatorMain, Executor executorMain) {
-        this.facilityController = facilityController;
-        this.roomController = roomController;
-        this.executor = executor;
-        this.navigatorMain = navigatorMain;
-        this.executorMain = executorMain;
-    }
-
-    public static Executor getSingletonInstance(ControllerFacility facilityController, ControllerRoom roomController,
-                                                ExecutorRoomLevel executor, Navigator navigatorMain,
-                                                Executor executorMain){
-        if (executorRoom == null) {
-            executorRoom = new ExecutorRoom(facilityController, roomController, executor, navigatorMain, executorMain);
-        }
-        return executorRoom;
-    }
+    public ExecutorRoom(){}
 
     @Override
     public void execute(int userSelection) throws IllegalAccessException {
@@ -67,7 +48,7 @@ public class ExecutorRoom implements Executor {
                 int price = sc.nextInt();
                 System.out.print("Capacity of Room --> ");
                 int capacity = sc.nextInt();
-                String roomLevel = new StartMenuRoomLevel(executor).runMenu();
+                String roomLevel = startMenuRoomLevel.runMenu();
                 if(roomLevel.isEmpty()){
                     execute(userSelection);
                 }
@@ -120,10 +101,10 @@ public class ExecutorRoom implements Executor {
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }
-            case 0 -> StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
+            case 0 -> startMenuMain.runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuMain.getSingletonInstance(navigatorMain, executorMain).runMenu();
+                startMenuRoom.runMenu();
             }
         }
     }

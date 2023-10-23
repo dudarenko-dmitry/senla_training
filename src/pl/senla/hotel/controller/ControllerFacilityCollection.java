@@ -11,23 +11,12 @@ import java.util.List;
 @AppComponent
 public class ControllerFacilityCollection implements ControllerFacility{
 
-    private static ControllerFacility controllerFacility;
     @GetInstance(beanName = "ServiceFacilityImpl")
-    private final ServiceFacility serviceFacility;
+    private ServiceFacility serviceFacility;
     @GetInstance(beanName = "ServiceRoomImpl")
-    private final ServiceRoom serviceRoom;
+    private ServiceRoom serviceRoom;
 
-    private ControllerFacilityCollection(ServiceFacility serviceFacility, ServiceRoom serviceRoom) {
-        this.serviceFacility = serviceFacility;
-        this.serviceRoom = serviceRoom;
-    }
-
-    public static ControllerFacility getSingletonInstance(ServiceFacility serviceFacility, ServiceRoom serviceRoom){
-        if(controllerFacility == null){
-            controllerFacility = new ControllerFacilityCollection(serviceFacility, serviceRoom);
-        }
-        return controllerFacility;
-    }
+    public ControllerFacilityCollection() {}
 
     @Override
     public List<HotelFacility> readAll() {
@@ -35,7 +24,7 @@ public class ControllerFacilityCollection implements ControllerFacility{
     }
 
     @Override
-    public boolean create(String hotelFacilityString) {
+    public boolean create(String hotelFacilityString) throws IllegalAccessException {
         return serviceFacility.create(hotelFacilityString);
     }
 

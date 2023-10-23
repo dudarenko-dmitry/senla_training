@@ -4,7 +4,7 @@ import pl.senla.hotel.annotations.di.AppComponent;
 import pl.senla.hotel.annotations.di.GetInstance;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.controller.ControllerRoomReservation;
-import pl.senla.hotel.ui.Navigator;
+import pl.senla.hotel.ui.StartMenu;
 
 import java.util.Scanner;
 
@@ -14,33 +14,19 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.ERROR_READ_ROOM;
 @AppComponent
 public class ExecutorCreateHotelService {
 
-    private static ExecutorCreateHotelService executor;
+    @GetInstance(beanName = "StartMenuOrder")
+    private StartMenu startMenuOrder; // use instead of StartCreateHotelService
+//    @GetInstance(beanName = "StartCreateHotelService")
+//    private StartCreateHotelService startCreateHotelService;
     @GetInstance(beanName = "ControllerRoomReservationCollection")
-    private final ControllerRoomReservation roomReservationController;
+    private ControllerRoomReservation roomReservationController;
     @GetInstance(beanName = "ControllerFacilityCollection")
-    private final ControllerFacility controllerFacility;
-    @GetInstance(beanName = "NavigatorHotelService")
-    private final Navigator navigator;
+    private ControllerFacility controllerFacility;
 
-    private ExecutorCreateHotelService(ControllerRoomReservation roomReservationController,
-                                       ControllerFacility controllerFacility,
-                                       Navigator navigator) {
-        this.roomReservationController = roomReservationController;
-        this.controllerFacility = controllerFacility;
-        this.navigator = navigator;
-    }
-
-    public static ExecutorCreateHotelService getSingletonInstance(ControllerRoomReservation roomReservationController,
-                                                                  ControllerFacility controllerFacility,
-                                                                  Navigator navigator){
-        if (executor == null) {
-            executor = new ExecutorCreateHotelService(roomReservationController, controllerFacility, navigator);
-        }
-        return executor;
-    }
+    public ExecutorCreateHotelService() {}
 
     //Later change return from RoomReservation to HotelService and refactor
-    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService) { //use only (1) RoomReservation
+    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService) throws IllegalAccessException { //use only (1) RoomReservation
         Scanner sc = new Scanner(System.in);
         switch (typeOfService) {
             case 1 -> {
@@ -76,7 +62,8 @@ public class ExecutorCreateHotelService {
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartCreateHotelService.getSingletonInstance(navigator, executor).runMenu(idOrder, idGuest);
+                startMenuOrder.runMenu();
+//                startCreateHotelService.runMenu(idOrder, idGuest);
             }
         }
         return true;

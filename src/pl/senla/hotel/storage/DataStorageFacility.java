@@ -6,16 +6,7 @@ import pl.senla.hotel.entity.facilities.HotelFacility;
 @AppComponent
 public class DataStorageFacility extends DataStorage<HotelFacility>{
 
-    private static DataStorageFacility dataStorageFacility;
-
-    private DataStorageFacility() {
-    }
-
-    public static DataStorageFacility getSingletonInstance(){
-        if(dataStorageFacility == null) {
-            dataStorageFacility = new DataStorageFacility();
-        }
-        return dataStorageFacility;
+    public DataStorageFacility() {
     }
 
     @Override

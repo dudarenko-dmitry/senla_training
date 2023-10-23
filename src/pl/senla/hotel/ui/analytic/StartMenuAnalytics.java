@@ -9,23 +9,12 @@ import pl.senla.hotel.ui.StartMenu;
 @AppComponent
 public class StartMenuAnalytics implements StartMenu {
 
-    private static StartMenu startMenu;
     @GetInstance(beanName = "NavigatorAnalytics")
-    private final Navigator navigator;
+    private Navigator navigator;
     @GetInstance(beanName = "ExecutorAnalytics")
-    private final Executor executor;
+    private Executor executor;
 
-    private StartMenuAnalytics(Navigator navigator, Executor executor) {
-        this.navigator = navigator;
-        this.executor = executor;
-    }
-
-    public static StartMenu getSingletonInstance(Navigator navigator, Executor executor){
-        if (startMenu == null) {
-            startMenu = new StartMenuAnalytics(navigator, executor);
-        }
-        return startMenu;
-    }
+    public StartMenuAnalytics() {}
 
     @Override
     public void runMenu() throws IllegalAccessException {

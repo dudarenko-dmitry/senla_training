@@ -6,16 +6,7 @@ import pl.senla.hotel.entity.services.RoomReservation;
 @AppComponent
 public class DataStorageRoomReservation extends DataStorage<RoomReservation>{
 
-    private static DataStorageRoomReservation dataStorageRoomReservation;
-
-    private DataStorageRoomReservation(){}
-
-    public static DataStorageRoomReservation getSingletonInstance(){
-        if(dataStorageRoomReservation == null) {
-            dataStorageRoomReservation = new DataStorageRoomReservation();
-        }
-        return dataStorageRoomReservation;
-    }
+    public DataStorageRoomReservation(){}
 
     @Override
     public String toString() {

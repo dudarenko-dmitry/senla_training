@@ -10,20 +10,10 @@ import java.util.List;
 @AppComponent
 public class ControllerRoomCollection implements ControllerRoom {
 
-    private static ControllerRoom controllerRoom;
     @GetInstance(beanName = "ServiceRoomImpl")
-    private final ServiceRoom roomService;
+    private ServiceRoom roomService;
 
-    private ControllerRoomCollection(ServiceRoom roomService) {
-        this.roomService = roomService;
-    }
-
-    public static ControllerRoom getSingletonInstance(ServiceRoom roomService) {
-        if (controllerRoom == null) {
-            controllerRoom = new ControllerRoomCollection(roomService);
-        }
-        return controllerRoom;
-    }
+    public ControllerRoomCollection() {}
 
     @Override
     public List<HotelFacility> readAll() {
@@ -31,7 +21,7 @@ public class ControllerRoomCollection implements ControllerRoom {
     }
 
     @Override
-    public boolean create(String roomString) {
+    public boolean create(String roomString) throws IllegalAccessException {
         return roomService.create(roomString);
     }
 
