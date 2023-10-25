@@ -1,10 +1,12 @@
 package pl.senla.hotel.ie.file;
 
-import pl.senla.hotel.annotations.config.ConfigProperty;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 
 import pl.senla.hotel.utils.RoomUtil;
 
+@AppComponent
 public class ConverterHotelFacility implements ConverterEntity<HotelFacility> {
 
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.directory")

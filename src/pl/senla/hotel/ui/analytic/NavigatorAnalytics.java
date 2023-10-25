@@ -1,6 +1,6 @@
 package pl.senla.hotel.ui.analytic;
 
-import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;

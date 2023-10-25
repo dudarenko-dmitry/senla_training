@@ -1,7 +1,7 @@
 package pl.senla.hotel.comparators;
 
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.Transfer;
 import pl.senla.hotel.entity.services.HotelService;

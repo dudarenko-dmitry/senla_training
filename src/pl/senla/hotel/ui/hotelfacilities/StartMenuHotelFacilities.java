@@ -1,7 +1,7 @@
 package pl.senla.hotel.ui.hotelfacilities;
 
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;

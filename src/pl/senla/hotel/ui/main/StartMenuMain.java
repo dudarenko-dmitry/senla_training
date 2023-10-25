@@ -1,8 +1,9 @@
 package pl.senla.hotel.ui.main;
 
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
-import pl.senla.hotel.annotations.di.StartPoint;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
+import pl.senla.hotel.application.annotation.StartMethod;
+import pl.senla.hotel.application.annotation.StartPoint;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
@@ -21,13 +22,16 @@ public class StartMenuMain implements StartMenu {
 
     public StartMenuMain() {}
 
+    @StartMethod
     @Override
     public void runMenu() throws IllegalAccessException {
         int menuPoint = 1;
         while (menuPoint != 0) {
             navigator.buildMenu();
             menuPoint = userChoice.makeChoice();
-            executor.execute(menuPoint);
+            if (menuPoint != 0) {
+                executor.execute(menuPoint);
+            }
         }
     }
 }

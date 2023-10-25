@@ -1,5 +1,7 @@
 package pl.senla.hotel;
 
+import pl.senla.hotel.application.di.DIApplication;
+
 import java.lang.reflect.InvocationTargetException;
 
 public class Main {
@@ -8,8 +10,7 @@ public class Main {
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,
             ClassNotFoundException, InstantiationException {
 
-        DIApplication.run("C://IT/senla_training/src/pl/senla/hotel/resources/",
-                "hotel.properties");
+        DIApplication.run();
     }
 }
 

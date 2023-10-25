@@ -1,6 +1,6 @@
 package pl.senla.hotel.entity.services;
 
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.service.ServiceRoom;
 
 import java.io.Serial;

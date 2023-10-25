@@ -1,6 +1,6 @@
 package pl.senla.hotel.ui;
 
-import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.application.annotation.AppComponent;
 
 import java.util.Scanner;
 

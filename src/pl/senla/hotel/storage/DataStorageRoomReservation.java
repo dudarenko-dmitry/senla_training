@@ -1,6 +1,6 @@
 package pl.senla.hotel.storage;
 
-import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.entity.services.RoomReservation;
 
 @AppComponent

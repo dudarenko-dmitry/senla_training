@@ -1,9 +1,9 @@
 package pl.senla.hotel.ie.serialization;
 
-import pl.senla.hotel.entity.SavedHotel;
+import pl.senla.hotel.entity.Hotel;
 
 public interface Processor {
 
-    SavedHotel loadHotel();
-    void saveHotel(SavedHotel hotel);
+    Hotel loadHotel();
+    void saveHotel(Hotel hotel);
 }

@@ -1,7 +1,7 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.service.ServiceFacility;
 import pl.senla.hotel.service.ServiceRoom;

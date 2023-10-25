@@ -1,6 +1,6 @@
 package pl.senla.hotel.utils;
 
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;

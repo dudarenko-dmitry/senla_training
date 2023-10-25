@@ -1,8 +1,8 @@
 package pl.senla.hotel.ie.serialization;
 
-import pl.senla.hotel.annotations.config.ConfigProperty;
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.entity.SavedHotel;
+import pl.senla.hotel.application.annotation.ConfigProperty;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.entity.Hotel;
 
 import java.io.*;
 
@@ -12,21 +12,20 @@ import static pl.senla.hotel.constant.InputOutputConstant.ERROR_WRITE_SERIALIZAT
 @AppComponent
 public class ProcessorSerializable implements Processor{
 
-    // не считывает данные аннотации без Static!!!
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.serialization")
-    private static String filePathSerialization;
+    private String filePathSerialization;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-name.serialization")
-    private static String fileNameSerialization;
+    private String fileNameSerialization;
 
     public ProcessorSerializable() {
     }
 
     @Override
-    public SavedHotel loadHotel() {
+    public Hotel loadHotel() {
         try (FileInputStream fis = new FileInputStream(filePathSerialization + fileNameSerialization);
              ObjectInputStream ois = new ObjectInputStream(fis))
         {
-            return (SavedHotel) ois.readObject();
+            return (Hotel) ois.readObject();
         } catch (IOException e) {
             System.out.println(ERROR_READ_SERIALIZATION_FILE + e);
         } catch (ClassNotFoundException e) {
@@ -36,7 +35,7 @@ public class ProcessorSerializable implements Processor{
     }
 
     @Override
-    public void saveHotel(SavedHotel hotel) {
+    public void saveHotel(Hotel hotel) {
         try (FileOutputStream fos = new FileOutputStream(filePathSerialization + fileNameSerialization);
         ObjectOutputStream oos = new ObjectOutputStream(fos))
         {

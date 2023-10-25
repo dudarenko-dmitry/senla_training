@@ -1,7 +1,7 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.controller.ControllerRoomReservation;
 
@@ -21,43 +21,36 @@ public class ExecutorCreateHotelService {
     public ExecutorCreateHotelService() {}
 
     //Later change return from RoomReservation to HotelService and refactor
-    protected boolean createHotelServiceForGuest(int idOrder, int idGuest) throws IllegalAccessException { //use only (1) RoomReservation
-        int typeOfService = 1;
-        while (typeOfService != 0){
-            typeOfService = makeChoice();
-            Scanner sc = new Scanner(System.in);
-            switch (typeOfService) {
-                case 1 -> {
-                    System.out.print("Input Id Room --> ");
-                    int idRoom = sc.nextInt();
-                    if (controllerFacility.read(idRoom) != null) {
-                        String startDateString = inputDateString();
-                        System.out.print("Input number of days to reserve --> ");
-                        int numberOfDays = sc.nextInt();
-                        String roomReservationString = idOrder + ";" +
-                                idGuest + ";" +
-                                idRoom + ";" +
-                                startDateString + ";" +
-                                numberOfDays;
-                        roomReservationController.create(roomReservationString);
-                    }
-                    System.out.println(ERROR_READ_ROOM);
-                    return false;
+    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService) throws IllegalAccessException { //use only (1) RoomReservation
+        int typeOfService2 = makeChoice();
+        Scanner sc = new Scanner(System.in);
+        switch (typeOfService) {
+            case 1 -> {
+                System.out.print("Input Id Room --> ");
+                int idRoom = sc.nextInt();
+                if (controllerFacility.read(idRoom) != null) {
+                    String startDateString = inputDateString();
+                    System.out.print("Input number of days to reserve --> ");
+                    int numberOfDays = sc.nextInt();
+                    String roomReservationString = idOrder + ";" +
+                            idGuest + ";" +
+                            idRoom + ";" +
+                            startDateString + ";" +
+                            numberOfDays;
+                    roomReservationController.create(roomReservationString);
                 }
-                case 2 -> {
-                    System.out.println("Do not use this type of Service: Restaurant. ");
-                }
-                case 3 -> {
-                    System.out.println("Do not use this type of Service: Transfer");
-                }
-                case 0 -> {
-                    System.out.println(CONSOLE_CREATE_ORDER);
-                    return true;
-                }
-                default -> {
-                    System.out.println(ERROR_INPUT);
-                    createHotelServiceForGuest(idOrder, idGuest);
-                }
+                System.out.println(ERROR_READ_ROOM);
+                return false;
+            }
+            case 2 -> {
+                System.out.println("Do not use this type of Service: Restaurant. ");
+            }
+            case 3 -> {
+                System.out.println("Do not use this type of Service: Transfer");
+            }
+            default -> {
+                System.out.println(ERROR_INPUT);
+                createHotelServiceForGuest(idOrder, idGuest, typeOfService2);
             }
         }
         return true;

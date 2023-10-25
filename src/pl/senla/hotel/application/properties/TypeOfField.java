@@ -1,4 +1,4 @@
-package pl.senla.hotel.annotations.config;
+package pl.senla.hotel.application.properties;
 
 import java.lang.reflect.Field;
 

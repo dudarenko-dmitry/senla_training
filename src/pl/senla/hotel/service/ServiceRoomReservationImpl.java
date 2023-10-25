@@ -1,8 +1,8 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.annotations.config.ConfigProperty;
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.ConfigProperty;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -42,7 +42,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     @GetInstance(beanName = "ServiceRoomImpl")
     private transient ServiceRoom serviceRoom;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
-    private static Integer roomRecordsNumber;
+    private Integer roomRecordsNumber;
 
     public ServiceRoomReservationImpl() {}
 

@@ -1,21 +1,24 @@
-package pl.senla.hotel.annotations;
+package pl.senla.hotel.application.di;
 
 import org.reflections.Reflections;
 import org.reflections.scanners.FieldAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
-import pl.senla.hotel.annotations.config.ConfigProperty;
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.Entity;
-import pl.senla.hotel.annotations.di.GetInstance;
-import pl.senla.hotel.annotations.di.StartPoint;
+import pl.senla.hotel.application.config.Configuration;
+import pl.senla.hotel.application.config.DIConfiguration;
+import pl.senla.hotel.application.annotation.ConfigProperty;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.Entity;
+import pl.senla.hotel.application.annotation.GetInstance;
+import pl.senla.hotel.application.annotation.StartPoint;
 
 import java.lang.reflect.Field;
 import java.util.Set;
 
 public class AnnotationScanner {
 
-    private final Reflections reflections = new Reflections("pl.senla.hotel",
+    private final Configuration configuration = new DIConfiguration();
+    private final Reflections reflections = new Reflections(configuration.setPackageToScan(),
             new FieldAnnotationsScanner(),
             new TypeAnnotationsScanner(),
             new SubTypesScanner());
@@ -29,7 +32,7 @@ public class AnnotationScanner {
         return reflections.getTypesAnnotatedWith(AppComponent.class);
     }
 
-    public Set<Class<?>> getStartPoints(){
+    public Set<Class<?>> getStartPoints() {
         return reflections.getTypesAnnotatedWith(StartPoint.class);
     }
 

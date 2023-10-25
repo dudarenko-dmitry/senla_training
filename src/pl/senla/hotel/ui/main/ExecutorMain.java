@@ -1,8 +1,8 @@
 package pl.senla.hotel.ui.main;
 
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
-import pl.senla.hotel.entity.SavedHotel;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
+import pl.senla.hotel.entity.Hotel;
 import pl.senla.hotel.ie.serialization.Processor;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
@@ -35,13 +35,6 @@ public class ExecutorMain implements Executor {
             case 3 -> startMenuOrder.runMenu();
             case 4 -> startMenuAnalytics.runMenu();
             case 5 -> startMenuImportExport.runMenu();
-            case 0 -> {
-                SavedHotel hotel = new SavedHotel();
-                processor.saveHotel(hotel);
-                System.out.println(" ===== >  serialization is completed.");
-                System.out.println("Good-bye.");
-                System.exit(0);
-            }
             default -> {
                 System.out.println(ERROR_INPUT);
                 execute(menuPoint);

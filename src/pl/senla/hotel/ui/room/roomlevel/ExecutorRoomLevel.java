@@ -1,6 +1,6 @@
 package pl.senla.hotel.ui.room.roomlevel;
 
-import pl.senla.hotel.annotations.di.AppComponent;
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.entity.facilities.RoomLevel;
 
 import java.util.Scanner;

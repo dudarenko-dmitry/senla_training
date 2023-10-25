@@ -1,8 +1,8 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.annotations.config.ConfigProperty;
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.ConfigProperty;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
 
@@ -18,9 +18,8 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @GetInstance(beanName = "RepositoryFacilityCollection")
     private Repository<HotelFacility> repositoryFacility;
-    // не считывает данную аннотацию без Static!!!
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
-    private static Boolean changeRoomStatusEnabled;
+    private Boolean changeRoomStatusEnabled;
 
     public ServiceRoomImpl() {}
 

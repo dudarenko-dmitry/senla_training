@@ -1,14 +1,13 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.annotations.di.AppComponent;
-import pl.senla.hotel.annotations.di.GetInstance;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
 import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.repository.*;
-import pl.senla.hotel.ui.services.StartCreateHotelService;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,8 +19,8 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 @AppComponent
 public class ServiceOrderImpl implements ServiceOrder {
 
-    @GetInstance(beanName = "StartCreateHotelService")
-    private StartCreateHotelService startCreateHotelService;
+//    @GetInstance(beanName = "StartCreateHotelService")
+//    private StartCreateHotelService startCreateHotelService;
     @GetInstance(beanName = "ServiceHotelServiceImpl")
     private ServiceHotelService serviceHotelService;
     @GetInstance(beanName = "RepositoryOrderCollection")
@@ -47,9 +46,8 @@ public class ServiceOrderImpl implements ServiceOrder {
         order.setIdGuest(idGuest);
         int idOrderNew = getIdOrderNew();
         order.setIdOrder(idOrderNew);
-        startCreateHotelService.runMenu(idOrderNew, idGuest);
-        List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrderNew);
-        order.setServices(idServicesInOrder);
+//        startCreateHotelService.runMenu(idOrderNew, idGuest);
+        order.setServices(null);
         return repositoryOrder.create(order);
     }
 
@@ -136,6 +134,25 @@ public class ServiceOrderImpl implements ServiceOrder {
                         .stream()
                         .map(serviceHotelService::read))
                 .toList();
+    }
+
+    @Override
+    public boolean addServicesToOrder(int idOrder) {
+        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
+            System.out.println(ERROR_READ_ALL_ORDERS);
+            return false;
+        } else if (read(idOrder) == null) {
+            System.out.println(ERROR_READ_ORDER);
+            System.out.println(ERROR_INPUT);
+            return false;
+        }
+        List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrder);
+        Order orderOld = repositoryOrder.read(idOrder);
+        Order orderUpdate = new Order(); // read from String
+        orderUpdate.setIdOrder(idOrder);
+        orderUpdate.setIdGuest(orderOld.getIdGuest());
+        orderUpdate.setServices(idServicesInOrder);
+        return repositoryOrder.update(idOrder, orderUpdate);
     }
 
     private int getIdOrderNew() {
