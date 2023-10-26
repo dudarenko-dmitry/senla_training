@@ -4,6 +4,9 @@ import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.application.annotation.StartMethod;
 import pl.senla.hotel.application.annotation.StartPoint;
+import pl.senla.hotel.application.di.DIContext;
+import pl.senla.hotel.ie.serialization.Processor;
+import pl.senla.hotel.ie.serialization.ProcessorSerializable;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
@@ -25,13 +28,13 @@ public class StartMenuMain implements StartMenu {
     @StartMethod
     @Override
     public void runMenu() throws IllegalAccessException {
-        int menuPoint = 1;
-        while (menuPoint != 0) {
+        DIContext context = DIContext.getContext();
+        Processor processor = context.getBean(ProcessorSerializable.class);
+        processor.loadHotelData();
+        while (true) {
             navigator.buildMenu();
-            menuPoint = userChoice.makeChoice();
-            if (menuPoint != 0) {
-                executor.execute(menuPoint);
-            }
+            int menuPoint = userChoice.makeChoice();
+            executor.execute(menuPoint);
         }
     }
 }

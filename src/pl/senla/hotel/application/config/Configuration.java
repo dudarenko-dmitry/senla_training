@@ -2,9 +2,9 @@ package pl.senla.hotel.application.config;
 
 public interface Configuration {
 
-    String setPackageToScan();
+    String getPackageToScan();
 
-    String setPropertiesDirectory();
+    String getPropertiesDirectory();
 
-    String setPropertiesFileName();
+    String getPropertiesFileName();
 }

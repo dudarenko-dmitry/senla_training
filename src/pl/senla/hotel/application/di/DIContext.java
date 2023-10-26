@@ -20,8 +20,8 @@ public class DIContext {
     private final AnnotationScanner annotationScanner;
     private final ConfigPropertyAnnotationLoader configLoader;
     private final Map<Class<?>, Object> DIContainer = new HashMap<>();
-    private final String configDirectory = configuration.setPropertiesDirectory();
-    private final String configName = configuration.setPropertiesFileName();
+    private final String configDirectory = configuration.getPropertiesDirectory();
+    private final String configName = configuration.getPropertiesFileName();
 
     private DIContext(){
         this.annotationScanner = new AnnotationScanner();
@@ -57,8 +57,6 @@ public class DIContext {
                                 if (DIContainer.get(fullFieldClassName) != null) {
                                     setFieldValue(f, fullFieldClassName, bean);
                                     counter++;
-//                                } else {
-//                                    System.out.println("Error: there is no such bean in DIContainer yet");
                                 }
                             } else {
                                 ConfigProperty annotationProperty = f.getAnnotation(ConfigProperty.class);
@@ -77,8 +75,6 @@ public class DIContext {
                             DIContainer.replace(aClass, bean);
                             System.out.println("Class " + aClass.getTypeName() +
                                     " and his Bean have been added to DIContainer!");
-//                        } else {
-//                            System.out.println("Some of Fields is not in Container yet");
                         }
                     }
                 }

@@ -18,7 +18,7 @@ import java.util.Set;
 public class AnnotationScanner {
 
     private final Configuration configuration = new DIConfiguration();
-    private final Reflections reflections = new Reflections(configuration.setPackageToScan(),
+    private final Reflections reflections = new Reflections(configuration.getPackageToScan(),
             new FieldAnnotationsScanner(),
             new TypeAnnotationsScanner(),
             new SubTypesScanner());

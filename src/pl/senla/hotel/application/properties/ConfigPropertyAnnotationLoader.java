@@ -14,8 +14,7 @@ public class ConfigPropertyAnnotationLoader {
     private ConfigPropertyAnnotationLoader() {
     }
 
-    public static synchronized ConfigPropertyAnnotationLoader getConfigPropertyAnnotationLoader
-            () {
+    public static synchronized ConfigPropertyAnnotationLoader getConfigPropertyAnnotationLoader() {
         if (configPropertyAnnotationLoader == null) {
             configPropertyAnnotationLoader = new ConfigPropertyAnnotationLoader();
         }
@@ -23,7 +22,7 @@ public class ConfigPropertyAnnotationLoader {
     }
 
     public void setField(String configDirectory, String configName, Field field, String propertyName, String type,
-                          Object object) throws IllegalAccessException {
+                         Object object) throws IllegalAccessException {
         Properties properties = loadProperty(configDirectory, configName);
         String fieldName = field.getName();
         String propertyValue;
@@ -37,7 +36,7 @@ public class ConfigPropertyAnnotationLoader {
 
     private Properties loadProperty(String configDirectory, String configName) {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream(new File(configDirectory, configName))){
+        try (FileInputStream fis = new FileInputStream(new File(configDirectory, configName))) {
             properties.load(fis);
         } catch (IOException e) {
             throw new RuntimeException(e);
