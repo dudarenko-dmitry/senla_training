@@ -12,10 +12,9 @@ import java.util.Comparator;
 public class RoomReservationsComparatorByGuestName implements Comparator<RoomReservation> {
 
     @GetInstance(beanName = "RepositoryGuestCollection")
-    private final Repository<Guest> repositoryGuest;
+    private Repository<Guest> repositoryGuest;
 
-    public RoomReservationsComparatorByGuestName(Repository<Guest> repositoryGuest) {
-        this.repositoryGuest = repositoryGuest;
+    public RoomReservationsComparatorByGuestName() {
     }
 
     @Override

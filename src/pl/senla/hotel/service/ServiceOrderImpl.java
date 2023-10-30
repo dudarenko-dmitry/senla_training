@@ -19,8 +19,6 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 @AppComponent
 public class ServiceOrderImpl implements ServiceOrder {
 
-//    @GetInstance(beanName = "StartCreateHotelService")
-//    private StartCreateHotelService startCreateHotelService;
     @GetInstance(beanName = "ServiceHotelServiceImpl")
     private ServiceHotelService serviceHotelService;
     @GetInstance(beanName = "RepositoryOrderCollection")

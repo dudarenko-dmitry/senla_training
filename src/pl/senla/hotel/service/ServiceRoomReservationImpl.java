@@ -196,7 +196,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     @Override
     public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
         return readAll().stream()
-                .sorted(new RoomReservationsComparatorByGuestName(repositoryGuest))
+                .sorted(new RoomReservationsComparatorByGuestName())
                 .toList();
     }
 
