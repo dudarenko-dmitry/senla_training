@@ -188,7 +188,7 @@ Tasks for lecture No. 11
 
 Task 1**.**
 Create an ER database diagram, a set of DDL scripts for creating a structure and a set of DML scripts
-that allow you to fill the datbase for your program from previous classes with test data.
+that allow you to fill the database for your program from previous classes with test data.
 To create a .bat file that allows you to quickly install the database and fill it with test data.
 
 Task 2.
