@@ -1,33 +1,32 @@
 package pl.senla.hotel.ui.hotelfacilities;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
+import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
 
+@AppComponent
 public class StartMenuHotelFacilities implements StartMenu {
 
-    private static StartMenu startMenu;
-    private final Navigator navigator;
-    private final Executor executor;
+    @GetInstance(beanName = "NavigatorHotelFacilities")
+    private Navigator navigator;
+    @GetInstance(beanName = "UserChoice")
+    private Choice userChoice;
+    @GetInstance(beanName = "ExecutorHotelFacilities")
+    private Executor executor;
 
-    private StartMenuHotelFacilities(Configuration appConfiguration) {
-        this.navigator = new NavigatorHotelFacilities();
-        this.executor = ExecutorHotelFacilities.getExecutorHotelFacilities(appConfiguration);
-    }
+    public StartMenuHotelFacilities() {}
 
-    public static StartMenu getStartMenuHotelFacilities(Configuration appConfiguration){
-        if (startMenu == null) {
-            startMenu = new StartMenuHotelFacilities(appConfiguration);
-        }
-        return startMenu;
-    }
-
-    public void runMenu() {
-        while (true){
+    public void runMenu() throws IllegalAccessException {
+        int menuPoint = 1;
+        while (menuPoint != 0) {
             navigator.buildMenu();
-            int userSelection = navigator.makeChoice();
-            executor.execute(userSelection);
+            menuPoint = userChoice.makeChoice();
+            if (menuPoint != 0) {
+                executor.execute(menuPoint);
+            }
         }
     }
 }

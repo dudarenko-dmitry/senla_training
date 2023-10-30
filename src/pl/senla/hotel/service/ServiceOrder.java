@@ -10,4 +10,6 @@ public interface ServiceOrder extends ServiceCRUDALL<Order> {
     List<HotelService> readAllServicesSortByPrice();
     List<HotelService> readAllServicesSortByDate();
     List<HotelService> readAllServicesForOrder(int idOrder);
+
+    boolean addServicesToOrder(int idOrder);
 }

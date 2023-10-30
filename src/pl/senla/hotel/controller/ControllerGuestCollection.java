@@ -1,26 +1,19 @@
 package pl.senla.hotel.controller;
 
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.service.ServiceGuest;
-import pl.senla.hotel.service.ServiceGuestImpl;
 
 import java.util.List;
 
+@AppComponent
 public class ControllerGuestCollection implements ControllerGuest {
 
-    private static ControllerGuest controllerGuest;
-    private final ServiceGuest guestService;
+    @GetInstance(beanName = "ServiceGuestImpl")
+    private ServiceGuest guestService;
 
-    private ControllerGuestCollection() {
-        this.guestService = ServiceGuestImpl.getServiceGuest();
-    }
-
-    public static ControllerGuest getControllerGuest(){
-        if(controllerGuest == null){
-            controllerGuest = new ControllerGuestCollection();
-        }
-        return controllerGuest;
-    }
+    public ControllerGuestCollection() {}
 
     @Override
     public List<Guest> readAll() {
@@ -28,7 +21,7 @@ public class ControllerGuestCollection implements ControllerGuest {
     }
 
     @Override
-    public boolean create(String guest) {
+    public boolean create(String guest) throws IllegalAccessException {
         return guestService.create(guest);
     }
 

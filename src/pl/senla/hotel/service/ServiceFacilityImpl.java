@@ -1,10 +1,10 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RepositoryFacilityCollection;
-import pl.senla.hotel.repository.RepositoryRoomCollection;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,23 +12,15 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
+@AppComponent
 public class ServiceFacilityImpl implements ServiceFacility{
 
-    private static ServiceFacility serviceFacility;
-    private final Repository<HotelFacility> repositoryHotelFacility;
-    private final Repository<Room> repositoryRoom;
+    @GetInstance(beanName = "RepositoryFacilityCollection")
+    private Repository<HotelFacility> repositoryHotelFacility;
+    @GetInstance(beanName = "RepositoryRoomCollection")
+    private Repository<Room> repositoryRoom;
 
-    private ServiceFacilityImpl() {
-        this.repositoryHotelFacility = RepositoryFacilityCollection.getRepositoryFacility();
-        this.repositoryRoom = RepositoryRoomCollection.getRepositoryRoom();
-    }
-
-    public static ServiceFacility getServiceFacility(){
-        if (serviceFacility == null){
-            serviceFacility = new ServiceFacilityImpl();
-        }
-        return serviceFacility;
-    }
+    public ServiceFacilityImpl() {}
 
     @Override
     public List<HotelFacility> readAll() {

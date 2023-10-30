@@ -1,38 +1,28 @@
 package pl.senla.hotel.ui.services;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.ControllerFacility;
-import pl.senla.hotel.controller.ControllerFacilityCollection;
 import pl.senla.hotel.controller.ControllerRoomReservation;
-import pl.senla.hotel.controller.ControllerRoomReservationCollection;
 
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.HotelFacilityConstant.ERROR_READ_ROOM;
 
+@AppComponent
 public class ExecutorCreateHotelService {
 
-    private static ExecutorCreateHotelService executor;
-    private final ControllerRoomReservation roomReservationController;
-    private final ControllerFacility controllerFacility;
-    private final Configuration configuration;
+    @GetInstance(beanName = "ControllerRoomReservationCollection")
+    private ControllerRoomReservation roomReservationController;
+    @GetInstance(beanName = "ControllerFacilityCollection")
+    private ControllerFacility controllerFacility;
 
-    private ExecutorCreateHotelService(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.roomReservationController = ControllerRoomReservationCollection.getControllerRoomReservation(configuration);
-        this.controllerFacility = ControllerFacilityCollection.getControllerFacility(configuration);
-    }
-
-    public static ExecutorCreateHotelService getExecutorCreateHotelService(Configuration appConfiguration){
-        if (executor == null) {
-            executor = new ExecutorCreateHotelService(appConfiguration);
-        }
-        return executor;
-    }
+    public ExecutorCreateHotelService() {}
 
     //Later change return from RoomReservation to HotelService and refactor
-    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService) { //use only (1) RoomReservation
+    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService) throws IllegalAccessException { //use only (1) RoomReservation
+        int typeOfService2 = makeChoice();
         Scanner sc = new Scanner(System.in);
         switch (typeOfService) {
             case 1 -> {
@@ -47,31 +37,29 @@ public class ExecutorCreateHotelService {
                             idRoom + ";" +
                             startDateString + ";" +
                             numberOfDays;
-                    return roomReservationController.create(roomReservationString);
+                    roomReservationController.create(roomReservationString);
                 }
                 System.out.println(ERROR_READ_ROOM);
                 return false;
             }
             case 2 -> {
                 System.out.println("Do not use this type of Service: Restaurant. ");
-                //logic
-                return true;
             }
             case 3 -> {
                 System.out.println("Do not use this type of Service: Transfer");
-                //logic
-                return true;
-            }
-            case 0 -> {
-                System.out.println(CONSOLE_CREATE_ORDER);
-                return true;
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartCreateHotelService.getStartCreateHotelService(configuration).runMenu(idOrder, idGuest);
+                createHotelServiceForGuest(idOrder, idGuest, typeOfService2);
             }
         }
         return true;
+    }
+
+    private int makeChoice(){
+        System.out.print("Input your choice --> ");
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
     }
 
     private String inputDateString() {

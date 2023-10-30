@@ -1,27 +1,19 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.HotelFacility;
-import pl.senla.hotel.service.ServiceRoomImpl;
 import pl.senla.hotel.service.ServiceRoom;
 
 import java.util.List;
 
+@AppComponent
 public class ControllerRoomCollection implements ControllerRoom {
 
-    private static ControllerRoom controllerRoom;
-    private final ServiceRoom roomService;
+    @GetInstance(beanName = "ServiceRoomImpl")
+    private ServiceRoom roomService;
 
-    private ControllerRoomCollection(Configuration appConfiguration) {
-        this.roomService = ServiceRoomImpl.getServiceRoom(appConfiguration);
-    }
-
-    public static ControllerRoom getControllerRoom(Configuration appConfiguration) {
-        if (controllerRoom == null) {
-            controllerRoom = new ControllerRoomCollection(appConfiguration);
-        }
-        return controllerRoom;
-    }
+    public ControllerRoomCollection() {}
 
     @Override
     public List<HotelFacility> readAll() {
@@ -29,7 +21,7 @@ public class ControllerRoomCollection implements ControllerRoom {
     }
 
     @Override
-    public boolean create(String roomString) {
+    public boolean create(String roomString) throws IllegalAccessException {
         return roomService.create(roomString);
     }
 

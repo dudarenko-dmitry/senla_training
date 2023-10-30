@@ -1,9 +1,9 @@
 package pl.senla.hotel.ui.room;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.main.StartMenuMain;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -13,30 +13,22 @@ import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
+@AppComponent
 public class ExecutorRoom implements Executor {
 
-    private static Executor executorRoom;
-    private final ControllerFacility facilityController;
-    private final ControllerRoom roomController;
-    private final Configuration configuration;
+    @GetInstance(beanName = "StartMenuRoomLevel")
+    private StartMenuRoomLevel startMenuRoomLevel;
+    @GetInstance(beanName = "ControllerFacilityCollection")
+    private ControllerFacility facilityController;
+    @GetInstance(beanName = "ControllerRoomCollection")
+    private ControllerRoom roomController;
 
-    private ExecutorRoom(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.facilityController = ControllerFacilityCollection.getControllerFacility(configuration);
-        this.roomController = ControllerRoomCollection.getControllerRoom(configuration);
-    }
-
-    public static Executor getExecutorRoom(Configuration appConfiguration){
-        if (executorRoom == null) {
-            executorRoom = new ExecutorRoom(appConfiguration);
-        }
-        return executorRoom;
-    }
+    public ExecutorRoom(){}
 
     @Override
-    public void execute(int userSelection) {
+    public void execute(int menuPoint) throws IllegalAccessException {
         Scanner sc = new Scanner(System.in);
-        switch (userSelection) {
+        switch (menuPoint) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
             case 2 -> {
                 System.out.print(INPUT_ID_ROOM);
@@ -51,9 +43,9 @@ public class ExecutorRoom implements Executor {
                 int price = sc.nextInt();
                 System.out.print("Capacity of Room --> ");
                 int capacity = sc.nextInt();
-                String roomLevel = new StartMenuRoomLevel().runMenu();
+                String roomLevel = startMenuRoomLevel.runMenu();
                 if(roomLevel.isEmpty()){
-                    execute(userSelection);
+                    execute(menuPoint);
                 }
                 String stringRoom = CategoryFacility.ROOM + ";" +
                         roomNumber + ";" +
@@ -104,10 +96,9 @@ public class ExecutorRoom implements Executor {
                 int idRoomDelete = sc.nextInt();
                 System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
             }
-            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuMain.getStartMenu(configuration).runMenu();
+                execute(menuPoint);
             }
         }
     }

@@ -1,8 +1,9 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RepositoryGuestCollection;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,21 +12,13 @@ import java.util.List;
 import static pl.senla.hotel.constant.ClientConstant.*;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
+@AppComponent
 public class ServiceGuestImpl implements ServiceGuest {
 
-    private static ServiceGuest serviceGuest;
-    private final Repository<Guest> guestRepository;
+    @GetInstance(beanName = "RepositoryGuestCollection")
+    private Repository<Guest> guestRepository;
 
-    private ServiceGuestImpl() {
-        this.guestRepository = RepositoryGuestCollection.getRepositoryGuest();
-    }
-
-    public static ServiceGuest getServiceGuest(){
-        if (serviceGuest == null){
-            serviceGuest = new ServiceGuestImpl();
-        }
-        return serviceGuest;
-    }
+    public ServiceGuestImpl() {}
 
     @Override
     public List<Guest> readAll() {

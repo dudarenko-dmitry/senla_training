@@ -5,7 +5,7 @@ import java.util.List;
 public interface ServiceCRUDALL<T> {
 
     List<T> readAll();
-    boolean create(String tString);
+    boolean create(String tString) throws IllegalAccessException;
     T read(int id);
     boolean update(int id, String tString);
     boolean delete(int id);

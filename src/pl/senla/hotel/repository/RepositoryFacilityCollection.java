@@ -1,26 +1,20 @@
 package pl.senla.hotel.repository;
 
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.storage.DataStorage;
-import pl.senla.hotel.storage.DataStorageFacility;
 
 import java.util.List;
 
+@AppComponent
 public class RepositoryFacilityCollection implements Repository<HotelFacility> {
 
-    private static Repository<HotelFacility> repositoryFacility;
-    private final DataStorage<HotelFacility> priceList;
+    @GetInstance(beanName = "DataStorageFacility")
+    private DataStorage<HotelFacility> priceList;
 
-    private RepositoryFacilityCollection() {
-        this.priceList = DataStorageFacility.getDataStorageFacility();
-    }
+    public RepositoryFacilityCollection() {    }
 
-    public static Repository<HotelFacility> getRepositoryFacility(){
-        if(repositoryFacility == null){
-            repositoryFacility = new RepositoryFacilityCollection();
-        }
-        return repositoryFacility;
-    }
     @Override
     public List<HotelFacility> readAll() {
         return priceList.getDataList();

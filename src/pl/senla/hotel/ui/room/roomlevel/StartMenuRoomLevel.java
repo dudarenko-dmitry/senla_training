@@ -1,21 +1,20 @@
 package pl.senla.hotel.ui.room.roomlevel;
 
-import pl.senla.hotel.configuration.AppConfiguration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ui.Navigator;
 
+@AppComponent
 public class StartMenuRoomLevel {
+    @GetInstance(beanName = "NavigatorRoomLevel")
+    private Navigator navigator;
+    @GetInstance(beanName = "ExecutorRoomLevel")
+    private ExecutorRoomLevel executor;
 
-    private final Navigator navigator;
-    private final ExecutorRoomLevel executor;
+    public StartMenuRoomLevel() {}
 
-    public StartMenuRoomLevel() {
-        this.navigator = new NavigatorRoomLevel();
-        this.executor = new ExecutorRoomLevel(AppConfiguration.getAppConfiguration());
-    }
-
-    public String runMenu() {
+    public String runMenu() throws IllegalAccessException {
         navigator.buildMenu();
-        int userSelection = navigator.makeChoice();
-        return executor.execute(userSelection);
+        return executor.execute();
     }
 }

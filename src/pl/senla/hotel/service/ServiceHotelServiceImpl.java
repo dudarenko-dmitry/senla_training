@@ -1,32 +1,24 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.repository.Repository;
-import pl.senla.hotel.repository.RepositoryHotelServiceCollection;
 
 import java.util.Collections;
 import java.util.List;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.*;
 
+@AppComponent
 public class ServiceHotelServiceImpl implements ServiceHotelService{
 
-    private static ServiceHotelService serviceHotelService;
-    private final ServiceRoomReservation serviceRoomReservation;
-    private final Repository<HotelService> repositoryHotelService;
+    @GetInstance(beanName = "ServiceRoomReservationImpl")
+    private ServiceRoomReservation serviceRoomReservation;
+    @GetInstance(beanName = "RepositoryHotelServiceCollection")
+    private Repository<HotelService> repositoryHotelService;
 
-    private ServiceHotelServiceImpl(Configuration appConfiguration) {
-        this.serviceRoomReservation = ServiceRoomReservationImpl.getServiceRoomReservation(appConfiguration);
-        this.repositoryHotelService = RepositoryHotelServiceCollection.getRepositoryHotelService();
-    }
-
-    public static ServiceHotelService getServiceHotelService(Configuration appConfiguration){
-        if(serviceHotelService == null){
-            serviceHotelService = new ServiceHotelServiceImpl(appConfiguration);
-        }
-        return serviceHotelService;
-    }
+    public ServiceHotelServiceImpl() {}
 
     @Override
     public List<HotelService> readAll() {
@@ -38,7 +30,7 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     }
 
     @Override
-    public boolean create(String hotelServiceString) {
+    public boolean create(String hotelServiceString) throws IllegalAccessException {
         String[] hotelServiceData = hotelServiceString.split(";");
         String typeOfService = hotelServiceData[0]; // EDIT and PUT correct index
         switch (typeOfService){

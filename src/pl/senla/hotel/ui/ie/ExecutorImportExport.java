@@ -1,34 +1,23 @@
 package pl.senla.hotel.ui.ie;
 
-import pl.senla.hotel.configuration.Configuration;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ie.file.DataProcessor;
-import pl.senla.hotel.ie.file.DataProcessorFileEntity;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.main.StartMenuMain;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
+@AppComponent
 public class ExecutorImportExport implements Executor {
 
-    private static Executor executor;
-    private final DataProcessor dataProcessor;
-    private final Configuration configuration;
+    @GetInstance(beanName = "DataProcessorFileEntity")
+    private DataProcessor dataProcessor;
 
-    private ExecutorImportExport(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.dataProcessor = DataProcessorFileEntity.getDataProcessor();
-    }
-
-    public static Executor getExecutor(Configuration appConfiguration) {
-        if (executor == null) {
-            executor = new ExecutorImportExport(appConfiguration);
-        }
-        return executor;
-    }
+    public ExecutorImportExport(){}
 
     @Override
-    public void execute(int userSelection) {
-        switch (userSelection) {
+    public void execute(int menuPoint) throws IllegalAccessException {
+        switch (menuPoint) {
             case 1 -> dataProcessor.loadAllEntities();
             case 2 -> dataProcessor.saveAllEntities();
             case 3 -> dataProcessor.loadHotelFacility();
@@ -43,10 +32,9 @@ public class ExecutorImportExport implements Executor {
                 dataProcessor.saveHotelServices();
                 dataProcessor.saveOrders();
             }
-            case 0 -> StartMenuMain.getStartMenu(configuration).runMenu();
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuImportExport.getStartMenuImpExp(configuration).runMenu();
+                execute(menuPoint);
             }
         }
     }

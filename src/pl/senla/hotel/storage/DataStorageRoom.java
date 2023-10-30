@@ -1,19 +1,12 @@
 package pl.senla.hotel.storage;
 
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.entity.facilities.Room;
 
+@AppComponent
 public class DataStorageRoom extends DataStorage<Room>{
 
-    private static DataStorageRoom dataStorageRoom;
-
-    private DataStorageRoom() {
-    }
-
-    public static DataStorageRoom getDataStorageRoom(){
-        if (dataStorageRoom == null){
-            dataStorageRoom = new DataStorageRoom();
-        }
-        return dataStorageRoom;
+    public DataStorageRoom() {
     }
 
     @Override

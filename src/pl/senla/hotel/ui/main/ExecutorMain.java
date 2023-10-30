@@ -1,74 +1,62 @@
 package pl.senla.hotel.ui.main;
 
-import pl.senla.hotel.configuration.Configuration;
-import pl.senla.hotel.ie.file.DataProcessor;
-import pl.senla.hotel.ie.file.DataProcessorFileEntity;
+import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.GetInstance;
+import pl.senla.hotel.application.di.DIContext;
+import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.entity.Hotel;
+import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ie.serialization.Processor;
 import pl.senla.hotel.ie.serialization.ProcessorSerializable;
+import pl.senla.hotel.storage.*;
+import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
-import pl.senla.hotel.ui.analytic.StartMenuAnalytics;
-import pl.senla.hotel.ui.guest.StartMenuGuest;
-import pl.senla.hotel.ui.hotelfacilities.StartMenuHotelFacilities;
-import pl.senla.hotel.ui.ie.StartMenuImportExport;
-import pl.senla.hotel.ui.order.StartMenuOrder;
+
+import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
+@AppComponent
 public class ExecutorMain implements Executor {
 
-    private static Executor executor;
-    private final StartMenu startMenuHotelFacilities;
-    private final StartMenu startMenuGuest;
-    private final StartMenu startMenuOrder;
-    private final StartMenu startMenuAnalytics;
-    private final StartMenu startMenuImportExport;
-    private final DataProcessor dataProcessor; //version 3 (save Application's state to files)
-    private final Processor processor;
-    private final Configuration configuration;
+    @GetInstance(beanName = "StartMenuHotelFacilities")
+    private StartMenu startMenuHotelFacilities;
+    @GetInstance(beanName = "StartMenuGuest")
+    private StartMenu startMenuGuest;
+    @GetInstance(beanName = "StartMenuOrder")
+    private StartMenu startMenuOrder;
+    @GetInstance(beanName = "StartMenuAnalytics")
+    private StartMenu startMenuAnalytics;
+    @GetInstance(beanName = "StartMenuImportExport")
+    private StartMenu startMenuImportExport;
+    @GetInstance(beanName = "UserChoice")
+    private Choice userChoice;
+    @GetInstance(beanName = "ProcessorSerializable")
+    private Processor processor;
 
-    private ExecutorMain(Configuration appConfiguration) {
-        this.configuration = appConfiguration;
-        this.startMenuHotelFacilities  = StartMenuHotelFacilities.getStartMenuHotelFacilities(configuration);
-        this.startMenuGuest = StartMenuGuest.getStartMenuGuest(configuration);
-        this.startMenuOrder = StartMenuOrder.getStartMenuOrder(configuration);
-        this.startMenuAnalytics = StartMenuAnalytics.getStartMenuAnalytics(configuration);
-        this.startMenuImportExport = StartMenuImportExport.getStartMenuImpExp(configuration);
-        this.dataProcessor = DataProcessorFileEntity.getDataProcessor(); //version 3 (save Application's state to files)
-        this.processor = new ProcessorSerializable(configuration);
-    }
-
-    public static Executor getExecutor(Configuration appConfiguration) {
-        if (executor == null) {
-            executor = new ExecutorMain(appConfiguration);
-        }
-        return executor;
+    public ExecutorMain(){
     }
 
     @Override
-    public void execute(int userSelection) {
-        switch (userSelection) {
+    public void execute(int menuPoint) throws IllegalAccessException {
+        switch (menuPoint) {
             case 1 -> startMenuHotelFacilities.runMenu();
             case 2 -> startMenuGuest.runMenu();
             case 3 -> startMenuOrder.runMenu();
             case 4 -> startMenuAnalytics.runMenu();
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
-//                version 3 (save Application's state to files)
-                System.out.println(" ===== >  save to files");
-                dataProcessor.saveAllEntities(); // use in case of saving Application's state to files
-
-                // version 4 (save Application's state by Serialization
-//                SavedHotel hotel = new SavedHotel(configuration);
-//                processor.saveHotel(hotel);
-//                System.out.println(" ===== >  serialization is completed.");
-
+                processor.saveHotelData();
                 System.out.println("Good-bye.");
                 System.exit(0);
             }
             default -> {
                 System.out.println(ERROR_INPUT);
-                StartMenuMain.getStartMenu(configuration).runMenu();
+                menuPoint = userChoice.makeChoice();
+                execute(menuPoint);
             }
         }
     }
