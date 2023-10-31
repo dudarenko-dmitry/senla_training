@@ -1,5 +1,4 @@
 -- hotel.guests definition
-DROP TABLE hotel.guests;
 
 CREATE TABLE IF NOT EXISTS hotel.guests (
   `guestID` int AUTO_INCREMENT PRIMARY KEY,
