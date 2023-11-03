@@ -1,4 +1,4 @@
-package pl.senla.hotel.repository;
+package pl.senla.hotel.dao;
 
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
@@ -8,12 +8,12 @@ import pl.senla.hotel.storage.DataStorage;
 import java.util.List;
 
 @AppComponent
-public class RepositoryGuestCollection implements Repository<Guest> {
+public class DaoGuestCollection implements GenericDao<Guest> {
 
     @GetInstance(beanName = "DataStorageGuest")
     public DataStorage<Guest> dataStorage;
 
-    public RepositoryGuestCollection() {
+    public DaoGuestCollection() {
     }
 
     @Override

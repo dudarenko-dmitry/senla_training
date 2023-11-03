@@ -4,7 +4,7 @@ import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.entity.facilities.*;
-import pl.senla.hotel.repository.Repository;
+import pl.senla.hotel.dao.GenericDao;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,20 +15,20 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 @AppComponent
 public class ServiceFacilityImpl implements ServiceFacility{
 
-    @GetInstance(beanName = "RepositoryFacilityCollection")
-    private Repository<HotelFacility> repositoryHotelFacility;
-    @GetInstance(beanName = "RepositoryRoomCollection")
-    private Repository<Room> repositoryRoom;
+    @GetInstance(beanName = "DaoFacilityCollection")
+    private GenericDao<HotelFacility> daoHotelFacility;
+    @GetInstance(beanName = "DaoRoomCollection")
+    private GenericDao<Room> daoRoom;
 
     public ServiceFacilityImpl() {}
 
     @Override
     public List<HotelFacility> readAll() {
-        if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){
+        if(daoHotelFacility.readAll() == null || daoHotelFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
             return Collections.emptyList();
         }
-        return repositoryHotelFacility.readAll();
+        return daoHotelFacility.readAll();
     }
 
     @Override
@@ -42,19 +42,19 @@ public class ServiceFacilityImpl implements ServiceFacility{
         hotelFacility.setRoomLevel(RoomLevel.valueOf(facilityData[4]));
         hotelFacility.setRoomStatus(RoomStatus.valueOf(facilityData[5]));
         setIdFacilityNew(hotelFacility);
-        repositoryRoom.create(hotelFacility);
-        return repositoryHotelFacility.create(hotelFacility);
+        daoRoom.create(hotelFacility);
+        return daoHotelFacility.create(hotelFacility);
     }
 
     @Override
     public HotelFacility read(int idFacility) {
-        if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){
+        if(daoHotelFacility.readAll() == null || daoHotelFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
             return null;
         }
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdFacility() == idFacility){
-                return repositoryHotelFacility.read(idFacility);
+                return daoHotelFacility.read(idFacility);
             }
         }
         System.out.println(ERROR_READ_HOTEL_FACILITY);
@@ -63,7 +63,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     @Override
     public boolean update(int idFacility, String hotelFacilityString) {
-        if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){
+        if(daoHotelFacility.readAll() == null || daoHotelFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if(read(idFacility) == null){
@@ -72,19 +72,19 @@ public class ServiceFacilityImpl implements ServiceFacility{
         }
         HotelFacility hotelFacilityUpdate = read(idFacility);
         hotelFacilityUpdate.setPrice(Integer.parseInt(hotelFacilityString));
-        repositoryRoom.update(idFacility, (Room) hotelFacilityUpdate);
-        return repositoryHotelFacility.update(idFacility, hotelFacilityUpdate);
+        daoRoom.update(idFacility, (Room) hotelFacilityUpdate);
+        return daoHotelFacility.update(idFacility, hotelFacilityUpdate);
     }
 
     @Override
     public boolean delete(int idFacility) {
-        if(repositoryHotelFacility.readAll() == null || repositoryHotelFacility.readAll().isEmpty()){
+        if(daoHotelFacility.readAll() == null || daoHotelFacility.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
         }
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdFacility() == idFacility){
-                repositoryRoom.delete(idFacility);
-                return repositoryHotelFacility.delete(idFacility);
+                daoRoom.delete(idFacility);
+                return daoHotelFacility.delete(idFacility);
             }
         }
         System.out.println(ERROR_READ_HOTEL_FACILITY);

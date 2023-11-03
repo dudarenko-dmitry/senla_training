@@ -30,7 +30,7 @@ public class ExecutorUpdateHotelServiceList {
                 case 1:
                     System.out.println("Update Room's Reservation: ");
                     System.out.println(CONSOLE_READ_ALL_SERVICES + orderController.read(idOrderUpdate)
-                            .getServices()
+                            .getIdServices()
                             .stream()
                             .filter(s -> roomReservationController.read(s).getTypeOfService()
                                     .equals(TypeOfService.ROOM_RESERVATION))

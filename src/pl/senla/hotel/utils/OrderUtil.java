@@ -38,7 +38,7 @@ public final class OrderUtil {
     public static String[] convertOrderToString(Order o) {
         String idOrder = String.valueOf(o.getIdOrder());
         String idGuest = String.valueOf(o.getIdGuest());
-        List<Integer> idServices = o.getServices();
+        List<Integer> idServices = o.getIdServices();
         if (!idServices.isEmpty()) {
             StringBuilder services = new StringBuilder();
             services.append(idServices.get(0));

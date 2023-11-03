@@ -3,7 +3,7 @@ package pl.senla.hotel.service;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.Guest;
-import pl.senla.hotel.repository.Repository;
+import pl.senla.hotel.dao.GenericDao;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,18 +15,18 @@ import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 @AppComponent
 public class ServiceGuestImpl implements ServiceGuest {
 
-    @GetInstance(beanName = "RepositoryGuestCollection")
-    private Repository<Guest> guestRepository;
+    @GetInstance(beanName = "DaoGuestCollection")
+    private GenericDao<Guest> daoGuest;
 
     public ServiceGuestImpl() {}
 
     @Override
     public List<Guest> readAll() {
-        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
+        if(daoGuest.readAll() == null || daoGuest.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return Collections.emptyList();
         }
-        return guestRepository.readAll();
+        return daoGuest.readAll();
     }
 
     @Override
@@ -37,21 +37,21 @@ public class ServiceGuestImpl implements ServiceGuest {
         guest.setName(guestData[0]);
         guest.setPhoneNumber(Integer.parseInt(guestData[1]));
         setIdGuestNew(guest);
-        return guestRepository.create(guest);
+        return daoGuest.create(guest);
     }
 
     @Override
     public Guest read(int idGuest) {
-        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
+        if(daoGuest.readAll() == null || daoGuest.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return null;
-        } else if(idGuest < 0 || idGuest >= guestRepository.readAll().size()){
+        } else if(idGuest < 0 || idGuest >= daoGuest.readAll().size()){
             System.out.println(ERROR_INPUT);
             return null;
         }
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdGuest() == idGuest){
-                return guestRepository.read(idGuest);
+                return daoGuest.read(idGuest);
             }
         }
         System.out.println(ERROR_READ_CLIENT);
@@ -60,7 +60,7 @@ public class ServiceGuestImpl implements ServiceGuest {
 
     @Override
     public boolean update(int idGuest, String guestUpdate) {
-        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
+        if(daoGuest.readAll() == null || daoGuest.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
         } else if(read(idGuest) == null){
@@ -69,24 +69,24 @@ public class ServiceGuestImpl implements ServiceGuest {
         }
         Guest guest = read(idGuest);
         guest.setPhoneNumber(Integer.parseInt(guestUpdate));
-        return guestRepository.update(idGuest, guest);
+        return daoGuest.update(idGuest, guest);
     }
 
     @Override
     public boolean delete(int idGuest) {
-        if(guestRepository.readAll() == null || guestRepository.readAll().isEmpty()){
+        if(daoGuest.readAll() == null || daoGuest.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_CLIENT);
             return false;
         } else if(read(idGuest) == null){
             System.out.println(ERROR_READ_CLIENT);
             return false;
         }
-        return guestRepository.delete(idGuest);
+        return daoGuest.delete(idGuest);
     }
 
     @Override
     public int countNumberOfGuestsTotal() {
-        return guestRepository.readAll().size();
+        return daoGuest.readAll().size();
     }
 
     private void setIdGuestNew(Guest guest) {

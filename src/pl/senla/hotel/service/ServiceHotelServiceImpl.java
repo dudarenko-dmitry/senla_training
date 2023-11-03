@@ -3,7 +3,7 @@ package pl.senla.hotel.service;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.repository.Repository;
+import pl.senla.hotel.dao.GenericDao;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,18 +15,18 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
 
     @GetInstance(beanName = "ServiceRoomReservationImpl")
     private ServiceRoomReservation serviceRoomReservation;
-    @GetInstance(beanName = "RepositoryHotelServiceCollection")
-    private Repository<HotelService> repositoryHotelService;
+    @GetInstance(beanName = "DaoHotelServiceCollection")
+    private GenericDao<HotelService> daoHotelService;
 
     public ServiceHotelServiceImpl() {}
 
     @Override
     public List<HotelService> readAll() {
-        if(repositoryHotelService.readAll() == null || repositoryHotelService.readAll().isEmpty()){
+        if(daoHotelService.readAll() == null || daoHotelService.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_SERVICES);
             return Collections.emptyList();
         }
-        return repositoryHotelService.readAll();
+        return daoHotelService.readAll();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
         }
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdService() == idHotelService){
-                return repositoryHotelService.read(idHotelService);
+                return daoHotelService.read(idHotelService);
             }
         }
         System.out.println(ERROR_READ_SERVICE);
@@ -78,7 +78,7 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
         }
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdService() == idHotelService){
-                return repositoryHotelService.delete(idHotelService);
+                return daoHotelService.delete(idHotelService);
             }
         }
         System.out.println(ERROR_READ_SERVICE);

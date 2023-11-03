@@ -7,7 +7,7 @@ import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.repository.*;
+import pl.senla.hotel.dao.*;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,20 +21,20 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @GetInstance(beanName = "ServiceHotelServiceImpl")
     private ServiceHotelService serviceHotelService;
-    @GetInstance(beanName = "RepositoryOrderCollection")
-    private Repository<Order> repositoryOrder;
-    @GetInstance(beanName = "RepositoryRoomCollection")
-    private Repository<Room> repositoryRoom;
+    @GetInstance(beanName = "DaoOrderCollection")
+    private GenericDao<Order> daoOrder;
+    @GetInstance(beanName = "DaoRoomCollection")
+    private GenericDao<Room> daoRoom;
 
     public ServiceOrderImpl() {}
 
     @Override
     public List<Order> readAll() {
-        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
+        if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return Collections.emptyList();
         }
-        return repositoryOrder.readAll();
+        return daoOrder.readAll();
     }
 
     @Override
@@ -46,12 +46,12 @@ public class ServiceOrderImpl implements ServiceOrder {
         order.setIdOrder(idOrderNew);
 //        startCreateHotelService.runMenu(idOrderNew, idGuest);
         order.setServices(null);
-        return repositoryOrder.create(order);
+        return daoOrder.create(order);
     }
 
     @Override
     public Order read(int idOrder) {
-        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
+        if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return null;
         } else if (idOrder < 0 || idOrder >= readAll().size()) {
@@ -60,7 +60,7 @@ public class ServiceOrderImpl implements ServiceOrder {
         }
         for (int i = 0; i <= readAll().size(); i++) {
             if (readAll().get(i).getIdOrder() == idOrder) {
-                return repositoryOrder.read(i);
+                return daoOrder.read(i);
             }
         }
         System.out.println(ERROR_READ_ORDER);
@@ -69,7 +69,7 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public boolean update(int idOrder, String orderUpdatingString) {
-        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
+        if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
         } else if (read(idOrder) == null) {
@@ -78,12 +78,12 @@ public class ServiceOrderImpl implements ServiceOrder {
             return false;
         }
         Order orderUpdate = new Order(); // read from String
-        return repositoryOrder.update(idOrder, orderUpdate);
+        return daoOrder.update(idOrder, orderUpdate);
     }
 
     @Override
     public boolean delete(int idOrder) {
-        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
+        if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
         }
@@ -93,7 +93,7 @@ public class ServiceOrderImpl implements ServiceOrder {
                 for (HotelService hs : services) {
                     serviceHotelService.delete(hs.getIdService());
                 }
-                return repositoryOrder.delete(i);
+                return daoOrder.delete(i);
             }
         }
         System.out.println(ERROR_READ_ORDER);
@@ -103,9 +103,9 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public List<HotelService> readAllServicesSortByPrice() {
-        return repositoryOrder.readAll()
+        return daoOrder.readAll()
                 .stream()
-                .flatMap(o -> o.getServices()
+                .flatMap(o -> o.getIdServices()
                         .stream()
                         .map(serviceHotelService::read))
                 .sorted(new HotelServicesComparatorByPrice())
@@ -114,9 +114,9 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public List<HotelService> readAllServicesSortByDate() {
-        return repositoryOrder.readAll()
+        return daoOrder.readAll()
                 .stream()
-                .flatMap(o -> o.getServices()
+                .flatMap(o -> o.getIdServices()
                         .stream()
                         .map(serviceHotelService::read))
                 .sorted(new HotelServicesComparatorByDate())
@@ -125,10 +125,10 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public List<HotelService> readAllServicesForOrder(int idOrder) {
-        return repositoryOrder.readAll()
+        return daoOrder.readAll()
                 .stream()
                 .filter(o -> o.getIdOrder() == idOrder)
-                .flatMap(o -> o.getServices()
+                .flatMap(o -> o.getIdServices()
                         .stream()
                         .map(serviceHotelService::read))
                 .toList();
@@ -136,7 +136,7 @@ public class ServiceOrderImpl implements ServiceOrder {
 
     @Override
     public boolean addServicesToOrder(int idOrder) {
-        if (repositoryOrder.readAll() == null || repositoryOrder.readAll().isEmpty()) {
+        if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ORDERS);
             return false;
         } else if (read(idOrder) == null) {
@@ -145,12 +145,12 @@ public class ServiceOrderImpl implements ServiceOrder {
             return false;
         }
         List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrder);
-        Order orderOld = repositoryOrder.read(idOrder);
+        Order orderOld = daoOrder.read(idOrder);
         Order orderUpdate = new Order(); // read from String
         orderUpdate.setIdOrder(idOrder);
         orderUpdate.setIdGuest(orderOld.getIdGuest());
         orderUpdate.setServices(idServicesInOrder);
-        return repositoryOrder.update(idOrder, orderUpdate);
+        return daoOrder.update(idOrder, orderUpdate);
     }
 
     private int getIdOrderNew() {

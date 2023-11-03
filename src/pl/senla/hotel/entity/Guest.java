@@ -1,10 +1,15 @@
 package pl.senla.hotel.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serial;
 import java.io.Serializable;
 
 import static pl.senla.hotel.constant.ClientConstant.*;
 
+@Setter
+@Getter
 public class Guest implements Serializable {
 
     private Integer idGuest;

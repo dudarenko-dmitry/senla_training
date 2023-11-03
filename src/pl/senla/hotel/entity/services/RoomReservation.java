@@ -1,5 +1,7 @@
 package pl.senla.hotel.entity.services;
 
+import lombok.Getter;
+import lombok.Setter;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.service.ServiceRoom;
@@ -14,6 +16,8 @@ import static pl.senla.hotel.constant.HotelServiceConstant.*;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 @AppComponent
+@Setter
+@Getter
 public class RoomReservation extends HotelService implements Serializable {
 
     private Integer idRoom;

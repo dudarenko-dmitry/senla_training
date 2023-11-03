@@ -1,10 +1,15 @@
 package pl.senla.hotel.entity.facilities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serial;
 import java.io.Serializable;
 
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
+@Setter
+@Getter
 public abstract class HotelFacility implements Serializable {
 
     private Integer idFacility;

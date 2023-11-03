@@ -1,10 +1,15 @@
 package pl.senla.hotel.entity.services;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.*;
 import static pl.senla.hotel.constant.RestaurantConstant.*;
 
+@Setter
+@Getter
 public class Restaurant extends HotelService{
 
     private Integer idTable;

@@ -4,7 +4,7 @@ import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.*;
-import pl.senla.hotel.repository.Repository;
+import pl.senla.hotel.dao.GenericDao;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,8 +16,8 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 @AppComponent
 public class ServiceRoomImpl implements ServiceRoom {
 
-    @GetInstance(beanName = "RepositoryFacilityCollection")
-    private Repository<HotelFacility> repositoryFacility;
+    @GetInstance(beanName = "DaoFacilityCollection")
+    private GenericDao<HotelFacility> daoFacility;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
     private Boolean changeRoomStatusEnabled;
 
@@ -25,11 +25,11 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public List<HotelFacility> readAll() {
-        if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
+        if (daoFacility.readAll() == null || daoFacility.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ROOM);
             return Collections.emptyList();
         }
-        return repositoryFacility.readAll()
+        return daoFacility.readAll()
                 .stream()
                 .filter(r -> r.getCategory().equals(CategoryFacility.ROOM))
                 .toList();
@@ -46,12 +46,12 @@ public class ServiceRoomImpl implements ServiceRoom {
         room.setRoomLevel(RoomLevel.valueOf(roomData[4]));
         room.setRoomStatus(RoomStatus.valueOf(roomData[5]));
         setIdRoomNew(room);
-        return repositoryFacility.create(room);
+        return daoFacility.create(room);
     }
 
     @Override
     public Room read(int idRoom) {
-        if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
+        if (daoFacility.readAll() == null || daoFacility.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ROOM);
             return null;
         } else if (idRoom < 0 || idRoom > readAll().size()) {
@@ -60,7 +60,7 @@ public class ServiceRoomImpl implements ServiceRoom {
         }
         for (int i = 0; i <= readAll().size(); i++) {
             if (readAll().get(i).getIdFacility() == idRoom) {
-                return (Room) repositoryFacility.read(idRoom);
+                return (Room) daoFacility.read(idRoom);
             }
         }
         System.out.println(ERROR_READ_ROOM);
@@ -69,7 +69,7 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean update(int idRoom, String roomString) {
-        if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
+        if (daoFacility.readAll() == null || daoFacility.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if (read(idRoom) == null) {
@@ -78,13 +78,13 @@ public class ServiceRoomImpl implements ServiceRoom {
         }
         Room roomUpdate = read(idRoom);
         roomUpdate.setPrice(Integer.parseInt(roomString));
-        return repositoryFacility.update(idRoom, roomUpdate);
+        return daoFacility.update(idRoom, roomUpdate);
     }
 
     @Override
     public boolean updateRoomStatusAvailable(int idRoom) {
         if (changeRoomStatusEnabled){
-            if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
+            if (daoFacility.readAll() == null || daoFacility.readAll().isEmpty()) {
                 System.out.println(ERROR_READ_ALL_ROOM);
                 return false;
             } else if (read(idRoom) == null) {
@@ -93,7 +93,7 @@ public class ServiceRoomImpl implements ServiceRoom {
             }
             Room roomUpdate = read(idRoom);
             roomUpdate.makeRoomAvailable();
-            return repositoryFacility.update(idRoom, roomUpdate);
+            return daoFacility.update(idRoom, roomUpdate);
         }
         System.out.println(ERROR_NO_PERMISSION);
         return false;
@@ -102,7 +102,7 @@ public class ServiceRoomImpl implements ServiceRoom {
     @Override
     public boolean updateRoomStatusRepaired(int idRoom) {
         if (changeRoomStatusEnabled){
-            if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
+            if (daoFacility.readAll() == null || daoFacility.readAll().isEmpty()) {
                 System.out.println(ERROR_READ_ALL_ROOM);
                 return false;
             } else if (read(idRoom) == null) {
@@ -111,7 +111,7 @@ public class ServiceRoomImpl implements ServiceRoom {
             }
             Room roomUpdate = read(idRoom);
             roomUpdate.makeRoomRepaired();
-            return repositoryFacility.update(idRoom, roomUpdate);
+            return daoFacility.update(idRoom, roomUpdate);
         }
         System.out.println(ERROR_NO_PERMISSION);
         return false;
@@ -119,14 +119,14 @@ public class ServiceRoomImpl implements ServiceRoom {
 
     @Override
     public boolean delete(int id) {
-        if (repositoryFacility.readAll() == null || repositoryFacility.readAll().isEmpty()) {
+        if (daoFacility.readAll() == null || daoFacility.readAll().isEmpty()) {
             System.out.println(ERROR_READ_ALL_ROOM);
             return false;
         } else if (read(id) == null) {
             System.out.println(ERROR_READ_ROOM);
             return false;
         }
-        return repositoryFacility.delete(id);
+        return daoFacility.delete(id);
     }
 
     private void setIdRoomNew(HotelFacility room) {

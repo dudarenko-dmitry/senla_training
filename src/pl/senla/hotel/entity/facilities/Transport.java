@@ -1,8 +1,13 @@
 package pl.senla.hotel.entity.facilities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serial;
 import java.io.Serializable;
 
+@Setter
+@Getter
 public class Transport extends HotelFacility implements Serializable {
 
     @Serial

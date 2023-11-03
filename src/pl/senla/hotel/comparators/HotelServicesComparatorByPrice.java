@@ -7,7 +7,7 @@ import pl.senla.hotel.entity.services.Transfer;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.Restaurant;
 import pl.senla.hotel.entity.services.RoomReservation;
-import pl.senla.hotel.repository.Repository;
+import pl.senla.hotel.dao.GenericDao;
 
 import java.util.Comparator;
 
@@ -16,8 +16,8 @@ import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE
 @AppComponent
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
-    @GetInstance(beanName = "RepositoryRoomCollection")
-    private Repository<Room> repositoryRoom;
+    @GetInstance(beanName = "DaoRoomCollection")
+    private GenericDao<Room> daoRoom;
 
     public HotelServicesComparatorByPrice() {}
 
@@ -33,7 +33,7 @@ public class HotelServicesComparatorByPrice implements Comparator<HotelService> 
     }
 
     private int compareRoomReservation(RoomReservation o1, RoomReservation o2){
-        return repositoryRoom.read(o1.getIdRoom()).getPrice() - repositoryRoom.read(o2.getIdRoom()).getPrice();
+        return daoRoom.read(o1.getIdRoom()).getPrice() - daoRoom.read(o2.getIdRoom()).getPrice();
     }
 
     private int compareRestaurant(Restaurant o1, Restaurant o2){

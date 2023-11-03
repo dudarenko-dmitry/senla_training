@@ -1,8 +1,8 @@
-package pl.senla.hotel.repository;
+package pl.senla.hotel.dao;
 
 import java.util.List;
 
-public interface Repository<T> {
+public interface GenericDao<T> {
 
     List<T> readAll();
     boolean create(T t);

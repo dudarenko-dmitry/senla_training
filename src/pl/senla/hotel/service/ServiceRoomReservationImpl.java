@@ -12,7 +12,7 @@ import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;
-import pl.senla.hotel.repository.*;
+import pl.senla.hotel.dao.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,14 +31,14 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @GetInstance(beanName = "ServiceFacilityImpl")
     private ServiceFacility serviceHotelFacility;
-    @GetInstance(beanName = "RepositoryHotelServiceCollection")
-    private Repository<HotelService> repositoryHotelService;
-    @GetInstance(beanName = "RepositoryRoomReservationCollection")
-    private Repository<RoomReservation> repositoryRoomReservation;
-    @GetInstance(beanName = "RepositoryGuestCollection")
-    private Repository<Guest> repositoryGuest;
-    @GetInstance(beanName = "RepositoryFacilityCollection")
-    private Repository<HotelFacility> repositoryFacility;
+    @GetInstance(beanName = "DaoHotelServiceCollection")
+    private GenericDao<HotelService> daoHotelService;
+    @GetInstance(beanName = "DaoRoomReservationCollection")
+    private GenericDao<RoomReservation> daoRoomReservation;
+    @GetInstance(beanName = "DaoGuestCollection")
+    private GenericDao<Guest> daoGuest;
+    @GetInstance(beanName = "DaoFacilityCollection")
+    private GenericDao<HotelFacility> daoFacility;
     @GetInstance(beanName = "ServiceRoomImpl")
     private transient ServiceRoom serviceRoom;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
@@ -48,11 +48,11 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public List<RoomReservation> readAll() {
-        if(repositoryHotelService.readAll() == null || repositoryHotelService.readAll().isEmpty()){
+        if(daoHotelService.readAll() == null || daoHotelService.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return Collections.emptyList();
         }
-        return repositoryRoomReservation.readAll()
+        return daoRoomReservation.readAll()
                 .stream()
                 .map(RoomReservation.class::cast) //check
                 .toList();
@@ -65,13 +65,13 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         int idGuest = Integer.parseInt(reservationData[1]);
         int idRoom = Integer.parseInt(reservationData[2]);
 
-        if(idGuest < 0 || idGuest >= repositoryGuest.readAll().size()){
+        if(idGuest < 0 || idGuest >= daoGuest.readAll().size()){
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return false;
-        } else if(idRoom < 0 || idRoom >= repositoryFacility.readAll().size()) {
+        } else if(idRoom < 0 || idRoom >= daoFacility.readAll().size()) {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return false;
-        } else if (((Room)repositoryFacility.read(idRoom)).getRoomStatus().equals(RoomStatus.REPAIRED)) { // edit later!!!
+        } else if (((Room) daoFacility.read(idRoom)).getRoomStatus().equals(RoomStatus.REPAIRED)) { // edit later!!!
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_REPAIRED);
             return false;
         } else {
@@ -91,7 +91,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                 reservation.setNumberOfDays(numberOfDays);
                 reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION);
                 reservation.setCheckOutTime(checkOutTime);
-                reservation.setCost(repositoryFacility.read(idRoom).getPrice() * numberOfDays);
+                reservation.setCost(daoFacility.read(idRoom).getPrice() * numberOfDays);
                 setIdRoomReservationNew(reservation);
 
                 List<RoomReservation> roomReservationList = readAll().stream()
@@ -102,8 +102,8 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
                     int idRoomReservationToDelete = roomReservationList.get(0).getIdService();
                     delete(idRoomReservationToDelete);
                 }
-                repositoryRoomReservation.create(reservation);
-                return repositoryHotelService.create(reservation);
+                daoRoomReservation.create(reservation);
+                return daoHotelService.create(reservation);
             } else {
                 System.out.println(ERROR_ROOM_NOT_AVAILABLE);
                 return false;
@@ -114,13 +114,13 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public RoomReservation read(int idReservation) {
-        if(repositoryHotelService.readAll() == null || repositoryHotelService.readAll().isEmpty()){
+        if(daoHotelService.readAll() == null || daoHotelService.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return null;
         }
         for (int i = 0; i <= readAll().size(); i++){
             if (readAll().get(i).getIdService() == idReservation){
-                return (RoomReservation) repositoryHotelService.read(i);
+                return (RoomReservation) daoHotelService.read(i);
             }
         }
         System.out.println(ERROR_READ_ROOM_RESERVATION);
@@ -130,7 +130,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public boolean update(int idReservation, String reservationUpdatingString) {
-        if(repositoryHotelService.readAll() == null || repositoryHotelService.readAll().isEmpty()){
+        if(daoHotelService.readAll() == null || daoHotelService.readAll().isEmpty()){
             System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
             return false;
         } else if(read(idReservation) == null){
@@ -154,7 +154,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         reservationUpdate.setCheckInTime(checkInTime);
         reservationUpdate.setNumberOfDays(numberOfDaysNew);
         reservationUpdate.setCheckOutTime(checkOutTime);
-        reservationUpdate.setCost(repositoryFacility.read(reservationOld.getIdRoom()).getPrice() * numberOfDaysNew);
+        reservationUpdate.setCost(daoFacility.read(reservationOld.getIdRoom()).getPrice() * numberOfDaysNew);
 
         delete(idReservation);
         if(createFromObject(reservationUpdate)){
@@ -175,8 +175,8 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         }
         for (int i = 0; i <= readAll().size(); i++){
             if (readAll().get(i).getIdService() == idReservation){
-                repositoryRoomReservation.delete(i);
-                return repositoryHotelService.delete(i);
+                daoRoomReservation.delete(i);
+                return daoHotelService.delete(i);
             }
         }
         System.out.println(ERROR_READ_ROOM_RESERVATION);
@@ -233,10 +233,10 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         for (RoomReservation rr : roomReservationsForRoom){
             if (rr != null) {
                 int idGuest = rr.getIdGuest();
-                for (int i = 0; i < repositoryGuest.readAll().size(); i++) {
-                    if (idGuest == repositoryGuest.read(i).getIdGuest()) {
+                for (int i = 0; i < daoGuest.readAll().size(); i++) {
+                    if (idGuest == daoGuest.read(i).getIdGuest()) {
                         String guestAndDate = "\n#" + (i + 1) +
-                                ":\nGuest's name: " + repositoryGuest.read(i).getName() +
+                                ":\nGuest's name: " + daoGuest.read(i).getName() +
                                 ", check-in:" + rr.getCheckInTime() +
                                 ", check-out = " + rr.getCheckOutTime();
                         guestsAndDates.add(guestAndDate);
@@ -300,7 +300,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     private boolean createFromObject(RoomReservation reservation) {
         if(isVacant(reservation.getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
-            return repositoryHotelService.create(reservation); // changed here
+            return daoHotelService.create(reservation); // changed here
         } else {
             System.out.println(ERROR_ROOM_NOT_AVAILABLE);
             return false;
@@ -308,7 +308,7 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     }
 
     private void setIdRoomReservationNew(RoomReservation reservation) {
-        int lastId = repositoryHotelService.readAll()
+        int lastId = daoHotelService.readAll()
                 .stream()
                 .map(HotelService::getIdService)
                 .max(Comparator.comparingInt(o -> o))

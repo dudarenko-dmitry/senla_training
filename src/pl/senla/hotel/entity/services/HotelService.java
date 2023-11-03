@@ -1,11 +1,16 @@
 package pl.senla.hotel.entity.services;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serial;
 import java.io.Serializable;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.*;
 import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
 
+@Setter
+@Getter
 public abstract class HotelService implements Serializable {
 
     @Serial

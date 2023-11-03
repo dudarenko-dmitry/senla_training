@@ -1,7 +1,12 @@
 package pl.senla.hotel.entity.services;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 public class Transfer extends HotelService{
 
     private LocalDateTime startDateTime;

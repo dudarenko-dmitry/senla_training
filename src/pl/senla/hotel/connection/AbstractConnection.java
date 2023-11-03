@@ -8,8 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static pl.senla.hotel.constant.DBConstant.DB_CONNECTED;
-import static pl.senla.hotel.constant.DBConstant.DB_CONNECTION_ERROR;
+import static pl.senla.hotel.constant.DBConstant.*;
 
 @AppComponent
 public class AbstractConnection {
@@ -39,9 +38,15 @@ public class AbstractConnection {
         }
     }
 
-    public static void close() throws SQLException {
+    public static void close() {
         if(connection != null){
-            connection.close();
+            try {
+                connection.close();
+                System.out.println(DB_CONNECTION_CLOSE);
+            } catch (SQLException e) {
+                System.out.println(DB_CONNECTION_CLOSE_ERROR);
+                throw new RuntimeException(e);
+            }
             connection = null;
         }
     }
