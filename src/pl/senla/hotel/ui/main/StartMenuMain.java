@@ -2,8 +2,6 @@ package pl.senla.hotel.ui.main;
 
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.application.annotation.StartMethod;
-import pl.senla.hotel.application.annotation.StartPoint;
 import pl.senla.hotel.application.di.DIContext;
 import pl.senla.hotel.ie.serialization.Processor;
 import pl.senla.hotel.ie.serialization.ProcessorSerializable;
@@ -12,8 +10,10 @@ import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
 
+import java.lang.reflect.InvocationTargetException;
+
 @AppComponent
-@StartPoint
+//@StartPoint
 public class StartMenuMain implements StartMenu {
 
     @GetInstance(beanName = "NavigatorMainMenu")
@@ -25,9 +25,10 @@ public class StartMenuMain implements StartMenu {
 
     public StartMenuMain() {}
 
-    @StartMethod
+//    @StartMethod
     @Override
-    public void runMenu() throws IllegalAccessException {
+    public void runMenu() throws IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException {
         DIContext context = DIContext.getContext();
         Processor processor = context.getBean(ProcessorSerializable.class);
         processor.loadHotelData();

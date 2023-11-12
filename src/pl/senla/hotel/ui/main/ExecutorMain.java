@@ -2,20 +2,12 @@ package pl.senla.hotel.ui.main;
 
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.application.di.DIContext;
-import pl.senla.hotel.entity.Guest;
-import pl.senla.hotel.entity.Hotel;
-import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.facilities.HotelFacility;
-import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ie.serialization.Processor;
-import pl.senla.hotel.ie.serialization.ProcessorSerializable;
-import pl.senla.hotel.storage.*;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
 
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
@@ -41,7 +33,8 @@ public class ExecutorMain implements Executor {
     }
 
     @Override
-    public void execute(int menuPoint) throws IllegalAccessException {
+    public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException {
         switch (menuPoint) {
             case 1 -> startMenuHotelFacilities.runMenu();
             case 2 -> startMenuGuest.runMenu();

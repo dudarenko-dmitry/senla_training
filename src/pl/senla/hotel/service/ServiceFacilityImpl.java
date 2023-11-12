@@ -6,6 +6,7 @@ import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.entity.facilities.*;
 import pl.senla.hotel.dao.GenericDao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ServiceFacilityImpl implements ServiceFacility{
     @Override
     public List<HotelFacility> readAll() {
         if(daoHotelFacility.readAll() == null || daoHotelFacility.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
+            System.out.println(READ_ALL_HOTEL_FACILITY_IS_EMPTY);
             return Collections.emptyList();
         }
         return daoHotelFacility.readAll();
@@ -42,34 +43,25 @@ public class ServiceFacilityImpl implements ServiceFacility{
         hotelFacility.setRoomLevel(RoomLevel.valueOf(facilityData[4]));
         hotelFacility.setRoomStatus(RoomStatus.valueOf(facilityData[5]));
         setIdFacilityNew(hotelFacility);
-        daoRoom.create(hotelFacility);
+//        daoRoom.create(hotelFacility);
         return daoHotelFacility.create(hotelFacility);
     }
 
     @Override
-    public HotelFacility read(int idFacility) {
-        if(daoHotelFacility.readAll() == null || daoHotelFacility.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
-            return null;
-        }
+    public HotelFacility read(int idFacility) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdFacility() == idFacility){
                 return daoHotelFacility.read(idFacility);
             }
         }
-        System.out.println(ERROR_READ_HOTEL_FACILITY);
+        System.out.println(READ_HOTEL_FACILITY_NOT_EXIST);
         return null;
     }
 
     @Override
-    public boolean update(int idFacility, String hotelFacilityString) {
-        if(daoHotelFacility.readAll() == null || daoHotelFacility.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_ROOM);
-            return false;
-        } else if(read(idFacility) == null){
-            System.out.println(ERROR_READ_ROOM);
-            return false;
-        }
+    public boolean update(int idFacility, String hotelFacilityString) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         HotelFacility hotelFacilityUpdate = read(idFacility);
         hotelFacilityUpdate.setPrice(Integer.parseInt(hotelFacilityString));
         daoRoom.update(idFacility, (Room) hotelFacilityUpdate);
@@ -78,16 +70,13 @@ public class ServiceFacilityImpl implements ServiceFacility{
 
     @Override
     public boolean delete(int idFacility) {
-        if(daoHotelFacility.readAll() == null || daoHotelFacility.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_HOTEL_FACILITY);
-        }
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdFacility() == idFacility){
                 daoRoom.delete(idFacility);
                 return daoHotelFacility.delete(idFacility);
             }
         }
-        System.out.println(ERROR_READ_HOTEL_FACILITY);
+        System.out.println(READ_HOTEL_FACILITY_NOT_EXIST);
         return false;
     }
 

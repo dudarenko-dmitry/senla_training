@@ -6,5 +6,7 @@ public interface Configuration {
 
     String getPropertiesDirectory();
 
-    String getPropertiesFileName();
+    String getHotelPropertiesFileName();
+
+    String getDBPropertiesFileName();
 }

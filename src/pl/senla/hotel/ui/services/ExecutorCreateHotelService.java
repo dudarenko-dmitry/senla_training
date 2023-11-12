@@ -5,10 +5,11 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.controller.ControllerRoomReservation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
-import static pl.senla.hotel.constant.HotelFacilityConstant.ERROR_READ_ROOM;
+import static pl.senla.hotel.constant.HotelFacilityConstant.ROOM_NOT_EXIST;
 
 @AppComponent
 public class ExecutorCreateHotelService {
@@ -21,7 +22,9 @@ public class ExecutorCreateHotelService {
     public ExecutorCreateHotelService() {}
 
     //Later change return from RoomReservation to HotelService and refactor
-    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService) throws IllegalAccessException { //use only (1) RoomReservation
+    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService)
+            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+            InstantiationException { //use only (1) RoomReservation
         int typeOfService2 = makeChoice();
         Scanner sc = new Scanner(System.in);
         switch (typeOfService) {
@@ -39,7 +42,7 @@ public class ExecutorCreateHotelService {
                             numberOfDays;
                     roomReservationController.create(roomReservationString);
                 }
-                System.out.println(ERROR_READ_ROOM);
+                System.out.println(ROOM_NOT_EXIST);
                 return false;
             }
             case 2 -> {

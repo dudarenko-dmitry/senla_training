@@ -2,13 +2,12 @@ package pl.senla.hotel.service;
 
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.comparators.HotelServicesComparatorByDate;
-import pl.senla.hotel.comparators.HotelServicesComparatorByPrice;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.dao.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -31,7 +30,7 @@ public class ServiceOrderImpl implements ServiceOrder {
     @Override
     public List<Order> readAll() {
         if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
-            System.out.println(ERROR_READ_ALL_ORDERS);
+            System.out.println(READ_ALL_ORDERS_IS_EMPTY);
             return Collections.emptyList();
         }
         return daoOrder.readAll();
@@ -50,9 +49,10 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     @Override
-    public Order read(int idOrder) {
+    public Order read(int idOrder) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
-            System.out.println(ERROR_READ_ALL_ORDERS);
+            System.out.println(READ_ALL_ORDERS_IS_EMPTY);
             return null;
         } else if (idOrder < 0 || idOrder >= readAll().size()) {
             System.out.println(ERROR_INPUT);
@@ -63,17 +63,18 @@ public class ServiceOrderImpl implements ServiceOrder {
                 return daoOrder.read(i);
             }
         }
-        System.out.println(ERROR_READ_ORDER);
+        System.out.println(ORDER_NOT_EXISTS);
         return null;
     }
 
     @Override
-    public boolean update(int idOrder, String orderUpdatingString) {
+    public boolean update(int idOrder, String orderUpdatingString) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
-            System.out.println(ERROR_READ_ALL_ORDERS);
+            System.out.println(READ_ALL_ORDERS_IS_EMPTY);
             return false;
         } else if (read(idOrder) == null) {
-            System.out.println(ERROR_READ_ORDER);
+            System.out.println(ORDER_NOT_EXISTS);
             System.out.println(ERROR_INPUT);
             return false;
         }
@@ -82,65 +83,34 @@ public class ServiceOrderImpl implements ServiceOrder {
     }
 
     @Override
-    public boolean delete(int idOrder) {
+    public boolean delete(int idOrder) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
-            System.out.println(ERROR_READ_ALL_ORDERS);
+            System.out.println(READ_ALL_ORDERS_IS_EMPTY);
             return false;
         }
         for (int i = 0; i <= readAll().size(); i++) {
             if (readAll().get(i).getIdOrder() == idOrder) {
-                List<HotelService> services = readAllServicesForOrder(idOrder);
-                for (HotelService hs : services) {
-                    serviceHotelService.delete(hs.getIdService());
+                List<Integer> services = readAllIdServicesForOrder(idOrder);
+                for (Integer id : services) {
+                    serviceHotelService.delete(id);
                 }
                 return daoOrder.delete(i);
             }
         }
-        System.out.println(ERROR_READ_ORDER);
+        System.out.println(ORDER_NOT_EXISTS);
         System.out.println(ERROR_INPUT);
         return false;
     }
 
     @Override
-    public List<HotelService> readAllServicesSortByPrice() {
-        return daoOrder.readAll()
-                .stream()
-                .flatMap(o -> o.getIdServices()
-                        .stream()
-                        .map(serviceHotelService::read))
-                .sorted(new HotelServicesComparatorByPrice())
-                .toList();
-    }
-
-    @Override
-    public List<HotelService> readAllServicesSortByDate() {
-        return daoOrder.readAll()
-                .stream()
-                .flatMap(o -> o.getIdServices()
-                        .stream()
-                        .map(serviceHotelService::read))
-                .sorted(new HotelServicesComparatorByDate())
-                .toList();
-    }
-
-    @Override
-    public List<HotelService> readAllServicesForOrder(int idOrder) {
-        return daoOrder.readAll()
-                .stream()
-                .filter(o -> o.getIdOrder() == idOrder)
-                .flatMap(o -> o.getIdServices()
-                        .stream()
-                        .map(serviceHotelService::read))
-                .toList();
-    }
-
-    @Override
-    public boolean addServicesToOrder(int idOrder) {
+    public boolean addServicesToOrder(int idOrder) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (daoOrder.readAll() == null || daoOrder.readAll().isEmpty()) {
-            System.out.println(ERROR_READ_ALL_ORDERS);
+            System.out.println(READ_ALL_ORDERS_IS_EMPTY);
             return false;
         } else if (read(idOrder) == null) {
-            System.out.println(ERROR_READ_ORDER);
+            System.out.println(ORDER_NOT_EXISTS);
             System.out.println(ERROR_INPUT);
             return false;
         }
@@ -162,7 +132,8 @@ public class ServiceOrderImpl implements ServiceOrder {
         return lastId + 1;
     }
 
-    private List<Integer> readAllIdServicesForOrder(int idOrderNew) {
+    @Override
+    public List<Integer> readAllIdServicesForOrder(int idOrderNew) {
         return serviceHotelService.readAll()
                 .stream()
                 .filter(o -> o.getIdOrder() == idOrderNew)

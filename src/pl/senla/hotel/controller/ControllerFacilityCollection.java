@@ -6,6 +6,7 @@ import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.service.ServiceFacility;
 import pl.senla.hotel.service.ServiceRoom;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @AppComponent
@@ -24,32 +25,38 @@ public class ControllerFacilityCollection implements ControllerFacility{
     }
 
     @Override
-    public boolean create(String hotelFacilityString) throws IllegalAccessException {
+    public boolean create(String hotelFacilityString) throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException, InstantiationException {
         return serviceFacility.create(hotelFacilityString);
     }
 
     @Override
-    public HotelFacility read(int id) {
+    public HotelFacility read(int id) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         return serviceFacility.read(id);
     }
 
     @Override
-    public boolean update(int id, String hotelFacilityString) {
+    public boolean update(int id, String hotelFacilityString) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         return serviceFacility.update(id, hotelFacilityString);
     }
 
     @Override
-    public boolean updateRoomStatusAvailable(int idRoom){
+    public boolean updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         return serviceRoom.updateRoomStatusAvailable(idRoom);
     }
 
     @Override
-    public boolean updateRoomStatusRepaired(int idRoom){
+    public boolean updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         return serviceRoom.updateRoomStatusRepaired(idRoom);
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         return serviceFacility.delete(id);
     }
 

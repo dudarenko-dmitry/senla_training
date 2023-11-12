@@ -1,6 +1,6 @@
 package pl.senla.hotel.application.config;
 
-public class DIConfiguration implements Configuration {
+public class AppConfiguration implements Configuration {
 
     @Override
     public String getPackageToScan() {
@@ -13,7 +13,12 @@ public class DIConfiguration implements Configuration {
     }
 
     @Override
-    public String getPropertiesFileName() {
+    public String getHotelPropertiesFileName() {
         return "hotel.properties";
+    }
+
+    @Override
+    public String getDBPropertiesFileName() {
+        return "db.properties";
     }
 }

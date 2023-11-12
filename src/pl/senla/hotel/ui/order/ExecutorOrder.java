@@ -8,6 +8,7 @@ import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.services.StartCreateHotelService;
 import pl.senla.hotel.ui.services.StartUpdateHotelServiceList;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.Scanner;
 
@@ -27,14 +28,15 @@ public class ExecutorOrder implements Executor {
     public ExecutorOrder() {}
 
     @Override
-    public void execute(int menuPoint) throws IllegalAccessException {
+    public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException {
         Scanner sc = new Scanner(System.in);
         switch (menuPoint) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ORDERS + orderController.readAll());
             case 2 -> {
                 System.out.print("Input Order's ID --> ");
                 int id = sc.nextInt();
-                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_ORDER + orderController.readAllServicesForOrder(id));
+                System.out.println(CONSOLE_READ_ALL_SERVICES_FOR_ORDER + orderController.readAllIdServicesForOrder(id));
             }
             case 3 -> {
                 System.out.print("Input Guest's ID --> ");

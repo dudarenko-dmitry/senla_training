@@ -1,29 +1,39 @@
 package pl.senla.hotel.utils;
 
+import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.services.HotelService;
+import pl.senla.hotel.entity.services.RoomReservation;
+
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DataBaseMapperUtil {
+public final class DataBaseMapperUtil {
 
     private DataBaseMapperUtil() {
-
     }
 
     public static Map<String, String> getMapper(Class<?> type) {
         Map<String, String> mapper = null;
-        switch (type.getTypeName()) {
-            case "HotelFacility" -> mapper = getRoomMapper();
-            case "Guest" -> mapper = getGuestMapper();
-            case "HotelService" -> mapper = getHotelServiceMapper();
-            case "Order" -> mapper = getOrderMapper();
-            default -> System.out.println("There is no such table in DB \n" + new SQLException());
+        if (type.equals(HotelFacility.class) || type.equals(Room.class)) {
+            mapper = getRoomMapper();
+        } else if (type.equals(Guest.class)) {
+            mapper = getGuestMapper();
+        } else if (type.equals(HotelService.class) || type.equals(RoomReservation.class)) {
+            mapper = getHotelServiceMapper();
+        } else if (type.equals(Order.class)) {
+            mapper = getOrderMapper();
+        } else {
+            System.out.println("There is no such table in DB \n" + new SQLException());
         }
         return mapper;
     }
 
     private static Map<String, String> getRoomMapper() {
-        Map<String, String> roomMapper = new HashMap<>();
+        Map<String, String> roomMapper = new LinkedHashMap<>();
         roomMapper.put("tableName", "hotel.rooms");
         roomMapper.put("idFacility", "facilityID");
         roomMapper.put("category", "category");
@@ -36,7 +46,7 @@ public class DataBaseMapperUtil {
     }
 
     private static Map<String, String> getGuestMapper() {
-        Map<String, String> guestMapper = new HashMap<>();
+        Map<String, String> guestMapper = new LinkedHashMap<>();
         guestMapper.put("tableName", "hotel.guests");
         guestMapper.put("idGuest", "guestID");
         guestMapper.put("name", "name");
@@ -45,7 +55,7 @@ public class DataBaseMapperUtil {
     }
 
     private static Map<String, String> getHotelServiceMapper() {
-        Map<String, String> hotelServiceMapper = new HashMap<>();
+        Map<String, String> hotelServiceMapper = new LinkedHashMap<>();
         hotelServiceMapper.put("tableName", "hotel.reservations");
         hotelServiceMapper.put("idService", "serviceID");
         hotelServiceMapper.put("idOrder", "orderID");
@@ -60,7 +70,7 @@ public class DataBaseMapperUtil {
     }
 
     private static Map<String, String> getOrderMapper() {
-        Map<String, String> orderMapper = new HashMap<>();
+        Map<String, String> orderMapper = new LinkedHashMap<>();
         orderMapper.put("tableName", "hotel.orders");
         orderMapper.put("idOrder", "orderID");
         orderMapper.put("idGuest", "guestID");

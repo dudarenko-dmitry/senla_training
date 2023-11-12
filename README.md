@@ -77,11 +77,10 @@ The program should allow you to show:
 - readPriceListForServicesSortByCategory,
 - readPriceListForServicesSortByPrice;
 11. Show the details of a separate room:
-- readRoom.
-
-Task 2 (difficulty 2)
-Assemble the program written during the previous task into an executable Jar file.
-Assemble the catalog of the finished program and create .bat/.sh the file to run the program.
+    - readRoom.                     
+    Task 2 (difficulty 2)
+    Assemble the program written during the previous task into an executable Jar file.
+    Assemble the catalog of the finished program and create .bat/.sh the file to run the program.
 
 The program directory should have the following structure:
 program_folder

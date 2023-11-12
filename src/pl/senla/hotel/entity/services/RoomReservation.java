@@ -8,6 +8,7 @@ import pl.senla.hotel.service.ServiceRoom;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -40,7 +41,9 @@ public class RoomReservation extends HotelService implements Serializable {
     }
 
     public RoomReservation(Integer idService, Integer idOrder, Integer idGuest, Integer idRoom,
-                           LocalDate startDate, Integer numberOfDays, ServiceRoom serviceRoom) {
+                           LocalDate startDate, Integer numberOfDays, ServiceRoom serviceRoom)
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException,
+            IllegalAccessException {
         super(idService, idOrder, TypeOfService.ROOM_RESERVATION, idGuest);
         this.serviceRoom = serviceRoom;
         if(idRoom == null){
@@ -62,20 +65,12 @@ public class RoomReservation extends HotelService implements Serializable {
         this.cost = this.serviceRoom.read(idRoom).getPrice() * numberOfDays;
     }
 
-    public Integer getIdRoom() {
-        return idRoom;
-    }
-
     public void setIdRoom(Integer idRoom) {
         if (idRoom != null) {
             this.idRoom = idRoom;
         } else {
             System.out.println(ERROR_NULL_FACILITY);
         }
-    }
-
-    public LocalDateTime getCheckInTime() {
-        return checkInTime;
     }
 
     public void setCheckInTime(LocalDateTime checkInTime) {
@@ -86,20 +81,12 @@ public class RoomReservation extends HotelService implements Serializable {
         }
     }
 
-    public Integer getNumberOfDays() {
-        return numberOfDays;
-    }
-
     public void setNumberOfDays(Integer numberOfDays) {
         if (numberOfDays != null) {
             this.numberOfDays = numberOfDays;
         } else {
             System.out.println(ERROR_NULL_DAYS);
         }
-    }
-
-    public LocalDateTime getCheckOutTime() {
-        return checkOutTime;
     }
 
     public void setCheckOutTime(LocalDateTime checkOutTime) {
@@ -118,11 +105,9 @@ public class RoomReservation extends HotelService implements Serializable {
         }
     }
 
-    public Integer getCost() {
-        return cost;
-    }
-
-    public void setCost() {
+    // TODO
+    public void setCost() throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         if (cost != null) {
             this.cost = getNumberOfDays() * serviceRoom.read(idRoom).getPrice();
         } else {

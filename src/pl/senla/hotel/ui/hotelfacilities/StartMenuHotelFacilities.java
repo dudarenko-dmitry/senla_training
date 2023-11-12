@@ -7,6 +7,8 @@ import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
 import pl.senla.hotel.ui.StartMenu;
 
+import java.lang.reflect.InvocationTargetException;
+
 @AppComponent
 public class StartMenuHotelFacilities implements StartMenu {
 
@@ -19,7 +21,8 @@ public class StartMenuHotelFacilities implements StartMenu {
 
     public StartMenuHotelFacilities() {}
 
-    public void runMenu() throws IllegalAccessException {
+    public void runMenu() throws IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException {
         int menuPoint = 1;
         while (menuPoint != 0) {
             navigator.buildMenu();

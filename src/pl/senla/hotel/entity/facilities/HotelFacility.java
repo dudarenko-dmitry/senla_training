@@ -10,7 +10,7 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 @Setter
 @Getter
-public abstract class HotelFacility implements Serializable {
+public class HotelFacility implements Serializable {
 
     private Integer idFacility;
     private CategoryFacility category;
@@ -21,19 +21,15 @@ public abstract class HotelFacility implements Serializable {
     @Serial
     private static final long serialVersionUID = 4L;
 
-    protected HotelFacility(CategoryFacility category, String nameFacility, Integer price, Integer capacity) {
+    public HotelFacility(CategoryFacility category, String nameFacility, Integer price, Integer capacity) {
         this.category = category;
         this.nameFacility = nameFacility;
         this.price = price;
         this.capacity = capacity;
     }
 
-    protected HotelFacility() {
+    public HotelFacility() {
 
-    }
-
-    public Integer getIdFacility() {
-        return idFacility;
     }
 
     public void setIdFacility(Integer idFacility) {
@@ -44,20 +40,12 @@ public abstract class HotelFacility implements Serializable {
         }
     }
 
-    public CategoryFacility getCategory() {
-        return category;
-    }
-
     public void setCategory(CategoryFacility category) {
         if (category != null) {
             this.category = category;
         } else {
             System.out.println(ERROR_NULL_CATEGORY);
         }
-    }
-
-    public String getNameFacility() {
-        return nameFacility;
     }
 
     public void setNameFacility(String nameFacility) {
@@ -80,10 +68,6 @@ public abstract class HotelFacility implements Serializable {
         }
     }
 
-    public Integer getCapacity() {
-        return capacity;
-    }
-
     public void setCapacity(Integer capacity) {
         if (capacity != null) {
             this.capacity = capacity;
@@ -94,7 +78,7 @@ public abstract class HotelFacility implements Serializable {
 
     @Override
     public String toString() {
-        return "HotelFacility{" +
+        return "\nHotelFacility{" +
                 "idFacility=" + idFacility +
                 ", category='" + category + '\'' +
                 ", nameFacility=" + nameFacility +

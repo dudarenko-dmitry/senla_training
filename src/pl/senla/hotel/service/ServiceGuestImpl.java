@@ -5,6 +5,7 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.dao.GenericDao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +24,7 @@ public class ServiceGuestImpl implements ServiceGuest {
     @Override
     public List<Guest> readAll() {
         if(daoGuest.readAll() == null || daoGuest.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_CLIENT);
+            System.out.println(READ_ALL_CLIENT_IS_EMPTY);
             return Collections.emptyList();
         }
         return daoGuest.readAll();
@@ -41,30 +42,26 @@ public class ServiceGuestImpl implements ServiceGuest {
     }
 
     @Override
-    public Guest read(int idGuest) {
-        if(daoGuest.readAll() == null || daoGuest.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_CLIENT);
-            return null;
-        } else if(idGuest < 0 || idGuest >= daoGuest.readAll().size()){
+    public Guest read(int idGuest) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
+        if(idGuest < 0 || idGuest >= daoGuest.readAll().size()){
             System.out.println(ERROR_INPUT);
             return null;
         }
-        for(int i = 0; i <= readAll().size(); i++){
+        for(int i = 0; i < readAll().size(); i++){
             if(readAll().get(i).getIdGuest() == idGuest){
                 return daoGuest.read(idGuest);
             }
         }
-        System.out.println(ERROR_READ_CLIENT);
+        System.out.println(CLIENT_NOT_EXISTS);
         return null;
     }
 
     @Override
-    public boolean update(int idGuest, String guestUpdate) {
-        if(daoGuest.readAll() == null || daoGuest.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_CLIENT);
-            return false;
-        } else if(read(idGuest) == null){
-            System.out.println(ERROR_READ_CLIENT);
+    public boolean update(int idGuest, String guestUpdate) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if(read(idGuest) == null){
+            System.out.println(CLIENT_NOT_EXISTS);
             return false;
         }
         Guest guest = read(idGuest);
@@ -73,12 +70,10 @@ public class ServiceGuestImpl implements ServiceGuest {
     }
 
     @Override
-    public boolean delete(int idGuest) {
-        if(daoGuest.readAll() == null || daoGuest.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_CLIENT);
-            return false;
-        } else if(read(idGuest) == null){
-            System.out.println(ERROR_READ_CLIENT);
+    public boolean delete(int idGuest) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
+        if(read(idGuest) == null){
+            System.out.println(CLIENT_NOT_EXISTS);
             return false;
         }
         return daoGuest.delete(idGuest);

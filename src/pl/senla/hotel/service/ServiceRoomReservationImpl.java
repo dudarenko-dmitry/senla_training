@@ -14,6 +14,7 @@ import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;
 import pl.senla.hotel.dao.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -48,18 +49,19 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
 
     @Override
     public List<RoomReservation> readAll() {
-        if(daoHotelService.readAll() == null || daoHotelService.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
-            return Collections.emptyList();
+        if(daoHotelService.readAll() != null || !daoHotelService.readAll().isEmpty()){
+            return daoRoomReservation.readAll()
+                    .stream()
+                    .map(RoomReservation.class::cast) //check
+                    .toList();
         }
-        return daoRoomReservation.readAll()
-                .stream()
-                .map(RoomReservation.class::cast) //check
-                .toList();
+        System.out.println(ALL_ROOM_RESERVATION_IS_EMPTY);
+        return Collections.emptyList();
     }
 
     @Override
-    public boolean create(String reservationString) {
+    public boolean create(String reservationString) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         String[] reservationData = reservationString.split(";");
         int idOrder = Integer.parseInt(reservationData[0]);
         int idGuest = Integer.parseInt(reservationData[1]);
@@ -111,30 +113,24 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         }
     }
 
-
     @Override
-    public RoomReservation read(int idReservation) {
-        if(daoHotelService.readAll() == null || daoHotelService.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
-            return null;
-        }
+    public RoomReservation read(int idReservation) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         for (int i = 0; i <= readAll().size(); i++){
             if (readAll().get(i).getIdService() == idReservation){
                 return (RoomReservation) daoHotelService.read(i);
             }
         }
-        System.out.println(ERROR_READ_ROOM_RESERVATION);
+        System.out.println(ROOM_RESERVATION_NOT_EXISTS);
         System.out.println(ERROR_INPUT);
         return null;
     }
 
     @Override
-    public boolean update(int idReservation, String reservationUpdatingString) {
-        if(daoHotelService.readAll() == null || daoHotelService.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
-            return false;
-        } else if(read(idReservation) == null){
-            System.out.println(ERROR_READ_ROOM_RESERVATION);
+    public boolean update(int idReservation, String reservationUpdatingString) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if(read(idReservation) == null){
+            System.out.println(ROOM_RESERVATION_NOT_EXISTS);
             System.out.println(ERROR_INPUT);
             return false;
         }
@@ -168,18 +164,13 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     }
 
     @Override
-    public boolean delete(int idReservation) {
-        if(readAll() == null){
-            System.out.println(ERROR_READ_ALL_ROOM_RESERVATION);
-            return false;
+    public boolean delete(int idReservation) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
+        if (read(idReservation) != null){
+            daoRoomReservation.delete(idReservation);
+            return daoHotelService.delete(idReservation);
         }
-        for (int i = 0; i <= readAll().size(); i++){
-            if (readAll().get(i).getIdService() == idReservation){
-                daoRoomReservation.delete(i);
-                return daoHotelService.delete(i);
-            }
-        }
-        System.out.println(ERROR_READ_ROOM_RESERVATION);
+        System.out.println(ROOM_RESERVATION_NOT_EXISTS);
         System.out.println(ERROR_INPUT);
         return false;
     }
@@ -222,7 +213,8 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     }
 
     @Override
-    public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
+    public List<String> read3LastGuestAndDatesForRoom(int idRoom) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         List<String> guestsAndDates = new ArrayList<>();
         List<RoomReservation> roomReservationsForRoom = readAll()
                 .stream()
@@ -255,8 +247,16 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
         List<HotelFacility> occupiedRooms = readAll().stream()
                 .filter(rr -> rr.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
-                .map(Room.class::cast)
-                .map(rr -> serviceHotelFacility.read(rr.getIdFacility()))
+//                .map(Room.class::cast)
+                .map(RoomReservation::getIdRoom)
+                .map(r -> {
+                    try {
+                        return serviceHotelFacility.read(r);
+                    } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
+                             IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .toList();
         List<HotelFacility> rooms = serviceHotelFacility.readAll().stream()
                 .filter(hs -> hs.getCategory().equals(CategoryFacility.ROOM))
@@ -295,6 +295,22 @@ public class ServiceRoomReservationImpl implements ServiceRoomReservation {
     public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
         return readAllRoomsFreeInTime(checkedTimeString).stream()
                 .sorted(new RoomComparatorByLevel())
+                .toList();
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByDate() {
+        return daoHotelService.readAll()
+                .stream()
+                .sorted(new HotelServicesComparatorByDate())
+                .toList();
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByPrice() {
+        return daoHotelService.readAll()
+                .stream()
+                .sorted(new HotelServicesComparatorByPrice())
                 .toList();
     }
 

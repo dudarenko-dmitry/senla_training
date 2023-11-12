@@ -5,6 +5,7 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.service.ServiceGuest;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @AppComponent
@@ -21,22 +22,26 @@ public class ControllerGuestCollection implements ControllerGuest {
     }
 
     @Override
-    public boolean create(String guest) throws IllegalAccessException {
+    public boolean create(String guest) throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException, InstantiationException {
         return guestService.create(guest);
     }
 
     @Override
-    public Guest read(int id) {
+    public Guest read(int id) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         return guestService.read(id);
     }
 
     @Override
-    public boolean update(int id, String guestUpdate) {
+    public boolean update(int id, String guestUpdate) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         return guestService.update(id, guestUpdate);
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         return guestService.delete(id);
     }
 

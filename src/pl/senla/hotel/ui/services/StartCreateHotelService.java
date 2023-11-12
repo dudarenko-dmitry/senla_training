@@ -5,6 +5,7 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Navigator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CREATE_SERVICE;
@@ -21,7 +22,8 @@ public class StartCreateHotelService {
 
     public StartCreateHotelService() {}
 
-    public boolean runMenu(int idOrder, int idGuest) throws IllegalAccessException {
+    public boolean runMenu(int idOrder, int idGuest) throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException, InstantiationException {
         int typeOfService = 1;
         while (typeOfService !=0 ) {
             navigator.buildMenu();
@@ -31,7 +33,7 @@ public class StartCreateHotelService {
                         executor.createHotelServiceForGuest(idOrder, idGuest, typeOfService));
             }
         }
-        return true; // check why
+        return true;
     }
 
     private int makeChoice(){

@@ -5,9 +5,9 @@ public class HotelServiceConstant {
     private HotelServiceConstant() {
     }
 
-    public static final String ERROR_READ_ALL_SERVICES =    "There is no any service in hotel.\n" +
+    public static final String READ_ALL_SERVICES_IS_EMPTY =    "There is no any service in hotel.\n" +
                                                             "Please, check access to Database.";
-    public static final String ERROR_READ_SERVICE =         "There is no such service.";
+    public static final String SERVICE_NOT_EXISTS =         "There is no such service.";
     public static final String ERROR_IN_SERVICE_TYPE =      "ERROR IN SERVICE TYPE.";
 
     public static final String ERROR_NULL_ID =              "Not allowed to create Service without ID.";

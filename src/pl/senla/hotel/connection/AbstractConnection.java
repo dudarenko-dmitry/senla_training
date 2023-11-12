@@ -1,7 +1,6 @@
 package pl.senla.hotel.connection;
 
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.ConfigProperty;
+import pl.senla.hotel.utils.DBPropertiesUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -10,31 +9,28 @@ import java.sql.SQLException;
 
 import static pl.senla.hotel.constant.DBConstant.*;
 
-@AppComponent
-public class AbstractConnection {
+public abstract class AbstractConnection {
 
-    @ConfigProperty(configFileName = "hotel.properties", propertyName = "db.url")
-    private static String url;
-    @ConfigProperty(configFileName = "hotel.properties", propertyName = "db.username")
-    private static String username;
-    @ConfigProperty(configFileName = "hotel.properties", propertyName = "db.password")
-    private static String password;
+    private final static String URL = "db.url";
+    private final static String USERNAME = "db.username";
+    private final static String PASSWORD = "db.password";
     private static Connection connection = null;
 
-    public static Connection connection() throws SQLException {
+    public static Connection connection() throws SQLException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            if (connection == null) {
-                connection = DriverManager.getConnection(url, username, password);
+//            Driver driver = new com.mysql.cj.jdbc.Driver();
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(
+                        DBPropertiesUtil.get(URL),
+                        DBPropertiesUtil.get(USERNAME),
+                        DBPropertiesUtil.get(PASSWORD));
                 System.out.println(DB_CONNECTED);
             }
             return connection;
         } catch (SQLException e) {
             System.out.println(DB_CONNECTION_ERROR);
             throw new SQLException(DB_CONNECTION_ERROR, e);
-        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
-                 NoSuchMethodException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -42,12 +38,12 @@ public class AbstractConnection {
         if(connection != null){
             try {
                 connection.close();
+                connection = null;
                 System.out.println(DB_CONNECTION_CLOSE);
             } catch (SQLException e) {
                 System.out.println(DB_CONNECTION_CLOSE_ERROR);
                 throw new RuntimeException(e);
             }
-            connection = null;
         }
     }
 }

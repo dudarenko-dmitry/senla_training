@@ -7,7 +7,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.*;
-import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
+import static pl.senla.hotel.constant.OrderConstant.ORDER_NOT_EXISTS;
 
 @Setter
 @Getter
@@ -26,7 +26,7 @@ public abstract class HotelService implements Serializable {
 
     protected HotelService(Integer idService, Integer idOrder, TypeOfService typeOfService, Integer idGuest) {
         if(idOrder == null) {
-            System.out.println(ERROR_READ_ORDER);
+            System.out.println(ORDER_NOT_EXISTS);
             return;
         }
         if (idGuest == null) {
@@ -38,20 +38,12 @@ public abstract class HotelService implements Serializable {
         this.typeOfService = typeOfService;
     }
 
-    public Integer getIdService() {
-        return idService;
-    }
-
     public void setIdService(Integer idService) {
         if (idService != null) {
             this.idService = idService;
         } else {
             System.out.println(ERROR_NULL_ID);
         }
-    }
-
-    public Integer getIdOrder() {
-        return idOrder;
     }
 
     public void setIdOrder(Integer idOrder) {
@@ -63,20 +55,12 @@ public abstract class HotelService implements Serializable {
 
     }
 
-    public TypeOfService getTypeOfService() {
-        return typeOfService;
-    }
-
     public void setTypeOfService(TypeOfService typeOfService) {
         if (typeOfService != null) {
             this.typeOfService = typeOfService;
         } else {
             System.out.println(ERROR_NULL_CATEGORY);
         }
-    }
-
-    public Integer getIdGuest() {
-        return idGuest;
     }
 
     public void setIdGuest(Integer idGuest) {

@@ -5,6 +5,8 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @AppComponent
@@ -18,7 +20,8 @@ public class ExecutorHotelFacilities implements Executor {
     public ExecutorHotelFacilities() {}
 
     @Override
-    public void execute(int menuPoint) throws IllegalAccessException {
+    public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException {
         switch (menuPoint) {
             case 1 -> menuRoom.runMenu();
 //            case 2 -> menuTable.runMenu();

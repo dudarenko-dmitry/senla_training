@@ -3,9 +3,11 @@ package pl.senla.hotel.controller;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.service.ServiceRoomReservation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @AppComponent
@@ -22,22 +24,26 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public boolean create(String reservationString) throws IllegalAccessException {
+    public boolean create(String reservationString) throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException, InstantiationException {
         return roomReservationService.create(reservationString);
     }
 
     @Override
-    public RoomReservation read(int idReservation) {
+    public RoomReservation read(int idReservation) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         return roomReservationService.read(idReservation);
     }
 
     @Override
-    public boolean update(int idReservation, String reservationString) {
+    public boolean update(int idReservation, String reservationString) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         return roomReservationService.update(idReservation, reservationString);
     }
 
     @Override
-    public boolean delete(int idReservation) {
+    public boolean delete(int idReservation) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         return roomReservationService.delete(idReservation);
     }
 
@@ -87,7 +93,20 @@ public class ControllerRoomReservationCollection implements ControllerRoomReserv
     }
 
     @Override
-    public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
+    public List<String> read3LastGuestAndDatesForRoom(int idRoom) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         return roomReservationService.read3LastGuestAndDatesForRoom(idRoom);
     }
+
+
+    @Override
+    public List<HotelService> readAllServicesSortByDate() {
+        return roomReservationService.readAllServicesSortByDate();
+    }
+
+    @Override
+    public List<HotelService> readAllServicesSortByPrice() {
+        return roomReservationService.readAllServicesSortByPrice();
+    }
+
 }

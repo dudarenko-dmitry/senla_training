@@ -9,6 +9,7 @@ import pl.senla.hotel.controller.*;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.RoomStatus;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
@@ -26,7 +27,8 @@ public class ExecutorRoom implements Executor {
     public ExecutorRoom(){}
 
     @Override
-    public void execute(int menuPoint) throws IllegalAccessException {
+    public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException {
         Scanner sc = new Scanner(System.in);
         switch (menuPoint) {
             case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());

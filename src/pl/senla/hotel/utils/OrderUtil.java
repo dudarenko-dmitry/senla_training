@@ -12,16 +12,6 @@ public final class OrderUtil {
     private OrderUtil() {
     }
 
-//    public static Order convertCsvToOrder(CsvOrder csvOrder) {
-//        Order order = new Order();
-//        order.setIdOrder(csvOrder.getIdOrder());
-//        order.setIdGuest(csvOrder.getIdGuest());
-//        String[] services = csvOrder.getServices().split(","); // тут ошибка
-////        String[] services = new String[] {"1","2"}; // такое читает правильно
-//        order.setServices(Arrays.stream(services).map(Integer::parseInt).toList());
-//        return order;
-//    }
-
     public static Order convertStringToOrder(String csvOrder) {
         Order order = new Order();
         String[] text = csvOrder.split(";");

@@ -5,6 +5,7 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.*;
 import pl.senla.hotel.ui.Executor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
@@ -18,7 +19,8 @@ public class ExecutorGuest implements Executor {
     public ExecutorGuest() {}
 
     @Override
-    public void execute(int menuPoint) throws IllegalAccessException {
+    public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException {
         Scanner sc = new Scanner(System.in);
         switch (menuPoint) {
             case 1 ->

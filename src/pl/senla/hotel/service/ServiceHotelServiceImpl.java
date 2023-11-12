@@ -5,6 +5,7 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.dao.GenericDao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,15 +23,16 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
 
     @Override
     public List<HotelService> readAll() {
-        if(daoHotelService.readAll() == null || daoHotelService.readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_SERVICES);
-            return Collections.emptyList();
+        if(daoHotelService.readAll() != null || !daoHotelService.readAll().isEmpty()){
+            return daoHotelService.readAll();
         }
-        return daoHotelService.readAll();
+        System.out.println(READ_ALL_SERVICES_IS_EMPTY);
+        return Collections.emptyList();
     }
 
     @Override
-    public boolean create(String hotelServiceString) throws IllegalAccessException {
+    public boolean create(String hotelServiceString) throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException, InstantiationException {
         String[] hotelServiceData = hotelServiceString.split(";");
         String typeOfService = hotelServiceData[0]; // EDIT and PUT correct index
         switch (typeOfService){
@@ -43,22 +45,20 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
     }
 
     @Override
-    public HotelService read(int idHotelService) {
-        if(readAll() == null || readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_SERVICES);
-            return null;
-        }
+    public HotelService read(int idHotelService) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdService() == idHotelService){
                 return daoHotelService.read(idHotelService);
             }
         }
-        System.out.println(ERROR_READ_SERVICE);
+        System.out.println(SERVICE_NOT_EXISTS);
         return null;
     }
 
     @Override
-    public boolean update(int idHotelService, String hotelServiceString) {
+    public boolean update(int idHotelService, String hotelServiceString) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         String[] hotelServiceData = hotelServiceString.split(";");
         String typeOfService = hotelServiceData[0]; // EDIT and PUT correct index
         switch (typeOfService){
@@ -72,16 +72,13 @@ public class ServiceHotelServiceImpl implements ServiceHotelService{
 
     @Override
     public boolean delete(int idHotelService) {
-        if(readAll() == null || readAll().isEmpty()){
-            System.out.println(ERROR_READ_ALL_SERVICES);
-            return false;
-        }
         for(int i = 0; i <= readAll().size(); i++){
             if(readAll().get(i).getIdService() == idHotelService){
                 return daoHotelService.delete(idHotelService);
             }
         }
-        System.out.println(ERROR_READ_SERVICE);
+        System.out.println(SERVICE_NOT_EXISTS);
         return false;
     }
+
 }

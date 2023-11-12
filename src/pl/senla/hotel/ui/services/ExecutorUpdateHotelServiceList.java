@@ -7,10 +7,11 @@ import pl.senla.hotel.controller.ControllerRoomReservation;
 
 import pl.senla.hotel.entity.services.TypeOfService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
-import static pl.senla.hotel.constant.OrderConstant.ERROR_READ_ORDER;
+import static pl.senla.hotel.constant.OrderConstant.ORDER_NOT_EXISTS;
 
 @AppComponent
 public class ExecutorUpdateHotelServiceList {
@@ -22,7 +23,8 @@ public class ExecutorUpdateHotelServiceList {
 
     public ExecutorUpdateHotelServiceList() {}
 
-    protected boolean updateHotelServiceList(int idOrderUpdate) throws IllegalAccessException {
+    protected boolean updateHotelServiceList(int idOrderUpdate) throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException, InstantiationException {
         if(orderController.read(idOrderUpdate) != null){
             int typeOfServiceInt = makeChoice();
             Scanner sc = new Scanner(System.in);
@@ -32,8 +34,15 @@ public class ExecutorUpdateHotelServiceList {
                     System.out.println(CONSOLE_READ_ALL_SERVICES + orderController.read(idOrderUpdate)
                             .getIdServices()
                             .stream()
-                            .filter(s -> roomReservationController.read(s).getTypeOfService()
-                                    .equals(TypeOfService.ROOM_RESERVATION))
+                            .filter(s -> {
+                                try {
+                                    return roomReservationController.read(s).getTypeOfService()
+                                            .equals(TypeOfService.ROOM_RESERVATION);
+                                } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
+                                         IllegalAccessException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            })
                             .toList());
                     System.out.print("Input RoomReservation's ID to Update --> ");
                     int idRoomReservation = sc.nextInt();
@@ -55,7 +64,7 @@ public class ExecutorUpdateHotelServiceList {
                     return false;
             }
         } else {
-            System.out.println(ERROR_READ_ORDER);
+            System.out.println(ORDER_NOT_EXISTS);
             System.out.println(ERROR_INPUT);
             return false;
         }
