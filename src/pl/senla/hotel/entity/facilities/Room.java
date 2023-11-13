@@ -27,22 +27,6 @@ public class Room extends HotelFacility implements Serializable {
         super();
     }
 
-    public RoomStatus getRoomStatus() {
-        return roomStatus;
-    }
-
-    public void setRoomStatus(RoomStatus roomStatus) {
-        this.roomStatus = roomStatus;
-    }
-
-    public RoomLevel getRoomLevel() {
-        return roomLevel;
-    }
-
-    public void setRoomLevel(RoomLevel roomLevel) {
-        this.roomLevel = roomLevel;
-    }
-
     public void makeRoomAvailable() {
         roomStatus = RoomStatus.AVAILABLE;
     }

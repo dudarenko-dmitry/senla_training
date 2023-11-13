@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
-import static pl.senla.hotel.constant.HotelFacilityConstant.ROOM_NOT_EXIST;
+import static pl.senla.hotel.constant.HotelFacilityConstant.ROOM_NOT_EXISTS;
 
 @AppComponent
 public class ExecutorCreateHotelService {
@@ -42,7 +42,7 @@ public class ExecutorCreateHotelService {
                             numberOfDays;
                     roomReservationController.create(roomReservationString);
                 }
-                System.out.println(ROOM_NOT_EXIST);
+                System.out.println(ROOM_NOT_EXISTS);
                 return false;
             }
             case 2 -> {

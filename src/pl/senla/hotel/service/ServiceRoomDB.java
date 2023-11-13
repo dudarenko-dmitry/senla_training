@@ -7,11 +7,9 @@ import pl.senla.hotel.dao.GenericDao;
 import pl.senla.hotel.entity.facilities.*;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 @AppComponent
@@ -47,12 +45,14 @@ public class ServiceRoomDB implements ServiceRoom {
     }
 
     @Override
-    public Room read(int idRoom) throws InvocationTargetException, NoSuchMethodException,
+//    public Room read(int idRoom) throws InvocationTargetException, NoSuchMethodException,
+    public HotelFacility read(int idRoom) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         if (daoFacility.read(idRoom) != null) {
-            return (Room) daoFacility.read(idRoom);
+//            return (Room) daoFacility.read(idRoom);
+            return daoFacility.read(idRoom);
         }
-        System.out.println(ERROR_INPUT);
+        System.out.println(ROOM_NOT_EXISTS);
         return null;
     }
 
@@ -60,11 +60,12 @@ public class ServiceRoomDB implements ServiceRoom {
     public boolean update(int idRoom, String roomString) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (read(idRoom) != null) {
-            Room roomUpdate = read(idRoom);
+//            Room roomUpdate = read(idRoom);
+            Room roomUpdate = (Room) read(idRoom);
             roomUpdate.setPrice(Integer.parseInt(roomString));
             return daoFacility.update(idRoom, roomUpdate);
         }
-        System.out.println(READ_ALL_ROOM_IS_EMPTY);
+        System.out.println(ROOM_NOT_EXISTS);
         return false;
     }
 
@@ -72,12 +73,13 @@ public class ServiceRoomDB implements ServiceRoom {
     public boolean updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled){
+
             if (read(idRoom) != null) {
-                Room roomUpdate = read(idRoom);
+                Room roomUpdate = (Room) read(idRoom);
                 roomUpdate.makeRoomAvailable();
                 return daoFacility.update(idRoom, roomUpdate);
             }
-            System.out.println(ROOM_NOT_EXIST);
+            System.out.println(ROOM_NOT_EXISTS);
             return false;
         }
         System.out.println(ERROR_NO_PERMISSION);
@@ -89,11 +91,11 @@ public class ServiceRoomDB implements ServiceRoom {
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled){
             if (read(idRoom) != null) {
-                Room roomUpdate = read(idRoom);
+                Room roomUpdate = (Room) read(idRoom);
                 roomUpdate.makeRoomRepaired();
                 return daoFacility.update(idRoom, roomUpdate);
             }
-            System.out.println(ROOM_NOT_EXIST);
+            System.out.println(ROOM_NOT_EXISTS);
             return false;
         }
         System.out.println(ERROR_NO_PERMISSION);
@@ -106,7 +108,7 @@ public class ServiceRoomDB implements ServiceRoom {
         if (read(id) != null) {
             return daoFacility.delete(id);
         }
-        System.out.println(ROOM_NOT_EXIST);
+        System.out.println(ROOM_NOT_EXISTS);
         return false;
     }
 

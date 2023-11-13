@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
-import static pl.senla.hotel.constant.HotelFacilityConstant.ROOM_NOT_EXIST;
+import static pl.senla.hotel.constant.HotelFacilityConstant.ROOM_NOT_EXISTS;
 
 @AppComponent
 public class ExecutorCreateHotelServiceDB {
@@ -43,7 +43,7 @@ public class ExecutorCreateHotelServiceDB {
                     roomReservationController.create(roomReservationString);
                     return true;
                 }
-                System.out.println(ROOM_NOT_EXIST);
+                System.out.println(ROOM_NOT_EXISTS);
             }
             case 2 -> System.out.println("Do not use this type of Service: Restaurant. ");
             case 3 -> System.out.println("Do not use this type of Service: Transfer");

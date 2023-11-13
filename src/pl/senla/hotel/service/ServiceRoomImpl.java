@@ -62,7 +62,7 @@ public class ServiceRoomImpl implements ServiceRoom {
                 return (Room) daoFacility.read(idRoom);
             }
         }
-        System.out.println(ROOM_NOT_EXIST);
+        System.out.println(ROOM_NOT_EXISTS);
         return null;
     }
 
@@ -74,7 +74,7 @@ public class ServiceRoomImpl implements ServiceRoom {
             roomUpdate.setPrice(Integer.parseInt(roomString));
             return daoFacility.update(idRoom, roomUpdate);
         }
-        System.out.println(ROOM_NOT_EXIST);
+        System.out.println(ROOM_NOT_EXISTS);
         return false;
     }
 
@@ -83,7 +83,7 @@ public class ServiceRoomImpl implements ServiceRoom {
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled){
             if (read(idRoom) == null) {
-                System.out.println(ROOM_NOT_EXIST);
+                System.out.println(ROOM_NOT_EXISTS);
                 return false;
             }
             Room roomUpdate = read(idRoom);
@@ -99,7 +99,7 @@ public class ServiceRoomImpl implements ServiceRoom {
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled){
             if (read(idRoom) == null) {
-                System.out.println(ROOM_NOT_EXIST);
+                System.out.println(ROOM_NOT_EXISTS);
                 return false;
             }
             Room roomUpdate = read(idRoom);
@@ -116,7 +116,7 @@ public class ServiceRoomImpl implements ServiceRoom {
         if (read(id) != null) {
             return daoFacility.delete(id);
         }
-        System.out.println(ROOM_NOT_EXIST);
+        System.out.println(ROOM_NOT_EXISTS);
         return false;
     }
 

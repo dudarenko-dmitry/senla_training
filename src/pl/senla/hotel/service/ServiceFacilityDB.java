@@ -64,7 +64,7 @@ public class ServiceFacilityDB implements ServiceFacility{
 //        daoRoom.update(idFacility, (Room) hotelFacilityUpdate);
             return daoHotelFacility.update(idFacility, hotelFacilityUpdate);
         }
-        System.out.println(ROOM_NOT_EXIST);
+        System.out.println(ROOM_NOT_EXISTS);
         return false;
     }
 
@@ -74,7 +74,7 @@ public class ServiceFacilityDB implements ServiceFacility{
         if(daoHotelFacility.read(idFacility) != null){
             return daoHotelFacility.delete(idFacility);
         }
-        System.out.println(ROOM_NOT_EXIST);
+        System.out.println(ROOM_NOT_EXISTS);
         return false;
     }
 

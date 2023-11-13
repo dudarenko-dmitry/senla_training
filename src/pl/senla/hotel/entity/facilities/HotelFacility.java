@@ -56,10 +56,6 @@ public class HotelFacility implements Serializable {
         }
     }
 
-    public Integer getPrice() {
-        return price;
-    }
-
     public void setPrice(Integer price) {
         if (price != null) {
             this.price = price;
