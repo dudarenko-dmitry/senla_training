@@ -3,7 +3,6 @@ package pl.senla.hotel.ui.room;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.ControllerFacility;
-import pl.senla.hotel.controller.ControllerRoom;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.facilities.RoomStatus;
@@ -22,8 +21,6 @@ public class ExecutorRoomDB implements Executor {
     private StartMenuRoomLevel startMenuRoomLevel;
     @GetInstance(beanName = "ControllerFacilityDB")
     private ControllerFacility facilityController;
-    @GetInstance(beanName = "ControllerRoomDB")
-    private ControllerRoom roomController;
 
     public ExecutorRoomDB(){}
 
@@ -32,11 +29,11 @@ public class ExecutorRoomDB implements Executor {
             NoSuchMethodException, InstantiationException {
         Scanner sc = new Scanner(System.in);
         switch (menuPoint) {
-            case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + roomController.readAll());
+            case 1 -> System.out.println(CONSOLE_READ_ALL_ROOMS + facilityController.readAll());
             case 2 -> {
                 System.out.print(INPUT_ID_ROOM);
                 int id = sc.nextInt();
-                System.out.println(CONSOLE_READ_ROOM + roomController.read(id));
+                System.out.println(CONSOLE_READ_ROOM + facilityController.read(id));
             }
             case 3 -> {
                 System.out.println("Input new Room's data: ");
@@ -64,7 +61,7 @@ public class ExecutorRoomDB implements Executor {
                 int idRoomUpdate = sc.nextInt();
                 System.out.print("Input new price --> ");
                 int newPrice = sc.nextInt();
-                HotelFacility roomUpdated = roomController.read(idRoomUpdate);
+                HotelFacility roomUpdated = facilityController.read(idRoomUpdate);
                 if(roomUpdated != null){
                     System.out.println(CONSOLE_CHANGE_ROOM +
                             facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
@@ -75,7 +72,7 @@ public class ExecutorRoomDB implements Executor {
             case 5 -> {
                 System.out.print(INPUT_ID_ROOM_UPDATE);
                 int idRoomUpdate = sc.nextInt();
-                HotelFacility roomUpdated = roomController.read(idRoomUpdate);
+                HotelFacility roomUpdated = facilityController.read(idRoomUpdate);
                 if(roomUpdated != null){
                     System.out.println(CONSOLE_CHANGE_ROOM +
                             facilityController.updateRoomStatusAvailable(idRoomUpdate));
@@ -86,7 +83,7 @@ public class ExecutorRoomDB implements Executor {
             case 6 -> {
                 System.out.print(INPUT_ID_ROOM_UPDATE);
                 int idRoomUpdate = sc.nextInt();
-                HotelFacility roomUpdated = roomController.read(idRoomUpdate);
+                HotelFacility roomUpdated = facilityController.read(idRoomUpdate);
                 if(roomUpdated != null){
                     System.out.println(CONSOLE_CHANGE_ROOM +
                             facilityController.updateRoomStatusRepaired(idRoomUpdate));
@@ -97,7 +94,7 @@ public class ExecutorRoomDB implements Executor {
             case 7 -> {
                 System.out.print(INPUT_ID_ROOM_DELETE);
                 int idRoomDelete = sc.nextInt();
-                System.out.println(CONSOLE_DELETE_ROOM + roomController.delete(idRoomDelete));
+                System.out.println(CONSOLE_DELETE_ROOM + facilityController.delete(idRoomDelete));
             }
             default -> {
                 System.out.println(ERROR_INPUT);

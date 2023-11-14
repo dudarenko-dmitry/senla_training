@@ -1,8 +1,8 @@
 package pl.senla.hotel.dao;
 
 import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.OrderDto;
 
 @AppComponent
-public class DaoOrderDB extends GenericDaoDB<Order> implements GenericDao<Order> {
+public class DaoOrderDB extends GenericDaoDB<OrderDto> implements GenericDao<OrderDto> {
 }

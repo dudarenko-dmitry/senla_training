@@ -4,16 +4,13 @@ import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.entity.services.RoomReservation;
 
-import pl.senla.hotel.service.ServiceRoom;
+import pl.senla.hotel.service.ServiceFacility;
 import pl.senla.hotel.utils.RoomReservationUtil;
 
 @AppComponent
 public class ConverterRoomReservation implements ConverterEntity<HotelService> {
 
-    @GetInstance(beanName = "ServiceRoomImpl")
-    private ServiceRoom serviceRoom;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.directory")
     private String filePathDirectory;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-name.services")
@@ -35,7 +32,7 @@ public class ConverterRoomReservation implements ConverterEntity<HotelService> {
         return RoomReservationUtil.convertHotelServiceToString(t);
     }
 
-    public RoomReservation convertStringToEntity(String csvT) {
-        return RoomReservationUtil.convertCsvToRoomReservation(csvT, serviceRoom);
+    public HotelService convertStringToEntity(String csvT) {
+        return RoomReservationUtil.convertCsvToRoomReservation(csvT);
     }
 }

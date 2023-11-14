@@ -2,10 +2,9 @@ package pl.senla.hotel.utils;
 
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.OrderDto;
 import pl.senla.hotel.entity.facilities.HotelFacility;
-import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.entity.services.RoomReservation;
 
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
@@ -18,13 +17,13 @@ public final class DataBaseMapperUtil {
 
     public static Map<String, String> getMapper(Class<?> type) {
         Map<String, String> mapper = null;
-        if (type.equals(HotelFacility.class) || type.equals(Room.class)) {
+        if (type.equals(HotelFacility.class)) {
             mapper = getRoomMapper();
         } else if (type.equals(Guest.class)) {
             mapper = getGuestMapper();
-        } else if (type.equals(HotelService.class) || type.equals(RoomReservation.class)) {
+        } else if (type.equals(HotelService.class)) {
             mapper = getHotelServiceMapper();
-        } else if (type.equals(Order.class)) {
+        } else if (type.equals(OrderDto.class) || type.equals(Order.class)) {
             mapper = getOrderMapper();
         } else {
             System.out.println("There is no such table in DB \n" + new SQLException());
@@ -74,7 +73,6 @@ public final class DataBaseMapperUtil {
         orderMapper.put("tableName", "hotel.orders");
         orderMapper.put("idOrder", "orderID");
         orderMapper.put("idGuest", "guestID");
-        // add getReservationList ?
         return orderMapper;
     }
 

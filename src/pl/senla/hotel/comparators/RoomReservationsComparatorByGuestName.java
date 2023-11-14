@@ -3,23 +3,23 @@ package pl.senla.hotel.comparators;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.Guest;
-import pl.senla.hotel.entity.services.RoomReservation;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.dao.GenericDao;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 
 @AppComponent
-public class RoomReservationsComparatorByGuestName implements Comparator<RoomReservation> {
+public class RoomReservationsComparatorByGuestName implements Comparator<HotelService> {
 
-    @GetInstance(beanName = "DaoGuestCollection")
+    @GetInstance(beanName = "DaoGuestDB")
     private GenericDao<Guest> daoGuest;
 
     public RoomReservationsComparatorByGuestName() {
     }
 
     @Override
-    public int compare(RoomReservation o1, RoomReservation o2) {
+    public int compare(HotelService o1, HotelService o2) {
         int idGuest1 = o1.getIdGuest();
         int idGuest2 = o2.getIdGuest();
         String name1 = null;

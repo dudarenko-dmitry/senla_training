@@ -13,8 +13,6 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 @AppComponent
 public class ExecutorAnalyticsDB implements Executor {
 
-    @GetInstance(beanName = "ControllerRoomDB")
-    private ControllerRoom roomController;
     @GetInstance(beanName = "ControllerFacilityDB")
     private ControllerFacility facilityController;
     @GetInstance(beanName = "ControllerRoomReservationDB")
@@ -113,7 +111,7 @@ public class ExecutorAnalyticsDB implements Executor {
             case 19:
                 System.out.print(INPUT_ID_ROOM);
                 idRoom = sc.nextInt();
-                roomController.read(idRoom);
+                facilityController.read(idRoom);
                 break;
             default:
                 System.out.println(ERROR_INPUT);

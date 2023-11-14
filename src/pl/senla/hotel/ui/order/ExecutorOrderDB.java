@@ -5,8 +5,8 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.ui.Executor;
-import pl.senla.hotel.ui.services.StartCreateHotelService;
-import pl.senla.hotel.ui.services.StartUpdateHotelServiceList;
+import pl.senla.hotel.ui.services.StartCreateHotelServiceDB;
+import pl.senla.hotel.ui.services.StartUpdateHotelServiceListDB;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
@@ -17,12 +17,12 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 @AppComponent
 public class ExecutorOrderDB implements Executor {
 
-    @GetInstance(beanName = "StartCreateHotelService")
-    private StartCreateHotelService startCreateHotelService;
+    @GetInstance(beanName = "StartCreateHotelServiceDB")
+    private StartCreateHotelServiceDB startCreateHotelService;
     @GetInstance(beanName = "ControllerOrderDB")
     private ControllerOrder orderController;
-    @GetInstance(beanName = "StartUpdateHotelServiceList")
-    private StartUpdateHotelServiceList startUpdateHotelServiceList;
+    @GetInstance(beanName = "StartUpdateHotelServiceListDB")
+    private StartUpdateHotelServiceListDB startUpdateHotelServiceList;
 
     public ExecutorOrderDB() {}
 

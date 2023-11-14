@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface ControllerFacility extends ControllerCRUDALL<HotelFacility> {
 
-    boolean updateRoomStatusAvailable(int idRoom) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+    boolean updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    boolean updateRoomStatusRepaired(int idRoom) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+    boolean updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException;
 
     List<HotelFacility> readPriceListForServicesSortByCategory();
     List<HotelFacility> readPriceListForServicesSortByPrice();

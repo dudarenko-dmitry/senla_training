@@ -2,9 +2,8 @@ package pl.senla.hotel.controller;
 
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.service.ServiceRoomReservation;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +18,7 @@ public class ControllerRoomReservationDB implements ControllerRoomReservation {
     public ControllerRoomReservationDB() {}
 
     @Override
-    public List<RoomReservation> readAll() {
+    public List<HotelService> readAll() {
         return roomReservationService.readAll();
     }
 
@@ -30,7 +29,7 @@ public class ControllerRoomReservationDB implements ControllerRoomReservation {
     }
 
     @Override
-    public RoomReservation read(int idReservation) throws InvocationTargetException,
+    public HotelService read(int idReservation) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         return roomReservationService.read(idReservation);
     }
@@ -48,27 +47,27 @@ public class ControllerRoomReservationDB implements ControllerRoomReservation {
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString) {
+    public List<HotelFacility> readAllFreeRoomsSortByPrice(String checkedTimeString) {
         return roomReservationService.readAllFreeRoomsSortByPrice(checkedTimeString);
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
+    public List<HotelFacility> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
         return roomReservationService.readAllFreeRoomsSortByCapacity(checkedTimeString);
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
+    public List<HotelFacility> readAllFreeRoomsSortByLevel(String checkedTimeString) {
         return roomReservationService.readAllFreeRoomsSortByLevel(checkedTimeString);
     }
 
     @Override
-    public List<RoomReservation> readAllRoomReservationsSortByGuestName() {
+    public List<HotelService> readAllRoomReservationsSortByGuestName() {
         return roomReservationService.readAllRoomReservationsSortByGuestName();
     }
 
     @Override
-    public List<RoomReservation> readAllRoomReservationsSortByGuestCheckOut() {
+    public List<HotelService> readAllRoomReservationsSortByGuestCheckOut() {
         return roomReservationService.readAllRoomReservationsSortByGuestCheckOut();
     }
 
@@ -83,7 +82,7 @@ public class ControllerRoomReservationDB implements ControllerRoomReservation {
     }
 
     @Override
-    public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
+    public List<HotelFacility> readAllRoomsFreeInTime(String checkedTimeString) {
         return roomReservationService.readAllRoomsFreeInTime(checkedTimeString);
     }
 

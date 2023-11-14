@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface ServiceOrder extends ServiceCRUDALL<Order> {
 
-    boolean addServicesToOrder(int idOrder) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+    boolean addServicesToOrder(int idOrder) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    List<Integer> readAllIdServicesForOrder(int idOrderNew);
+    List<Integer> readAllIdServicesForOrder(int idOrder);
 }

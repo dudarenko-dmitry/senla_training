@@ -2,7 +2,6 @@ package pl.senla.hotel.ui.main;
 
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.ie.serialization.Processor;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
@@ -26,8 +25,6 @@ public class ExecutorMainDB implements Executor {
     private StartMenu startMenuImportExport;
     @GetInstance(beanName = "UserChoice")
     private Choice userChoice;
-//    @GetInstance(beanName = "ProcessorSerializable")
-//    private Processor processor;
 
     public ExecutorMainDB(){
     }
@@ -42,7 +39,6 @@ public class ExecutorMainDB implements Executor {
             case 4 -> startMenuAnalytics.runMenu();
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
-//                processor.saveHotelData();
                 System.out.println("Good-bye.");
                 System.exit(0);
             }

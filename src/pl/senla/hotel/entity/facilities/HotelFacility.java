@@ -17,19 +17,24 @@ public class HotelFacility implements Serializable {
     private String nameFacility;
     private Integer price;
     private Integer capacity;
+    private RoomLevel roomLevel;
+    private RoomStatus roomStatus;
 
     @Serial
     private static final long serialVersionUID = 4L;
 
-    public HotelFacility(CategoryFacility category, String nameFacility, Integer price, Integer capacity) {
+    public HotelFacility() {
+
+    }
+
+    public HotelFacility(CategoryFacility category, String nameFacility, Integer price,
+                         Integer capacity, RoomLevel roomLevel, RoomStatus roomStatus) {
         this.category = category;
         this.nameFacility = nameFacility;
         this.price = price;
         this.capacity = capacity;
-    }
-
-    public HotelFacility() {
-
+        this.roomLevel = roomLevel;
+        this.roomStatus = roomStatus;
     }
 
     public void setIdFacility(Integer idFacility) {
@@ -72,6 +77,22 @@ public class HotelFacility implements Serializable {
         }
     }
 
+    public void setRoomLevel(RoomLevel roomLevel) {
+        this.roomLevel = roomLevel;
+    }
+
+    public void setRoomStatus(RoomStatus roomStatus) {
+        this.roomStatus = roomStatus;
+    }
+
+    public void makeRoomAvailable() {
+        roomStatus = RoomStatus.AVAILABLE;
+    }
+
+    public void makeRoomRepaired() {
+        roomStatus = RoomStatus.REPAIRED;
+    }
+
     @Override
     public String toString() {
         return "\nHotelFacility{" +
@@ -80,6 +101,8 @@ public class HotelFacility implements Serializable {
                 ", nameFacility=" + nameFacility +
                 ", price=" + price +
                 ", capacity=" + capacity +
+                ", roomLevel=" + roomLevel + //new
+                ", roomStatus=" + roomStatus + //new
                 '}';
     }
 }

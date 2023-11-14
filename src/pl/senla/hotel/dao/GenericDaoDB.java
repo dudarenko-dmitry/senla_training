@@ -1,11 +1,11 @@
 package pl.senla.hotel.dao;
 
-import org.reflections.Reflections;
 import pl.senla.hotel.connection.AbstractConnection;
 import pl.senla.hotel.utils.DataBaseMapperUtil;
 
 import java.lang.reflect.*;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -125,7 +125,6 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
             connection = AbstractConnection.connection();
             String command = getStringBuilderUpdateInstance(id);
             PreparedStatement stmt = connection.prepareStatement(command);
-//            setFieldsValuesToUpdateInstance(t, stmt);
             setFieldsValuesToCreateInstance(t, stmt);
             return stmt.execute();
         } catch (SQLException e) {
@@ -178,20 +177,25 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
         Field[] declaredFields = type.getDeclaredFields();
         List<Field> fields = Arrays.stream(declaredFields)
                 .filter(f -> !f.getName().equals("serialVersionUID"))
+                .filter(f -> !f.getType().isInterface())
                 .toList();
         for (Field f : fields) {
             f.setAccessible(true);
             String fieldName = f.getName();
             Class<?> fieldType = f.getType();
             if (fieldType.isEnum()) {
-                Enum anEnum = Enum.valueOf((Class<? extends Enum>) fieldType, rs.getString(fieldName));
+                Enum anEnum = Enum.valueOf((Class<? extends Enum>) fieldType,
+                        rs.getString(mappingEntityToDB.get(fieldName)));
                 f.set(t, anEnum);
             } else if (fieldType.equals(Integer.class)) {
                 f.set(t, rs.getInt(mappingEntityToDB.get(fieldName)));
             } else if (fieldType.equals(String.class)) {
                 f.set(t, rs.getString(mappingEntityToDB.get(fieldName)));
-            } else if (fieldType.equals(Timestamp.class)) {
-                f.set(t, rs.getTimestamp(mappingEntityToDB.get(fieldName)));
+            } else if (fieldType.equals(LocalDateTime.class)) {
+                Timestamp timestamp = rs.getTimestamp(mappingEntityToDB.get(fieldName));
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                f.set(t, localDateTime);
+
             } else {
                 System.out.println("No such type of fields in Application. " + fieldType +
                         "\nNew type must be added to Application.");
@@ -244,84 +248,15 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
             String fieldName = entitiesFields.get(i);
             String getterStringCommand = getGetterString(fieldName);
             Method getter = getGetter(t, getterStringCommand);
-            Field field = null;
             try {
-                field = aClass.getDeclaredField(fieldName);
+                Field field = aClass.getDeclaredField(fieldName);
                 setValuesToStatement(t, stmt, field, j, getter);
                 j++;
-            } catch (NoSuchFieldException e) {
-                Class<?> superClass = aClass.getSuperclass();
-                try {
-                    field = superClass.getDeclaredField(fieldName);
-                    setValuesToStatement(t, stmt, field, j, getter);
-                    j++;
-                } catch (NoSuchFieldException ex) {
-                    Reflections reflections = new Reflections("pl.senla.hotel.entity");
-                    List<Class<?>> childClasses = (List<Class<?>>) reflections.getSubTypesOf(aClass).stream().toList();
-                    Class<?> childClass = childClasses.stream()
-                            .filter(cl -> {
-                                try {
-                                    return cl.getDeclaredField(fieldName) != null;
-                                } catch (NoSuchFieldException exc) {
-                                    throw new RuntimeException(exc);
-                                }
-                            })
-                            .findFirst().orElse(null);
-                    try {
-                        assert childClass != null;
-                        field = childClass.getDeclaredField(fieldName);
-                        setValuesToStatement(t, stmt, field, j, getter);
-                    } catch (NoSuchFieldException | NoSuchMethodException exc) {
-                        throw new RuntimeException(exc);
-                    }
-                } catch (NoSuchMethodException ex) {
-                    throw new RuntimeException(ex);
-                }
-            } catch (NoSuchMethodException e) {
+            } catch (NoSuchFieldException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
-//    private void setFieldsValuesToUpdateInstance(T t, PreparedStatement stmt) throws SQLException,
-//            InvocationTargetException, IllegalAccessException  {
-//        int j = 1;
-//        for (int i = 2; i < entitiesFields.size(); i++) {
-//            String fieldName = entitiesFields.get(i);
-//            String getterStringCommand = getGetterString(fieldName);
-//            Method getter = getGetter(t, getterStringCommand);
-//            Field field;
-//            try {
-//                field = t.getClass().getDeclaredField(fieldName);
-//                setValuesToStatement(t, stmt, field, j, getter);
-//            } catch (NoSuchFieldException e) {
-//                Class<?> superclass = t.getClass().getSuperclass();
-//                try {
-//                    field = superclass.getDeclaredField(fieldName);
-//                    setValuesToStatement(t, stmt, field, j, getter);
-//                    j++;
-//                } catch (NoSuchFieldException ex) {
-//                    Class<?> aClass = Arrays.stream(t.getClass().getClasses())
-//                            .filter(cl -> {
-//                                try {
-//                                    return cl.getDeclaredField(fieldName) != null;
-//                                } catch (NoSuchFieldException exc) {
-//                                    throw new RuntimeException(exc);
-//                                }
-//                            })
-//                            .findFirst().orElse(null);
-//                    try {
-//                        assert aClass != null;
-//                        field = aClass.getDeclaredField(fieldName);
-//                        setValuesToStatement(t, stmt, field, j, getter);
-//                    } catch (NoSuchFieldException exc) {
-//                        throw new RuntimeException(exc);
-//                    }
-//                }
-//            }
-//            j++;
-//        }
-//    }
 
     private static <T> void setValuesToStatement(T t, PreparedStatement stmt, Field field, int j, Method getter)
             throws SQLException, NoSuchMethodException {
@@ -332,49 +267,25 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
             try {
                 stmt.setString(j, String.valueOf(getter.invoke(t)));
             } catch (IllegalAccessException | InvocationTargetException e) {
-                try {
-                    Class<?> childClass = getChildClassByField(field, aClass);
-                    Object childInstance = childClass.getConstructor().newInstance();
-                    stmt.setString(j, String.valueOf(getter.invoke(childInstance)));
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
-                    throw new RuntimeException(ex);
-                }
+                throw new RuntimeException(e);
             }
         } else if (fieldType.equals(Integer.class)) {
             try {
                 stmt.setInt(j, (Integer) getter.invoke(t));
             } catch (IllegalAccessException | InvocationTargetException e) {
-                try {
-                    Class<?> childClass = getChildClassByField(field, aClass);
-                    Object childInstance = childClass.getConstructor().newInstance();
-                    stmt.setInt(j, (Integer) getter.invoke(childInstance));
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
-                    throw new RuntimeException(ex);
-                }
+                throw new RuntimeException(e);
             }
         } else if (fieldType.equals(String.class)) {
             try {
                 stmt.setString(j, String.valueOf(getter.invoke(t)));
             } catch (IllegalAccessException | InvocationTargetException e) {
-                try {
-                    Class<?> childClass = getChildClassByField(field, aClass);
-                    Object childInstance = childClass.getConstructor().newInstance();
-                    stmt.setString(j, String.valueOf(getter.invoke(childInstance)));
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
-                    throw new RuntimeException(ex);
-                }
+                throw new RuntimeException(e);
             }
-        } else if (fieldType.equals(Timestamp.class)) {
+        } else if (fieldType.equals(LocalDateTime.class)) {
             try {
-                stmt.setTimestamp(j, (Timestamp) getter.invoke(t));
+                stmt.setTimestamp(j, Timestamp.valueOf((LocalDateTime) getter.invoke(t)));
             } catch (IllegalAccessException | InvocationTargetException e) {
-                try {
-                    Class<?> childClass = getChildClassByField(field, aClass);
-                    Object childInstance = childClass.getConstructor().newInstance();
-                    stmt.setTimestamp(j, (Timestamp) getter.invoke(childInstance));
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
-                    throw new RuntimeException(ex);
-                }
+                throw new RuntimeException(e);
             }
         } else {
             System.out.println("No such type of fields in Application. " + fieldType +
@@ -382,56 +293,18 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
         }
     }
 
-    private static Class<?> getChildClassByField(Field field, Class<?> aClass) {
-        Reflections reflections = new Reflections("pl.senla.hotel.entity");
-        List<Class<?>> childClasses = (List<Class<?>>) reflections.getSubTypesOf(aClass).stream().toList();
-        return childClasses.stream().filter(cl -> {
-                    try {
-                        return cl.getDeclaredField(String.valueOf(field)) != null;
-                    } catch (NoSuchFieldException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                })
-                .findAny().orElse(null);
-    }
-
     private static <T> Method getGetter(T t, String fieldGetter) {
-        Class<?> aClass = t.getClass();
-        Method getter = null;
         try {
-            getter = t.getClass().getDeclaredMethod(fieldGetter);
+            return t.getClass().getDeclaredMethod(fieldGetter);
         } catch (NoSuchMethodException e) {
-            Class<?> superClass = aClass.getSuperclass();
-            try {
-                getter = superClass.getDeclaredMethod(fieldGetter);
-            } catch (NoSuchMethodException e1) {
-                Reflections reflections = new Reflections("pl.senla.hotel.entity");
-                List<Class<?>> childClasses = (List<Class<?>>) reflections.getSubTypesOf(aClass).stream().toList();
-                Class<?> childClass = childClasses.stream()
-                        .filter(cl -> {
-                            try {
-                                return cl.getDeclaredMethod(fieldGetter) != null;
-                            } catch (NoSuchMethodException e2) {
-                                throw new RuntimeException(e2);
-                            }
-                        })
-                        .findAny().orElse(null);
-                try {
-                    assert childClass != null;
-                    getter = childClass.getDeclaredMethod(fieldGetter);
-                } catch (NoSuchMethodException exc) {
-                    throw new RuntimeException(exc);
-                }
-            }
+            throw new RuntimeException(e);
         }
-        return getter;
     }
 
     private static String getGetterString(String fieldName) {
-        String fieldGetter = "get" +
+        return "get" +
                 fieldName.substring(0,1).toUpperCase() +
                 fieldName.substring(1);
-        return fieldGetter;
     }
 
 }

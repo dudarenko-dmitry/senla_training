@@ -37,10 +37,9 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
         String[] hotelServiceData = hotelServiceString.split(";");
         String typeOfService = hotelServiceData[0]; // EDIT and PUT correct index
         switch (typeOfService){
-//            case "RoomReservation" -> serviceRoomReservation.create(hotelServiceString);
             case "RoomReservation" -> serviceRoomReservation.create(hotelServiceString);
-            case "Restaurant" -> System.out.println("CREATE ACTION FOR RESTAURANT");
-            case "Transfer" -> System.out.println("CREATE ACTION FOR TRANSFER");
+//            case "Restaurant" -> System.out.println("CREATE ACTION FOR RESTAURANT");
+//            case "Transfer" -> System.out.println("CREATE ACTION FOR TRANSFER");
             default -> System.out.println("Something went wrong ...");
         }
         return true;
@@ -64,8 +63,8 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
             String typeOfService = hotelServiceData[0]; // EDIT and PUT correct index
             switch (typeOfService){
                 case "RoomReservation" -> serviceRoomReservation.update(idHotelService, hotelServiceString);
-                case "Restaurant" -> System.out.println("CREATE ACTION FOR RESTAURANT");
-                case "Transfer" -> System.out.println("CREATE ACTION FOR TRANSFER");
+//                case "Restaurant" -> System.out.println("CREATE ACTION FOR RESTAURANT");
+//                case "Transfer" -> System.out.println("CREATE ACTION FOR TRANSFER");
                 default -> System.out.println("Something went wrong ...");
             }
         }

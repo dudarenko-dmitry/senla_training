@@ -7,9 +7,9 @@ public final class RoomUtil {
     private RoomUtil() {
     }
 
-    public static Room convertStringToRoom(String csvT) {
+    public static HotelFacility convertStringToRoom(String csvT) {
         String[] text = csvT.split(";");
-        Room room = new Room();
+        HotelFacility room = new HotelFacility();
         room.setIdFacility(Integer.valueOf(text[0].substring(1, text[0].length() - 1)));
         room.setCategory(CategoryFacility.valueOf(text[1].substring(1, text[1].length() - 1)));
         room.setNameFacility(text[2].substring(1, text[2].length() - 1));
@@ -28,9 +28,8 @@ public final class RoomUtil {
         Integer capacity = facility.getCapacity();
         switch (categoryFacility) {
             case ROOM -> {
-                Room hsRoom = (Room) facility;
-                RoomLevel roomLevel = hsRoom.getRoomLevel();
-                RoomStatus roomStatus = hsRoom.getRoomStatus();
+                RoomLevel roomLevel = facility.getRoomLevel();
+                RoomStatus roomStatus = facility.getRoomStatus();
                 return new String[] {
                         String.valueOf(idFacility),
                         categoryFacility.name(),
@@ -41,10 +40,10 @@ public final class RoomUtil {
                         roomStatus.name()
                 };
             }
-            case TABLE -> System.out.println("This Hotel Facility (Table) was not created.");
-            case TRANSPORT -> System.out.println("This Hotel Facility (Transport) was not created.");
+//            case TABLE -> System.out.println("This Hotel Facility (Table) was not created.");
+//            case TRANSPORT -> System.out.println("This Hotel Facility (Transport) was not created.");
             default -> throw new IllegalStateException("Unexpected value: " + categoryFacility.name());
         }
-        return new String[0]; // change after creating of rest entities
+        // change after creating of rest entities
     }
 }

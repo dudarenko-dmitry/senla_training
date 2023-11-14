@@ -1,7 +1,6 @@
 package pl.senla.hotel.comparators;
 
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.entity.services.RoomReservation;
 
 import java.util.Comparator;
 
@@ -12,7 +11,7 @@ public class HotelServicesComparatorByDate implements Comparator<HotelService> {
     @Override
     public int compare(HotelService o1, HotelService o2) {
         return switch (o1.getTypeOfService()) {
-            case ROOM_RESERVATION -> compareRoomReservation((RoomReservation) o1, (RoomReservation) o2);
+            case ROOM_RESERVATION -> compareRoomReservation(o1, o2);
 //            case RESTAURANT -> compareRestaurant((Restaurant) o1, (Restaurant) o2);
 //            case TRANSFER -> compareTransfer((Transfer) o1, (Transfer) o2);
             default -> {
@@ -42,7 +41,7 @@ public class HotelServicesComparatorByDate implements Comparator<HotelService> {
 //        }
 //    }
 
-    private int compareRoomReservation(RoomReservation o1, RoomReservation o2) {
+    private int compareRoomReservation(HotelService o1, HotelService o2) {
         if(o1.getCheckInTime().isBefore(o2.getCheckInTime())){
             return -1;
         } else if(o1.getCheckInTime().isAfter(o2.getCheckInTime())){

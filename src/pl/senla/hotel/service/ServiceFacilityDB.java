@@ -1,6 +1,7 @@
 package pl.senla.hotel.service;
 
 import pl.senla.hotel.application.annotation.AppComponent;
+import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.dao.GenericDao;
@@ -18,6 +19,8 @@ public class ServiceFacilityDB implements ServiceFacility{
 
     @GetInstance(beanName = "DaoFacilityDB")
     private GenericDao<HotelFacility> daoHotelFacility;
+    @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
+    private Boolean changeRoomStatusEnabled;
 
     public ServiceFacilityDB() {}
 
@@ -33,7 +36,7 @@ public class ServiceFacilityDB implements ServiceFacility{
     @Override
     public boolean create(String hotelFacilityString) {
         String[] facilityData = hotelFacilityString.split(";");
-        Room hotelFacility = new Room();
+        HotelFacility hotelFacility = new HotelFacility();
         hotelFacility.setCategory(CategoryFacility.valueOf(facilityData[0]));
         hotelFacility.setNameFacility(facilityData[1]);
         hotelFacility.setPrice(Integer.parseInt(facilityData[2]));
@@ -41,7 +44,6 @@ public class ServiceFacilityDB implements ServiceFacility{
         hotelFacility.setRoomLevel(RoomLevel.valueOf(facilityData[4]));
         hotelFacility.setRoomStatus(RoomStatus.valueOf(facilityData[5]));
         setIdFacilityNew(hotelFacility);
-//        daoRoom.create(hotelFacility);
         return daoHotelFacility.create(hotelFacility);
     }
 
@@ -61,7 +63,6 @@ public class ServiceFacilityDB implements ServiceFacility{
         if(daoHotelFacility.read(idFacility) != null){
             HotelFacility hotelFacilityUpdate = read(idFacility);
             hotelFacilityUpdate.setPrice(Integer.parseInt(hotelFacilityString));
-//        daoRoom.update(idFacility, (Room) hotelFacilityUpdate);
             return daoHotelFacility.update(idFacility, hotelFacilityUpdate);
         }
         System.out.println(ROOM_NOT_EXISTS);
@@ -125,5 +126,37 @@ public class ServiceFacilityDB implements ServiceFacility{
                 .max(Comparator.comparingInt(o -> o))
                 .orElse(-1);
         hotelFacility.setIdFacility(lastId + 1);
+    }
+
+    @Override
+    public boolean updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if (changeRoomStatusEnabled){
+            if (read(idRoom) != null) {
+                HotelFacility roomUpdate = read(idRoom);
+                roomUpdate.makeRoomAvailable();
+                return daoHotelFacility.update(idRoom, roomUpdate);
+            }
+            System.out.println(ROOM_NOT_EXISTS);
+            return false;
+        }
+        System.out.println(ERROR_NO_PERMISSION);
+        return false;
+    }
+
+    @Override
+    public boolean updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if (changeRoomStatusEnabled){
+            if (read(idRoom) != null) {
+                HotelFacility roomUpdate = read(idRoom);
+                roomUpdate.makeRoomRepaired();
+                return daoHotelFacility.update(idRoom, roomUpdate);
+            }
+            System.out.println(ROOM_NOT_EXISTS);
+            return false;
+        }
+        System.out.println(ERROR_NO_PERMISSION);
+        return false;
     }
 }
