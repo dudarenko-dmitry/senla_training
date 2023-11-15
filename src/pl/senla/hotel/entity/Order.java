@@ -38,15 +38,6 @@ public class Order implements Serializable {
 
     }
 
-    public void setIdOrder(Integer idOrder) {
-        if (idOrder != null) {
-            this.idOrder = idOrder;
-        } else {
-            System.out.println(ERROR_ID_ORDER);
-        }
-
-    }
-
     public void setIdGuest(Integer idGuest) {
         if (idGuest != null) {
             this.idGuest = idGuest;

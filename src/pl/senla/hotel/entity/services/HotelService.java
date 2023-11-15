@@ -38,7 +38,7 @@ public class HotelService implements Serializable {
     public HotelService() {
     }
 
-    public HotelService(Integer idService, Integer idOrder, TypeOfService typeOfService, Integer idGuest,
+    public HotelService(Integer idOrder, TypeOfService typeOfService, Integer idGuest,
                            Integer idRoom, LocalDate startDate, Integer numberOfDays)
             throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         if(idOrder == null) {
@@ -61,7 +61,6 @@ public class HotelService implements Serializable {
             System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_DAYS);
             return;
         }
-        this.idService = idService;
         this.idGuest = idGuest;
         this.typeOfService = typeOfService;
         this.idRoom = idRoom;
@@ -97,12 +96,15 @@ public class HotelService implements Serializable {
 
     @Override
     public String toString() {
-        return "{typeOfService='" + typeOfService +
+        return "HotelService{" +
+                "idService=" + idService +
+                ", idOrder=" + idOrder +
+                ", typeOfService=" + typeOfService +
                 ", idGuest=" + idGuest +
                 ", idRoom=" + idRoom +
-                ",\ncheck-in time=" + checkInTime +
-                ", numberOfDays=" + numberOfDays +
-                ", check-out time=" + checkOutTime +
+                "\nnumberOfDays=" + numberOfDays +
+                ", checkInTime=" + checkInTime +
+                ", checkOutTime=" + checkOutTime +
                 ", cost=" + cost +
                 '}';
     }

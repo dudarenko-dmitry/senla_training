@@ -31,12 +31,11 @@ public class ServiceOrderDB implements ServiceOrder {
 
     @Override
     public List<Order> readAll() {
-        if (daoOrderDto.readAll() != null || !daoOrderDto.readAll().isEmpty()) {
-            List<OrderDto> orderDtos = daoOrderDto.readAll();
-            return orderDtos.stream().map(this::convertOrderDto).toList();
+        List<OrderDto> orderDtoList = daoOrderDto.readAll();
+        if (orderDtoList.isEmpty()) {
+            System.out.println(READ_ALL_ORDERS_IS_EMPTY);
         }
-        System.out.println(READ_ALL_ORDERS_IS_EMPTY);
-        return Collections.emptyList();
+        return orderDtoList.stream().map(this::convertOrderDto).toList();
     }
 
     @Override
@@ -44,8 +43,6 @@ public class ServiceOrderDB implements ServiceOrder {
         int idGuest = Integer.parseInt(orderString);
         OrderDto order = new OrderDto(idGuest);
         order.setIdGuest(idGuest);
-        int idOrderNew = getIdOrderNew();
-        order.setIdOrder(idOrderNew);
         return daoOrderDto.create(order);
     }
 
@@ -54,8 +51,7 @@ public class ServiceOrderDB implements ServiceOrder {
             InstantiationException, IllegalAccessException {
         if (daoOrderDto.read(idOrder) != null) {
             OrderDto orderDto = daoOrderDto.read(idOrder);
-            Order order = convertOrderDto(orderDto);
-            return order;
+            return convertOrderDto(orderDto);
         }
         System.out.println(ERROR_INPUT);
         return null;
@@ -86,7 +82,7 @@ public class ServiceOrderDB implements ServiceOrder {
     @Override
     public boolean addServicesToOrder(int idOrder) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
-        if (daoOrderDto.readAll() == null || daoOrderDto.readAll().isEmpty()) {
+        if (daoOrderDto.readAll().isEmpty()) {
             System.out.println(READ_ALL_ORDERS_IS_EMPTY);
             return false;
         } else if (read(idOrder) == null) {
@@ -94,22 +90,11 @@ public class ServiceOrderDB implements ServiceOrder {
             System.out.println(ERROR_INPUT);
             return false;
         }
-//        List<Integer> idServicesInOrder = readAllIdServicesForOrder(idOrder);
         OrderDto orderOld = daoOrderDto.read(idOrder);
         OrderDto orderUpdate = new OrderDto(); // read from String
         orderUpdate.setIdOrder(idOrder);
         orderUpdate.setIdGuest(orderOld.getIdGuest());
-//        orderUpdate.setServices(idServicesInOrder);
         return daoOrderDto.update(idOrder, orderUpdate);
-    }
-
-    private int getIdOrderNew() {
-        int lastId = readAll()
-                .stream()
-                .map(Order::getIdOrder)
-                .max(Comparator.comparingInt(o -> o))
-                .orElse(-1);
-        return lastId + 1;
     }
 
     @Override
@@ -123,7 +108,7 @@ public class ServiceOrderDB implements ServiceOrder {
 
     private Order convertOrderDto(OrderDto orderDto) {
         Order order = new Order();
-        order.setIdOrder(orderDto.getIdOrder());
+        order.setIdOrder(orderDto.getIdOrder()); // косяк
         order.setIdGuest(orderDto.getIdGuest());
         order.setIdServices(readAllIdServicesForOrder(orderDto.getIdOrder()));
         return order;

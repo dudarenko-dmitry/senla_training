@@ -37,14 +37,6 @@ public class HotelFacility implements Serializable {
         this.roomStatus = roomStatus;
     }
 
-    public void setIdFacility(Integer idFacility) {
-        if (idFacility != null) {
-            this.idFacility = idFacility;
-        } else {
-            System.out.println(ERROR_NULL_ID);
-        }
-    }
-
     public void setCategory(CategoryFacility category) {
         if (category != null) {
             this.category = category;

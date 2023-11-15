@@ -21,10 +21,6 @@ public class Guest implements Serializable {
     public Guest() {
     }
 
-    public Guest(Integer idGuest) {
-        this.idGuest = idGuest;
-    }
-
     public Guest(String name, Integer phoneNumber) {
         if (name == null) {
             System.out.printf(ERROR_NULL_NAME);
@@ -40,14 +36,6 @@ public class Guest implements Serializable {
 
     public Integer getIdGuest() {
         return idGuest;
-    }
-
-    public void setIdGuest(Integer idGuest) {
-        if (idGuest != null) {
-            this.idGuest = idGuest;
-        } else {
-            System.out.printf(ERROR_NULL_ID);
-        }
     }
 
     public String getName() {

@@ -8,8 +8,6 @@ import pl.senla.hotel.dao.GenericDao;
 import pl.senla.hotel.entity.facilities.*;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
@@ -26,11 +24,11 @@ public class ServiceFacilityDB implements ServiceFacility{
 
     @Override
     public List<HotelFacility> readAll() {
-        if(daoHotelFacility.readAll() != null || !daoHotelFacility.readAll().isEmpty()){
-            return daoHotelFacility.readAll();
+        List<HotelFacility> hotelFacilityList = daoHotelFacility.readAll();
+        if(hotelFacilityList.isEmpty()){
+            System.out.println(READ_ALL_HOTEL_FACILITY_IS_EMPTY);
         }
-        System.out.println(READ_ALL_HOTEL_FACILITY_IS_EMPTY);
-        return Collections.emptyList();
+        return hotelFacilityList;
     }
 
     @Override
@@ -43,7 +41,6 @@ public class ServiceFacilityDB implements ServiceFacility{
         hotelFacility.setCapacity(Integer.parseInt(facilityData[3]));
         hotelFacility.setRoomLevel(RoomLevel.valueOf(facilityData[4]));
         hotelFacility.setRoomStatus(RoomStatus.valueOf(facilityData[5]));
-        setIdFacilityNew(hotelFacility);
         return daoHotelFacility.create(hotelFacility);
     }
 
@@ -117,15 +114,6 @@ public class ServiceFacilityDB implements ServiceFacility{
                 .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
                 .sorted(new RoomComparatorByLevel())
                 .toList();
-    }
-
-    private void setIdFacilityNew(HotelFacility hotelFacility) {
-        int lastId = readAll()
-                .stream()
-                .map(HotelFacility::getIdFacility)
-                .max(Comparator.comparingInt(o -> o))
-                .orElse(-1);
-        hotelFacility.setIdFacility(lastId + 1);
     }
 
     @Override

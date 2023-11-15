@@ -30,10 +30,8 @@ public class ServiceGuestDB implements ServiceGuest {
     public boolean create(String guestString) {
         Guest guest = new Guest();
         String[] guestData = guestString.split(";");
-        guest.setIdGuest(-1);
         guest.setName(guestData[0]);
         guest.setPhoneNumber(Integer.parseInt(guestData[1]));
-        setIdGuestNew(guest);
         return daoGuest.create(guest);
     }
 
@@ -74,12 +72,4 @@ public class ServiceGuestDB implements ServiceGuest {
         return daoGuest.readAll().size();
     }
 
-    private void setIdGuestNew(Guest guest) {
-        int lastId = readAll()
-                .stream()
-                .map(Guest::getIdGuest)
-                .max(Comparator.comparingInt(o -> o))
-                .orElse(-1);
-        guest.setIdGuest(lastId + 1);
-    }
 }

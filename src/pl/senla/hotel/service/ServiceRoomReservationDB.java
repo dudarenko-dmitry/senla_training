@@ -16,8 +16,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CHANGE_ROOM_RESERVATION;
@@ -46,14 +44,12 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
 
     @Override
     public List<HotelService> readAll() {
-        if(daoHotelService.readAll() != null || !daoHotelService.readAll().isEmpty()){
-            return daoHotelService.readAll()
-                    .stream()
-//                    .map(RoomReservation.class::cast) //check
-                    .toList();
+        List<HotelService> hotelServiceList = daoHotelService.readAll();
+        if(!hotelServiceList.isEmpty()){
+            return hotelServiceList;
         }
         System.out.println(ALL_ROOM_RESERVATION_IS_EMPTY);
-        return Collections.emptyList();
+        return hotelServiceList;
     }
 
     @Override
@@ -81,7 +77,6 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
 
             if(isVacant(idRoom, checkInTime, checkOutTime)){
                 HotelService reservation = new HotelService();
-                reservation.setIdService(-1);
                 reservation.setIdOrder(idOrder);
                 reservation.setIdGuest(idGuest);
                 reservation.setIdRoom(idRoom);
@@ -90,8 +85,6 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
                 reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION);
                 reservation.setCheckOutTime(checkOutTime);
                 reservation.setCost(daoFacility.read(idRoom).getPrice() * numberOfDays);
-                setIdRoomReservationNew(reservation);
-
                 List<HotelService> roomReservationList = readAll().stream()
                         .filter(rr -> rr.getIdRoom() == idRoom)
                         .toList();
@@ -112,11 +105,12 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
     @Override
     public HotelService read(int idReservation) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
-        if(daoHotelService.read(idReservation) != null){
-            return daoHotelService.read(idReservation);
+        HotelService hotelService = daoHotelService.read(idReservation);
+        if(daoHotelService.read(idReservation) == null){
+            System.out.println(ROOM_RESERVATION_NOT_EXISTS);
+            return null;
         }
-        System.out.println(ALL_ROOM_RESERVATION_IS_EMPTY);
-        return null;
+        return hotelService;
     }
 
     @Override
@@ -237,7 +231,6 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
         List<HotelFacility> occupiedRooms = readAll().stream()
                 .filter(rr -> rr.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
-//                .map(Room.class::cast)
                 .map(rr -> {
                     try {
                         return serviceHotelFacility.read(rr.getIdRoom());
@@ -310,15 +303,6 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
             System.out.println(ERROR_ROOM_NOT_AVAILABLE);
             return false;
         }
-    }
-
-    private void setIdRoomReservationNew(HotelService reservation) {
-        int lastId = daoHotelService.readAll()
-                .stream()
-                .map(HotelService::getIdService)
-                .max(Comparator.comparingInt(o -> o))
-                .orElse(-1);
-        reservation.setIdService(lastId + 1);
     }
 
     private boolean isVacant(int idRoom, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
