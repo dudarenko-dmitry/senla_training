@@ -1,10 +1,15 @@
 package pl.senla.hotel.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serial;
 import java.io.Serializable;
 
 import static pl.senla.hotel.constant.ClientConstant.*;
 
+@Setter
+@Getter
 public class Guest implements Serializable {
 
     private Integer idGuest;
@@ -14,10 +19,6 @@ public class Guest implements Serializable {
     @Serial
     private static final long serialVersionUID = 12L;
     public Guest() {
-    }
-
-    public Guest(Integer idGuest) {
-        this.idGuest = idGuest;
     }
 
     public Guest(String name, Integer phoneNumber) {
@@ -35,14 +36,6 @@ public class Guest implements Serializable {
 
     public Integer getIdGuest() {
         return idGuest;
-    }
-
-    public void setIdGuest(Integer idGuest) {
-        if (idGuest != null) {
-            this.idGuest = idGuest;
-        } else {
-            System.out.printf(ERROR_NULL_ID);
-        }
     }
 
     public String getName() {

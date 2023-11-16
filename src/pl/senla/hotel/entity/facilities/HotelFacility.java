@@ -1,46 +1,40 @@
 package pl.senla.hotel.entity.facilities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serial;
 import java.io.Serializable;
 
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
-public abstract class HotelFacility implements Serializable {
+@Setter
+@Getter
+public class HotelFacility implements Serializable {
 
     private Integer idFacility;
     private CategoryFacility category;
     private String nameFacility;
     private Integer price;
     private Integer capacity;
+    private RoomLevel roomLevel;
+    private RoomStatus roomStatus;
 
     @Serial
     private static final long serialVersionUID = 4L;
 
-    protected HotelFacility(CategoryFacility category, String nameFacility, Integer price, Integer capacity) {
+    public HotelFacility() {
+
+    }
+
+    public HotelFacility(CategoryFacility category, String nameFacility, Integer price,
+                         Integer capacity, RoomLevel roomLevel, RoomStatus roomStatus) {
         this.category = category;
         this.nameFacility = nameFacility;
         this.price = price;
         this.capacity = capacity;
-    }
-
-    protected HotelFacility() {
-
-    }
-
-    public Integer getIdFacility() {
-        return idFacility;
-    }
-
-    public void setIdFacility(Integer idFacility) {
-        if (idFacility != null) {
-            this.idFacility = idFacility;
-        } else {
-            System.out.println(ERROR_NULL_ID);
-        }
-    }
-
-    public CategoryFacility getCategory() {
-        return category;
+        this.roomLevel = roomLevel;
+        this.roomStatus = roomStatus;
     }
 
     public void setCategory(CategoryFacility category) {
@@ -51,20 +45,12 @@ public abstract class HotelFacility implements Serializable {
         }
     }
 
-    public String getNameFacility() {
-        return nameFacility;
-    }
-
     public void setNameFacility(String nameFacility) {
         if (nameFacility != null) {
             this.nameFacility = nameFacility;
         } else {
             System.out.println(ERROR_NAME_FACILITY);
         }
-    }
-
-    public Integer getPrice() {
-        return price;
     }
 
     public void setPrice(Integer price) {
@@ -75,10 +61,6 @@ public abstract class HotelFacility implements Serializable {
         }
     }
 
-    public Integer getCapacity() {
-        return capacity;
-    }
-
     public void setCapacity(Integer capacity) {
         if (capacity != null) {
             this.capacity = capacity;
@@ -87,14 +69,32 @@ public abstract class HotelFacility implements Serializable {
         }
     }
 
+    public void setRoomLevel(RoomLevel roomLevel) {
+        this.roomLevel = roomLevel;
+    }
+
+    public void setRoomStatus(RoomStatus roomStatus) {
+        this.roomStatus = roomStatus;
+    }
+
+    public void makeRoomAvailable() {
+        roomStatus = RoomStatus.AVAILABLE;
+    }
+
+    public void makeRoomRepaired() {
+        roomStatus = RoomStatus.REPAIRED;
+    }
+
     @Override
     public String toString() {
-        return "HotelFacility{" +
+        return "\nHotelFacility{" +
                 "idFacility=" + idFacility +
                 ", category='" + category + '\'' +
                 ", nameFacility=" + nameFacility +
                 ", price=" + price +
                 ", capacity=" + capacity +
+                ", roomLevel=" + roomLevel + //new
+                ", roomStatus=" + roomStatus + //new
                 '}';
     }
 }

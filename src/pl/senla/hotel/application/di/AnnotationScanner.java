@@ -5,7 +5,7 @@ import org.reflections.scanners.FieldAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import pl.senla.hotel.application.config.Configuration;
-import pl.senla.hotel.application.config.DIConfiguration;
+import pl.senla.hotel.application.config.AppConfiguration;
 import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.Entity;
@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class AnnotationScanner {
 
-    private final Configuration configuration = new DIConfiguration();
+    private final Configuration configuration = new AppConfiguration();
     private final Reflections reflections = new Reflections(configuration.getPackageToScan(),
             new FieldAnnotationsScanner(),
             new TypeAnnotationsScanner(),

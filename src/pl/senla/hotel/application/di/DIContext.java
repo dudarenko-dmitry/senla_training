@@ -4,7 +4,7 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.application.annotation.StartMethod;
 import pl.senla.hotel.application.annotation.StartPoint;
 import pl.senla.hotel.application.config.Configuration;
-import pl.senla.hotel.application.config.DIConfiguration;
+import pl.senla.hotel.application.config.AppConfiguration;
 import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.application.properties.ConfigPropertyAnnotationLoader;
 
@@ -16,12 +16,12 @@ import java.util.*;
 public class DIContext {
 
     private static DIContext context;
-    private final Configuration configuration = new DIConfiguration();
+    private final Configuration configuration = new AppConfiguration();
     private final AnnotationScanner annotationScanner;
     private final ConfigPropertyAnnotationLoader configLoader;
     private final Map<Class<?>, Object> DIContainer = new HashMap<>();
     private final String configDirectory = configuration.getPropertiesDirectory();
-    private final String configName = configuration.getPropertiesFileName();
+    private final String configName = configuration.getHotelPropertiesFileName();
 
     private DIContext(){
         this.annotationScanner = new AnnotationScanner();

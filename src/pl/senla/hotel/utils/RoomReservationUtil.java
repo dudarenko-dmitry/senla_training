@@ -1,25 +1,30 @@
 package pl.senla.hotel.utils;
 
+import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.entity.services.RoomReservation;
 import pl.senla.hotel.entity.services.TypeOfService;
-import pl.senla.hotel.service.ServiceRoom;
+import pl.senla.hotel.service.ServiceFacility;
 
 import java.time.LocalDateTime;
 
+@AppComponent
 public final class RoomReservationUtil {
 
-    @GetInstance(beanName = "ServiceRoomImpl")
-    private final ServiceRoom serviceRoom;
+    @GetInstance(beanName = "ServiceFacilityDB")
+    private ServiceFacility serviceRoom;
 
-    private RoomReservationUtil(ServiceRoom serviceRoom) {
+    public RoomReservationUtil() {
+
+    }
+
+    public RoomReservationUtil(ServiceFacility serviceRoom) {
         this.serviceRoom = serviceRoom;
     }
 
-    public static RoomReservation convertCsvToRoomReservation(String csv, ServiceRoom serviceRoom) {
+    public static HotelService convertCsvToRoomReservation(String csv) {
         String[] text = csv.split(";");
-        RoomReservation reservation = new RoomReservation(serviceRoom);
+        HotelService reservation = new HotelService();
         reservation.setIdService(Integer.valueOf(text[0].substring(1,text[0].length() - 1)));
         reservation.setIdOrder(Integer.valueOf(text[1].substring(1,text[1].length() - 1)));
         reservation.setTypeOfService(TypeOfService.valueOf(text[2].substring(1,text[2].length() - 1)));
@@ -39,7 +44,7 @@ public final class RoomReservationUtil {
         String idGuest = String.valueOf(hs.getIdGuest());
         switch (typeOfService) {
             case ROOM_RESERVATION -> {
-                RoomReservation hsReservation = (RoomReservation) hs;
+                HotelService hsReservation = hs;
                 String idRoom = String.valueOf(hsReservation.getIdRoom());
                 String checkInTime = String.valueOf(hsReservation.getCheckInTime());
                 String numberOfDays = String.valueOf(hsReservation.getNumberOfDays());

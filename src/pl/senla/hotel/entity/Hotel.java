@@ -1,5 +1,7 @@
 package pl.senla.hotel.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.services.HotelService;
 
@@ -7,6 +9,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
+@Setter
+@Getter
 public class Hotel implements Serializable {
 
     @Serial
@@ -18,38 +22,6 @@ public class Hotel implements Serializable {
     private List<Order> orderList;
 
     public Hotel() {
-    }
-
-    public List<HotelFacility> getHotelFacilityList() {
-        return hotelFacilityList;
-    }
-
-    public List<Guest> getGuestList() {
-        return guestList;
-    }
-
-    public List<HotelService> getHotelServiceList() {
-        return hotelServiceList;
-    }
-
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setHotelFacilityList(List<HotelFacility> hotelFacilityList) {
-        this.hotelFacilityList = hotelFacilityList;
-    }
-
-    public void setGuestList(List<Guest> guestList) {
-        this.guestList = guestList;
-    }
-
-    public void setHotelServiceList(List<HotelService> hotelServiceList) {
-        this.hotelServiceList = hotelServiceList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
     }
 
     @Override

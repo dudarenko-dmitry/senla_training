@@ -1,5 +1,8 @@
 package pl.senla.hotel.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,6 +10,8 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.OrderConstant.*;
 
+@Setter
+@Getter
 public class Order implements Serializable {
 
     private Integer idOrder;
@@ -33,23 +38,6 @@ public class Order implements Serializable {
 
     }
 
-    public Integer getIdOrder() {
-        return idOrder;
-    }
-
-    public void setIdOrder(Integer idOrder) {
-        if (idOrder != null) {
-            this.idOrder = idOrder;
-        } else {
-            System.out.println(ERROR_ID_ORDER);
-        }
-
-    }
-
-    public Integer getIdGuest() {
-        return idGuest;
-    }
-
     public void setIdGuest(Integer idGuest) {
         if (idGuest != null) {
             this.idGuest = idGuest;
@@ -57,10 +45,6 @@ public class Order implements Serializable {
             System.out.println(ERROR_ID_GUEST);
         }
 
-    }
-
-    public List<Integer> getServices() {
-        return idServices;
     }
 
     public void setServices(List<Integer> idServices) {
