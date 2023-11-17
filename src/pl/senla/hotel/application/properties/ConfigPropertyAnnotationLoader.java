@@ -1,11 +1,16 @@
 package pl.senla.hotel.application.properties;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
+import static pl.senla.hotel.constant.ApplicationContextConstant.CREATE_CONFIG_PROPERTIES;
+
+@Slf4j
 public class ConfigPropertyAnnotationLoader {
 
     private static ConfigPropertyAnnotationLoader configPropertyAnnotationLoader;
@@ -16,6 +21,7 @@ public class ConfigPropertyAnnotationLoader {
 
     public static synchronized ConfigPropertyAnnotationLoader getConfigPropertyAnnotationLoader() {
         if (configPropertyAnnotationLoader == null) {
+            log.debug(CREATE_CONFIG_PROPERTIES);
             configPropertyAnnotationLoader = new ConfigPropertyAnnotationLoader();
         }
         return configPropertyAnnotationLoader;

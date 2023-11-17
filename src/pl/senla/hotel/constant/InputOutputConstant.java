@@ -2,6 +2,10 @@ package pl.senla.hotel.constant;
 
 public class InputOutputConstant {
 
+    public static final String BUILD_READER_WRITER =             "CONSTRUCTOR: Built ReaderWriterEntity.";
+    public static final String START_LOAD =                      "START: Load entities' info from file.";
+    public static final String START_SAVE =                      "START: Save entities' info to file.";
+    public static final String DATA_LOADED =                     "Loading successful.";
     public static final String DATA_SAVED =                      "s' data were saved.";
     public static final String LOAD_HOTEL_FACILITY_LIST =        "Facilities' list was loaded.";
     public static final String LOAD_GUEST_LIST =                 "Guests' list was loaded.";

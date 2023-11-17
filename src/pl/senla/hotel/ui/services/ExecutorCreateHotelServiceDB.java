@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.services;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.ControllerFacility;
@@ -8,10 +9,11 @@ import pl.senla.hotel.controller.ControllerRoomReservation;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
-import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
+import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.HotelFacilityConstant.ROOM_NOT_EXISTS;
 
 @AppComponent
+@Slf4j
 public class ExecutorCreateHotelServiceDB {
 
     @GetInstance(beanName = "ControllerRoomReservationDB")
@@ -29,11 +31,11 @@ public class ExecutorCreateHotelServiceDB {
         Scanner sc = new Scanner(System.in);
         switch (typeOfService) {
             case 1 -> {
-                System.out.print("Input Id Room --> ");
+                log.info(INPUT_ID_ROOM);
                 int idRoom = sc.nextInt();
                 if (controllerFacility.read(idRoom) != null) {
                     String startDateString = inputDateString();
-                    System.out.print("Input number of days to reserve --> ");
+                    log.info(INPUT_NUMBER_OF_DAYS);
                     int numberOfDays = sc.nextInt();
                     String roomReservationString = idOrder + ";" +
                             idGuest + ";" +
@@ -56,35 +58,35 @@ public class ExecutorCreateHotelServiceDB {
     }
 
     private int makeChoice(){
-        System.out.print("Input your choice --> ");
+        log.info(INPUT_MENU_POINT);
         Scanner sc = new Scanner(System.in);
         return sc.nextInt();
     }
 
     private String inputDateString() {
-        System.out.println("Input start date of Reservation: ");
+        log.info(SELECT_START_TIME);
         Scanner sc = new Scanner(System.in);
-        System.out.print("Input year --> ");
+        log.info(INPUT_YEAR);
         int year = sc.nextInt();
-        System.out.print("Input month --> ");
+        log.info(INPUT_MONTH);
         int month = sc.nextInt();
-        System.out.print("Input day --> ");
+        log.info(INPUT_DAY);
         int day = sc.nextInt();
         return year + "-" + month + "-" + day;
     }
 
     private String inputDateTimeString() {
-        System.out.println("Select start Time of Reservation. ");
+        log.info(SELECT_START_TIME);
         Scanner sc = new Scanner(System.in);
-        System.out.print("Input year --> ");
+        log.info(INPUT_YEAR);
         int year = sc.nextInt();
-        System.out.print("Input month --> ");
+        log.info(INPUT_MONTH);
         int month = sc.nextInt();
-        System.out.print("Input day --> ");
+        log.info(INPUT_DAY);
         int day = sc.nextInt();
-        System.out.print("Input hour --> ");
+        log.info(INPUT_HOUR);
         int hour = sc.nextInt();
-        System.out.print("Input minute --> ");
+        log.info(INPUT_MINUTE);
         int minute = sc.nextInt();
         return year + "-" + month + "-" + day + "-" + hour + "-" + minute;
     } // will be used with Restaurant and Transfer.

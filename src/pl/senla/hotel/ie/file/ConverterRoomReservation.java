@@ -2,10 +2,8 @@ package pl.senla.hotel.ie.file;
 
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.ConfigProperty;
-import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 
-import pl.senla.hotel.service.ServiceFacility;
 import pl.senla.hotel.utils.RoomReservationUtil;
 
 @AppComponent

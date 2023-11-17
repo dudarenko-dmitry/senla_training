@@ -1,5 +1,6 @@
 package pl.senla.hotel.application.di;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.application.annotation.StartMethod;
 import pl.senla.hotel.application.annotation.StartPoint;
@@ -13,6 +14,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import static pl.senla.hotel.constant.ApplicationContextConstant.*;
+
+@Slf4j
 public class DIContext {
 
     private static DIContext context;
@@ -21,7 +25,6 @@ public class DIContext {
     private final ConfigPropertyAnnotationLoader configLoader;
     private final Map<Class<?>, Object> DIContainer = new HashMap<>();
     private final String configDirectory = configuration.getPropertiesDirectory();
-    private final String configName = configuration.getHotelPropertiesFileName();
 
     private DIContext(){
         this.annotationScanner = new AnnotationScanner();
@@ -31,8 +34,10 @@ public class DIContext {
 
     public static synchronized DIContext getContext() {
         if (context == null) {
+            log.debug(START_CREATE_CONTEXT);
             context = new DIContext();
         }
+        log.debug(CONTEXT_IS_READY);
         return context;
     }
 
@@ -65,7 +70,7 @@ public class DIContext {
                                     String configFileName = annotationProperty.configFileName();
                                     String propertyName = annotationProperty.propertyName();
                                     String type = annotationProperty.type();
-                                    System.out.println("Set value of " + propertyName + " from Properties");
+                                    log.debug(SET_VALUE_FROM_PROPERTIES, propertyName);
                                     configLoader.setField(configDirectory, configFileName, f, propertyName, type, bean);
                                 }
                                 counter++;
@@ -73,8 +78,7 @@ public class DIContext {
                         }
                         if (counter == numberOfFields) {
                             DIContainer.replace(aClass, bean);
-                            System.out.println("Class " + aClass.getTypeName() +
-                                    " and his Bean have been added to DIContainer!");
+                            log.debug(ADD_BEAN_TO_CONTAINER, aClass.getTypeName());
                         }
                     }
                 }
@@ -95,7 +99,7 @@ public class DIContext {
                     if (DIContainer.get(fullFieldClassName) != null) {
                         setFieldValue(field, fullFieldClassName, bean);
                     } else {
-                        System.out.println("Error: there is no " + annotationGetInstance.beanName() + " in DIContainer");
+                        log.warn(NO_BEAN_IN_CONTAINER, annotationGetInstance.beanName());
                     }
                 }
             }

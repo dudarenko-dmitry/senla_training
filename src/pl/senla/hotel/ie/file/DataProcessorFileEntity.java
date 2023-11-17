@@ -1,5 +1,6 @@
 package pl.senla.hotel.ie.file;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.Guest;
@@ -17,6 +18,7 @@ import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.InputOutputConstant.*;
 
 @AppComponent
+@Slf4j
 public class DataProcessorFileEntity implements DataProcessor {
 
     @GetInstance(beanName = "DataStorageFacility")
@@ -52,12 +54,12 @@ public class DataProcessorFileEntity implements DataProcessor {
         ReaderWriterEntity<HotelFacility> hotelFacilityReaderWriter =
                 new ReaderWriterEntity<>(new ConverterHotelFacility());
         if (dataStorageFacility.getDataList().isEmpty()) {
-            System.out.println(ERROR_HOTEL_FACILITY_LIST_EMPTY);
+            log.info(ERROR_HOTEL_FACILITY_LIST_EMPTY);
         } else {
             try {
                 hotelFacilityReaderWriter.save(dataStorageFacility.getDataList());
             } catch (IOException e) {
-                System.out.println(ERROR_HOTEL_FACILITY_SAVE + e.getMessage());
+                log.error(ERROR_HOTEL_FACILITY_SAVE + e.getMessage());
             }
         }
     }
@@ -66,12 +68,12 @@ public class DataProcessorFileEntity implements DataProcessor {
     public void saveGuests() {
         ReaderWriterEntity<Guest> guestReaderWriter = new ReaderWriterEntity<>(new ConverterGuest());
         if (dataStorageGuest.getDataList().isEmpty()) {
-            System.out.println(ERROR_GUEST_LIST_EMPTY);
+            log.info(ERROR_GUEST_LIST_EMPTY);
         } else {
             try {
                 guestReaderWriter.save(dataStorageGuest.getDataList());
             } catch (IOException e) {
-                System.out.println(ERROR_GUEST_SAVE + e.getMessage());
+                log.error(ERROR_GUEST_SAVE + e.getMessage());
             }
         }
     }
@@ -81,12 +83,12 @@ public class DataProcessorFileEntity implements DataProcessor {
         ReaderWriterEntity<HotelService> hotelServiceReaderWriter =
                 new ReaderWriterEntity<>(new ConverterRoomReservation());
         if (dataStorageHotelService.getDataList().isEmpty()) {
-            System.out.println(ERROR_SERVICES_LIST_EMPTY);
+            log.info(ERROR_SERVICES_LIST_EMPTY);
         } else {
             try {
                 hotelServiceReaderWriter.save(dataStorageHotelService.getDataList());
             } catch (IOException e) {
-                System.out.println(ERROR_SERVICES_SAVE + e.getMessage());
+                log.error(ERROR_SERVICES_SAVE + e.getMessage());
             }
         }
     }
@@ -95,12 +97,12 @@ public class DataProcessorFileEntity implements DataProcessor {
     public void saveOrders() {
         ReaderWriterEntity<Order> orderReaderWriter = new ReaderWriterEntity<>(new ConverterOrder());
         if (dataStorageOrder.getDataList().isEmpty()) {
-            System.out.println(ERROR_ORDER_LIST_EMPTY);
+            log.info(ERROR_ORDER_LIST_EMPTY);
         } else {
             try {
                 orderReaderWriter.save(dataStorageOrder.getDataList());
             } catch (IOException e) {
-                System.out.println(ERROR_ORDER_SAVE + e.getMessage());
+                log.error(ERROR_ORDER_SAVE + e.getMessage());
             }
         }
     }
@@ -113,14 +115,14 @@ public class DataProcessorFileEntity implements DataProcessor {
             if (dataStorageFacility.getDataList().isEmpty()) {
                 dataStorageFacility.getDataList()
                         .addAll(hotelFacilityReaderWriter.load());
-                System.out.println(LOAD_HOTEL_FACILITY_LIST);
+                log.info(LOAD_HOTEL_FACILITY_LIST);
             } else {
-                System.out.println(ERROR_HOTEL_FACILITY_LIST_EXIST);
+                log.info(ERROR_HOTEL_FACILITY_LIST_EXIST);
             }
         } catch (IOException e) {
-            System.out.println(ERROR_HOTEL_FACILITY_LIST_LOAD + e.getMessage());
+            log.error(ERROR_HOTEL_FACILITY_LIST_LOAD + e.getMessage());
         }
-        System.out.println(CONSOLE_READ_ALL_FACILITIES + dataStorageFacility.getDataList());
+        log.info(CONSOLE_READ_ALL_FACILITIES + dataStorageFacility.getDataList());
     }
 
     @Override
@@ -130,14 +132,14 @@ public class DataProcessorFileEntity implements DataProcessor {
             if (dataStorageGuest.getDataList().isEmpty()) {
                 dataStorageGuest.getDataList()
                         .addAll(guestReaderWriter.load());
-                System.out.println(LOAD_GUEST_LIST);
+                log.info(LOAD_GUEST_LIST);
             } else {
-                System.out.println(ERROR_GUEST_LIST_EXIST);
+                log.info(ERROR_GUEST_LIST_EXIST);
             }
         } catch (IOException e) {
-            System.out.println(ERROR_GUEST_LIST_LOAD + e.getMessage());
+            log.error(ERROR_GUEST_LIST_LOAD + e.getMessage());
         }
-        System.out.println(CONSOLE_READ_ALL_GUESTS + dataStorageGuest.getDataList());
+        log.info(CONSOLE_READ_ALL_GUESTS, dataStorageGuest.getDataList());
     }
 
     @Override
@@ -148,14 +150,14 @@ public class DataProcessorFileEntity implements DataProcessor {
             if (dataStorageHotelService.getDataList().isEmpty()) {
                 dataStorageHotelService.getDataList()
                         .addAll(hotelServiceReaderWriter.load());
-                System.out.println(LOAD_SERVICES_LIST);
+                log.info(LOAD_SERVICES_LIST);
             } else {
-                System.out.println(ERROR_SERVICES_LIST_EXIST);
+                log.info(ERROR_SERVICES_LIST_EXIST);
             }
         } catch (IOException e) {
-            System.out.println(ERROR_SERVICES_LIST_LOAD + e.getMessage());
+            log.error(ERROR_SERVICES_LIST_LOAD + e.getMessage());
         }
-        System.out.println(CONSOLE_READ_ALL_SERVICES + dataStorageHotelService.getDataList());
+        log.info(CONSOLE_READ_ALL_SERVICES, dataStorageHotelService.getDataList());
     }
 
     @Override
@@ -165,14 +167,13 @@ public class DataProcessorFileEntity implements DataProcessor {
             if (dataStorageOrder.getDataList().isEmpty()) {
                 dataStorageOrder.getDataList()
                         .addAll(orderReaderWriter.load());
-                System.out.println(LOAD_ORDER_LIST);
+                log.info(LOAD_ORDER_LIST);
             } else {
-                System.out.println(ERROR_ORDER_LIST_EXIST);
+                log.info(ERROR_ORDER_LIST_EXIST);
             }
         } catch (IOException e) {
-            System.out.println(ERROR_ORDER_LIST_LOAD + e.getMessage());
+            log.error(ERROR_ORDER_LIST_LOAD + e.getMessage());
         }
-        System.out.println(CONSOLE_READ_ALL_ORDERS + dataStorageOrder.getDataList());
+        log.info(CONSOLE_READ_ALL_ORDERS, dataStorageOrder.getDataList());
     }
-
 }

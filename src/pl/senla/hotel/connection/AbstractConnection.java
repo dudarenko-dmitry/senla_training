@@ -1,5 +1,6 @@
 package pl.senla.hotel.connection;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.utils.DBPropertiesUtil;
 
 import java.lang.reflect.InvocationTargetException;
@@ -8,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import static pl.senla.hotel.constant.DBConstant.*;
-
+@Slf4j
 public abstract class AbstractConnection {
 
     private final static String URL = "db.url";
@@ -17,33 +18,20 @@ public abstract class AbstractConnection {
     private static Connection connection = null;
 
     public static Connection connection() throws SQLException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        log.debug("Start of Create connection");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-//            Driver driver = new com.mysql.cj.jdbc.Driver();
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(
                         DBPropertiesUtil.get(URL),
                         DBPropertiesUtil.get(USERNAME),
                         DBPropertiesUtil.get(PASSWORD));
-                System.out.println(DB_CONNECTED);
+                log.debug(DB_CONNECTED);
             }
             return connection;
         } catch (SQLException e) {
-            System.out.println(DB_CONNECTION_ERROR);
+            log.error(DB_CONNECTION_ERROR);
             throw new SQLException(DB_CONNECTION_ERROR, e);
-        }
-    }
-
-    public static void close() {
-        if(connection != null){
-            try {
-                connection.close();
-                connection = null;
-                System.out.println(DB_CONNECTION_CLOSE);
-            } catch (SQLException e) {
-                System.out.println(DB_CONNECTION_CLOSE_ERROR);
-                throw new RuntimeException(e);
-            }
         }
     }
 }

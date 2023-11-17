@@ -1,20 +1,21 @@
 package pl.senla.hotel;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.di.DIApplication;
-import pl.senla.hotel.connection.AbstractConnection;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
 
+import static pl.senla.hotel.constant.ApplicationContextConstant.START_APPLICATION;
+
+@Slf4j
 public class Main {
 
     public static void main(String[] args)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-            ClassNotFoundException, InstantiationException {
+            InstantiationException, InterruptedException {
 
-        DIApplication.run();
+        log.debug(START_APPLICATION);
+        DIApplication.getApplication().run();
     }
 }
 

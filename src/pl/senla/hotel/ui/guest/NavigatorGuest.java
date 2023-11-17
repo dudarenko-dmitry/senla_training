@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.guest;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
@@ -8,13 +9,15 @@ import pl.senla.hotel.ui.Navigator;
 import static pl.senla.hotel.constant.MenuConstant.MENU_GUEST;
 
 @AppComponent
+@Slf4j
 public class NavigatorGuest implements Navigator {
 
     public NavigatorGuest() {
     }
 
     public void buildMenu() {
-        System.out.println(MENU_GUEST);
+        log.info("");
+        log.info(MENU_GUEST);
         MenuItem item1 = new Item1ReadAllGuests();
         MenuItem item2 = new Item2ReadGuest();
         MenuItem item3 = new Item3CreateGuest();

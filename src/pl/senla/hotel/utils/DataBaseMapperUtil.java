@@ -1,5 +1,6 @@
 package pl.senla.hotel.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.OrderDto;
@@ -10,6 +11,9 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static pl.senla.hotel.constant.DBConstant.DB_NO_TABLE;
+
+@Slf4j
 public final class DataBaseMapperUtil {
 
     private DataBaseMapperUtil() {
@@ -26,7 +30,7 @@ public final class DataBaseMapperUtil {
         } else if (type.equals(OrderDto.class) || type.equals(Order.class)) {
             mapper = getOrderMapper();
         } else {
-            System.out.println("There is no such table in DB \n" + new SQLException());
+            log.warn(DB_NO_TABLE, new SQLException());
         }
         return mapper;
     }

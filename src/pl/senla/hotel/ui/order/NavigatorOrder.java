@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.order;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
@@ -8,6 +9,7 @@ import pl.senla.hotel.ui.Item0QuitToMain;
 import static pl.senla.hotel.constant.MenuConstant.MENU_ORDER;
 
 @AppComponent
+@Slf4j
 public class NavigatorOrder implements Navigator {
 
     public NavigatorOrder() {
@@ -15,7 +17,8 @@ public class NavigatorOrder implements Navigator {
 
     @Override
     public void buildMenu() {
-        System.out.println(MENU_ORDER);
+        log.info("");
+        log.info(MENU_ORDER);
         MenuItem item1 = new Item1ReadAllOrders();
         MenuItem item2 = new Item2ReadOrder();
         MenuItem item3 = new Item3CreateOrder();

@@ -2,6 +2,7 @@ package pl.senla.hotel.entity.facilities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 @Setter
 @Getter
+@Slf4j
 public class HotelFacility implements Serializable {
 
     private Integer idFacility;
@@ -41,7 +43,7 @@ public class HotelFacility implements Serializable {
         if (category != null) {
             this.category = category;
         } else {
-            System.out.println(ERROR_NULL_CATEGORY);
+            log.warn(ERROR_NULL_CATEGORY);
         }
     }
 
@@ -49,7 +51,7 @@ public class HotelFacility implements Serializable {
         if (nameFacility != null) {
             this.nameFacility = nameFacility;
         } else {
-            System.out.println(ERROR_NAME_FACILITY);
+            log.warn(ERROR_NAME_FACILITY);
         }
     }
 
@@ -57,7 +59,7 @@ public class HotelFacility implements Serializable {
         if (price != null) {
             this.price = price;
         } else {
-            System.out.println(ERROR_NULL_PRICE);
+            log.warn(ERROR_NULL_PRICE);
         }
     }
 
@@ -65,7 +67,7 @@ public class HotelFacility implements Serializable {
         if (capacity != null) {
             this.capacity = capacity;
         } else {
-            System.out.println(ERROR_NULL_CAPACITY);
+            log.warn(ERROR_NULL_CAPACITY);
         }
     }
 
@@ -93,8 +95,8 @@ public class HotelFacility implements Serializable {
                 ", nameFacility=" + nameFacility +
                 ", price=" + price +
                 ", capacity=" + capacity +
-                ", roomLevel=" + roomLevel + //new
-                ", roomStatus=" + roomStatus + //new
+                ", roomLevel=" + roomLevel +
+                ", roomStatus=" + roomStatus +
                 '}';
     }
 }

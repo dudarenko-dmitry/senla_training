@@ -1,7 +1,10 @@
 package pl.senla.hotel.ui;
 
+import lombok.extern.slf4j.Slf4j;
+
 import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_0_QUIT_TO_MAIN;
 
+@Slf4j
 public class Item0QuitToMain implements MenuItem {
 
     private final String nameItem;
@@ -12,6 +15,6 @@ public class Item0QuitToMain implements MenuItem {
 
     @Override
     public void printItem() {
-        System.out.println(nameItem);
+        log.info(nameItem);
     }
 }

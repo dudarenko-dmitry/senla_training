@@ -6,8 +6,6 @@ import pl.senla.hotel.entity.Guest;
 @AppComponent
 public class DataStorageGuest extends DataStorage<Guest>{
 
-    public DataStorageGuest(){}
-
     @Override
     public String toString() {
         return "Guest {" + super.toString();

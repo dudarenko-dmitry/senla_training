@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.dao.GenericDao;
@@ -12,6 +13,7 @@ import static pl.senla.hotel.constant.HotelServiceConstant.READ_ALL_SERVICES_IS_
 import static pl.senla.hotel.constant.HotelServiceConstant.SERVICE_NOT_EXISTS;
 
 @AppComponent
+@Slf4j
 public class ServiceHotelServiceDB implements ServiceHotelService{
 
     @GetInstance(beanName = "ServiceRoomReservationDB")
@@ -23,6 +25,7 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
 
     @Override
     public List<HotelService> readAll() {
+        log.debug("START: HotelService ReadAll");
         List<HotelService> hotelServiceList = daoHotelService.readAll();
         if(hotelServiceList.isEmpty()){
             System.out.println(READ_ALL_SERVICES_IS_EMPTY);
@@ -33,6 +36,7 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
     @Override
     public boolean create(String hotelServiceString) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
+        log.debug("START: HotelService Create");
         return serviceRoomReservation.create(hotelServiceString);
     }
 
@@ -40,8 +44,9 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
     public HotelService read(int idHotelService) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         HotelService hotelService = daoHotelService.read(idHotelService);
+        log.debug("START: HotelService Read");
         if(hotelService == null){
-            System.out.println(SERVICE_NOT_EXISTS);
+            log.debug(SERVICE_NOT_EXISTS);
         }
         return hotelService;
     }
@@ -49,8 +54,9 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
     @Override
     public boolean update(int idHotelService, String hotelServiceString) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
+        log.debug("START: HotelService Update");
         if (read(idHotelService) == null) {
-            System.out.println(READ_ALL_SERVICES_IS_EMPTY);
+            log.debug(READ_ALL_SERVICES_IS_EMPTY);
             }
         return serviceRoomReservation.update(idHotelService, hotelServiceString);
     }
@@ -58,11 +64,11 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
     @Override
     public boolean delete(int idHotelService) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
+        log.debug("START: HotelService Delete");
         if(daoHotelService.read(idHotelService) != null){
             return daoHotelService.delete(idHotelService);
         }
-        System.out.println(SERVICE_NOT_EXISTS);
+        log.debug(SERVICE_NOT_EXISTS);
         return false;
     }
-
 }
