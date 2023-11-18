@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug">
+
+    <Appenders>
+        <Console name="STDOUT">
+            <Layout type="PatternLayout" pattern="%m %n" />
+        </Console>
+        <File name="rollingFile"
+                     fileName="hotel.log"
+                     append="true"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy
+                        size="10 MB" />
+            </Policies>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="rollingFile" />
+        </Root>
+    </Loggers>
+
+</Configuration>

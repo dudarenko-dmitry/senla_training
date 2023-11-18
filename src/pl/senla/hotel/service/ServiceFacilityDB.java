@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.application.annotation.GetInstance;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
+@Slf4j
 @AppComponent
 public class ServiceFacilityDB implements ServiceFacility{
 
@@ -26,8 +28,9 @@ public class ServiceFacilityDB implements ServiceFacility{
     public List<HotelFacility> readAll() {
         List<HotelFacility> hotelFacilityList = daoHotelFacility.readAll();
         if(hotelFacilityList.isEmpty()){
-            System.out.println(READ_ALL_HOTEL_FACILITY_IS_EMPTY);
+            log.info(READ_ALL_HOTEL_FACILITY_IS_EMPTY);
         }
+        log.info("Read All HotelFacility.");
         return hotelFacilityList;
     }
 
@@ -41,16 +44,20 @@ public class ServiceFacilityDB implements ServiceFacility{
         hotelFacility.setCapacity(Integer.parseInt(facilityData[3]));
         hotelFacility.setRoomLevel(RoomLevel.valueOf(facilityData[4]));
         hotelFacility.setRoomStatus(RoomStatus.valueOf(facilityData[5]));
-        return daoHotelFacility.create(hotelFacility);
+        boolean b = daoHotelFacility.create(hotelFacility);
+        log.info("Create new HotelFacility");
+        return b;
     }
 
     @Override
     public HotelFacility read(int idFacility) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
-        if(daoHotelFacility.read(idFacility) != null){
-            return daoHotelFacility.read(idFacility);
+        HotelFacility hotelFacility = daoHotelFacility.read(idFacility);
+        if(hotelFacility != null){
+            log.info("Read HotelFacility.");
+            return hotelFacility;
         }
-        System.out.println(READ_HOTEL_FACILITY_NOT_EXIST);
+        log.info(READ_HOTEL_FACILITY_NOT_EXIST);
         return null;
     }
 
@@ -60,9 +67,10 @@ public class ServiceFacilityDB implements ServiceFacility{
         if(daoHotelFacility.read(idFacility) != null){
             HotelFacility hotelFacilityUpdate = read(idFacility);
             hotelFacilityUpdate.setPrice(Integer.parseInt(hotelFacilityString));
+            log.info("Update HotelFacility");
             return daoHotelFacility.update(idFacility, hotelFacilityUpdate);
         }
-        System.out.println(ROOM_NOT_EXISTS);
+        log.info(ROOM_NOT_EXISTS);
         return false;
     }
 
@@ -70,14 +78,16 @@ public class ServiceFacilityDB implements ServiceFacility{
     public boolean delete(int idFacility) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         if(daoHotelFacility.read(idFacility) != null){
+            log.info("Delete HotelFacility.");
             return daoHotelFacility.delete(idFacility);
         }
-        System.out.println(ROOM_NOT_EXISTS);
+        log.info(ROOM_NOT_EXISTS);
         return false;
     }
 
     @Override
     public List<HotelFacility> readPriceListForServicesSortByCategory() {
+        log.info("PriceListForServicesSortByCategory:");
         return readAll()
                 .stream()
                 .sorted(new HotelFacilityComparatorByCategory())
@@ -86,6 +96,7 @@ public class ServiceFacilityDB implements ServiceFacility{
 
     @Override
     public List<HotelFacility> readPriceListForServicesSortByPrice() {
+        log.info("PriceListForServicesSortByPrice:");
         return readAll()
                 .stream()
                 .sorted(new HotelFacilityComparatorByPrice())
@@ -94,6 +105,7 @@ public class ServiceFacilityDB implements ServiceFacility{
 
     @Override
     public List<HotelFacility> readAllRoomsSortByPrice() {
+        log.info("AllRoomsSortByPrice:");
         return readAll().stream()
                 .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
                 .sorted(new RoomComparatorByPrice())
@@ -102,6 +114,7 @@ public class ServiceFacilityDB implements ServiceFacility{
 
     @Override
     public List<HotelFacility> readAllRoomsSortByCapacity() {
+        log.info("AllRoomsSortByCapacity:");
         return readAll().stream()
                 .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
                 .sorted(new RoomComparatorByCapacity())
@@ -110,6 +123,7 @@ public class ServiceFacilityDB implements ServiceFacility{
 
     @Override
     public List<HotelFacility> readAllRoomsSortByLevel() {
+        log.info("AllRoomsSortByLevel:");
         return readAll().stream()
                 .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
                 .sorted(new RoomComparatorByLevel())
@@ -123,12 +137,13 @@ public class ServiceFacilityDB implements ServiceFacility{
             if (read(idRoom) != null) {
                 HotelFacility roomUpdate = read(idRoom);
                 roomUpdate.makeRoomAvailable();
+                log.info("Set RoomStatus Available.");
                 return daoHotelFacility.update(idRoom, roomUpdate);
             }
-            System.out.println(ROOM_NOT_EXISTS);
+            log.info(ROOM_NOT_EXISTS);
             return false;
         }
-        System.out.println(ERROR_NO_PERMISSION);
+        log.info(ERROR_NO_PERMISSION);
         return false;
     }
 
@@ -139,12 +154,13 @@ public class ServiceFacilityDB implements ServiceFacility{
             if (read(idRoom) != null) {
                 HotelFacility roomUpdate = read(idRoom);
                 roomUpdate.makeRoomRepaired();
+                log.info("Set RoomStatus Repaired.");
                 return daoHotelFacility.update(idRoom, roomUpdate);
             }
-            System.out.println(ROOM_NOT_EXISTS);
+            log.info(ROOM_NOT_EXISTS);
             return false;
         }
-        System.out.println(ERROR_NO_PERMISSION);
+        log.info(ERROR_NO_PERMISSION);
         return false;
     }
 }

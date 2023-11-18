@@ -1,5 +1,6 @@
 package pl.senla.hotel.application.di;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.application.annotation.StartMethod;
 import pl.senla.hotel.application.annotation.StartPoint;
@@ -13,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+@Slf4j
 public class DIContext {
 
     private static DIContext context;
@@ -31,8 +33,10 @@ public class DIContext {
 
     public static synchronized DIContext getContext() {
         if (context == null) {
+            log.info("Start creating of Application's context.");
             context = new DIContext();
         }
+        log.debug("Context is ready to use.");
         return context;
     }
 

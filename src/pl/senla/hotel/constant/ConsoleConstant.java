@@ -5,11 +5,11 @@ public class ConsoleConstant {
     private ConsoleConstant() {
     }
 
-    public static final String CONSOLE_READ_ALL_ROOMS =         "\nList of all rooms: ";
-    public static final String CONSOLE_READ_ROOM =              "Room: ";
-    public static final String CONSOLE_CREATE_ROOM =            "New room was created: ";
-    public static final String CONSOLE_CHANGE_ROOM =            "Room was changed: ";
-    public static final String CONSOLE_DELETE_ROOM =            "Room was deleted: ";
+    public static final String CONSOLE_READ_ALL_ROOMS =         "\nList of all rooms: {}";
+    public static final String CONSOLE_READ_ROOM =              "Room: {}";
+    public static final String CONSOLE_CREATE_ROOM =            "New room was created: {}";
+    public static final String CONSOLE_CHANGE_ROOM =            "Room was changed: {}";
+    public static final String CONSOLE_DELETE_ROOM =            "Room was deleted: {}";
 
     public static final String CONSOLE_READ_ALL_FREE_ROOMS =         "\nList of all Free rooms (Time-slots): ";
     public static final String CONSOLE_READ_ALL_FREE_ROOMS_TIME =    "\nList of all Free rooms at Time: ";

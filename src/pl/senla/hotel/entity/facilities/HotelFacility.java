@@ -93,8 +93,8 @@ public class HotelFacility implements Serializable {
                 ", nameFacility=" + nameFacility +
                 ", price=" + price +
                 ", capacity=" + capacity +
-                ", roomLevel=" + roomLevel + //new
-                ", roomStatus=" + roomStatus + //new
+                ", roomLevel=" + roomLevel +
+                ", roomStatus=" + roomStatus +
                 '}';
     }
 }

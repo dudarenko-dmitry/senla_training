@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.main;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ui.Choice;
@@ -11,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 @AppComponent
+@Slf4j
 public class ExecutorMainDB implements Executor {
 
     @GetInstance(beanName = "StartMenuHotelFacilitiesDB")
@@ -39,11 +41,11 @@ public class ExecutorMainDB implements Executor {
             case 4 -> startMenuAnalytics.runMenu();
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
-                System.out.println("Good-bye.");
+                log.info("Good-bye.");
                 System.exit(0);
             }
             default -> {
-                System.out.println(ERROR_INPUT);
+                log.warn(ERROR_INPUT);
                 menuPoint = userChoice.makeChoice();
                 execute(menuPoint);
             }
