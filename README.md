@@ -217,7 +217,7 @@ must be in a single instance;
 
 -----------------------------------------------------------------------------
 
-Tasks for lecture No. 11
+Tasks for lecture No. 12
 
 Task 1.
 Transfer the main project to Maven. The project should have a modular structure.

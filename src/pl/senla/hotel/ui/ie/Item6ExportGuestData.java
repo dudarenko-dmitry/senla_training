@@ -1,9 +1,11 @@
 package pl.senla.hotel.ui.ie;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.ui.MenuItem;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_6_EXPORT_GUEST_DATA;
 
+@Slf4j
 public class Item6ExportGuestData implements MenuItem {
 
     private final String nameItem;
@@ -14,6 +16,6 @@ public class Item6ExportGuestData implements MenuItem {
 
     @Override
     public void printItem() {
-        System.out.println(nameItem);
+        log.info(nameItem);
     }
 }

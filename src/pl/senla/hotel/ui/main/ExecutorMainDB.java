@@ -9,6 +9,7 @@ import pl.senla.hotel.ui.StartMenu;
 
 import java.lang.reflect.InvocationTargetException;
 
+import static pl.senla.hotel.constant.ApplicationContextConstant.CLOSE_APPLICATION;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 @AppComponent
@@ -41,11 +42,11 @@ public class ExecutorMainDB implements Executor {
             case 4 -> startMenuAnalytics.runMenu();
             case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
-                log.info("Good-bye.");
+                log.info(CLOSE_APPLICATION);
                 System.exit(0);
             }
             default -> {
-                log.warn(ERROR_INPUT);
+                log.info(ERROR_INPUT);
                 menuPoint = userChoice.makeChoice();
                 execute(menuPoint);
             }

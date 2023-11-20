@@ -5,6 +5,8 @@ import pl.senla.hotel.application.di.DIApplication;
 
 import java.lang.reflect.InvocationTargetException;
 
+import static pl.senla.hotel.constant.ApplicationContextConstant.START_APPLICATION;
+
 @Slf4j
 public class Main {
 
@@ -12,7 +14,7 @@ public class Main {
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,
             ClassNotFoundException, InstantiationException, InterruptedException {
 
-        log.info("Start Application.");
+        log.info(START_APPLICATION);
         DIApplication.run();
     }
 }

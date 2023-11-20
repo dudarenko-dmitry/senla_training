@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.services;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
@@ -7,6 +8,7 @@ import pl.senla.hotel.ui.Navigator;
 import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE;
 
 @AppComponent
+@Slf4j
 public class NavigatorHotelService implements Navigator {
 
     public NavigatorHotelService() {
@@ -14,7 +16,7 @@ public class NavigatorHotelService implements Navigator {
 
     @Override
     public void buildMenu() {
-        System.out.println(MENU_HOTEL_SERVICE);
+        log.info(MENU_HOTEL_SERVICE);
         MenuItem item1 = new Item1RoomReservation();
         MenuItem item2 = new Item2RestaurantReservation();
         MenuItem item3 = new Item3TransferReservation();

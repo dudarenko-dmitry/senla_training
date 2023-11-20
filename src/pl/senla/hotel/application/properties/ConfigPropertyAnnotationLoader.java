@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
+import static pl.senla.hotel.constant.ApplicationContextConstant.CREATE_CONFIG_PROPERTIES;
+
 @Slf4j
 public class ConfigPropertyAnnotationLoader {
 
@@ -19,7 +21,7 @@ public class ConfigPropertyAnnotationLoader {
 
     public static synchronized ConfigPropertyAnnotationLoader getConfigPropertyAnnotationLoader() {
         if (configPropertyAnnotationLoader == null) {
-            log.debug("Create ConfigProperties.");
+            log.debug(CREATE_CONFIG_PROPERTIES);
             configPropertyAnnotationLoader = new ConfigPropertyAnnotationLoader();
         }
         return configPropertyAnnotationLoader;

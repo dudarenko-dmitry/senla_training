@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.services;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ui.Choice;
@@ -9,8 +10,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CREATE_SERVICE;
+import static pl.senla.hotel.constant.ConsoleConstant.INPUT_MENU_POINT;
 
 @AppComponent
+@Slf4j
 public class StartCreateHotelServiceDB {
 
     @GetInstance(beanName = "NavigatorHotelService")
@@ -29,7 +32,7 @@ public class StartCreateHotelServiceDB {
             navigator.buildMenu();
             typeOfService = makeChoice();
             if (typeOfService != 0) {
-                System.out.println(CONSOLE_CREATE_SERVICE +
+                log.info(CONSOLE_CREATE_SERVICE,
                         executor.createHotelServiceForGuest(idOrder, idGuest, typeOfService));
             }
         }
@@ -37,7 +40,7 @@ public class StartCreateHotelServiceDB {
     }
 
     private int makeChoice(){
-        System.out.print("Input your choice --> ");
+        log.info(INPUT_MENU_POINT);
         Scanner sc = new Scanner(System.in);
         return sc.nextInt();
     }

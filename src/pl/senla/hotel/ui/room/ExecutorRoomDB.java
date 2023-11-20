@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
+import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 @AppComponent
 @Slf4j
@@ -38,12 +39,12 @@ public class ExecutorRoomDB implements Executor {
                 log.info(CONSOLE_READ_ROOM, facilityController.read(id));
             }
             case 3 -> {
-                log.info("Input new Room's data: ");
-                log.info("Room number/name --> ");
+                log.info(INPUT_ROOM_DATA);
+                log.info(INPUT_ROOM_NUMBER);
                 String roomNumber = sc.next();
-                log.info("Price of Room --> ");
+                log.info(INPUT_PRICE);
                 int price = sc.nextInt();
-                log.info("Capacity of Room --> ");
+                log.info(INPUT_CAPACITY);
                 int capacity = sc.nextInt();
                 String roomLevel = startMenuRoomLevel.runMenu();
                 if(roomLevel.isEmpty()){
@@ -61,7 +62,7 @@ public class ExecutorRoomDB implements Executor {
             case 4 -> {
                 log.info(INPUT_ID_ROOM_UPDATE);
                 int idRoomUpdate = sc.nextInt();
-                log.info("Input new price --> ");
+                log.info(INPUT_PRICE);
                 int newPrice = sc.nextInt();
                 HotelFacility roomUpdated = facilityController.read(idRoomUpdate);
                 if(roomUpdated != null){
@@ -91,7 +92,7 @@ public class ExecutorRoomDB implements Executor {
                 }
             }
             case 7 -> {
-                log.info(INPUT_ID_ROOM_DELETE);
+                log.info(INPUT_ID_ROOM);
                 int idRoomDelete = sc.nextInt();
                 log.info(CONSOLE_DELETE_ROOM, facilityController.delete(idRoomDelete));
             }

@@ -14,6 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import static pl.senla.hotel.constant.ApplicationContextConstant.*;
+
 @Slf4j
 public class DIContext {
 
@@ -33,10 +35,10 @@ public class DIContext {
 
     public static synchronized DIContext getContext() {
         if (context == null) {
-            log.info("Start creating of Application's context.");
+            log.info(START_CREATE_CONTEXT);
             context = new DIContext();
         }
-        log.debug("Context is ready to use.");
+        log.info(CONTEXT_IS_READY);
         return context;
     }
 
@@ -69,7 +71,7 @@ public class DIContext {
                                     String configFileName = annotationProperty.configFileName();
                                     String propertyName = annotationProperty.propertyName();
                                     String type = annotationProperty.type();
-                                    System.out.println("Set value of " + propertyName + " from Properties");
+                                    log.debug(SET_VALUE_FROM_PROPERTIES, propertyName);
                                     configLoader.setField(configDirectory, configFileName, f, propertyName, type, bean);
                                 }
                                 counter++;
@@ -77,8 +79,7 @@ public class DIContext {
                         }
                         if (counter == numberOfFields) {
                             DIContainer.replace(aClass, bean);
-                            System.out.println("Class " + aClass.getTypeName() +
-                                    " and his Bean have been added to DIContainer!");
+                            log.info(ADD_BEAN_TO_CONTAINER, aClass.getTypeName());
                         }
                     }
                 }
@@ -99,7 +100,7 @@ public class DIContext {
                     if (DIContainer.get(fullFieldClassName) != null) {
                         setFieldValue(field, fullFieldClassName, bean);
                     } else {
-                        System.out.println("Error: there is no " + annotationGetInstance.beanName() + " in DIContainer");
+                        log.warn(NO_BEAN_IN_CONTAINER, annotationGetInstance.beanName());
                     }
                 }
             }

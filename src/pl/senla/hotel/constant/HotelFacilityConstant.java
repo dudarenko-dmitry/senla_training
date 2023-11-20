@@ -19,4 +19,10 @@ public class HotelFacilityConstant {
     public static final String ERROR_NULL_CAPACITY =        "Not allowed to create Facility without number of Guests.";
     public static final String ERROR_NULL_PRICE =           "Not allowed to create Facility without price.";
     public static final String ERROR_NO_PERMISSION =        "You don't have permission to change RoomStatus.";
+
+    public static final String INPUT_ROOM_DATA =            "Input new Room's data: ";
+    public static final String INPUT_PRICE =                "Input new price --> ";
+    public static final String INPUT_ROOM_NUMBER =          "Room number/name --> ";
+    public static final String INPUT_CAPACITY =          "Capacity of Room --> ";
+
 }

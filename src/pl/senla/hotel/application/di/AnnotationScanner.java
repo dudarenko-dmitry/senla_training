@@ -16,6 +16,8 @@ import pl.senla.hotel.application.annotation.StartPoint;
 import java.lang.reflect.Field;
 import java.util.Set;
 
+import static pl.senla.hotel.constant.ApplicationContextConstant.*;
+
 @Slf4j
 public class AnnotationScanner {
 
@@ -27,27 +29,27 @@ public class AnnotationScanner {
 
 
     public Set<Field> getAnnotatedPropertyFields() {
-        log.debug("getFieldsAnnotatedWith(ConfigProperty.class)");
+        log.debug(GET_ANNOTATION_CONFIG_PROPERTY);
         return reflections.getFieldsAnnotatedWith(ConfigProperty.class);
     }
 
     public Set<Class<?>> getAnnotatedClasses() {
-        log.debug("getTypesAnnotatedWith(AppComponent.class)");
+        log.debug(GET_ANNOTATION_APP_COMPONENT);
         return reflections.getTypesAnnotatedWith(AppComponent.class);
     }
 
     public Set<Class<?>> getStartPoints() {
-        log.debug("getTypesAnnotatedWith(StartPoint.class)");
+        log.debug(GET_ANNOTATION_START_POINT);
         return reflections.getTypesAnnotatedWith(StartPoint.class);
     }
 
     public Set<Field> getAnnotatedFields() {
-        log.debug("getFieldsAnnotatedWith(GetInstance.class)");
+        log.debug(GET_ANNOTATION_GET_INSTANCE);
         return reflections.getFieldsAnnotatedWith(GetInstance.class);
     }
 
     public Set<Class<?>> getAnnotatedEntities() {
-        log.debug("getTypesAnnotatedWith(Entity.class)");
+        log.debug(GET_ANNOTATION_ENTITY);
         return reflections.getTypesAnnotatedWith(Entity.class);
     }
 

@@ -1,5 +1,6 @@
 package pl.senla.hotel.ui.ie;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.ie.file.DataProcessor;
@@ -8,6 +9,7 @@ import pl.senla.hotel.ui.Executor;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @AppComponent
+@Slf4j
 public class ExecutorImportExport implements Executor {
 
     @GetInstance(beanName = "DataProcessorFileEntity")
@@ -33,7 +35,7 @@ public class ExecutorImportExport implements Executor {
                 dataProcessor.saveOrders();
             }
             default -> {
-                System.out.println(ERROR_INPUT);
+                log.info(ERROR_INPUT);
                 execute(menuPoint);
             }
         }
