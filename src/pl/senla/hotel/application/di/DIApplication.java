@@ -14,7 +14,7 @@ public class DIApplication {
     private DIApplication() {}
     public static synchronized DIApplication getApplication() {
         if (application == null) {
-            log.debug(CRATE_APPLICATION_LOADER);
+            log.debug(CREATE_APPLICATION_LOADER);
             application = new DIApplication();
         }
         return application;

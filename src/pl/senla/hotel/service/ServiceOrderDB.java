@@ -1,5 +1,6 @@
 package pl.senla.hotel.service;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.dao.GenericDao;
@@ -9,8 +10,6 @@ import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.entity.services.HotelService;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
@@ -18,6 +17,7 @@ import static pl.senla.hotel.constant.OrderConstant.READ_ALL_ORDERS_IS_EMPTY;
 import static pl.senla.hotel.constant.OrderConstant.ORDER_NOT_EXISTS;
 
 @AppComponent
+@Slf4j
 public class ServiceOrderDB implements ServiceOrder {
 
     @GetInstance(beanName = "ServiceHotelServiceDB")
@@ -31,15 +31,17 @@ public class ServiceOrderDB implements ServiceOrder {
 
     @Override
     public List<Order> readAll() {
+        log.debug("START: Order ReadAll");
         List<OrderDto> orderDtoList = daoOrderDto.readAll();
         if (orderDtoList.isEmpty()) {
-            System.out.println(READ_ALL_ORDERS_IS_EMPTY);
+            log.debug(READ_ALL_ORDERS_IS_EMPTY);
         }
         return orderDtoList.stream().map(this::convertOrderDto).toList();
     }
 
     @Override
     public boolean create(String orderString) throws IllegalAccessException {
+        log.debug("START: Order Create");
         int idGuest = Integer.parseInt(orderString);
         OrderDto order = new OrderDto(idGuest);
         order.setIdGuest(idGuest);
@@ -49,11 +51,12 @@ public class ServiceOrderDB implements ServiceOrder {
     @Override
     public Order read(int idOrder) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
+        log.debug("START: Order Read");
         if (daoOrderDto.read(idOrder) != null) {
             OrderDto orderDto = daoOrderDto.read(idOrder);
             return convertOrderDto(orderDto);
         }
-        System.out.println(ERROR_INPUT);
+        log.debug(ERROR_INPUT);
         return null;
     }
 
@@ -64,30 +67,32 @@ public class ServiceOrderDB implements ServiceOrder {
 //            Order orderUpdate = new Order(); // read from String
 //            return daoOrder.update(idOrder, orderUpdate);
 //        }
-        System.out.println(ORDER_NOT_EXISTS);
-        System.out.println(ERROR_INPUT);
-        return false;
+        log.debug(ORDER_NOT_EXISTS);
+        log.debug(ERROR_INPUT);
+        return true;
     }
 
     @Override
     public boolean delete(int idOrder) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
+        log.debug("START: Order Delete");
         if (read(idOrder) != null) {
             return daoOrderDto.delete(idOrder);
         }
-        System.out.println(ORDER_NOT_EXISTS);
+        log.debug(ORDER_NOT_EXISTS);
         return false;
     }
 
     @Override
     public boolean addServicesToOrder(int idOrder) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
+        log.debug("START: Add Service to Order");
         if (daoOrderDto.readAll().isEmpty()) {
-            System.out.println(READ_ALL_ORDERS_IS_EMPTY);
+            log.debug(READ_ALL_ORDERS_IS_EMPTY);
             return false;
         } else if (read(idOrder) == null) {
-            System.out.println(ORDER_NOT_EXISTS);
-            System.out.println(ERROR_INPUT);
+            log.debug(ORDER_NOT_EXISTS);
+            log.debug(ERROR_INPUT);
             return false;
         }
         OrderDto orderOld = daoOrderDto.read(idOrder);
@@ -99,6 +104,7 @@ public class ServiceOrderDB implements ServiceOrder {
 
     @Override
     public List<Integer> readAllIdServicesForOrder(int idOrder) {
+        log.debug("START: ReadAll Services for Order");
         return serviceHotelService.readAll()
                 .stream()
                 .filter(o -> o.getIdOrder() == idOrder)
@@ -107,6 +113,7 @@ public class ServiceOrderDB implements ServiceOrder {
     }
 
     private Order convertOrderDto(OrderDto orderDto) {
+        log.debug("START: Convert DTO to Order");
         Order order = new Order();
         order.setIdOrder(orderDto.getIdOrder()); // косяк
         order.setIdGuest(orderDto.getIdGuest());

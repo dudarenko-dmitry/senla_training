@@ -38,7 +38,7 @@ public class DIContext {
             log.info(START_CREATE_CONTEXT);
             context = new DIContext();
         }
-        log.info(CONTEXT_IS_READY);
+        log.debug(CONTEXT_IS_READY);
         return context;
     }
 
@@ -79,7 +79,7 @@ public class DIContext {
                         }
                         if (counter == numberOfFields) {
                             DIContainer.replace(aClass, bean);
-                            log.info(ADD_BEAN_TO_CONTAINER, aClass.getTypeName());
+                            log.debug(ADD_BEAN_TO_CONTAINER, aClass.getTypeName());
                         }
                     }
                 }

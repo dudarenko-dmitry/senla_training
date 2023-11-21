@@ -16,6 +16,7 @@ public class NavigatorRoomLevel implements Navigator {
 
     @Override
     public void buildMenu() {
+        log.info("");
         log.info(MENU_ROOM_LEVEL);
         MenuItem item1 = new Item1RoomEconomy();
         MenuItem item2 = new Item2RoomStandard();

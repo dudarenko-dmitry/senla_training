@@ -16,6 +16,7 @@ public class NavigatorMenuImportExport implements Navigator {
     }
 
     public void buildMenu() {
+        log.info("");
         log.info(MENU_INPUT_OUTPUT);
         MenuItem item1 = new Item1ImportAllData();
         MenuItem item2 = new Item2ExportAllData();

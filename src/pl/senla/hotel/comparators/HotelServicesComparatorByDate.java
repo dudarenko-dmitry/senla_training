@@ -1,11 +1,13 @@
 package pl.senla.hotel.comparators;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.services.HotelService;
 
 import java.util.Comparator;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE;
 
+@Slf4j
 public class HotelServicesComparatorByDate implements Comparator<HotelService> {
 
     @Override
@@ -15,7 +17,7 @@ public class HotelServicesComparatorByDate implements Comparator<HotelService> {
 //            case RESTAURANT -> compareRestaurant((Restaurant) o1, (Restaurant) o2);
 //            case TRANSFER -> compareTransfer((Transfer) o1, (Transfer) o2);
             default -> {
-                System.out.println(ERROR_IN_SERVICE_TYPE);
+                log.warn(ERROR_IN_SERVICE_TYPE);
                 yield 0;
             }
         };

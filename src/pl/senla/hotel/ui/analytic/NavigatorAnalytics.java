@@ -17,6 +17,7 @@ public class NavigatorAnalytics implements Navigator {
 
     @Override
     public void buildMenu() {
+        log.info("");
         log.info(MENU_ANALYTICS_REPORTS);
         MenuItem item1 = new Item1SortRoomsByPrice();
         MenuItem item2 = new Item2SortRoomsByCapacity();

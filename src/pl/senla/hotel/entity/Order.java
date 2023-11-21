@@ -2,6 +2,7 @@ package pl.senla.hotel.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 
 @Setter
 @Getter
+@Slf4j
 public class Order implements Serializable {
 
     private Integer idOrder;
@@ -27,7 +29,7 @@ public class Order implements Serializable {
 
     public Order(Integer idGuest, List<Integer> idServices) {
         if (idGuest == null) {
-            System.out.println(ERROR_CREATE_ORDER_NO_CLIENT);
+            log.warn(ERROR_CREATE_ORDER_NO_CLIENT);
             return;
         }
         this.idGuest = idGuest;
@@ -42,7 +44,7 @@ public class Order implements Serializable {
         if (idGuest != null) {
             this.idGuest = idGuest;
         } else {
-            System.out.println(ERROR_ID_GUEST);
+            log.warn(ERROR_ID_GUEST);
         }
 
     }
@@ -51,7 +53,7 @@ public class Order implements Serializable {
         if (idServices != null) {
             this.idServices = idServices;
         } else {
-            System.out.println(ERROR_ID_SERVICES);
+            log.warn(ERROR_ID_SERVICES);
         }
     }
 

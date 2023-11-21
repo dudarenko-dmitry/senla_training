@@ -9,7 +9,7 @@ public class ApplicationContextConstant {
     public static final String CLOSE_APPLICATION =          "Good-bye.";
 
     // Application, Context and DI
-    public static final String CRATE_APPLICATION_LOADER =   "Create Application's loading instance.";
+    public static final String CREATE_APPLICATION_LOADER =   "Create Application's loading instance.";
     public static final String RUN_APPLICATION =            "Run Application.";
     public static final String INVOKE_START_METHOD =        "Invoke Start method.";
     public static final String ERROR_NO_START_METHOD =      "Application doesn't have StartPoint or StartMethod!";

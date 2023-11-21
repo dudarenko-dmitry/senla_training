@@ -72,6 +72,11 @@ public class ConsoleConstant {
     public static final String INPUT_PHONE =        "Guest's phone number --> ";
     public static final String INPUT_NEW_PHONE =    "Input new phoneNumber --> ";
 
+    public static final String INPUT_ROOM_DATA =            "Input new Room's data: ";
+    public static final String INPUT_PRICE =                "Input new price --> ";
+    public static final String INPUT_ROOM_NUMBER =          "Room number/name --> ";
+    public static final String INPUT_CAPACITY =             "Capacity of Room --> ";
+
     public static final String INPUT_NUMBER_OF_DAYS = "Input number of days to reserve --> ";
     public static final String ADD_NEW_SERVICE_FOR_ORDER = "Add new services to order: {}";
     public static final String UPDATE_RESERVATION = "Update Room's Reservation: ";

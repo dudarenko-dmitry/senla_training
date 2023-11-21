@@ -61,6 +61,7 @@ public class ControllerRoomReservationDB implements ControllerRoomReservation {
 
     @Override
     public List<HotelFacility> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
+        log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllFreeRoomsSortByCapacity'.");
         return roomReservationService.readAllFreeRoomsSortByCapacity(checkedTimeString);
     }
 

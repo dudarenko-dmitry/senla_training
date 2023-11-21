@@ -16,6 +16,7 @@ public class NavigatorGuest implements Navigator {
     }
 
     public void buildMenu() {
+        log.info("");
         log.info(MENU_GUEST);
         MenuItem item1 = new Item1ReadAllGuests();
         MenuItem item2 = new Item2ReadGuest();

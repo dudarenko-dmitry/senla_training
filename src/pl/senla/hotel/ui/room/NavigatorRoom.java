@@ -16,6 +16,7 @@ public class NavigatorRoom implements Navigator {
     }
 
     public void buildMenu() {
+        log.info("");
         log.info(MENU_ROOM);
         MenuItem item1 = new Item1ReadAllRooms();
         MenuItem item2 = new Item2ReadRoom();

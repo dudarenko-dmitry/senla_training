@@ -16,6 +16,7 @@ public class NavigatorHotelService implements Navigator {
 
     @Override
     public void buildMenu() {
+        log.info("");
         log.info(MENU_HOTEL_SERVICE);
         MenuItem item1 = new Item1RoomReservation();
         MenuItem item2 = new Item2RestaurantReservation();

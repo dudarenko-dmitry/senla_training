@@ -1,5 +1,6 @@
 package pl.senla.hotel.comparators;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.facilities.HotelFacility;
@@ -12,6 +13,7 @@ import java.util.Comparator;
 import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE;
 
 @AppComponent
+@Slf4j
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
     @GetInstance(beanName = "DaoFacilityDB")
@@ -32,7 +34,7 @@ public class HotelServicesComparatorByPrice implements Comparator<HotelService> 
             }
 //            case RESTAURANT -> {return compareRestaurant((Restaurant) o1, (Restaurant) o2);}
 //            case TRANSFER -> {return compareTransfer((Transfer) o1, (Transfer) o2);}
-            default -> {System.out.println(ERROR_IN_SERVICE_TYPE);
+            default -> {log.warn(ERROR_IN_SERVICE_TYPE);
                 return 0;}
         }
     }

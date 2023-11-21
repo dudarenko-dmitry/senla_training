@@ -15,6 +15,7 @@ public class NavigatorMainMenu implements Navigator {
     }
 
     public void buildMenu() {
+        log.info("");
         log.info(MENU_MAIN);
         MenuItem item1 = new Item1HotelFacilityOperations();
         MenuItem item2 = new Item2GuestOperations();

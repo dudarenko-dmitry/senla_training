@@ -2,6 +2,7 @@ package pl.senla.hotel.entity.services;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.service.ServiceFacility;
 
@@ -18,6 +19,7 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 @Setter
 @Getter
+@Slf4j
 public class HotelService implements Serializable {
 
     @Serial
@@ -42,23 +44,23 @@ public class HotelService implements Serializable {
                            Integer idRoom, LocalDate startDate, Integer numberOfDays)
             throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         if(idOrder == null) {
-            System.out.println(ORDER_NOT_EXISTS);
+            log.warn(ORDER_NOT_EXISTS);
             return;
         }
         if (idGuest == null) {
-            System.out.println(ERROR_NULL_GUEST);
+            log.warn(ERROR_NULL_GUEST);
             return;
         }
         if(idRoom == null){
-            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
+            log.warn(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return;
         }
         if(startDate == null){
-            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_DATE);
+            log.warn(ERROR_CREATE_ROOM_RESERVATION_NO_DATE);
             return;
         }
         if(numberOfDays == null){
-            System.out.println(ERROR_CREATE_ROOM_RESERVATION_NO_DAYS);
+            log.warn(ERROR_CREATE_ROOM_RESERVATION_NO_DAYS);
             return;
         }
         this.idGuest = idGuest;
@@ -74,7 +76,7 @@ public class HotelService implements Serializable {
         if (idOrder != null) {
             this.idOrder = idOrder;
         } else {
-            System.out.println(ERROR_NULL_ID_ORDER);
+            log.warn(ERROR_NULL_ID_ORDER);
         }
     }
 
@@ -82,7 +84,7 @@ public class HotelService implements Serializable {
         if (typeOfService != null) {
             this.typeOfService = typeOfService;
         } else {
-            System.out.println(ERROR_NULL_CATEGORY);
+            log.warn(ERROR_NULL_CATEGORY);
         }
     }
 
@@ -90,7 +92,7 @@ public class HotelService implements Serializable {
         if (idGuest != null) {
             this.idGuest = idGuest;
         } else {
-            System.out.println(ERROR_NULL_GUEST);
+            log.warn(ERROR_NULL_GUEST);
         }
     }
 

@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import static pl.senla.hotel.constant.DBConstant.*;
+import static pl.senla.hotel.constant.DaoConstant.*;
 
 @Slf4j
 public abstract class GenericDaoDB<T> implements GenericDao<T> {
@@ -29,21 +30,21 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
         mappingEntityToDB = (LinkedHashMap<String, String>) DataBaseMapperUtil.getMapper(type);
         entitiesFields = mappingEntityToDB.keySet().stream().toList();
         tablesFields = mappingEntityToDB.values().stream().toList();
-        log.info("Created GenericDaoDB for {}", type);
+        log.debug(CREATE_GENERIC_DAO, type);
     }
 
     @Override
     public List<T> readAll() {
-        log.debug("Start GenericDaoDB method 'ReadAll'");
+        log.debug(START_METHOD_READ_ALL);
         Connection connection = null;
         ArrayList<T> list = new ArrayList<>();
         try {
             connection = AbstractConnection.connection();
-            log.debug("Get connection to DB");
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM " +
-                    mappingEntityToDB.get("tableName"));
+            log.debug(DB_CONNECTED);
+            PreparedStatement stmt = connection.prepareStatement(SELECT_ALL_FIELDS +
+                    mappingEntityToDB.get(TABLE_NAME));
             ResultSet rs = stmt.executeQuery();
-            log.debug("Get ResultSet and start process it.");
+            log.debug(GET_RESULT_SET);
             while (rs.next()) {
                 T t = getEntity(rs);
                 list.add(t);
@@ -66,15 +67,15 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
 
     @Override
     public boolean create(T t) {
-        log.debug("Start GenericDaoDB method 'Create'");
+        log.debug(START_METHOD_CREATE);
         Connection connection = null;
         try {
             connection = AbstractConnection.connection();
-            log.debug("Get connection to DB");
+            log.debug(DB_CONNECTED);
             String command = getStringBuilderCreateInstance();
             PreparedStatement stmt = connection.prepareStatement(command);
-            setFieldsValuesToCreateInstance(t, stmt);
-            log.debug("Execute Request to DB.");
+            setFieldsValuesToPreparedStatement(t, stmt);
+            log.debug(EXECUTE_REQUEST_TO_DB);
             return stmt.execute();
         } catch (SQLException | IllegalAccessException | NoSuchMethodException | InvocationTargetException |
                  ClassNotFoundException | InstantiationException e) {
@@ -94,18 +95,18 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
 
     @Override
     public T read(int id) {
-        log.debug("Start GenericDaoDB method 'Read'");
+        log.debug(START_METHOD_READ);
         T instance = null;
         Connection connection = null;
         try {
             connection = AbstractConnection.connection();
-            log.debug("Get connection to DB");
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM " +
-                    mappingEntityToDB.get("tableName") + " WHERE " + tablesFields.get(1) + // edit
-                    " =?");
+            log.debug(DB_CONNECTED);
+            PreparedStatement stmt = connection.prepareStatement(SELECT_ALL_FIELDS +
+                    mappingEntityToDB.get(TABLE_NAME) + WHERE + tablesFields.get(1) + // edit
+                    REQUEST_VALUE);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            log.debug("Get ResultSet and start process it.");
+            log.debug(GET_RESULT_SET);
             while (rs.next()) {
                 instance = getEntity(rs);
             }
@@ -127,15 +128,15 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
 
     @Override
     public boolean update(int id, T t) {
-        log.debug("Start GenericDaoDB method 'Update'");
+        log.debug(START_METHOD_UPDATE);
         Connection connection = null;
         try {
             connection = AbstractConnection.connection();
-            log.debug("Get connection to DB");
+            log.debug(DB_CONNECTED);
             String command = getStringBuilderUpdateInstance(id);
             PreparedStatement stmt = connection.prepareStatement(command);
-            setFieldsValuesToCreateInstance(t, stmt);
-            log.debug("Execute Request to DB.");
+            setFieldsValuesToPreparedStatement(t, stmt);
+            log.debug(EXECUTE_REQUEST_TO_DB);
             return stmt.execute();
         } catch (SQLException e) {
             System.out.println(DB_CONNECTION_ERROR);
@@ -158,16 +159,16 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
 
     @Override
     public boolean delete(int id) {
-        log.debug("Start GenericDaoDB method 'Delete'");
+        log.debug(START_METHOD_DELETE);
         Connection connection = null;
         try {
             connection = AbstractConnection.connection();
-            log.debug("Get connection to DB");
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM " + mappingEntityToDB.get("tableName") +
-                    " WHERE " + tablesFields.get(1) + // edit
-                    " =?");
+            log.debug(DB_CONNECTED);
+            PreparedStatement stmt = connection.prepareStatement(DELETE_FROM + mappingEntityToDB.get(TABLE_NAME) +
+                    WHERE + tablesFields.get(1) +
+                    REQUEST_VALUE);
             stmt.setInt(1, id);
-            log.debug("Execute Request to DB.");
+            log.debug(EXECUTE_REQUEST_TO_DB);
             return stmt.execute();
         } catch (SQLException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException |
                  InstantiationException | IllegalAccessException e) {
@@ -187,14 +188,14 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
 
     private T getEntity(ResultSet rs) throws NoSuchMethodException, InvocationTargetException,
             InstantiationException, IllegalAccessException, SQLException, ClassNotFoundException {
-        log.debug("Get instance from ResultSet.");
+        log.debug(START_METHOD_GET_ENTITY);
         T t = type.getConstructor().newInstance();
         Field[] declaredFields = type.getDeclaredFields();
         List<Field> fields = Arrays.stream(declaredFields)
                 .filter(f -> !f.getName().equals("serialVersionUID"))
                 .filter(f -> !f.getType().isInterface())
                 .toList();
-        log.debug("Get instance's fields.");
+        log.debug(GET_FIELDS);
         for (Field f : fields) {
             f.setAccessible(true);
             String fieldName = f.getName();
@@ -202,21 +203,21 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
             if (fieldType.isEnum()) {
                 Enum anEnum = Enum.valueOf((Class<? extends Enum>) fieldType,
                         rs.getString(mappingEntityToDB.get(fieldName)));
-                log.debug("Set Enum value to field.");
+                log.debug(SET_VALUE_ENUM);
                 f.set(t, anEnum);
             } else if (fieldType.equals(Integer.class)) {
-                log.debug("Set Integer value to field.");
+                log.debug(SET_VALUE_INTEGER);
                 f.set(t, rs.getInt(mappingEntityToDB.get(fieldName)));
             } else if (fieldType.equals(String.class)) {
-                log.debug("Set String value to field.");
+                log.debug(SET_VALUE_STRING);
                 f.set(t, rs.getString(mappingEntityToDB.get(fieldName)));
             } else if (fieldType.equals(LocalDateTime.class)) {
-                log.debug("Set Timestamp value to field.");
+                log.debug(SET_VALUE_TIMESTAMP);
                 Timestamp timestamp = rs.getTimestamp(mappingEntityToDB.get(fieldName));
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
                 f.set(t, localDateTime);
             } else {
-                log.error("No such type of fields in Application {}.\nNew type must be added to Application.",
+                log.warn(WARN_ADD_NEW_METHOD,
                         fieldType);
             }
         }
@@ -224,9 +225,9 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
     }
 
     private String getStringBuilderCreateInstance() {
-        log.debug("Create PreparedStatement for CreateInstance.");
+        log.debug(START_METHOD_BUILD_STRING_TO_CREATE);
         StringBuilder command = new StringBuilder();
-        command.append("INSERT INTO ").append(mappingEntityToDB.get("tableName")).append(" (");
+        command.append(INSERT_INTO).append(mappingEntityToDB.get(TABLE_NAME)).append(" (");
         int size = tablesFields.size(); // edit
         if (size == 3) {  // №1 - tableName, №2 - ID parameter
             command.append(tablesFields.get(2))
@@ -245,25 +246,25 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
     }
 
     private String getStringBuilderUpdateInstance(int id) {
-        log.debug("Create PreparedStatement for UpdateInstance.");
+        log.debug(START_METHOD_BUILD_STRING_TO_UPDATE);
         StringBuilder command = new StringBuilder();
-        command.append("UPDATE ").append(mappingEntityToDB.get("tableName")).append(" SET ");
+        command.append(UPDATE).append(mappingEntityToDB.get(TABLE_NAME)).append(SET);
         int size = tablesFields.size();
         if (size == 3) { // №0 - tableName, №1 - ID
-            command.append(tablesFields.get(2)).append("=?");
+            command.append(tablesFields.get(2)).append(REQUEST_VALUE);
         } else {
             for (int i = 2; i < size - 1; i++) {
-                command.append(tablesFields.get(i)).append("=?").append(", ");
+                command.append(tablesFields.get(i)).append(REQUEST_VALUE).append(", ");
             }
-            command.append(tablesFields.get(size - 1)).append("=?");
+            command.append(tablesFields.get(size - 1)).append(REQUEST_VALUE);
         }
-        command.append(" WHERE ").append(tablesFields.get(1)).append("=").append(id);
+        command.append(WHERE).append(tablesFields.get(1)).append("=").append(id);
         return command.toString();
     }
 
-    private void setFieldsValuesToCreateInstance(T t, PreparedStatement stmt) throws SQLException,
+    private void setFieldsValuesToPreparedStatement(T t, PreparedStatement stmt) throws SQLException,
             IllegalAccessException, InvocationTargetException {
-        log.debug("Set values in setFieldsValuesToCreateInstance.");
+        log.debug(START_METHOD_SET_FIELD_VALUES_TO_STATEMENT);
         int j = 1;
         for (int i = 2; i < entitiesFields.size(); i++) {
             Class<?> aClass = t.getClass();
@@ -275,7 +276,7 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
                 setValuesToStatement(t, stmt, field, j, getter);
                 j++;
             } catch (NoSuchFieldException | NoSuchMethodException e) {
-                log.error("ERROR in setFieldsValuesToCreateInstance.", new RuntimeException(e));
+                log.error(ERROR_METHOD_SET_FIELD_VALUES_TO_STATEMENT, new RuntimeException(e));
             }
         }
     }
@@ -288,36 +289,37 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
             try {
                 stmt.setString(j, String.valueOf(getter.invoke(t)));
             } catch (IllegalAccessException | InvocationTargetException e) {
-                log.error("ERROR in setValuesToStatement.", new RuntimeException(e));
+                log.error(ERROR_METHOD_SET_VALUES_TO_STATEMENT, new RuntimeException(e));
             }
         } else if (fieldType.equals(Integer.class)) {
             try {
                 stmt.setInt(j, (Integer) getter.invoke(t));
             } catch (IllegalAccessException | InvocationTargetException e) {
-                log.error("ERROR in setValuesToStatement.", new RuntimeException(e));
+                log.error(ERROR_METHOD_SET_VALUES_TO_STATEMENT, new RuntimeException(e));
             }
         } else if (fieldType.equals(String.class)) {
             try {
                 stmt.setString(j, String.valueOf(getter.invoke(t)));
             } catch (IllegalAccessException | InvocationTargetException e) {
-                log.error("ERROR in setValuesToStatement.", new RuntimeException(e));
+                log.error(ERROR_METHOD_SET_VALUES_TO_STATEMENT, new RuntimeException(e));
             }
         } else if (fieldType.equals(LocalDateTime.class)) {
             try {
                 stmt.setTimestamp(j, Timestamp.valueOf((LocalDateTime) getter.invoke(t)));
             } catch (IllegalAccessException | InvocationTargetException e) {
-                log.error("ERROR in setValuesToStatement.", new RuntimeException(e));
+                log.error(ERROR_METHOD_SET_VALUES_TO_STATEMENT, new RuntimeException(e));
             }
         } else {
-            log.error("No such type of fields in Application: {}.\nNew type must be added to Application.", fieldType);
+            log.warn(WARN_ADD_NEW_METHOD, fieldType);
         }
     }
 
     private static <T> Method getGetter(T t, String fieldGetter) {
+        log.debug(START_METHOD_GET_GETTER);
         try {
             return t.getClass().getDeclaredMethod(fieldGetter);
         } catch (NoSuchMethodException e) {
-            log.error("ERROR in getGetter.", new RuntimeException(e));
+            log.error(ERROR_METHOD_GET_GETTER, new RuntimeException(e));
             return null;
         }
     }
