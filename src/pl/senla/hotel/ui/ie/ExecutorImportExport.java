@@ -18,7 +18,7 @@ public class ExecutorImportExport implements Executor {
     public ExecutorImportExport(){}
 
     @Override
-    public void execute(int menuPoint) throws IllegalAccessException {
+    public void execute(int menuPoint) {
         switch (menuPoint) {
             case 1 -> dataProcessor.loadAllEntities();
             case 2 -> dataProcessor.saveAllEntities();

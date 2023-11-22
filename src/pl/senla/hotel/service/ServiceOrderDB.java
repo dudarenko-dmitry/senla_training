@@ -40,7 +40,7 @@ public class ServiceOrderDB implements ServiceOrder {
     }
 
     @Override
-    public boolean create(String orderString) throws IllegalAccessException {
+    public boolean create(String orderString) {
         log.debug("START: Order Create");
         int idGuest = Integer.parseInt(orderString);
         OrderDto order = new OrderDto(idGuest);
@@ -61,8 +61,7 @@ public class ServiceOrderDB implements ServiceOrder {
     }
 
     @Override
-    public boolean update(int idOrder, String orderUpdatingString) throws InvocationTargetException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public boolean update(int idOrder, String orderUpdatingString) {
 //        if (read(idOrder) != null) {
 //            Order orderUpdate = new Order(); // read from String
 //            return daoOrder.update(idOrder, orderUpdate);

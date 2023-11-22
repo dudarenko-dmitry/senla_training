@@ -12,10 +12,10 @@ public class Main {
 
     public static void main(String[] args)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-            ClassNotFoundException, InstantiationException, InterruptedException {
+            InstantiationException, InterruptedException {
 
-        log.info(START_APPLICATION);
-        DIApplication.run();
+        log.debug(START_APPLICATION);
+        DIApplication.getApplication().run();
     }
 }
 

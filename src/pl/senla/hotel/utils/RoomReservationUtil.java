@@ -1,7 +1,6 @@
 package pl.senla.hotel.utils;
 
 import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.TypeOfService;
 import pl.senla.hotel.service.ServiceFacility;
@@ -11,15 +10,11 @@ import java.time.LocalDateTime;
 @AppComponent
 public final class RoomReservationUtil {
 
-    @GetInstance(beanName = "ServiceFacilityDB")
-    private ServiceFacility serviceRoom;
-
     public RoomReservationUtil() {
 
     }
 
     public RoomReservationUtil(ServiceFacility serviceRoom) {
-        this.serviceRoom = serviceRoom;
     }
 
     public static HotelService convertCsvToRoomReservation(String csv) {
@@ -44,12 +39,11 @@ public final class RoomReservationUtil {
         String idGuest = String.valueOf(hs.getIdGuest());
         switch (typeOfService) {
             case ROOM_RESERVATION -> {
-                HotelService hsReservation = hs;
-                String idRoom = String.valueOf(hsReservation.getIdRoom());
-                String checkInTime = String.valueOf(hsReservation.getCheckInTime());
-                String numberOfDays = String.valueOf(hsReservation.getNumberOfDays());
-                String checkOutTime = String.valueOf(hsReservation.getCheckOutTime());
-                String cost = String.valueOf(hsReservation.getCost());
+                String idRoom = String.valueOf(hs.getIdRoom());
+                String checkInTime = String.valueOf(hs.getCheckInTime());
+                String numberOfDays = String.valueOf(hs.getNumberOfDays());
+                String checkOutTime = String.valueOf(hs.getCheckOutTime());
+                String cost = String.valueOf(hs.getCost());
                 return new String[] {
                         idService,
                         idOrder,

@@ -26,26 +26,12 @@ public abstract class AbstractConnection {
                         DBPropertiesUtil.get(URL),
                         DBPropertiesUtil.get(USERNAME),
                         DBPropertiesUtil.get(PASSWORD));
-                log.info(DB_CONNECTED);
+                log.debug(DB_CONNECTED);
             }
             return connection;
         } catch (SQLException e) {
             log.error(DB_CONNECTION_ERROR);
             throw new SQLException(DB_CONNECTION_ERROR, e);
-        }
-    }
-
-    public static void close() {
-        log.debug("Start of Close connection");
-        if(connection != null){
-            try {
-                connection.close();
-                connection = null;
-                log.info(DB_CONNECTION_CLOSE);
-            } catch (SQLException e) {
-                log.error(DB_CONNECTION_CLOSE_ERROR);
-                throw new RuntimeException(e);
-            }
         }
     }
 }

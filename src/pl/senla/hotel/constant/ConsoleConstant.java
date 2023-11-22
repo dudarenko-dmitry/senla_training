@@ -11,11 +11,9 @@ public class ConsoleConstant {
     public static final String CONSOLE_CHANGE_ROOM =            "Room was changed: {}";
     public static final String CONSOLE_DELETE_ROOM =            "Room was deleted: {}";
 
-    public static final String CONSOLE_READ_ALL_FREE_ROOMS =         "\nList of all Free rooms (Time-slots): ";
     public static final String CONSOLE_READ_ALL_FREE_ROOMS_TIME =    "\nList of all Free rooms at Time: {}";
     public static final String CONSOLE_NUMBER_OF_FREE_ROOMS =        "Number of Free rooms at {}: {}";
 
-    public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS = "\nList of all room's reservations: ";
     public static final String CONSOLE_CHANGE_ROOM_RESERVATION =    "Room reservation was changed: ";
     public static final String CONSOLE_NUMBER_GUEST_IN_HOTEL_NOW =  "Number of Guest in Hotel at {}: {}} ";
     public static final String CONSOLE_GUEST_PAYMENT_FOR_ROOM =     "Guest's payment for the room: {}";
@@ -49,8 +47,8 @@ public class ConsoleConstant {
     public static final String CONSOLE_READ_ALL_ROOMS_SORTED_BY_LEVEL =      "\nList of all rooms sorted by Room's level: {}";
     public static final String CONSOLE_READ_ALL_FREE_ROOMS_SORTED_BY_LEVEL = "\nList of free rooms sorted by Room's level: {}";
     public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS_SORTED_BY_GUEST_NAME = "\nList of Guests sorted by name:{}";
-    public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS_SORTED_BY_CHECK_OUT =  "\nList of Guests sorted by check-out time";
-    public static final String CONSOLE_READ_ALL_FACILITIES_SORTED_BY_CATEGORY = "\nList of HotelFacilities sorted by category";
+    public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS_SORTED_BY_CHECK_OUT =  "\nList of Guests sorted by check-out time: {}";
+    public static final String CONSOLE_READ_ALL_FACILITIES_SORTED_BY_CATEGORY = "\nList of HotelFacilities sorted by category: {}";
 
     public static final String INPUT_MENU_POINT =     "Input your choice --> ";
     public static final String ERROR_INPUT =          "ERROR!!!\nYou input is invalid. Please, repeat input/action.";

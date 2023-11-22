@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
-import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 @AppComponent
 @Slf4j

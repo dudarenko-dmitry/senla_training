@@ -30,7 +30,7 @@ public class ExecutorUpdateHotelServiceDB {
             int typeOfServiceInt = makeChoice();
             Scanner sc = new Scanner(System.in);
             switch (typeOfServiceInt) {
-                case 1:
+                case 1 -> {
                     log.info(UPDATE_RESERVATION);
                     log.info(CONSOLE_READ_ALL_SERVICES, orderController.read(idOrderUpdate)
                             .getIdServices()
@@ -54,15 +54,19 @@ public class ExecutorUpdateHotelServiceDB {
                     String roomReservationUpdateString = checkInDateString + ";" +
                             numberOfDays;
                     return roomReservationController.update(idRoomReservation, roomReservationUpdateString);
-                case 2:
+                }
+                case 2 -> {
                     log.info("Update Restaurant's Reservation: do not use");
                     return true;
-                case 3:
+                }
+                case 3 -> {
                     log.info("Update Transfer's Reservation: do not use");
                     return true;
-                default:
+                }
+                default -> {
                     updateHotelServiceList(idOrderUpdate);
                     return false;
+                }
             }
         } else {
             log.info(ORDER_NOT_EXISTS);

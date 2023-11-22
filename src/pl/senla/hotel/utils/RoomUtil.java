@@ -2,6 +2,8 @@ package pl.senla.hotel.utils;
 
 import pl.senla.hotel.entity.facilities.*;
 
+import java.util.Objects;
+
 public final class RoomUtil {
 
     private RoomUtil() {
@@ -26,24 +28,19 @@ public final class RoomUtil {
         String nameFacility = facility.getNameFacility();
         Integer price = facility.getPrice();
         Integer capacity = facility.getCapacity();
-        switch (categoryFacility) {
-            case ROOM -> {
-                RoomLevel roomLevel = facility.getRoomLevel();
-                RoomStatus roomStatus = facility.getRoomStatus();
-                return new String[] {
-                        String.valueOf(idFacility),
-                        categoryFacility.name(),
-                        nameFacility,
-                        String.valueOf(price),
-                        String.valueOf(capacity),
-                        roomLevel.name(),
-                        roomStatus.name()
-                };
-            }
-//            case TABLE -> System.out.println("This Hotel Facility (Table) was not created.");
-//            case TRANSPORT -> System.out.println("This Hotel Facility (Transport) was not created.");
-            default -> throw new IllegalStateException("Unexpected value: " + categoryFacility.name());
+        if (Objects.requireNonNull(categoryFacility) == CategoryFacility.ROOM) {
+            RoomLevel roomLevel = facility.getRoomLevel();
+            RoomStatus roomStatus = facility.getRoomStatus();
+            return new String[]{
+                    String.valueOf(idFacility),
+                    categoryFacility.name(),
+                    nameFacility,
+                    String.valueOf(price),
+                    String.valueOf(capacity),
+                    roomLevel.name(),
+                    roomStatus.name()
+            };
         }
-        // change after creating of rest entities
+        throw new IllegalStateException("Unexpected value: " + categoryFacility.name());
     }
 }

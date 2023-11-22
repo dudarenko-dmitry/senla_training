@@ -6,8 +6,6 @@ import pl.senla.hotel.entity.Order;
 @AppComponent
 public class DataStorageOrder extends DataStorage<Order>{
 
-    public DataStorageOrder(){}
-
     @Override
     public String toString() {
         return "Order {" + super.toString();

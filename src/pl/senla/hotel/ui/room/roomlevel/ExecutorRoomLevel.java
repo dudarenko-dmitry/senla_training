@@ -15,7 +15,7 @@ public class ExecutorRoomLevel {
 
     public ExecutorRoomLevel() {}
 
-    public String execute() throws IllegalAccessException {
+    public String execute() {
         int userSelection = makeChoice();
         switch (userSelection) {
             case 1 -> {

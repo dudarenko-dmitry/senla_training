@@ -187,7 +187,7 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
     }
 
     private T getEntity(ResultSet rs) throws NoSuchMethodException, InvocationTargetException,
-            InstantiationException, IllegalAccessException, SQLException, ClassNotFoundException {
+            InstantiationException, SQLException, IllegalAccessException {
         log.debug(START_METHOD_GET_ENTITY);
         T t = type.getConstructor().newInstance();
         Field[] declaredFields = type.getDeclaredFields();
@@ -262,8 +262,7 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
         return command.toString();
     }
 
-    private void setFieldsValuesToPreparedStatement(T t, PreparedStatement stmt) throws SQLException,
-            IllegalAccessException, InvocationTargetException {
+    private void setFieldsValuesToPreparedStatement(T t, PreparedStatement stmt) throws SQLException {
         log.debug(START_METHOD_SET_FIELD_VALUES_TO_STATEMENT);
         int j = 1;
         for (int i = 2; i < entitiesFields.size(); i++) {
@@ -275,14 +274,14 @@ public abstract class GenericDaoDB<T> implements GenericDao<T> {
                 Field field = aClass.getDeclaredField(fieldName);
                 setValuesToStatement(t, stmt, field, j, getter);
                 j++;
-            } catch (NoSuchFieldException | NoSuchMethodException e) {
+            } catch (NoSuchFieldException e) {
                 log.error(ERROR_METHOD_SET_FIELD_VALUES_TO_STATEMENT, new RuntimeException(e));
             }
         }
     }
 
     private static <T> void setValuesToStatement(T t, PreparedStatement stmt, Field field, int j, Method getter)
-            throws SQLException, NoSuchMethodException {
+            throws SQLException {
         Class<?> fieldType = field.getType();
         field.setAccessible(true);
         if (fieldType.isEnum()) {

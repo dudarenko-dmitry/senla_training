@@ -25,7 +25,6 @@ public class DIContext {
     private final ConfigPropertyAnnotationLoader configLoader;
     private final Map<Class<?>, Object> DIContainer = new HashMap<>();
     private final String configDirectory = configuration.getPropertiesDirectory();
-    private final String configName = configuration.getHotelPropertiesFileName();
 
     private DIContext(){
         this.annotationScanner = new AnnotationScanner();
@@ -35,7 +34,7 @@ public class DIContext {
 
     public static synchronized DIContext getContext() {
         if (context == null) {
-            log.info(START_CREATE_CONTEXT);
+            log.debug(START_CREATE_CONTEXT);
             context = new DIContext();
         }
         log.debug(CONTEXT_IS_READY);

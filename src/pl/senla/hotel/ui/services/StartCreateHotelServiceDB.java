@@ -25,7 +25,7 @@ public class StartCreateHotelServiceDB {
 
     public StartCreateHotelServiceDB() {}
 
-    public boolean runMenu(int idOrder, int idGuest) throws IllegalAccessException,
+    public void runMenu(int idOrder, int idGuest) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         int typeOfService = 1;
         while (typeOfService !=0 ) {
@@ -36,7 +36,6 @@ public class StartCreateHotelServiceDB {
                         executor.createHotelServiceForGuest(idOrder, idGuest, typeOfService));
             }
         }
-        return true; // check why
     }
 
     private int makeChoice(){

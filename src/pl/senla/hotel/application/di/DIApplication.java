@@ -20,7 +20,7 @@ public class DIApplication {
         return application;
     }
 
-    public static void run() throws InvocationTargetException,
+    public void run() throws InvocationTargetException,
             IllegalAccessException, InstantiationException, NoSuchMethodException, InterruptedException {
         log.debug(RUN_APPLICATION);
         DIContext context = DIContext.getContext();

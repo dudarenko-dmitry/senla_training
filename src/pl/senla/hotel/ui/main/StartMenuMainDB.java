@@ -28,9 +28,6 @@ public class StartMenuMainDB implements StartMenu {
     @Override
     public void runMenu() throws IllegalAccessException, InvocationTargetException,
             NoSuchMethodException, InstantiationException {
-//        DIContext context = DIContext.getContext();
-//        Processor processor = context.getBean(ProcessorSerializable.class);
-//        processor.loadHotelData();
         while (true) {
             navigator.buildMenu();
             int menuPoint = userChoice.makeChoice();
