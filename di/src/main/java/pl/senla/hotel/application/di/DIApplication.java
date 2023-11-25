@@ -32,7 +32,9 @@ public class DIApplication {
 
     private static void runApplication(DIContext context) throws IllegalAccessException,
             InvocationTargetException {
+        log.debug("runApplication: START");
         Class<?> startPointClass = context.getStartPoint();
+        log.debug("runApplication startPoint: {}", startPointClass);
         Method startMethod = context.getStartMethod();
         if (startMethod != null) {
             log.debug(INVOKE_START_METHOD);

@@ -5,6 +5,7 @@ import org.reflections.Reflections;
 import org.reflections.scanners.FieldAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
+import pl.senla.hotel.application.annotation.StartMethod;
 import pl.senla.hotel.application.config.Configuration;
 import pl.senla.hotel.application.config.AppConfiguration;
 import pl.senla.hotel.application.annotation.AppComponent;

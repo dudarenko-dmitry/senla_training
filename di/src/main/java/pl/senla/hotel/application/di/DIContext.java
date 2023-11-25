@@ -9,6 +9,7 @@ import pl.senla.hotel.application.config.AppConfiguration;
 import pl.senla.hotel.application.annotation.ConfigProperty;
 import pl.senla.hotel.application.properties.ConfigPropertyAnnotationLoader;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -88,6 +89,7 @@ public class DIContext {
 
     public void injectValuesFromDIContainer() throws NoSuchMethodException, InvocationTargetException,
             InstantiationException, IllegalAccessException {
+        log.debug("START: injectValuesFromDIContainer");
         Set<Class<?>> annotatedEntities = DIContainer.keySet();
         for (Class<?> aClass : annotatedEntities) {
             Object bean = aClass.getConstructor().newInstance();
@@ -107,20 +109,28 @@ public class DIContext {
     }
 
     public Class<?> getStartPoint() {
+        log.debug("getStartPoint: START");
         Class<?> startClass = null;
+        log.debug("getStartPoint: StartPoint is: {}", startClass);
         Set<Class<?>> classSet = annotationScanner.getStartPoints();
+        log.debug("getStartPoint: classSet is: {}", classSet.toString());
         for (Class<?> aClass : classSet) {
             StartPoint annotation = aClass.getAnnotation(StartPoint.class);
+            log.debug("getStartPoint: Annotation is: {}", annotation);
             if (annotation != null) {
                 startClass = aClass;
+                log.debug("getStartPoint: START Class is: {}", startClass);
             }
         }
         return startClass;
     }
 
     public Method getStartMethod() {
+        log.debug("getStartMethod: START");
         Class<?> startClass = getStartPoint();
+        log.debug("getStartMethod: receive startClass {}", startClass);
         Method[] methods = startClass.getMethods();
+        log.debug("getStartMethod: receive class's methods {}", Arrays.toString(methods));
         Method startMethod = null;
         for (Method m : methods) {
             StartMethod annotation = m.getAnnotation(StartMethod.class);
