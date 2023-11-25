@@ -12,7 +12,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static pl.senla.hotel.constant.HotelConstant.*;
+import static pl.senla.hotel.constant.HotelConstant.HOTEL_CHECK_IN_TIME;
+import static pl.senla.hotel.constant.HotelConstant.HOTEL_CHECK_OUT_TIME;
 import static pl.senla.hotel.constant.HotelServiceConstant.*;
 import static pl.senla.hotel.constant.OrderConstant.ORDER_NOT_EXISTS;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
