@@ -213,3 +213,20 @@ must be in a single instance;
 •	jdbc configuration via properties;
 •	the main CRUD methods should be implemented through an object-oriented approach
 (an object should come to the “input” to the method, at the “output” we get an object or a list of objects);
+
+
+-----------------------------------------------------------------------------
+
+Tasks for lecture No. 12
+
+Task 1.
+Transfer the main project to Maven. The project should have a modular structure.
+
+Task 2.
+Сonnect any logging library and configure logging in the project as a dependency (logback, log4j2)
+
+Task 3.
+Add a plugin to the project assembly that checks code style.
+Configure it (including linking the plugin to the execution phase).
+Recommendations for choosing a plugin: maven-checkstyle-plugin, checkstyle. 
+(https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html)
