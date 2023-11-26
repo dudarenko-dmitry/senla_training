@@ -9,7 +9,8 @@ public class AppConfiguration implements Configuration {
 
     @Override
     public String getPropertiesDirectory() {
-        return "C://IT/senla_training/src/pl/senla/hotel/resources/";
+//        return "C:\\IT\\senla_training\\di\\src\\main\\java\\pl\\senla\\hotel\\resources";
+        return "C://IT/senla_training/di/src/main/java/pl/senla/hotel/resources/";
     }
 
     @Override
