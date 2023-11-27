@@ -3,7 +3,7 @@ package pl.senla.hotel.controller;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.service.ServiceFacility;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +19,7 @@ public class ControllerFacilityDB implements ControllerFacility{
     public ControllerFacilityDB() {}
 
     @Override
-    public List<HotelFacility> readAll() {
+    public List<Room> readAll() {
         log.debug("ControllerFacility call ServiceFacility's method 'ReadAll'.");
         return serviceFacility.readAll();
     }
@@ -32,7 +32,7 @@ public class ControllerFacilityDB implements ControllerFacility{
     }
 
     @Override
-    public HotelFacility read(int id) throws InvocationTargetException, NoSuchMethodException,
+    public Room read(int id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerFacility call ServiceFacility's method 'Read'.");
         return serviceFacility.read(id);
@@ -67,31 +67,31 @@ public class ControllerFacilityDB implements ControllerFacility{
     }
 
     @Override
-    public List<HotelFacility> readPriceListForServicesSortByCategory() {
+    public List<Room> readPriceListForServicesSortByCategory() {
         log.debug("ControllerFacility call ServiceFacility's method 'readPriceListForServicesSortByCategory'.");
         return serviceFacility.readPriceListForServicesSortByCategory();
     }
 
     @Override
-    public List<HotelFacility> readPriceListForServicesSortByPrice() {
+    public List<Room> readPriceListForServicesSortByPrice() {
         log.debug("ControllerFacility call ServiceFacility's method 'readPriceListForServicesSortByPrice'.");
         return serviceFacility.readPriceListForServicesSortByPrice();
     }
 
     @Override
-    public List<HotelFacility> readAllRoomsSortByPrice() {
+    public List<Room> readAllRoomsSortByPrice() {
         log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByPrice'.");
         return serviceFacility.readAllRoomsSortByPrice();
     }
 
     @Override
-    public List<HotelFacility> readAllRoomsSortByCapacity() {
+    public List<Room> readAllRoomsSortByCapacity() {
         log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByCapacity'.");
         return serviceFacility.readAllRoomsSortByCapacity();
     }
 
     @Override
-    public List<HotelFacility> readAllRoomsSortByLevel() {
+    public List<Room> readAllRoomsSortByLevel() {
         log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByLevel'.");
         return serviceFacility.readAllRoomsSortByLevel();
     }

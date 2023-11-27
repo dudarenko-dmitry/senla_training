@@ -17,16 +17,16 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 @AppComponent
 public class ServiceFacilityDB implements ServiceFacility{
 
-    @GetInstance(beanName = "DaoFacilityDB")
-    private GenericDao<HotelFacility> daoHotelFacility;
+    @GetInstance(beanName = "DaoFacilityHibernate")
+    private GenericDao<Room> daoHotelFacility;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
     private Boolean changeRoomStatusEnabled;
 
     public ServiceFacilityDB() {}
 
     @Override
-    public List<HotelFacility> readAll() {
-        List<HotelFacility> hotelFacilityList = daoHotelFacility.readAll();
+    public List<Room> readAll() {
+        List<Room> hotelFacilityList = daoHotelFacility.readAll();
         if(hotelFacilityList.isEmpty()){
             log.debug(READ_ALL_HOTEL_FACILITY_IS_EMPTY);
         }
@@ -37,7 +37,7 @@ public class ServiceFacilityDB implements ServiceFacility{
     @Override
     public boolean create(String hotelFacilityString) {
         String[] facilityData = hotelFacilityString.split(";");
-        HotelFacility hotelFacility = new HotelFacility();
+        Room hotelFacility = new Room();
         hotelFacility.setCategory(CategoryFacility.valueOf(facilityData[0]));
         hotelFacility.setNameFacility(facilityData[1]);
         hotelFacility.setPrice(Integer.parseInt(facilityData[2]));
@@ -50,9 +50,9 @@ public class ServiceFacilityDB implements ServiceFacility{
     }
 
     @Override
-    public HotelFacility read(int idFacility) throws InvocationTargetException, NoSuchMethodException,
+    public Room read(int idFacility) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
-        HotelFacility hotelFacility = daoHotelFacility.read(idFacility);
+        Room hotelFacility = daoHotelFacility.read(idFacility);
         if(hotelFacility != null){
             log.debug("Read HotelFacility.");
             return hotelFacility;
@@ -65,7 +65,7 @@ public class ServiceFacilityDB implements ServiceFacility{
     public boolean update(int idFacility, String hotelFacilityString) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if(daoHotelFacility.read(idFacility) != null){
-            HotelFacility hotelFacilityUpdate = read(idFacility);
+            Room hotelFacilityUpdate = read(idFacility);
             hotelFacilityUpdate.setPrice(Integer.parseInt(hotelFacilityString));
             log.debug("Update HotelFacility");
             return daoHotelFacility.update(idFacility, hotelFacilityUpdate);
@@ -86,7 +86,7 @@ public class ServiceFacilityDB implements ServiceFacility{
     }
 
     @Override
-    public List<HotelFacility> readPriceListForServicesSortByCategory() {
+    public List<Room> readPriceListForServicesSortByCategory() {
         log.debug("PriceListForServicesSortByCategory:");
         return readAll()
                 .stream()
@@ -95,7 +95,7 @@ public class ServiceFacilityDB implements ServiceFacility{
     }
 
     @Override
-    public List<HotelFacility> readPriceListForServicesSortByPrice() {
+    public List<Room> readPriceListForServicesSortByPrice() {
         log.debug("PriceListForServicesSortByPrice:");
         return readAll()
                 .stream()
@@ -104,7 +104,7 @@ public class ServiceFacilityDB implements ServiceFacility{
     }
 
     @Override
-    public List<HotelFacility> readAllRoomsSortByPrice() {
+    public List<Room> readAllRoomsSortByPrice() {
         log.debug("AllRoomsSortByPrice:");
         return readAll().stream()
                 .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
@@ -113,7 +113,7 @@ public class ServiceFacilityDB implements ServiceFacility{
     }
 
     @Override
-    public List<HotelFacility> readAllRoomsSortByCapacity() {
+    public List<Room> readAllRoomsSortByCapacity() {
         log.debug("AllRoomsSortByCapacity:");
         return readAll().stream()
                 .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
@@ -122,7 +122,7 @@ public class ServiceFacilityDB implements ServiceFacility{
     }
 
     @Override
-    public List<HotelFacility> readAllRoomsSortByLevel() {
+    public List<Room> readAllRoomsSortByLevel() {
         log.debug("AllRoomsSortByLevel:");
         return readAll().stream()
                 .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
@@ -135,7 +135,7 @@ public class ServiceFacilityDB implements ServiceFacility{
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled){
             if (read(idRoom) != null) {
-                HotelFacility roomUpdate = read(idRoom);
+                Room roomUpdate = read(idRoom);
                 roomUpdate.makeRoomAvailable();
                 log.debug("Set RoomStatus Available.");
                 return daoHotelFacility.update(idRoom, roomUpdate);
@@ -152,7 +152,7 @@ public class ServiceFacilityDB implements ServiceFacility{
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled){
             if (read(idRoom) != null) {
-                HotelFacility roomUpdate = read(idRoom);
+                Room roomUpdate = read(idRoom);
                 roomUpdate.makeRoomRepaired();
                 log.debug("Set RoomStatus Repaired.");
                 return daoHotelFacility.update(idRoom, roomUpdate);

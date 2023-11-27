@@ -15,7 +15,7 @@ import static pl.senla.hotel.constant.ClientConstant.CLIENT_NOT_EXISTS;
 @Slf4j
 public class ServiceGuestDB implements ServiceGuest {
 
-    @GetInstance(beanName = "DaoGuestDB")
+    @GetInstance(beanName = "DaoGuestHibernate")
     private GenericDao<Guest> daoGuest;
 
     public ServiceGuestDB() {}

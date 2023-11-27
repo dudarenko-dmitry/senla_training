@@ -32,10 +32,11 @@ public class ConsoleConstant {
 
     public static final String CONSOLE_READ_ALL_FACILITIES =        "\nHotel's facilities' list: ";
 
-    public static final String CONSOLE_READ_ALL_ORDERS = "\nList of Orders: {}";
-    public static final String CONSOLE_CREATE_ORDER = "New Order was created: {}";
-    public static final String CONSOLE_CHANGE_ORDER = "Order changed: {}";
-    public static final String CONSOLE_DELETE_ORDER = "Order deleted: {}";
+    public static final String CONSOLE_READ_ALL_ORDERS =    "\nList of Orders: {}";
+    public static final String CONSOLE_READ_ORDER =         "\nOrder: {}";
+    public static final String CONSOLE_CREATE_ORDER =       "New Order was created: {}";
+    public static final String CONSOLE_CHANGE_ORDER =       "Order changed: {}";
+    public static final String CONSOLE_DELETE_ORDER =       "Order deleted: {}";
 
     public static final String CONSOLE_READ_ALL_ROOMS_SORTED_BY_PRICE =      "\nList of all rooms sorted by price: {}";
     public static final String CONSOLE_READ_FREE_ROOMS_SORTED_BY_PRICE =     "\nList of free rooms sorted by price: {}";

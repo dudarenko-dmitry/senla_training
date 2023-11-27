@@ -1,18 +1,18 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public interface ServiceFacility extends ServiceCRUDALL<HotelFacility> {
+public interface ServiceFacility extends ServiceCRUDALL<Room> {
 
-    List<HotelFacility> readPriceListForServicesSortByCategory();
-    List<HotelFacility> readPriceListForServicesSortByPrice();
+    List<Room> readPriceListForServicesSortByCategory();
+    List<Room> readPriceListForServicesSortByPrice();
 
-    List<HotelFacility> readAllRoomsSortByPrice();
-    List<HotelFacility> readAllRoomsSortByCapacity();
-    List<HotelFacility> readAllRoomsSortByLevel();
+    List<Room> readAllRoomsSortByPrice();
+    List<Room> readAllRoomsSortByCapacity();
+    List<Room> readAllRoomsSortByLevel();
 
     boolean updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
