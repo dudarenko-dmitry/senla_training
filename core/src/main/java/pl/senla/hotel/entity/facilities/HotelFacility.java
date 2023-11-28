@@ -1,6 +1,8 @@
 package pl.senla.hotel.entity.facilities;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,23 +13,37 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Slf4j
+@Entity
+@Table(name = "rooms")
 public class HotelFacility implements Serializable {
 
+    @Id
+    @Column(name = "facilityID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFacility;
+
+    @Column(name = "category", nullable = false)
     private CategoryFacility category;
+
+    @Column(name = "nameFacility", nullable = false)
     private String nameFacility;
+
+    @Column(name = "price", nullable = false)
     private Integer price;
+
+    @Column(name = "capacity", nullable = false)
     private Integer capacity;
+
+    @Column(name = "level", nullable = false)
     private RoomLevel roomLevel;
+
+    @Column(name = "status", nullable = false)
     private RoomStatus roomStatus;
 
     @Serial
     private static final long serialVersionUID = 4L;
-
-    public HotelFacility() {
-
-    }
 
     public HotelFacility(CategoryFacility category, String nameFacility, Integer price,
                          Integer capacity, RoomLevel roomLevel, RoomStatus roomStatus) {

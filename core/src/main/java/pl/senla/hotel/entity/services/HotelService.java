@@ -1,9 +1,14 @@
 package pl.senla.hotel.entity.services;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.GetInstance;
+import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.facilities.HotelFacility;
 import pl.senla.hotel.service.ServiceFacility;
 
 import java.io.Serial;
@@ -20,26 +25,55 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Slf4j
+@Entity
+@Table(name = "reservations")
 public class HotelService implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 20L;
 
+    @Id
+    @Column(name = "serviceID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idService;
+
+    @Column(name = "orderID", nullable = false)
     private Integer idOrder;
+
+    @Column(name = "serviceType", nullable = false)
     private TypeOfService typeOfService;
+
+    @Column(name = "guestID", nullable = false)
     private Integer idGuest;
+
+    @Column(name = "facilityID", nullable = false)
     private Integer idRoom;
+
+    @Column(name = "day", nullable = false)
     private Integer numberOfDays;
+
+    @Column(name = "checkIn", nullable = false)
     private LocalDateTime checkInTime;
+
+    @Column(name = "checkOut", nullable = false)
     private LocalDateTime checkOutTime;
+
+    @Column(name = "cost", nullable = false)
     private Integer cost;
+
+    @OneToOne
+    private HotelFacility room;
+
+    @ManyToOne
+    private Guest guest;
+
+    @ManyToOne
+    private Order order;
+
     @GetInstance(beanName = "ServiceFacilityDB")
     private transient ServiceFacility serviceRoom;
-
-    public HotelService() {
-    }
 
     public HotelService(Integer idOrder, TypeOfService typeOfService, Integer idGuest,
                            Integer idRoom, LocalDate startDate, Integer numberOfDays)

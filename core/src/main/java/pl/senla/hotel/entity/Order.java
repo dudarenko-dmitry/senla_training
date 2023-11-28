@@ -1,6 +1,8 @@
 package pl.senla.hotel.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,11 +15,22 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Slf4j
+@Entity
+@Table(name = "orders")
 public class Order implements Serializable {
 
+    @Id
+    @Column(name = "orderID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrder;
+
+    @Column(name = "guestID", nullable = false)
+    @ManyToOne
     private Integer idGuest;
+
+    @OneToMany(mappedBy = "serviceID")
     private List<Integer> idServices = new ArrayList<>();
 
     @Serial
@@ -36,17 +49,12 @@ public class Order implements Serializable {
         this.idServices = idServices;
     }
 
-    public Order() {
-
-    }
-
     public void setIdGuest(Integer idGuest) {
         if (idGuest != null) {
             this.idGuest = idGuest;
         } else {
             log.warn(ERROR_ID_GUEST);
         }
-
     }
 
     public void setServices(List<Integer> idServices) {
