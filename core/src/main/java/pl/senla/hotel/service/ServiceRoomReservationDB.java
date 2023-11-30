@@ -31,11 +31,11 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
 
     @GetInstance(beanName = "ServiceFacilityDB")
     private ServiceFacility serviceHotelFacility;
-    @GetInstance(beanName = "DaoHotelServiceDB")
+    @GetInstance(beanName = "DaoHotelServiceHibernate")
     private GenericDao<HotelService> daoHotelService;
-    @GetInstance(beanName = "DaoGuestDB")
+    @GetInstance(beanName = "DaoGuestHibernate")
     private GenericDao<Guest> daoGuest;
-    @GetInstance(beanName = "DaoFacilityDB")
+    @GetInstance(beanName = "DaoFacilityHibernate")
     private GenericDao<HotelFacility> daoFacility;
     @GetInstance(beanName = "ServiceFacilityDB")
     private transient ServiceFacility serviceRoom;

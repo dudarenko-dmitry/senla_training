@@ -17,20 +17,20 @@ import static pl.senla.hotel.constant.OrderConstant.*;
 @Getter
 @NoArgsConstructor
 @Slf4j
-@Entity
-@Table(name = "orders")
+//@Entity
+//@Table(name = "orders")
 public class Order implements Serializable {
 
-    @Id
-    @Column(name = "orderID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @Column(name = "orderID")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrder;
 
-    @Column(name = "guestID", nullable = false)
-    @ManyToOne
+//    @Column(name = "guestID", nullable = false)
+//    @ManyToOne
     private Integer idGuest;
 
-    @OneToMany(mappedBy = "serviceID")
+//    @OneToMany(mappedBy = "serviceID")
     private List<Integer> idServices = new ArrayList<>();
 
     @Serial

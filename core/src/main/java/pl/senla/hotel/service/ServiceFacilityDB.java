@@ -17,7 +17,7 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 @AppComponent
 public class ServiceFacilityDB implements ServiceFacility{
 
-    @GetInstance(beanName = "DaoFacilityDB")
+    @GetInstance(beanName = "DaoFacilityHibernate")
     private GenericDao<HotelFacility> daoHotelFacility;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "change-room-status.enabled", type = "Boolean")
     private Boolean changeRoomStatusEnabled;

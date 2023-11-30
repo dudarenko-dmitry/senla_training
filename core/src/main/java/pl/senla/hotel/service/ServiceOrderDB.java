@@ -22,9 +22,9 @@ public class ServiceOrderDB implements ServiceOrder {
 
     @GetInstance(beanName = "ServiceHotelServiceDB")
     private ServiceHotelService serviceHotelService;
-    @GetInstance(beanName = "DaoOrderDB")
+    @GetInstance(beanName = "DaoOrderHibernate")
     private GenericDao<OrderDto> daoOrderDto;
-    @GetInstance(beanName = "DaoFacilityDB")
+    @GetInstance(beanName = "DaoFacilityHibernate")
     private GenericDao<HotelFacility> daoRoom;
 
     public ServiceOrderDB() {}

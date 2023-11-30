@@ -9,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.Serial;
 import java.io.Serializable;
 
-import static pl.senla.hotel.constant.HotelFacilityConstant.*;
-
 @Setter
 @Getter
 @NoArgsConstructor
@@ -52,46 +50,6 @@ public class HotelFacility implements Serializable {
         this.price = price;
         this.capacity = capacity;
         this.roomLevel = roomLevel;
-        this.roomStatus = roomStatus;
-    }
-
-    public void setCategory(CategoryFacility category) {
-        if (category != null) {
-            this.category = category;
-        } else {
-            log.warn(ERROR_NULL_CATEGORY);
-        }
-    }
-
-    public void setNameFacility(String nameFacility) {
-        if (nameFacility != null) {
-            this.nameFacility = nameFacility;
-        } else {
-            log.warn(ERROR_NAME_FACILITY);
-        }
-    }
-
-    public void setPrice(Integer price) {
-        if (price != null) {
-            this.price = price;
-        } else {
-            log.warn(ERROR_NULL_PRICE);
-        }
-    }
-
-    public void setCapacity(Integer capacity) {
-        if (capacity != null) {
-            this.capacity = capacity;
-        } else {
-            log.warn(ERROR_NULL_CAPACITY);
-        }
-    }
-
-    public void setRoomLevel(RoomLevel roomLevel) {
-        this.roomLevel = roomLevel;
-    }
-
-    public void setRoomStatus(RoomStatus roomStatus) {
         this.roomStatus = roomStatus;
     }
 

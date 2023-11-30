@@ -18,7 +18,7 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
 
     @GetInstance(beanName = "ServiceRoomReservationDB")
     private ServiceRoomReservation serviceRoomReservation;
-    @GetInstance(beanName = "DaoHotelServiceDB")
+    @GetInstance(beanName = "DaoHotelServiceHibernate")
     private GenericDao<HotelService> daoHotelService;
 
     public ServiceHotelServiceDB() {}

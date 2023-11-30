@@ -1,20 +1,27 @@
 package pl.senla.hotel.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 
-import static pl.senla.hotel.constant.OrderConstant.*;
-
-@Setter
-@Getter
+@Data
+@NoArgsConstructor
 @Slf4j
+@Entity
+@Table(name = "orders")
 public class OrderDto implements Serializable {
 
+    @Id
+    @Column(name = "orderID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrder;
+
+    @Column(name = "guestID", nullable = false)
+    @ManyToOne
     private Integer idGuest;
 
     @Serial
@@ -24,31 +31,4 @@ public class OrderDto implements Serializable {
         this.idOrder = idGuest;
     }
 
-    public OrderDto() {
-
-    }
-
-    public void setIdOrder(Integer idOrder) {
-        if (idOrder != null) {
-            this.idOrder = idOrder;
-        } else {
-            log.warn(ERROR_ID_ORDER);
-        }
-    }
-
-    public void setIdGuest(Integer idGuest) {
-        if (idGuest != null) {
-            this.idGuest = idGuest;
-        } else {
-            log.warn(ERROR_ID_GUEST);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "\n=== > Order{" +
-                "idOrder=" + idOrder +
-                ", idGuest= " + idGuest +
-                '}';
-    }
 }
