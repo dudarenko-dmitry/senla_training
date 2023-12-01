@@ -3,7 +3,7 @@ package pl.senla.hotel.comparators;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.dao.GenericDao;
 import pl.senla.hotel.entity.services.TypeOfService;
@@ -19,7 +19,7 @@ import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
     @GetInstance(beanName = "DaoFacilityDB")
-    private GenericDao<HotelFacility> daoRoom;
+    private GenericDao<Room> daoRoom;
 
     public HotelServicesComparatorByPrice() {}
 

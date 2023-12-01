@@ -8,7 +8,7 @@ import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.dao.GenericDao;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.TypeOfService;
@@ -36,7 +36,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
     @GetInstance(beanName = "DaoGuestHibernate")
     private GenericDao<Guest> daoGuest;
     @GetInstance(beanName = "DaoFacilityHibernate")
-    private GenericDao<HotelFacility> daoFacility;
+    private GenericDao<Room> daoFacility;
     @GetInstance(beanName = "ServiceFacilityDB")
     private transient ServiceFacility serviceRoom;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
@@ -239,10 +239,10 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
     }
 
     @Override
-    public List<HotelFacility> readAllRoomsFreeInTime(String checkedTimeString) {
+    public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
         log.debug("START: Hotel Service readAllRoomsFreeInTime");
         LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
-        List<HotelFacility> occupiedRooms = readAll().stream()
+        List<Room> occupiedRooms = readAll().stream()
                 .filter(rr -> rr.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
                 .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
                 .map(rr -> {
@@ -254,12 +254,12 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
                     }
                 })
                 .toList();
-        List<HotelFacility> rooms = serviceHotelFacility.readAll().stream()
+        List<Room> rooms = serviceHotelFacility.readAll().stream()
                 .filter(hs -> hs.getCategory().equals(CategoryFacility.ROOM))
                 .toList();
-        List<HotelFacility> freeRooms = new ArrayList<>();
-        for (HotelFacility r : rooms) {
-            for (HotelFacility hs : occupiedRooms) {
+        List<Room> freeRooms = new ArrayList<>();
+        for (Room r : rooms) {
+            for (Room hs : occupiedRooms) {
                 if (r.equals(hs)) {
                     freeRooms.add(r);
                 }
@@ -275,7 +275,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
     }
 
     @Override
-    public List<HotelFacility> readAllFreeRoomsSortByPrice(String checkedTimeString) {
+    public List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString) {
         log.debug("START: Hotel Service readAllFreeRoomsSortByPrice");
         return readAllRoomsFreeInTime(checkedTimeString).stream()
                 .sorted(new RoomComparatorByPrice())
@@ -283,7 +283,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
     }
 
     @Override
-    public List<HotelFacility> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
+    public List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
         log.debug("START: Hotel Service readAllFreeRoomsSortByCapacity");
         return readAllRoomsFreeInTime(checkedTimeString).stream()
                 .sorted(new RoomComparatorByCapacity())
@@ -291,7 +291,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
     }
 
     @Override
-    public List<HotelFacility> readAllFreeRoomsSortByLevel(String checkedTimeString) {
+    public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
         log.debug("START: Hotel Service readAllFreeRoomsSortByLevel");
         return readAllRoomsFreeInTime(checkedTimeString).stream()
                 .sorted(new RoomComparatorByLevel())

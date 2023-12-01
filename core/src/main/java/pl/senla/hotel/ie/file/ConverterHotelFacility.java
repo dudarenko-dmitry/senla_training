@@ -2,12 +2,12 @@ package pl.senla.hotel.ie.file;
 
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.ConfigProperty;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 
 import pl.senla.hotel.utils.RoomUtil;
 
 @AppComponent
-public class ConverterHotelFacility implements ConverterEntity<HotelFacility> {
+public class ConverterHotelFacility implements ConverterEntity<Room> {
 
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "file-path.directory")
     private String filePathDirectory;
@@ -22,11 +22,11 @@ public class ConverterHotelFacility implements ConverterEntity<HotelFacility> {
         return new String[] {"idFacility", "category", "nameFacility", "price", "capacity", "roomLevel", "roomStatus"};
     }
 
-    public String[] convertEntityToString(HotelFacility t) {
+    public String[] convertEntityToString(Room t) {
         return RoomUtil.convertFacilityToString(t);
     }
 
-    public HotelFacility convertStringToEntity(String csvT) {
+    public Room convertStringToEntity(String csvT) {
         return RoomUtil.convertStringToRoom(csvT);
     }
 }

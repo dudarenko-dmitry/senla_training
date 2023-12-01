@@ -5,7 +5,7 @@ import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.room.roomlevel.StartMenuRoomLevel;
@@ -63,7 +63,7 @@ public class ExecutorRoomDB implements Executor {
                 int idRoomUpdate = sc.nextInt();
                 log.info(INPUT_PRICE);
                 int newPrice = sc.nextInt();
-                HotelFacility roomUpdated = facilityController.read(idRoomUpdate);
+                Room roomUpdated = facilityController.read(idRoomUpdate);
                 if(roomUpdated != null){
                     log.info(CONSOLE_CHANGE_ROOM, facilityController.update(idRoomUpdate, String.valueOf(newPrice)));
                 } else {
@@ -73,7 +73,7 @@ public class ExecutorRoomDB implements Executor {
             case 5 -> {
                 log.info(INPUT_ID_ROOM_UPDATE);
                 int idRoomUpdate = sc.nextInt();
-                HotelFacility roomUpdated = facilityController.read(idRoomUpdate);
+                Room roomUpdated = facilityController.read(idRoomUpdate);
                 if(roomUpdated != null){
                     log.info(CONSOLE_CHANGE_ROOM, facilityController.updateRoomStatusAvailable(idRoomUpdate));
                 } else {
@@ -83,7 +83,7 @@ public class ExecutorRoomDB implements Executor {
             case 6 -> {
                 log.info(INPUT_ID_ROOM_UPDATE);
                 int idRoomUpdate = sc.nextInt();
-                HotelFacility roomUpdated = facilityController.read(idRoomUpdate);
+                Room roomUpdated = facilityController.read(idRoomUpdate);
                 if(roomUpdated != null){
                     log.info(CONSOLE_CHANGE_ROOM, facilityController.updateRoomStatusRepaired(idRoomUpdate));
                 } else {

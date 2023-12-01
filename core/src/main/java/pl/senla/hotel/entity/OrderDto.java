@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -21,8 +21,11 @@ public class OrderDto implements Serializable {
     private Integer idOrder;
 
     @Column(name = "guestID", nullable = false)
-    @ManyToOne
     private Integer idGuest;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "guestID")
+    private Guest guest;
 
     @Serial
     private static final long serialVersionUID = 32L;

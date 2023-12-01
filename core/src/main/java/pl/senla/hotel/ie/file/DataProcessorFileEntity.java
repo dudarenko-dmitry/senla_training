@@ -5,7 +5,7 @@ import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.storage.DataStorageFacility;
 import pl.senla.hotel.storage.DataStorageGuest;
@@ -51,7 +51,7 @@ public class DataProcessorFileEntity implements DataProcessor {
 
     @Override
     public void saveHotelFacility() {
-        ReaderWriterEntity<HotelFacility> hotelFacilityReaderWriter =
+        ReaderWriterEntity<Room> hotelFacilityReaderWriter =
                 new ReaderWriterEntity<>(new ConverterHotelFacility());
         if (dataStorageFacility.getDataList().isEmpty()) {
             log.info(ERROR_HOTEL_FACILITY_LIST_EMPTY);
@@ -109,7 +109,7 @@ public class DataProcessorFileEntity implements DataProcessor {
 
     @Override
     public void loadHotelFacility() {
-        ReaderWriterEntity<HotelFacility> hotelFacilityReaderWriter =
+        ReaderWriterEntity<Room> hotelFacilityReaderWriter =
                 new ReaderWriterEntity<>(new ConverterHotelFacility());
         try {
             if (dataStorageFacility.getDataList().isEmpty()) {

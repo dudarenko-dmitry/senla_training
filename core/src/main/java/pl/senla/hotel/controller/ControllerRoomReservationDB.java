@@ -3,7 +3,7 @@ package pl.senla.hotel.controller;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.service.ServiceRoomReservation;
 
@@ -54,19 +54,19 @@ public class ControllerRoomReservationDB implements ControllerRoomReservation {
     }
 
     @Override
-    public List<HotelFacility> readAllFreeRoomsSortByPrice(String checkedTimeString) {
+    public List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllFreeRoomsSortByPrice'.");
         return roomReservationService.readAllFreeRoomsSortByPrice(checkedTimeString);
     }
 
     @Override
-    public List<HotelFacility> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
+    public List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllFreeRoomsSortByCapacity'.");
         return roomReservationService.readAllFreeRoomsSortByCapacity(checkedTimeString);
     }
 
     @Override
-    public List<HotelFacility> readAllFreeRoomsSortByLevel(String checkedTimeString) {
+    public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllFreeRoomsSortByLevel'.");
         return roomReservationService.readAllFreeRoomsSortByLevel(checkedTimeString);
     }
@@ -96,7 +96,7 @@ public class ControllerRoomReservationDB implements ControllerRoomReservation {
     }
 
     @Override
-    public List<HotelFacility> readAllRoomsFreeInTime(String checkedTimeString) {
+    public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllRoomsFreeInTime'.");
         return roomReservationService.readAllRoomsFreeInTime(checkedTimeString);
     }

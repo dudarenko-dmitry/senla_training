@@ -6,7 +6,7 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.dao.GenericDao;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.OrderDto;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,7 +25,7 @@ public class ServiceOrderDB implements ServiceOrder {
     @GetInstance(beanName = "DaoOrderHibernate")
     private GenericDao<OrderDto> daoOrderDto;
     @GetInstance(beanName = "DaoFacilityHibernate")
-    private GenericDao<HotelFacility> daoRoom;
+    private GenericDao<Room> daoRoom;
 
     public ServiceOrderDB() {}
 

@@ -9,9 +9,9 @@ public final class RoomUtil {
     private RoomUtil() {
     }
 
-    public static HotelFacility convertStringToRoom(String csvT) {
+    public static Room convertStringToRoom(String csvT) {
         String[] text = csvT.split(";");
-        HotelFacility room = new HotelFacility();
+        Room room = new Room();
         room.setIdFacility(Integer.valueOf(text[0].substring(1, text[0].length() - 1)));
         room.setCategory(CategoryFacility.valueOf(text[1].substring(1, text[1].length() - 1)));
         room.setNameFacility(text[2].substring(1, text[2].length() - 1));
@@ -22,7 +22,7 @@ public final class RoomUtil {
         return room;
     }
 
-    public static String[] convertFacilityToString(HotelFacility facility) {
+    public static String[] convertFacilityToString(Room facility) {
         Integer idFacility = facility.getIdFacility();
         CategoryFacility categoryFacility = facility.getCategory();
         String nameFacility = facility.getNameFacility();

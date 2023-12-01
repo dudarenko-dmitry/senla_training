@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.services.HotelService;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,11 +16,13 @@ import static pl.senla.hotel.constant.ClientConstant.*;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @Slf4j
-@Entity
 @Table(name = "guests")
+@Entity
 public class Guest implements Serializable {
+
+    public Guest() {
+    }
 
     @Id
     @Column(name = "guestID")
@@ -33,11 +35,11 @@ public class Guest implements Serializable {
     @Column(name = "phone", nullable = false)
     private Integer phoneNumber;
 
-    @OneToMany(mappedBy = "guestID")
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HotelService> reservations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "guestID")
-    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDto> orders = new ArrayList<>();
 
     @Serial
     private static final long serialVersionUID = 12L;
