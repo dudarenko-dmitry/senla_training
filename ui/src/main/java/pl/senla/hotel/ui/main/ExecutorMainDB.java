@@ -24,8 +24,8 @@ public class ExecutorMainDB implements Executor {
     private StartMenu startMenuOrder;
     @GetInstance(beanName = "StartMenuAnalyticsDB")
     private StartMenu startMenuAnalytics;
-    @GetInstance(beanName = "StartMenuImportExport")
-    private StartMenu startMenuImportExport;
+//    @GetInstance(beanName = "StartMenuImportExport")
+//    private StartMenu startMenuImportExport;
     @GetInstance(beanName = "UserChoice")
     private Choice userChoice;
 
@@ -40,7 +40,7 @@ public class ExecutorMainDB implements Executor {
             case 2 -> startMenuGuest.runMenu();
             case 3 -> startMenuOrder.runMenu();
             case 4 -> startMenuAnalytics.runMenu();
-            case 5 -> startMenuImportExport.runMenu();
+//            case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
                 log.info(CLOSE_APPLICATION);
                 System.exit(0);

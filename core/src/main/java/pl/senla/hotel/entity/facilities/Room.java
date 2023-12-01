@@ -20,7 +20,7 @@ public class Room implements Serializable {
     @Id
     @Column(name = "facilityID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idFacility;
+    private Integer idRoom;
 
     @Column(name = "category", nullable = false)
     private CategoryFacility category;
@@ -64,7 +64,7 @@ public class Room implements Serializable {
     @Override
     public String toString() {
         return "\nHotelFacility{" +
-                "idFacility=" + idFacility +
+                "idFacility=" + idRoom +
                 ", category='" + category + '\'' +
                 ", nameFacility=" + nameFacility +
                 ", price=" + price +

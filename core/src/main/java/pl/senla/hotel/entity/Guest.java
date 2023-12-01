@@ -16,13 +16,11 @@ import static pl.senla.hotel.constant.ClientConstant.*;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Slf4j
 @Table(name = "guests")
 @Entity
 public class Guest implements Serializable {
-
-    public Guest() {
-    }
 
     @Id
     @Column(name = "guestID")
@@ -37,9 +35,6 @@ public class Guest implements Serializable {
 
     @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HotelService> reservations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderDto> orders = new ArrayList<>();
 
     @Serial
     private static final long serialVersionUID = 12L;

@@ -8,11 +8,9 @@ public class HibernateUtil {
 
     private static SessionFactory buildSessionFactory() {
         try {
-            // Создание SessionFactory из hibernate.cfg.xml
             return new Configuration().configure().buildSessionFactory();
         }
         catch (Throwable ex) {
-            // Вывод информации об исключении при создании SessionFactory
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
@@ -23,7 +21,6 @@ public class HibernateUtil {
     }
 
     public static void shutdown() {
-        // Закрытие кэшей и пулов соединений
         getSessionFactory().close();
     }
 }

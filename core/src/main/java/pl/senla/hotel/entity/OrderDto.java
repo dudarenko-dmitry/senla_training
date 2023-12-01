@@ -20,8 +20,8 @@ public class OrderDto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrder;
 
-    @Column(name = "guestID", nullable = false)
-    private Integer idGuest;
+//    @Column(name = "guestID", nullable = false)
+//    private Integer idGuest;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "guestID")

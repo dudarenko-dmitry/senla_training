@@ -38,6 +38,6 @@ public class HotelServicesComparatorByPrice implements Comparator<HotelService> 
     }
 
     private int compareRoomReservation(HotelService o1, HotelService o2) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        return daoRoom.read(o1.getIdRoom()).getPrice() - daoRoom.read(o2.getIdRoom()).getPrice();
+        return daoRoom.read(o1.getRoom().getIdRoom()).getPrice() - daoRoom.read(o2.getRoom().getIdRoom()).getPrice();
     }
 }

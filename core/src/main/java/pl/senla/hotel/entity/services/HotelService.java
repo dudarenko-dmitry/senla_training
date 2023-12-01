@@ -44,12 +44,16 @@ public class HotelService implements Serializable {
     @Column(name = "serviceType", nullable = false)
     private TypeOfService typeOfService;
 
-    @Column(name = "guestID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "guestID")
     private Guest guest;
-//    private Integer idGuest;
 
-    @Column(name = "facilityID", nullable = false)
-    private Integer idRoom;
+//    @Column(name = "facilityID", nullable = false)
+//    private Integer idRoom;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "facilityID", referencedColumnName = "facilityID")
+    private Room room;
 
     @Column(name = "day", nullable = false)
     private Integer numberOfDays;
@@ -62,27 +66,6 @@ public class HotelService implements Serializable {
 
     @Column(name = "cost", nullable = false)
     private Integer cost;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "guestID")
-//    private Guest guest;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "facilityID", referencedColumnName = "facilityID")
-    private Room room;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "orderID")
-//    private OrderDto orderDto;
-
-//    @OneToOne
-//    private HotelFacility room;
-//
-//    @ManyToOne
-//    private Guest guest;
-//
-//    @ManyToOne
-//    private Order order;
 
     @GetInstance(beanName = "ServiceFacilityDB")
     private transient ServiceFacility serviceRoom;
@@ -149,8 +132,8 @@ public class HotelService implements Serializable {
                 "idService=" + idService +
                 ", idOrder=" + idOrder +
                 ", typeOfService=" + typeOfService +
-                ", idGuest=" + guest +
-                ", idRoom=" + idRoom +
+                "\nGuest=" + guest +
+                "\nRoom=" + room +
                 "\nnumberOfDays=" + numberOfDays +
                 ", checkInTime=" + checkInTime +
                 ", checkOutTime=" + checkOutTime +

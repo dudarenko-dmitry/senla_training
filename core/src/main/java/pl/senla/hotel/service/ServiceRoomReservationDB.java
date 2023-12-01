@@ -82,15 +82,16 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
             if(isVacant(idRoom, checkInTime, checkOutTime)){
                 HotelService reservation = new HotelService();
                 reservation.setIdOrder(idOrder);
-                reservation.setIdGuest(idGuest);
-                reservation.setIdRoom(idRoom);
+//                reservation.setIdGuest(idGuest);
+                reservation.setGuest(daoGuest.read(idGuest));
+                reservation.setRoom(daoFacility.read(idRoom));
                 reservation.setCheckInTime(checkInTime);
                 reservation.setNumberOfDays(numberOfDays);
                 reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION);
                 reservation.setCheckOutTime(checkOutTime);
                 reservation.setCost(daoFacility.read(idRoom).getPrice() * numberOfDays);
                 List<HotelService> roomReservationList = readAll().stream()
-                        .filter(rr -> rr.getIdRoom() == idRoom)
+                        .filter(rr -> rr.getRoom().getIdRoom() == idRoom)
                         .toList();
                 int numberOfRecords = roomReservationList.size();
                 if (numberOfRecords >= roomRecordsNumber) {
@@ -138,12 +139,13 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
         HotelService reservationUpdate = new HotelService();
         reservationUpdate.setIdService(idReservation);
         reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION);
-        reservationUpdate.setIdGuest(reservationOld.getIdGuest());
-        reservationUpdate.setIdRoom(reservationOld.getIdRoom());
+//        reservationUpdate.setIdGuest(reservationOld.getIdGuest());
+        reservationUpdate.setGuest(reservationOld.getGuest());
+        reservationUpdate.setRoom(reservationOld.getRoom());
         reservationUpdate.setCheckInTime(checkInTime);
         reservationUpdate.setNumberOfDays(numberOfDaysNew);
         reservationUpdate.setCheckOutTime(checkOutTime);
-        reservationUpdate.setCost(daoFacility.read(reservationOld.getIdRoom()).getPrice() * numberOfDaysNew);
+        reservationUpdate.setCost(daoFacility.read(reservationOld.getRoom().getIdRoom()).getPrice() * numberOfDaysNew);
 
         delete(idReservation);
         if(createFromObject(reservationUpdate)){
@@ -198,7 +200,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
         log.debug("START: Hotel Service countGuestPaymentForRoom");
         List<Integer> costs = readAll()
                 .stream()
-                .filter(rr -> rr.getIdGuest() == idGuest)
+                .filter(rr -> rr.getGuest().getIdGuest() == idGuest)
                 .map(HotelService::getCost)
                 .toList();
         int sum = 0;
@@ -215,13 +217,13 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
         List<String> guestsAndDates = new ArrayList<>();
         List<HotelService> roomReservationsForRoom = readAll()
                 .stream()
-                .filter(rr -> rr.getIdRoom() == idRoom)
+                .filter(rr -> rr.getRoom().getIdRoom() == idRoom)
                 .sorted(new RoomReservationsComparatorByCheckOutReverse())
                 .limit(3)
                 .toList();
         for (HotelService rr : roomReservationsForRoom){
             if (rr != null) {
-                int idGuest = rr.getIdGuest();
+                int idGuest = rr.getGuest().getIdGuest();
                 for (int i = 0; i < daoGuest.readAll().size(); i++) {
                     if (idGuest == daoGuest.read(i).getIdGuest()) {
                         String guestAndDate = "\n#" + (i + 1) +
@@ -247,7 +249,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
                 .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
                 .map(rr -> {
                     try {
-                        return serviceHotelFacility.read(rr.getIdRoom());
+                        return serviceHotelFacility.read(rr.getRoom().getIdRoom());
                     } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                              IllegalAccessException e) {
                         throw new RuntimeException(e);
@@ -318,7 +320,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
 
     private boolean createFromObject(HotelService reservation) {
         log.debug("START: Hotel Service createFromObject");
-        if(isVacant(reservation.getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
+        if(isVacant(reservation.getRoom().getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
             return daoHotelService.create(reservation); // changed here
         } else {
             System.out.println(ERROR_ROOM_NOT_AVAILABLE);
@@ -329,7 +331,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
     private boolean isVacant(int idRoom, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
         log.debug("START: Hotel Service isVacant");
         return readAll().stream()
-                .filter(r -> r.getIdRoom() == idRoom)
+                .filter(r -> r.getRoom().getIdRoom() == idRoom)
                 .filter(r -> (checkInTime.isAfter(r.getCheckInTime()) && checkInTime.isBefore(r.getCheckOutTime())) ||
                         (checkOutTime.isAfter(r.getCheckInTime()) && checkInTime.isBefore(r.getCheckOutTime())))
                 .toList()
