@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.dao.GenericDao;
+import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.OrderDto;
 import pl.senla.hotel.entity.facilities.Room;
@@ -44,7 +45,7 @@ public class ServiceOrderDB implements ServiceOrder {
         log.debug("START: Order Create");
         int idGuest = Integer.parseInt(orderString);
         OrderDto order = new OrderDto(idGuest);
-        order.setIdGuest(idGuest);
+        order.getGuest().setIdGuest(idGuest);
         return daoOrderDto.create(order);
     }
 
@@ -97,7 +98,7 @@ public class ServiceOrderDB implements ServiceOrder {
         OrderDto orderOld = daoOrderDto.read(idOrder);
         OrderDto orderUpdate = new OrderDto(); // read from String
         orderUpdate.setIdOrder(idOrder);
-        orderUpdate.setIdGuest(orderOld.getIdGuest());
+        orderUpdate.setGuest(orderOld.getGuest());
         return daoOrderDto.update(idOrder, orderUpdate);
     }
 
@@ -115,7 +116,7 @@ public class ServiceOrderDB implements ServiceOrder {
         log.debug("START: Convert DTO to Order");
         Order order = new Order();
         order.setIdOrder(orderDto.getIdOrder()); // косяк
-        order.setIdGuest(orderDto.getIdGuest());
+        order.setGuest(orderDto.getGuest());
         order.setIdServices(readAllIdServicesForOrder(orderDto.getIdOrder()));
         return order;
     }

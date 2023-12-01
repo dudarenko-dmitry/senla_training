@@ -27,7 +27,7 @@ public class Order implements Serializable {
 
 //    @Column(name = "guestID", nullable = false)
 //    @ManyToOne
-    private Integer idGuest;
+    private Guest guest;
 
 //    @OneToMany(mappedBy = "serviceID")
     private List<Integer> idServices = new ArrayList<>();
@@ -39,18 +39,9 @@ public class Order implements Serializable {
         this.idOrder = idGuest;
     }
 
-    public Order(Integer idGuest, List<Integer> idServices) {
-        if (idGuest == null) {
-            log.warn(ERROR_CREATE_ORDER_NO_CLIENT);
-            return;
-        }
-        this.idGuest = idGuest;
-        this.idServices = idServices;
-    }
-
-    public void setIdGuest(Integer idGuest) {
-        if (idGuest != null) {
-            this.idGuest = idGuest;
+    public void setGuest(Guest guest) {
+        if (guest != null) {
+            this.guest = guest;
         } else {
             log.warn(ERROR_ID_GUEST);
         }
@@ -68,7 +59,7 @@ public class Order implements Serializable {
     public String toString() {
         return "\n=== > Order{" +
                 "idOrder=" + idOrder +
-                ", idGuest= " + idGuest +
+                ", Guest= " + guest +
                 ", idServices= " + idServices +
                 '}';
     }
