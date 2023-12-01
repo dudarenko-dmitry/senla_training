@@ -7,6 +7,7 @@ import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.dao.GenericDao;
 import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.facilities.RoomStatus;
@@ -37,6 +38,8 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
     private GenericDao<Guest> daoGuest;
     @GetInstance(beanName = "DaoFacilityHibernate")
     private GenericDao<Room> daoFacility;
+    @GetInstance(beanName = "DaoOrderHibernate")
+    private GenericDao<Order> daoOrder;
     @GetInstance(beanName = "ServiceFacilityDB")
     private transient ServiceFacility serviceRoom;
     @ConfigProperty(configFileName = "hotel.properties", propertyName = "room-records.number", type = "Integer")
@@ -81,8 +84,7 @@ public class ServiceRoomReservationDB implements ServiceRoomReservation {
 
             if(isVacant(idRoom, checkInTime, checkOutTime)){
                 HotelService reservation = new HotelService();
-                reservation.setIdOrder(idOrder);
-//                reservation.setIdGuest(idGuest);
+                reservation.setOrder(daoOrder.read(idOrder));
                 reservation.setGuest(daoGuest.read(idGuest));
                 reservation.setRoom(daoFacility.read(idRoom));
                 reservation.setCheckInTime(checkInTime);

@@ -106,7 +106,6 @@ public abstract class GenericDaoHibernate<T> implements GenericDao<T> {
         CriteriaQuery<T> allT = criteriaQuery.select(rootEntry);
         TypedQuery<T> allQuery = session.createQuery(allT);
         List<T> resultList = allQuery.getResultList();
-        log.info(READ_ALL_SUCCEED);
         return resultList;
     }
 

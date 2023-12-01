@@ -4,33 +4,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import pl.senla.hotel.entity.services.HotelService;
 
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static pl.senla.hotel.constant.OrderConstant.*;
-
 @Setter
 @Getter
 @NoArgsConstructor
 @Slf4j
-//@Entity
-//@Table(name = "orders")
+@Entity
+@Table(name = "orders")
 public class Order implements Serializable {
 
-//    @Id
-//    @Column(name = "orderID")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "orderID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrder;
 
-//    @Column(name = "guestID", nullable = false)
-//    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "guestID")
     private Guest guest;
 
-//    @OneToMany(mappedBy = "serviceID")
-    private List<Integer> idServices = new ArrayList<>();
+    @OneToMany(mappedBy = "order")
+    private List<HotelService> hotelServices = new ArrayList<>();
 
     @Serial
     private static final long serialVersionUID = 31L;
@@ -39,28 +39,12 @@ public class Order implements Serializable {
         this.idOrder = idGuest;
     }
 
-    public void setGuest(Guest guest) {
-        if (guest != null) {
-            this.guest = guest;
-        } else {
-            log.warn(ERROR_ID_GUEST);
-        }
-    }
-
-    public void setServices(List<Integer> idServices) {
-        if (idServices != null) {
-            this.idServices = idServices;
-        } else {
-            log.warn(ERROR_ID_SERVICES);
-        }
-    }
-
     @Override
     public String toString() {
         return "\n=== > Order{" +
                 "idOrder=" + idOrder +
                 ", Guest= " + guest +
-                ", idServices= " + idServices +
+                ", Services= " + hotelServices +
                 '}';
     }
 }

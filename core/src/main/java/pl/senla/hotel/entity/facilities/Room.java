@@ -22,6 +22,7 @@ public class Room implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idRoom;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
     private CategoryFacility category;
 
@@ -34,9 +35,11 @@ public class Room implements Serializable {
     @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "level", nullable = false)
     private RoomLevel roomLevel;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private RoomStatus roomStatus;
 

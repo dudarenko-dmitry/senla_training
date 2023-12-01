@@ -33,11 +33,11 @@ public class ExecutorUpdateHotelServiceDB {
                 case 1 -> {
                     log.info(UPDATE_RESERVATION);
                     log.info(CONSOLE_READ_ALL_SERVICES, orderController.read(idOrderUpdate)
-                            .getIdServices()
+                            .getHotelServices()
                             .stream()
                             .filter(s -> {
                                 try {
-                                    return roomReservationController.read(s).getTypeOfService()
+                                    return roomReservationController.read(s.getIdService()).getTypeOfService()
                                             .equals(TypeOfService.ROOM_RESERVATION);
                                 } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                                          IllegalAccessException e) {
