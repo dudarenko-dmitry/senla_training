@@ -44,9 +44,6 @@ public class HotelService implements Serializable {
     @JoinColumn(name = "guestID")
     private Guest guest;
 
-//    @Column(name = "facilityID", nullable = false)
-//    private Integer idRoom;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "facilityID", referencedColumnName = "facilityID")
     private Room room;
@@ -70,14 +67,28 @@ public class HotelService implements Serializable {
     public String toString() {
         return "HotelService{" +
                 "idService=" + idService +
-                ", idOrder=" + order +
                 ", typeOfService=" + typeOfService +
-                "\nGuest=" + guest +
-                "\nRoom=" + room +
-                "\nnumberOfDays=" + numberOfDays +
+                ", guest=" + guest +
+                ", room=" + room +
+                ", numberOfDays=" + numberOfDays +
                 ", checkInTime=" + checkInTime +
                 ", checkOutTime=" + checkOutTime +
                 ", cost=" + cost +
                 '}';
     }
+
+//    @Override
+//    public String toString() {
+//        return "HotelService{" +
+//                "idService=" + idService +
+//                ", idOrder=" + order +
+//                ", typeOfService=" + typeOfService +
+//                "\nGuest=" + guest +
+//                "\nRoom=" + room +
+//                "\nnumberOfDays=" + numberOfDays +
+//                ", checkInTime=" + checkInTime +
+//                ", checkOutTime=" + checkOutTime +
+//                ", cost=" + cost +
+//                '}';
+//    }
 }

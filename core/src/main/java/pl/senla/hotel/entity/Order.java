@@ -43,8 +43,9 @@ public class Order implements Serializable {
     public String toString() {
         return "\n=== > Order{" +
                 "idOrder=" + idOrder +
-                ", Guest= " + guest +
-                ", Services= " + hotelServices +
+                ", Guest= " + guest.getIdGuest() +
+                ", Services= [read order by ID to get info]"
+                +
                 '}';
     }
 }

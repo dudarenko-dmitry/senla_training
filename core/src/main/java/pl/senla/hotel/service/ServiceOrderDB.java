@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.application.annotation.AppComponent;
 import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.dao.GenericDao;
+import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
@@ -25,6 +26,8 @@ public class ServiceOrderDB implements ServiceOrder {
     private GenericDao<Order> daoOrder;
     @GetInstance(beanName = "DaoFacilityHibernate")
     private GenericDao<Room> daoRoom;
+    @GetInstance(beanName = "DaoGuestHibernate")
+    private GenericDao<Guest> daoGuest;
 
     public ServiceOrderDB() {}
 
@@ -43,7 +46,7 @@ public class ServiceOrderDB implements ServiceOrder {
         log.debug("START: Order Create");
         int idGuest = Integer.parseInt(orderString);
         Order order = new Order(idGuest);
-        order.getGuest().setIdGuest(idGuest);
+        order.setGuest(daoGuest.read(idGuest));
         return daoOrder.create(order);
     }
 
