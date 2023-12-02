@@ -18,7 +18,7 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
 
     @GetInstance(beanName = "ServiceRoomReservationDB")
     private ServiceRoomReservation serviceRoomReservation;
-    @GetInstance(beanName = "DaoHotelServiceDB")
+    @GetInstance(beanName = "DaoHotelServiceHibernate")
     private GenericDao<HotelService> daoHotelService;
 
     public ServiceHotelServiceDB() {}
@@ -28,7 +28,7 @@ public class ServiceHotelServiceDB implements ServiceHotelService{
         log.debug("START: HotelService ReadAll");
         List<HotelService> hotelServiceList = daoHotelService.readAll();
         if(hotelServiceList.isEmpty()){
-            System.out.println(READ_ALL_SERVICES_IS_EMPTY);
+            log.debug(READ_ALL_SERVICES_IS_EMPTY);
         }
         return hotelServiceList;
     }

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.OrderDto;
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 
 import java.sql.SQLException;
@@ -21,7 +21,7 @@ public final class DataBaseMapperUtil {
 
     public static Map<String, String> getMapper(Class<?> type) {
         Map<String, String> mapper = null;
-        if (type.equals(HotelFacility.class)) {
+        if (type.equals(Room.class)) {
             mapper = getRoomMapper();
         } else if (type.equals(Guest.class)) {
             mapper = getGuestMapper();

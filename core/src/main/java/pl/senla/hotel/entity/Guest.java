@@ -1,27 +1,43 @@
 package pl.senla.hotel.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import pl.senla.hotel.entity.services.HotelService;
 
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static pl.senla.hotel.constant.ClientConstant.*;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Slf4j
+@Table(name = "guests")
+@Entity
 public class Guest implements Serializable {
 
+    @Id
+    @Column(name = "guestID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idGuest;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "phone", nullable = false)
     private Integer phoneNumber;
+
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HotelService> reservations = new ArrayList<>();
 
     @Serial
     private static final long serialVersionUID = 12L;
-    public Guest() {
-    }
 
     public Guest(String name, Integer phoneNumber) {
         if (name == null) {

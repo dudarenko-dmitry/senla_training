@@ -37,6 +37,7 @@ public class ExecutorOrderDB implements Executor {
             case 2 -> {
                 log.info(INPUT_ID_ORDER);
                 int id = sc.nextInt();
+                log.info(CONSOLE_READ_ORDER, orderController.read(id));
                 log.info(CONSOLE_READ_ALL_SERVICES_FOR_ORDER, orderController.readAllIdServicesForOrder(id));
             }
             case 3 -> {

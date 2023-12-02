@@ -1,6 +1,6 @@
 package pl.senla.hotel.service;
 
-import pl.senla.hotel.entity.facilities.HotelFacility;
+import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,11 +14,11 @@ public interface ServiceRoomReservation extends ServiceCRUDALL<HotelService> {
     int countGuestPaymentForRoom(int idGuest);
     List<String> read3LastGuestAndDatesForRoom(int idRoom) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    List<HotelFacility> readAllRoomsFreeInTime(String checkedTimeString);
+    List<Room> readAllRoomsFreeInTime(String checkedTimeString);
     int countFreeRoomsInTime(String checkedTimeString);
-    List<HotelFacility> readAllFreeRoomsSortByPrice(String checkedTimeString);
-    List<HotelFacility> readAllFreeRoomsSortByCapacity(String checkedTimeString);
-    List<HotelFacility> readAllFreeRoomsSortByLevel(String checkedTimeString);
+    List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString);
+    List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString);
+    List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString);
 
     List<HotelService> readAllServicesSortByDate();
 

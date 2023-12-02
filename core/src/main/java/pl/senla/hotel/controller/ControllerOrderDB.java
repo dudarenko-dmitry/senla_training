@@ -61,8 +61,8 @@ public class ControllerOrderDB implements ControllerOrder {
     }
 
     @Override
-    public List<Integer> readAllIdServicesForOrder(int idOrderNew) {
+    public List<Integer> readAllIdServicesForOrder(int idOrder) {
         log.debug("ControllerOrder call ServiceOrder's method 'readAllIdServicesForOrder'.");
-        return orderService.readAllIdServicesForOrder(idOrderNew);
+        return orderService.readAllIdServicesForOrder(idOrder);
     }
 }
