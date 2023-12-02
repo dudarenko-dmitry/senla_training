@@ -112,13 +112,4 @@ public class ServiceOrderDB implements ServiceOrder {
                 .toList();
     }
 
-//    private Order convertOrderDto(OrderDto orderDto) {
-//        log.debug("START: Convert DTO to Order");
-//        Order order = new Order();
-//        order.setIdOrder(orderDto.getIdOrder()); // косяк
-//        order.setGuest(orderDto.getGuest());
-//        order.setIdServices(readAllIdServicesForOrder(orderDto.getIdOrder()));
-//        return order;
-//    }
-
 }

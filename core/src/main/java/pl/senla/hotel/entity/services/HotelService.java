@@ -67,28 +67,14 @@ public class HotelService implements Serializable {
     public String toString() {
         return "HotelService{" +
                 "idService=" + idService +
+                ", idOrder=" + order.getIdOrder() +
                 ", typeOfService=" + typeOfService +
-                ", guest=" + guest +
-                ", room=" + room +
-                ", numberOfDays=" + numberOfDays +
+                "\nGuest=" + guest.getIdGuest() +
+                "\nRoom=" + room.getIdRoom() +
+                "\nnumberOfDays=" + numberOfDays +
                 ", checkInTime=" + checkInTime +
                 ", checkOutTime=" + checkOutTime +
                 ", cost=" + cost +
                 '}';
     }
-
-//    @Override
-//    public String toString() {
-//        return "HotelService{" +
-//                "idService=" + idService +
-//                ", idOrder=" + order +
-//                ", typeOfService=" + typeOfService +
-//                "\nGuest=" + guest +
-//                "\nRoom=" + room +
-//                "\nnumberOfDays=" + numberOfDays +
-//                ", checkInTime=" + checkInTime +
-//                ", checkOutTime=" + checkOutTime +
-//                ", cost=" + cost +
-//                '}';
-//    }
 }
