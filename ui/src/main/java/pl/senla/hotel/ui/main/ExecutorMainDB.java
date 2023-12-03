@@ -1,8 +1,10 @@
 package pl.senla.hotel.ui.main;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
@@ -12,25 +14,26 @@ import java.lang.reflect.InvocationTargetException;
 import static pl.senla.hotel.constant.ApplicationContextConstant.CLOSE_APPLICATION;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
-@AppComponent
+@Component
+@Qualifier("ExecutorMainDB")
+@NoArgsConstructor
 @Slf4j
 public class ExecutorMainDB implements Executor {
 
-    @GetInstance(beanName = "StartMenuHotelFacilitiesDB")
+    @Autowired
+    @Qualifier("StartMenuHotelFacilitiesDB")
     private StartMenu startMenuHotelFacilities;
-    @GetInstance(beanName = "StartMenuGuestDB")
+    @Autowired
+    @Qualifier("StartMenuGuestDB")
     private StartMenu startMenuGuest;
-    @GetInstance(beanName = "StartMenuOrderDB")
+    @Autowired
+    @Qualifier("StartMenuOrderDB")
     private StartMenu startMenuOrder;
-    @GetInstance(beanName = "StartMenuAnalyticsDB")
+    @Autowired
+    @Qualifier("StartMenuAnalyticsDB")
     private StartMenu startMenuAnalytics;
-//    @GetInstance(beanName = "StartMenuImportExport")
-//    private StartMenu startMenuImportExport;
-    @GetInstance(beanName = "UserChoice")
+    @Autowired
     private Choice userChoice;
-
-    public ExecutorMainDB(){
-    }
 
     @Override
     public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,

@@ -1,25 +1,26 @@
 package pl.senla.hotel.comparators;
 
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.dao.GenericDao;
 import pl.senla.hotel.entity.services.TypeOfService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Optional;
 
 import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE;
 
-@AppComponent
+@Component
 @Slf4j
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
-    @GetInstance(beanName = "DaoFacilityDB")
-    private GenericDao<Room> daoRoom;
+    @Autowired
+    private DaoHotelFacilitySpring daoRoom;
 
     public HotelServicesComparatorByPrice() {}
 
@@ -38,6 +39,12 @@ public class HotelServicesComparatorByPrice implements Comparator<HotelService> 
     }
 
     private int compareRoomReservation(HotelService o1, HotelService o2) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        return daoRoom.read(o1.getRoom().getIdRoom()).getPrice() - daoRoom.read(o2.getRoom().getIdRoom()).getPrice();
+        Optional<Room> room1 = daoRoom.findById(o1.getRoom().getIdRoom());
+        Optional<Room> room2 = daoRoom.findById(o2.getRoom().getIdRoom());
+        if (room1.isPresent() && room2.isPresent()) {
+            return room1.get().getPrice() - room2.get().getPrice();
+        }
+        log.info("One (or all) of compared rooms is not exist!");
+        return 0;
     }
 }

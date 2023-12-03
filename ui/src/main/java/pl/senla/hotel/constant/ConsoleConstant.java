@@ -9,7 +9,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_READ_ROOM =              "Room: {}";
     public static final String CONSOLE_CREATE_ROOM =            "New room was created: {}";
     public static final String CONSOLE_CHANGE_ROOM =            "Room was changed: {}";
-    public static final String CONSOLE_DELETE_ROOM =            "Room was deleted: {}";
+    public static final String CONSOLE_DELETE_ROOM =            "Room was deleted";
 
     public static final String CONSOLE_READ_ALL_FREE_ROOMS_TIME =    "\nList of all Free rooms at Time: {}";
     public static final String CONSOLE_NUMBER_OF_FREE_ROOMS =        "Number of Free rooms at {}: {}";
@@ -22,7 +22,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_READ_GUEST =                 "Guest: {}";
     public static final String CONSOLE_CREATE_GUEST =               "New Guest was created: {}";
     public static final String CONSOLE_CHANGE_GUEST =               "Guest was changed: {}";
-    public static final String CONSOLE_DELETE_GUEST =               "Guest was deleted: {}";
+    public static final String CONSOLE_DELETE_GUEST =               "Guest was deleted";
     public static final String CONSOLE_NUMBER_GUEST_TOTAL =         "Total number of registered Guest in DataBase: {}";
     public static final String CONSOLE_3_GUESTS_AND_DATES =         "The last 3 guests of the room and the dates of their stay: {}";
 
@@ -36,7 +36,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_READ_ORDER =         "\nOrder: {}";
     public static final String CONSOLE_CREATE_ORDER =       "New Order was created: {}";
     public static final String CONSOLE_CHANGE_ORDER =       "Order changed: {}";
-    public static final String CONSOLE_DELETE_ORDER =       "Order deleted: {}";
+    public static final String CONSOLE_DELETE_ORDER =       "Order deleted";
 
     public static final String CONSOLE_READ_ALL_ROOMS_SORTED_BY_PRICE =      "\nList of all rooms sorted by price: {}";
     public static final String CONSOLE_READ_FREE_ROOMS_SORTED_BY_PRICE =     "\nList of free rooms sorted by price: {}";
@@ -77,7 +77,7 @@ public class ConsoleConstant {
     public static final String INPUT_CAPACITY =             "Capacity of Room --> ";
 
     public static final String INPUT_NUMBER_OF_DAYS = "Input number of days to reserve --> ";
-    public static final String ADD_NEW_SERVICE_FOR_ORDER = "Add new services to order: {}";
+    public static final String ADD_NEW_SERVICE_FOR_ORDER = "New services were added to order";
     public static final String UPDATE_RESERVATION = "Update Room's Reservation: ";
 
 }

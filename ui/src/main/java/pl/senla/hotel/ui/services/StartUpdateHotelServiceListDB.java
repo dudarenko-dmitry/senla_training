@@ -1,26 +1,27 @@
 package pl.senla.hotel.ui.services;
 
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Navigator;
 
 import java.lang.reflect.InvocationTargetException;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE_SELECT;
 
-@AppComponent
+@Component
 @Slf4j
 public class StartUpdateHotelServiceListDB {
 
-    @GetInstance(beanName = "NavigatorHotelService")
+    @Autowired
+    @Qualifier("NavigatorHotelService")
     private Navigator navigator;
-    @GetInstance(beanName = "ExecutorUpdateHotelServiceDB")
+    @Autowired
     private ExecutorUpdateHotelServiceDB executor;
 
-    public StartUpdateHotelServiceListDB() {}
-
-    public boolean runMenu(int idOrderUpdate) throws IllegalAccessException,
+    public HotelService runMenu(int idOrderUpdate) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         navigator.buildMenu();
         log.info(MENU_HOTEL_SERVICE_SELECT);

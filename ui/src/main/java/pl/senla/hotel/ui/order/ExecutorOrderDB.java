@@ -1,8 +1,10 @@
 package pl.senla.hotel.ui.order;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.ui.Executor;
@@ -15,18 +17,18 @@ import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
-@AppComponent
+@Component
+@Qualifier("ExecutorOrderDB")
+@NoArgsConstructor
 @Slf4j
 public class ExecutorOrderDB implements Executor {
 
-    @GetInstance(beanName = "StartCreateHotelServiceDB")
+    @Autowired
     private StartCreateHotelServiceDB startCreateHotelService;
-    @GetInstance(beanName = "ControllerOrderDB")
+    @Autowired
     private ControllerOrder orderController;
-    @GetInstance(beanName = "StartUpdateHotelServiceListDB")
+    @Autowired
     private StartUpdateHotelServiceListDB startUpdateHotelServiceList;
-
-    public ExecutorOrderDB() {}
 
     @Override
     public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,
@@ -50,7 +52,8 @@ public class ExecutorOrderDB implements Executor {
                         .max(Comparator.comparingInt(o -> o))
                         .orElse(-1);
                 startCreateHotelService.runMenu(idOrder, idGuest);
-                log.info(ADD_NEW_SERVICE_FOR_ORDER, orderController.addServicesToOrder(idOrder));
+                orderController.addServicesToOrder(idOrder);
+                log.info(ADD_NEW_SERVICE_FOR_ORDER);
             }
             case 4 -> {
                 log.info(INPUT_ID_ORDER);
@@ -60,7 +63,8 @@ public class ExecutorOrderDB implements Executor {
             case 5 -> {
                 log.info(INPUT_ID_ORDER);
                 int idOrderDelete = sc.nextInt();
-                log.info(CONSOLE_DELETE_ORDER, orderController.delete(idOrderDelete));
+                orderController.delete(idOrderDelete);
+                log.info(CONSOLE_DELETE_ORDER);
             }
             default -> {
                 System.out.println(ERROR_INPUT);

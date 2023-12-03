@@ -1,9 +1,9 @@
 package pl.senla.hotel.ui.main;
 
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.application.annotation.StartMethod;
-import pl.senla.hotel.application.annotation.StartPoint;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
@@ -11,20 +11,19 @@ import pl.senla.hotel.ui.StartMenu;
 
 import java.lang.reflect.InvocationTargetException;
 
-@AppComponent
-@StartPoint
+@Component
+@NoArgsConstructor
 public class StartMenuMainDB implements StartMenu {
 
-    @GetInstance(beanName = "NavigatorMainMenu")
+    @Autowired
+    @Qualifier("navigatorMainMenu")
     private Navigator navigator;
-    @GetInstance(beanName = "UserChoice")
+    @Autowired
     private Choice userChoice;
-    @GetInstance(beanName = "ExecutorMainDB")
+    @Autowired
+    @Qualifier("ExecutorMainDB")
     private Executor executor;
 
-    public StartMenuMainDB() {}
-
-    @StartMethod
     @Override
     public void runMenu() throws IllegalAccessException, InvocationTargetException,
             NoSuchMethodException, InstantiationException {

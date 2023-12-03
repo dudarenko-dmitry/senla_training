@@ -1,10 +1,12 @@
 package pl.senla.hotel.ui.services;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.controller.ControllerRoomReservation;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.TypeOfService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,18 +15,17 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.OrderConstant.ORDER_NOT_EXISTS;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class ExecutorUpdateHotelServiceDB {
 
-    @GetInstance(beanName = "ControllerOrderDB")
+    @Autowired
     private ControllerOrder orderController;
-    @GetInstance(beanName = "ControllerRoomReservationDB")
+    @Autowired
     private ControllerRoomReservation roomReservationController;
 
-    public ExecutorUpdateHotelServiceDB() {}
-
-    protected boolean updateHotelServiceList(int idOrderUpdate) throws IllegalAccessException,
+    protected HotelService updateHotelServiceList(int idOrderUpdate) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         if(orderController.read(idOrderUpdate) != null){
             int typeOfServiceInt = makeChoice();
@@ -57,21 +58,21 @@ public class ExecutorUpdateHotelServiceDB {
                 }
                 case 2 -> {
                     log.info("Update Restaurant's Reservation: do not use");
-                    return true;
+                    return null;
                 }
                 case 3 -> {
                     log.info("Update Transfer's Reservation: do not use");
-                    return true;
+                    return null;
                 }
                 default -> {
                     updateHotelServiceList(idOrderUpdate);
-                    return false;
+                    return null;
                 }
             }
         } else {
             log.info(ORDER_NOT_EXISTS);
             log.info(ERROR_INPUT);
-            return false;
+            return null;
         }
     }
 

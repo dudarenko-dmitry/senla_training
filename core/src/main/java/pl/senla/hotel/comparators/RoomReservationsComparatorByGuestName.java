@@ -1,30 +1,27 @@
 package pl.senla.hotel.comparators;
 
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.entity.Guest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.dao.GenericDao;
 
 import java.util.Comparator;
 
-@AppComponent
+@Component
+@Slf4j
 public class RoomReservationsComparatorByGuestName implements Comparator<HotelService> {
 
-    @GetInstance(beanName = "DaoGuestDB")
-    private GenericDao<Guest> daoGuest;
+    @Autowired
+    private DaoGuestSpring daoGuest;
 
     public RoomReservationsComparatorByGuestName() {
     }
 
     @Override
     public int compare(HotelService o1, HotelService o2) {
-        int idGuest1 = o1.getGuest().getIdGuest();
-//        int idGuest1 = o1.getIdGuest();
-        int idGuest2 = o2.getGuest().getIdGuest();
-//        int idGuest2 = o2.getIdGuest();
-        String name1 = daoGuest.read(idGuest1).getName();
-        String name2 = daoGuest.read(idGuest2).getName();
+        String name1 = o1.getGuest().getName();
+        String name2 = o2.getGuest().getName();
         return name1.compareTo(name2);
     }
 }

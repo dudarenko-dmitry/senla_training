@@ -1,14 +1,15 @@
 package pl.senla.hotel.ui;
 
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
+import org.springframework.stereotype.Component;
+//import pl.senla.hotel.application.annotation.AppComponent;
 
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.INPUT_MENU_POINT;
 
-@AppComponent
 @Slf4j
+@Component
 public class UserChoice implements Choice{
 
     @Override

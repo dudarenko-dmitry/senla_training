@@ -1,18 +1,19 @@
 package pl.senla.hotel.ui.services;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE;
 
-@AppComponent
+@Component
+@Qualifier("NavigatorHotelService")
+@NoArgsConstructor
 @Slf4j
 public class NavigatorHotelService implements Navigator {
-
-    public NavigatorHotelService() {
-    }
 
     @Override
     public void buildMenu() {
