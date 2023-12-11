@@ -4,11 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-//import pl.senla.hotel.application.annotation.AppComponent;
-//import pl.senla.hotel.application.annotation.ConfigProperty;
-//import pl.senla.hotel.application.annotation.GetInstance;
 import pl.senla.hotel.comparators.*;
-import pl.senla.hotel.dao.GenericDao;
+import pl.senla.hotel.dao.DaoGuestSpring;
+import pl.senla.hotel.dao.DaoHotelFacilitySpring;
+import pl.senla.hotel.dao.DaoHotelServiceSpring;
+import pl.senla.hotel.dao.DaoOrderSpring;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -37,13 +37,13 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
     @Autowired
     private ServiceFacility serviceHotelFacility;
     @Autowired
-    private GenericDao<HotelService> daoHotelService;
+    private DaoHotelServiceSpring daoHotelService;
     @Autowired
-    private GenericDao<Guest> daoGuest;
+    private DaoGuestSpring daoGuest;
     @Autowired
-    private GenericDao<Room> daoFacility;
+    private DaoHotelFacilitySpring daoFacility;
     @Autowired
-    private GenericDao<Order> daoOrder;
+    private DaoOrderSpring daoOrder;
     @Autowired
     private transient ServiceFacility serviceRoom;
     @Value("${room-records.number}")

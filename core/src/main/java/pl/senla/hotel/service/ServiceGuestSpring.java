@@ -3,7 +3,7 @@ package pl.senla.hotel.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.senla.hotel.dao.GenericDao;
+import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.entity.Guest;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +17,7 @@ import static pl.senla.hotel.constant.ClientConstant.CLIENT_NOT_EXISTS;
 public class ServiceGuestSpring implements ServiceGuest {
 
     @Autowired
-    private GenericDao<Guest> daoGuest;
+    private DaoGuestSpring daoGuest;
 
     @Override
     public List<Guest> readAll() {

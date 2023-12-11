@@ -2,6 +2,7 @@ package pl.senla.hotel.ui.order;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
@@ -11,14 +12,17 @@ import pl.senla.hotel.ui.StartMenu;
 import java.lang.reflect.InvocationTargetException;
 
 @Component
+@Qualifier("StartMenuOrderDB")
 @NoArgsConstructor
 public class StartMenuOrderDB implements StartMenu {
 
     @Autowired
+    @Qualifier("NavigatorOrder")
     private Navigator navigator;
     @Autowired
     private Choice userChoice;
     @Autowired
+    @Qualifier("ExecutorOrderDB")
     private Executor executor;
 
     @Override

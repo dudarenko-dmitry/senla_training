@@ -3,6 +3,7 @@ package pl.senla.hotel.ui.room;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
@@ -17,6 +18,7 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @Component
+@Qualifier("ExecutorRoomDB")
 @NoArgsConstructor
 @Slf4j
 public class ExecutorRoomDB implements Executor {

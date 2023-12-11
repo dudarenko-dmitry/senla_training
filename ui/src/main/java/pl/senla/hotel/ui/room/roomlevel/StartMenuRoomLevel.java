@@ -2,6 +2,7 @@ package pl.senla.hotel.ui.room.roomlevel;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Navigator;
 
@@ -10,6 +11,7 @@ import pl.senla.hotel.ui.Navigator;
 public class StartMenuRoomLevel {
 
     @Autowired
+    @Qualifier("NavigatorRoomLevel")
     private Navigator navigator;
     @Autowired
     private ExecutorRoomLevel executor;

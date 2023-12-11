@@ -3,7 +3,7 @@ package pl.senla.hotel.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.senla.hotel.dao.GenericDao;
+import pl.senla.hotel.dao.DaoHotelServiceSpring;
 import pl.senla.hotel.entity.services.HotelService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +20,7 @@ public class ServiceHotelServiceSpring implements ServiceHotelService{
     @Autowired
     private ServiceRoomReservation serviceRoomReservation;
     @Autowired
-    private GenericDao<HotelService> daoHotelService;
+    private DaoHotelServiceSpring daoHotelService;
 
     @Override
     public List<HotelService> readAll() {

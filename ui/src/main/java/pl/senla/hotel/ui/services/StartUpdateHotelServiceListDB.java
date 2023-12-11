@@ -2,6 +2,7 @@ package pl.senla.hotel.ui.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.ui.Navigator;
@@ -15,6 +16,7 @@ import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE_SELECT;
 public class StartUpdateHotelServiceListDB {
 
     @Autowired
+    @Qualifier("NavigatorHotelService")
     private Navigator navigator;
     @Autowired
     private ExecutorUpdateHotelServiceDB executor;

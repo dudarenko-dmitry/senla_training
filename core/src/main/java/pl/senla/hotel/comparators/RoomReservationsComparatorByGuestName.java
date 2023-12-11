@@ -3,9 +3,8 @@ package pl.senla.hotel.comparators;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.dao.GenericDao;
 
 import java.util.Comparator;
 
@@ -14,7 +13,7 @@ import java.util.Comparator;
 public class RoomReservationsComparatorByGuestName implements Comparator<HotelService> {
 
     @Autowired
-    private GenericDao<Guest> daoGuest;
+    private DaoGuestSpring daoGuest;
 
     public RoomReservationsComparatorByGuestName() {
     }

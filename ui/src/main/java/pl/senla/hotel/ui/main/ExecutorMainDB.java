@@ -3,6 +3,7 @@ package pl.senla.hotel.ui.main;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
@@ -14,17 +15,22 @@ import static pl.senla.hotel.constant.ApplicationContextConstant.CLOSE_APPLICATI
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 @Component
+@Qualifier("ExecutorMainDB")
 @NoArgsConstructor
 @Slf4j
 public class ExecutorMainDB implements Executor {
 
     @Autowired
+    @Qualifier("StartMenuHotelFacilitiesDB")
     private StartMenu startMenuHotelFacilities;
     @Autowired
+    @Qualifier("StartMenuGuestDB")
     private StartMenu startMenuGuest;
     @Autowired
+    @Qualifier("StartMenuOrderDB")
     private StartMenu startMenuOrder;
     @Autowired
+    @Qualifier("StartMenuAnalyticsDB")
     private StartMenu startMenuAnalytics;
     @Autowired
     private Choice userChoice;

@@ -3,10 +3,11 @@ package pl.senla.hotel.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.senla.hotel.dao.GenericDao;
+import pl.senla.hotel.dao.DaoGuestSpring;
+import pl.senla.hotel.dao.DaoHotelFacilitySpring;
+import pl.senla.hotel.dao.DaoOrderSpring;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,11 +25,11 @@ public class ServiceOrderSpring implements ServiceOrder {
     @Autowired
     private ServiceHotelService serviceHotelService;
     @Autowired
-    private GenericDao<Order> daoOrder;
+    private DaoOrderSpring daoOrder;
     @Autowired
-    private GenericDao<Room> daoRoom;
+    private DaoHotelFacilitySpring daoRoom;
     @Autowired
-    private GenericDao<Guest> daoGuest;
+    private DaoGuestSpring daoGuest;
 
     public ServiceOrderSpring() {}
 

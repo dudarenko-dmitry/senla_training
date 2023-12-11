@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.senla.hotel.comparators.*;
-import pl.senla.hotel.dao.GenericDao;
+import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.facilities.RoomLevel;
@@ -22,7 +22,7 @@ import static pl.senla.hotel.constant.HotelFacilityConstant.*;
 public class ServiceFacilitySpring implements ServiceFacility{
 
     @Autowired
-    private GenericDao<Room> daoHotelFacility;
+    private DaoHotelFacilitySpring daoHotelFacility;
     @Value("${change-room-status.enabled}")
     private Boolean changeRoomStatusEnabled;
 

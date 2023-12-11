@@ -1,11 +1,11 @@
 package pl.senla.hotel.entity.facilities;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 

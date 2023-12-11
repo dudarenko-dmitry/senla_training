@@ -3,9 +3,9 @@ package pl.senla.hotel.comparators;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.dao.GenericDao;
 import pl.senla.hotel.entity.services.TypeOfService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +20,7 @@ import static pl.senla.hotel.constant.HotelServiceConstant.ERROR_IN_SERVICE_TYPE
 public class HotelServicesComparatorByPrice implements Comparator<HotelService> {
 
     @Autowired
-    private GenericDao<Room> daoRoom;
+    private DaoHotelFacilitySpring daoRoom;
 
     public HotelServicesComparatorByPrice() {}
 

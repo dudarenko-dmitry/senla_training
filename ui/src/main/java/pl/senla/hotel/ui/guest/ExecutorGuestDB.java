@@ -3,6 +3,7 @@ package pl.senla.hotel.ui.guest;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerGuest;
 import pl.senla.hotel.ui.Executor;
@@ -13,6 +14,7 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @Component
+@Qualifier("ExecutorGuestDB")
 @NoArgsConstructor
 @Slf4j
 public class ExecutorGuestDB implements Executor {

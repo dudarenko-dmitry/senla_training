@@ -2,6 +2,7 @@ package pl.senla.hotel.ui.analytic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.controller.ControllerGuest;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @Component
+@Qualifier("ExecutorAnalyticsDB")
 @Slf4j
 public class ExecutorAnalyticsDB implements Executor {
 
