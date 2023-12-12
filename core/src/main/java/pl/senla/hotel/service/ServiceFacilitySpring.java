@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.Room;
@@ -89,46 +88,31 @@ public class ServiceFacilitySpring implements ServiceFacility{
     @Override
     public List<Room> readPriceListForServicesSortByCategory() {
         log.debug("PriceListForServicesSortByCategory:");
-        return readAll()
-                .stream()
-                .sorted(new HotelFacilityComparatorByCategory())
-                .toList();
+        return daoHotelFacility.findByOrderByCategory();
     }
 
     @Override
     public List<Room> readPriceListForServicesSortByPrice() {
         log.debug("PriceListForServicesSortByPrice:");
-        return readAll()
-                .stream()
-                .sorted(new HotelFacilityComparatorByPrice())
-                .toList();
+        return daoHotelFacility.findByOrderByPrice();
     }
 
     @Override
     public List<Room> readAllRoomsSortByPrice() {
         log.debug("AllRoomsSortByPrice:");
-        return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
-                .sorted(new RoomComparatorByPrice())
-                .toList();
+        return daoHotelFacility.findByOrderByPrice();
     }
 
     @Override
     public List<Room> readAllRoomsSortByCapacity() {
         log.debug("AllRoomsSortByCapacity:");
-        return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
-                .sorted(new RoomComparatorByCapacity())
-                .toList();
+        return daoHotelFacility.findByOrderByCapacity();
     }
 
     @Override
     public List<Room> readAllRoomsSortByLevel() {
         log.debug("AllRoomsSortByLevel:");
-        return readAll().stream()
-                .filter(o -> o.getCategory().equals(CategoryFacility.ROOM))
-                .sorted(new RoomComparatorByLevel())
-                .toList();
+        return daoHotelFacility.findByOrderByRoomLevel();
     }
 
     @Override

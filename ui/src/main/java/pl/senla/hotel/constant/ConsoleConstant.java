@@ -47,7 +47,7 @@ public class ConsoleConstant {
     public static final String CONSOLE_READ_FREE_ROOMS_SORTED_BY_CAPACITY =  "\nList of free rooms sorted by Room's capacity: {}";
     public static final String CONSOLE_READ_ALL_ROOMS_SORTED_BY_LEVEL =      "\nList of all rooms sorted by Room's level: {}";
     public static final String CONSOLE_READ_ALL_FREE_ROOMS_SORTED_BY_LEVEL = "\nList of free rooms sorted by Room's level: {}";
-    public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS_SORTED_BY_GUEST_NAME = "\nList of Guests sorted by name:{}";
+    public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS_SORTED_BY_GUEST_NAME = "\nList of Guests and Reservations sorted by name:{}";
     public static final String CONSOLE_READ_ALL_ROOM_RESERVATIONS_SORTED_BY_CHECK_OUT =  "\nList of Guests sorted by check-out time: {}";
     public static final String CONSOLE_READ_ALL_FACILITIES_SORTED_BY_CATEGORY = "\nList of HotelFacilities sorted by category: {}";
 

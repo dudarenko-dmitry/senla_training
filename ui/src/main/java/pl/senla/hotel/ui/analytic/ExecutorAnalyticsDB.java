@@ -118,6 +118,6 @@ public class ExecutorAnalyticsDB implements Executor {
         int hour = sc.nextInt();
         System.out.print(INPUT_MINUTE);
         int minute = sc.nextInt();
-        return year + "-" + month + "-" + day + "-" + hour + "-" + minute;
+        return year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-00";
     }
 }

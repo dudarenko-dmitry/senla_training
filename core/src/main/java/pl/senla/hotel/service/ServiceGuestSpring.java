@@ -73,6 +73,6 @@ public class ServiceGuestSpring implements ServiceGuest {
     @Override
     public int countNumberOfGuestsTotal() {
         log.debug("START: CountGuest");
-        return readAll().size();
+        return daoGuest.countFindAll();
     }
 }

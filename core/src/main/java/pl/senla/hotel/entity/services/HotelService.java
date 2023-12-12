@@ -36,7 +36,7 @@ public class HotelService implements Serializable {
     private Order order;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "serviceType", nullable = false)
+    @Column(name = "service_type", nullable = false)
     private TypeOfService typeOfService;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,10 +50,10 @@ public class HotelService implements Serializable {
     @Column(name = "day", nullable = false)
     private Integer numberOfDays;
 
-    @Column(name = "checkIn")
+    @Column(name = "check_in")
     private LocalDateTime checkInTime;
 
-    @Column(name = "checkOut")
+    @Column(name = "check_out")
     private LocalDateTime checkOutTime;
 
     @Column(name = "cost", nullable = false)
@@ -61,12 +61,12 @@ public class HotelService implements Serializable {
 
     @Override
     public String toString() {
-        return "HotelService{" +
+        return "\nHotelService{" +
                 "idService=" + idService +
                 ", idOrder=" + order.getIdOrder() +
                 ", typeOfService=" + typeOfService +
-                "\nGuest=" + guest.getIdGuest() +
-                "\nRoom=" + room.getIdRoom() +
+                ", Guest=" + guest.getIdGuest() +
+                ", Room=" + room.getIdRoom() + "," +
                 "\nnumberOfDays=" + numberOfDays +
                 ", checkInTime=" + checkInTime +
                 ", checkOutTime=" + checkOutTime +

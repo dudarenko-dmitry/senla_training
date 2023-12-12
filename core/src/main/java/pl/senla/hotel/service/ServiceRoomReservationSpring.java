@@ -98,7 +98,7 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
                 reservation.setNumberOfDays(numberOfDays);
                 reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION);
                 reservation.setCheckOutTime(checkOutTime);
-                room.ifPresent(value -> reservation.setCost(value.getPrice() * numberOfDays));
+                reservation.setCost(daoFacility.findById(idRoom).get().getPrice() * numberOfDays);
                 List<HotelService> roomReservationList = readAll().stream()
                         .filter(rr -> rr.getRoom().getIdRoom() == idRoom)
                         .toList();
@@ -148,7 +148,6 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         HotelService reservationUpdate = new HotelService();
         reservationUpdate.setIdService(idReservation);
         reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION);
-//        reservationUpdate.setIdGuest(reservationOld.getIdGuest());
         reservationUpdate.setGuest(reservationOld.getGuest());
         reservationUpdate.setRoom(reservationOld.getRoom());
         reservationUpdate.setCheckInTime(checkInTime);
@@ -177,30 +176,22 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         log.debug(ALL_ROOM_RESERVATION_IS_EMPTY);
     }
 
-    @Override
+    @Override // ready
     public int countNumberOfGuestsOnDate(String checkedDateString) {
         log.debug("START: Hotel Service countNumberOfGuestsOnDate");
-        LocalDateTime checkedDateTime = getDateTime(checkedDateString);
-        return (int) readAll().stream()
-                .filter(rr -> checkedDateTime.isAfter(rr.getCheckInTime()) &&
-                        checkedDateTime.isBefore(rr.getCheckOutTime()))
-                .count();
+        return daoHotelService.countGuestOnDate(checkedDateString);
     }
 
     @Override
     public List<HotelService> readAllRoomReservationsSortByGuestName() {
         log.debug("START: Hotel Service readAllRoomReservationsSortByGuestName");
-        return readAll().stream()
-                .sorted(new RoomReservationsComparatorByGuestName())
-                .toList();
+        return daoHotelService.findAllOrderByGuestName();
     }
 
-    @Override
+    @Override //ready
     public List<HotelService> readAllRoomReservationsSortByGuestCheckOut() {
         log.debug("START: Hotel Service readAllRoomReservationsSortByGuestCheckOut");
-        return readAll().stream()
-                .sorted(new RoomReservationsComparatorByCheckOut())
-                .toList();
+        return daoHotelService.findByOrderByCheckOutTime();
     }
 
     @Override
