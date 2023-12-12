@@ -12,17 +12,16 @@ import pl.senla.hotel.ui.StartMenu;
 import java.lang.reflect.InvocationTargetException;
 
 @Component
-@Qualifier("StartMenuAnalyticsDB")
 @NoArgsConstructor
 public class StartMenuAnalyticsDB implements StartMenu {
 
     @Autowired
-    @Qualifier("NavigatorAnalytics")
+    @Qualifier("navigatorAnalytics")
     private Navigator navigator;
     @Autowired
     private Choice userChoice;
     @Autowired
-    @Qualifier("ExecutorAnalyticsDB")
+    @Qualifier("executorAnalyticsDB")
     private Executor executor;
 
     @Override

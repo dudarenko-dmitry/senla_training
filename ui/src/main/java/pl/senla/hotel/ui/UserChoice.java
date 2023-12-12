@@ -2,7 +2,6 @@ package pl.senla.hotel.ui;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-//import pl.senla.hotel.application.annotation.AppComponent;
 
 import java.util.Scanner;
 

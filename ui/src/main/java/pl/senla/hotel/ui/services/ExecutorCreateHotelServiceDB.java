@@ -23,7 +23,6 @@ public class ExecutorCreateHotelServiceDB {
     @Autowired
     private ControllerFacility controllerFacility;
 
-    //Later change return from RoomReservation to HotelService and refactor
     protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,
             InstantiationException { //use only (1) RoomReservation

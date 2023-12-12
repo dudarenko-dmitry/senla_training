@@ -12,17 +12,16 @@ import pl.senla.hotel.ui.StartMenu;
 import java.lang.reflect.InvocationTargetException;
 
 @Component
-@Qualifier("StartMenuRoomDB")
 @NoArgsConstructor
 public class StartMenuRoomDB implements StartMenu {
 
     @Autowired
-    @Qualifier("NavigatorRoom")
+    @Qualifier("navigatorRoom")
     private Navigator navigator;
     @Autowired
     private Choice userChoice;
     @Autowired
-    @Qualifier("ExecutorRoomDB")
+    @Qualifier("executorRoomDB")
     private Executor executor;
 
     public void runMenu() throws IllegalAccessException, InvocationTargetException,

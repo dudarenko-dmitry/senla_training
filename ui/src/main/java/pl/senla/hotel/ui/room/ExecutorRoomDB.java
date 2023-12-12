@@ -18,7 +18,6 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @Component
-@Qualifier("ExecutorRoomDB")
 @NoArgsConstructor
 @Slf4j
 public class ExecutorRoomDB implements Executor {

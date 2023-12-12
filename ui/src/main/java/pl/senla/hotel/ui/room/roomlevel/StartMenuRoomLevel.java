@@ -11,7 +11,7 @@ import pl.senla.hotel.ui.Navigator;
 public class StartMenuRoomLevel {
 
     @Autowired
-    @Qualifier("NavigatorRoomLevel")
+    @Qualifier("navigatorRoomLevel")
     private Navigator navigator;
     @Autowired
     private ExecutorRoomLevel executor;

@@ -12,12 +12,11 @@ import java.lang.reflect.InvocationTargetException;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 @Component
-@Qualifier("ExecutorHotelFacilitiesDB")
 @NoArgsConstructor
 public class ExecutorHotelFacilitiesDB implements Executor {
 
     @Autowired
-    @Qualifier("StartMenuRoomDB")
+    @Qualifier("startMenuRoomDB")
     private StartMenu menuRoom;
 
     @Override

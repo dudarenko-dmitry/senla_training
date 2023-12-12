@@ -16,7 +16,7 @@ import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE_SELECT;
 public class StartUpdateHotelServiceListDB {
 
     @Autowired
-    @Qualifier("NavigatorHotelService")
+    @Qualifier("navigatorHotelService")
     private Navigator navigator;
     @Autowired
     private ExecutorUpdateHotelServiceDB executor;

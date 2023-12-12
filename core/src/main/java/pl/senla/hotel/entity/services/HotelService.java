@@ -59,9 +59,6 @@ public class HotelService implements Serializable {
     @Column(name = "cost", nullable = false)
     private Integer cost;
 
-    @Autowired
-    private transient ServiceFacility serviceRoom;
-
     @Override
     public String toString() {
         return "HotelService{" +

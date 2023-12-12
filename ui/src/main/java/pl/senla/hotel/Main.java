@@ -1,10 +1,9 @@
 package pl.senla.hotel;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ExitCodeGenerator;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import pl.senla.hotel.ui.main.StartMenuMainDB;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -19,15 +18,17 @@ public class Main {
             InstantiationException, InterruptedException {
 
         log.info(START_APPLICATION);
+        SpringApplication.run(Main.class);
+    }
 
-        // previous version 1
-//        DIApplication.getApplication().run();
-
-//        version 3:
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
-        StartMenuMainDB startMenuMainDB = ctx.getBean(StartMenuMainDB.class);
-        startMenuMainDB.runMenu();
-
+    public static void exitApplication() {
+        int exit = SpringApplication.exit(SpringApplication.run(Main.class), new ExitCodeGenerator() {
+            @Override
+            public int getExitCode() {
+                return 0;
+            }
+        });
+        System.exit(exit);
     }
 
 }

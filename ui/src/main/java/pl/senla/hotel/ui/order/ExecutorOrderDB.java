@@ -3,7 +3,6 @@ package pl.senla.hotel.ui.order;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.entity.Order;
@@ -18,7 +17,6 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
 @Component
-@Qualifier("ExecutorOrderDB")
 @NoArgsConstructor
 @Slf4j
 public class ExecutorOrderDB implements Executor {

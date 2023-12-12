@@ -11,7 +11,6 @@ import pl.senla.hotel.ui.MenuItem;
 import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_FACILITY;
 
 @Component
-@Qualifier("NavigatorHotelFacilities")
 @NoArgsConstructor
 @Slf4j
 public class NavigatorHotelFacilities implements Navigator {

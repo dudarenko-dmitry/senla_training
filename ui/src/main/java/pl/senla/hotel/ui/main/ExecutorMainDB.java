@@ -15,22 +15,21 @@ import static pl.senla.hotel.constant.ApplicationContextConstant.CLOSE_APPLICATI
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
 @Component
-@Qualifier("ExecutorMainDB")
 @NoArgsConstructor
 @Slf4j
 public class ExecutorMainDB implements Executor {
 
     @Autowired
-    @Qualifier("StartMenuHotelFacilitiesDB")
+    @Qualifier("startMenuHotelFacilitiesDB")
     private StartMenu startMenuHotelFacilities;
     @Autowired
-    @Qualifier("StartMenuGuestDB")
+    @Qualifier("startMenuGuestDB")
     private StartMenu startMenuGuest;
     @Autowired
-    @Qualifier("StartMenuOrderDB")
+    @Qualifier("startMenuOrderDB")
     private StartMenu startMenuOrder;
     @Autowired
-    @Qualifier("StartMenuAnalyticsDB")
+    @Qualifier("startMenuAnalyticsDB")
     private StartMenu startMenuAnalytics;
     @Autowired
     private Choice userChoice;
@@ -43,7 +42,6 @@ public class ExecutorMainDB implements Executor {
             case 2 -> startMenuGuest.runMenu();
             case 3 -> startMenuOrder.runMenu();
             case 4 -> startMenuAnalytics.runMenu();
-//            case 5 -> startMenuImportExport.runMenu();
             case 0 -> {
                 log.info(CLOSE_APPLICATION);
                 System.exit(0);

@@ -20,7 +20,7 @@ import static pl.senla.hotel.constant.ConsoleConstant.INPUT_MENU_POINT;
 public class StartCreateHotelServiceDB {
 
     @Autowired
-    @Qualifier("NavigatorHotelService")
+    @Qualifier("navigatorHotelService")
     private Navigator navigator;
     @Autowired
     private Choice userChoice;
