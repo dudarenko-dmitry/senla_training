@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.service.ServiceOrder;
 
 import java.lang.reflect.InvocationTargetException;
@@ -51,14 +52,7 @@ public class ControllerOrderSpring implements ControllerOrder {
     }
 
     @Override
-    public void addServicesToOrder(int idOrder) throws InvocationTargetException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException {
-        log.debug("ControllerOrder call ServiceOrder's method 'addServicesToOrder'.");
-        orderService.addServicesToOrder(idOrder);
-    }
-
-    @Override
-    public List<Integer> readAllIdServicesForOrder(int idOrder) {
+    public List<HotelService> readAllServicesForOrder(int idOrder) {
         log.debug("ControllerOrder call ServiceOrder's method 'readAllIdServicesForOrder'.");
         return orderService.readAllIdServicesForOrder(idOrder);
     }

@@ -3,15 +3,15 @@ package pl.senla.hotel.ui.services;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.ui.MenuItem;
 
-import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_0_QUIT_TO_ORDER_MENU;
+import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_2_READ_HOT_SERV;
 
 @Slf4j
-public class Item0QuitToOrderMenu implements MenuItem {
+public class Item2ReadHotelService implements MenuItem {
 
     private final String nameItem;
 
-    public Item0QuitToOrderMenu() {
-        this.nameItem = MENU_ITEM_0_QUIT_TO_ORDER_MENU;
+    public Item2ReadHotelService() {
+        this.nameItem = MENU_ITEM_2_READ_HOT_SERV;
     }
 
     @Override

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.controller.ControllerRoomReservation;
 import pl.senla.hotel.entity.services.HotelService;
-import pl.senla.hotel.entity.services.TypeOfService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
@@ -33,19 +32,8 @@ public class ExecutorUpdateHotelServiceDB {
             switch (typeOfServiceInt) {
                 case 1 -> {
                     log.info(UPDATE_RESERVATION);
-                    log.info(CONSOLE_READ_ALL_SERVICES, orderController.read(idOrderUpdate)
-                            .getHotelServices()
-                            .stream()
-                            .filter(s -> {
-                                try {
-                                    return roomReservationController.read(s.getIdService()).getTypeOfService()
-                                            .equals(TypeOfService.ROOM_RESERVATION);
-                                } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
-                                         IllegalAccessException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            })
-                            .toList());
+                    log.info(CONSOLE_READ_ALL_SERVICES_FOR_ORDER,
+                            orderController.readAllServicesForOrder(idOrderUpdate));
                     log.info(INPUT_ID_RESERVATION_UPDATE);
                     int idRoomReservation = sc.nextInt();
                     log.info(SELECT_START_TIME);

@@ -23,10 +23,11 @@ public class ExecutorCreateHotelServiceDB {
     @Autowired
     private ControllerFacility controllerFacility;
 
-    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService)
+    public boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,
             InstantiationException { //use only (1) RoomReservation
-        int typeOfService2 = makeChoice();
+//        int typeOfService2 = makeChoice();
+        int typeOfService2 = 1;
         Scanner sc = new Scanner(System.in);
         switch (typeOfService) {
             case 1 -> {

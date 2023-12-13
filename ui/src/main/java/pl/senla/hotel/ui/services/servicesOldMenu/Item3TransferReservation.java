@@ -1,4 +1,4 @@
-package pl.senla.hotel.ui.services;
+package pl.senla.hotel.ui.services.servicesOldMenu;
 
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.ui.MenuItem;

@@ -67,12 +67,11 @@ public class ServiceOrderSpring implements ServiceOrder {
 
     @Override
     public Order update(int idOrder, String orderUpdatingString) {
-//        if (read(idOrder) != null) {
-//            Order orderUpdate = new Order(); // read from String
-//            return daoOrder.update(idOrder, orderUpdate);
-//        }
-        log.debug(ORDER_NOT_EXISTS);
-        log.debug(ERROR_INPUT);
+// this method is never used.
+// Updating of Order is processed by updating of its reservations in pl.senla.hotel.ui.services;
+        log.debug("this method is never used");
+        log.debug("Updating of Order is processed by updating of its reservations" +
+                " in pl.senla.hotel.ui.services by method <<updateHotelServiceList>>");
         return null;
     }
 
@@ -87,33 +86,9 @@ public class ServiceOrderSpring implements ServiceOrder {
     }
 
     @Override
-    public void addServicesToOrder(int idOrder) throws InvocationTargetException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException {
-        log.debug("START: Add Service to Order");
-        if (daoOrder.findAll().isEmpty()) {
-            log.debug(READ_ALL_ORDERS_IS_EMPTY);
-        } else if (read(idOrder) == null) {
-            log.debug(ORDER_NOT_EXISTS);
-            log.debug(ERROR_INPUT);
-        }
-        Optional<Order> orderOld = daoOrder.findById(idOrder);
-        if (orderOld.isPresent()) {
-            Order orderUpdate = new Order(); // read from String
-            orderUpdate.setIdOrder(idOrder);
-            orderUpdate.setGuest(orderOld.get().getGuest());
-            daoOrder.save(orderUpdate);
-        }
-        log.debug(ORDER_NOT_EXISTS);
-    }
-
-    @Override
-    public List<Integer> readAllIdServicesForOrder(int idOrder) {
+    public List<HotelService> readAllIdServicesForOrder(int idOrder) {
         log.debug("START: ReadAll Services for Order");
-        return serviceHotelService.readAll()
-                .stream()
-                .filter(o -> o.getOrder().getIdOrder() == idOrder)
-                .map(HotelService::getIdService)
-                .toList();
+        return serviceHotelService.findServicesForOrder(idOrder);
     }
 
 }

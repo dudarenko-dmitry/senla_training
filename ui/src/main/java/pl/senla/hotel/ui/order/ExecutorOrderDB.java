@@ -11,7 +11,6 @@ import pl.senla.hotel.ui.services.StartCreateHotelServiceDB;
 import pl.senla.hotel.ui.services.StartUpdateHotelServiceListDB;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Comparator;
 import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
@@ -38,19 +37,15 @@ public class ExecutorOrderDB implements Executor {
                 log.info(INPUT_ID_ORDER);
                 int id = sc.nextInt();
                 log.info(CONSOLE_READ_ORDER, orderController.read(id));
-                log.info(CONSOLE_READ_ALL_SERVICES_FOR_ORDER, orderController.readAllIdServicesForOrder(id));
+                log.info(CONSOLE_READ_ALL_SERVICES_FOR_ORDER, orderController.readAllServicesForOrder(id));
             }
             case 3 -> {
                 log.info(INPUT_ID_GUEST);
                 int idGuest = sc.nextInt();
-                log.info(CONSOLE_CREATE_ORDER, orderController.create(String.valueOf(idGuest)));
-                int idOrder = orderController.readAll()
-                        .stream()
-                        .map(Order::getIdOrder)
-                        .max(Comparator.comparingInt(o -> o))
-                        .orElse(-1);
+                Order orderNew = orderController.create(String.valueOf(idGuest));
+                log.info(CONSOLE_CREATE_ORDER);
+                int idOrder = orderNew.getIdOrder();
                 startCreateHotelService.runMenu(idOrder, idGuest);
-                orderController.addServicesToOrder(idOrder);
                 log.info(ADD_NEW_SERVICE_FOR_ORDER);
             }
             case 4 -> {

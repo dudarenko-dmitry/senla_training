@@ -26,15 +26,18 @@ public class ConsoleConstant {
     public static final String CONSOLE_NUMBER_GUEST_TOTAL =         "Total number of registered Guest in DataBase: {}";
     public static final String CONSOLE_3_GUESTS_AND_DATES =         "The last 3 guests of the room and the dates of their stay: {}";
 
-    public static final String CONSOLE_READ_ALL_SERVICES =              "\nList of Services: {}";
-    public static final String CONSOLE_READ_ALL_SERVICES_FOR_ORDER =    "\nList of all Services for Order: {}";
-    public static final String CONSOLE_CREATE_SERVICE =                 "New Reservation was created: {}";
+    public static final String CONSOLE_READ_ALL_SERVICES =           "\nList of Services: {}";
+    public static final String CONSOLE_READ_ALL_SERVICES_FOR_ORDER = "\nList of all Services for Order: {}";
+    public static final String CONSOLE_READ_SERVICE =                "Reservation: {}";
+    public static final String CONSOLE_CREATE_SERVICE =              "New Reservation was created: {}";
+    public static final String CONSOLE_UPDATE_SERVICE =              "Reservation was updated: {}";
+    public static final String CONSOLE_DELETE_SERVICE =              "Reservation was deleted";
 
     public static final String CONSOLE_READ_ALL_FACILITIES =        "\nHotel's facilities' list: ";
 
     public static final String CONSOLE_READ_ALL_ORDERS =    "\nList of Orders: {}";
     public static final String CONSOLE_READ_ORDER =         "\nOrder: {}";
-    public static final String CONSOLE_CREATE_ORDER =       "New Order was created: {}";
+    public static final String CONSOLE_CREATE_ORDER =       "New Order was created.";
     public static final String CONSOLE_CHANGE_ORDER =       "Order changed: {}";
     public static final String CONSOLE_DELETE_ORDER =       "Order deleted";
 
@@ -56,6 +59,7 @@ public class ConsoleConstant {
     public static final String INPUT_ID_GUEST =       "Input Guest's ID --> ";
     public static final String INPUT_ID_ROOM =        "Input Room's ID --> ";
     public static final String INPUT_ID_ROOM_UPDATE = "Input Room's ID to update --> ";
+    public static final String INPUT_ID_RESERVATION = "Input RoomReservation's ID --> ";
     public static final String INPUT_ID_RESERVATION_UPDATE = "Input RoomReservation's ID to Update --> ";
     public static final String INPUT_ID_ORDER =       "Input Order's ID --> ";
 

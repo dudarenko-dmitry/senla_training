@@ -32,7 +32,7 @@ public class StartCreateHotelServiceDB {
         int typeOfService = 1;
         while (typeOfService !=0 ) {
             navigator.buildMenu();
-            typeOfService = makeChoice();
+            typeOfService = makeChoice(); // use only 1 - RoomReservation
             if (typeOfService != 0) {
                 log.info(CONSOLE_CREATE_SERVICE,
                         executor.createHotelServiceForGuest(idOrder, idGuest, typeOfService));

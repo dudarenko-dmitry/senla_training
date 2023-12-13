@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.dao.DaoHotelServiceSpring;
@@ -49,7 +50,7 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
     @Value("${room-records.number}")
     private Integer roomRecordsNumber;
 
-    @Override
+    @Override // ready
     public List<HotelService> readAll() {
         log.debug("START: Hotel Service ReadAll");
         List<HotelService> hotelServiceList = daoHotelService.findAll();
@@ -60,6 +61,7 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         return hotelServiceList;
     }
 
+    @Transactional
     @Override
     public HotelService create(String reservationString) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -126,7 +128,8 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         return null;
     }
 
-    @Override
+    @Transactional
+    @Override // ready
     public HotelService update(int idReservation, String reservationUpdatingString) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("START: Hotel Service update");
@@ -263,7 +266,14 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         return daoHotelService.findByOrderByCost();
     }
 
-    private HotelService createFromObject(HotelService reservation) {
+    @Override
+    public List<HotelService> findServicesForOrder(int idOrder) {
+        log.debug("START: ServiceRoomReservation readAllServicesForOrder");
+        return daoHotelService.findByOrder(idOrder);
+    }
+
+
+        private HotelService createFromObject(HotelService reservation) {
         log.debug("START: Hotel Service createFromObject");
         if(isVacant(reservation.getRoom().getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
             return daoHotelService.save(reservation); // changed here

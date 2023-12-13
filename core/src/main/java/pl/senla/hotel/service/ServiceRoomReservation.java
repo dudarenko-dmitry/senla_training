@@ -23,4 +23,6 @@ public interface ServiceRoomReservation extends ServiceCRUDALL<HotelService> {
     List<HotelService> readAllServicesSortByDate();
 
     List<HotelService> readAllServicesSortByPrice();
+
+    List<HotelService> findServicesForOrder(int idOrder);
 }

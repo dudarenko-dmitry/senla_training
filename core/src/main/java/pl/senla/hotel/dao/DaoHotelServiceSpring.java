@@ -45,4 +45,7 @@ public interface DaoHotelServiceSpring extends JpaRepository<HotelService, Integ
             "LIMIT 3",
     nativeQuery = true)
     List<HotelService> findLast3ByRoomId(int idRoom);
+
+    @Query(value = "SELECT * FROM hotel.reservations WHERE orderID=?", nativeQuery = true)
+    List<HotelService> findByOrder(int idOrder);
 }

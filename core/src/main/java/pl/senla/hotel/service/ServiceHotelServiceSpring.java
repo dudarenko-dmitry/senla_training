@@ -71,4 +71,10 @@ public class ServiceHotelServiceSpring implements ServiceHotelService{
         }
         log.debug(SERVICE_NOT_EXISTS);
     }
+
+    @Override
+    public List<HotelService> findServicesForOrder(int idOrder) {
+        log.debug("START: HotelService findServicesForOrder");
+        return serviceRoomReservation.findServicesForOrder(idOrder);
+    }
 }

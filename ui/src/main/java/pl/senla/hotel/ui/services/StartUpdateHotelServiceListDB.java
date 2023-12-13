@@ -9,8 +9,6 @@ import pl.senla.hotel.ui.Navigator;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static pl.senla.hotel.constant.MenuConstant.MENU_HOTEL_SERVICE_SELECT;
-
 @Component
 @Slf4j
 public class StartUpdateHotelServiceListDB {
@@ -23,8 +21,8 @@ public class StartUpdateHotelServiceListDB {
 
     public HotelService runMenu(int idOrderUpdate) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
-        navigator.buildMenu();
-        log.info(MENU_HOTEL_SERVICE_SELECT);
+//        navigator.buildMenu();
+//        log.info(MENU_HOTEL_SERVICE_SELECT);
         return executor.updateHotelServiceList(idOrderUpdate);
     }
 }

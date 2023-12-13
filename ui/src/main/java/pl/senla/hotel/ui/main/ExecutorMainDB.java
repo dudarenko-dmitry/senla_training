@@ -26,6 +26,9 @@ public class ExecutorMainDB implements Executor {
     @Qualifier("startMenuGuestDB")
     private StartMenu startMenuGuest;
     @Autowired
+    @Qualifier("startMenuHotelService")
+    private StartMenu startHotelService;
+    @Autowired
     @Qualifier("startMenuOrderDB")
     private StartMenu startMenuOrder;
     @Autowired
@@ -41,7 +44,8 @@ public class ExecutorMainDB implements Executor {
             case 1 -> startMenuHotelFacilities.runMenu();
             case 2 -> startMenuGuest.runMenu();
             case 3 -> startMenuOrder.runMenu();
-            case 4 -> startMenuAnalytics.runMenu();
+            case 4 -> startHotelService.runMenu();
+            case 5 -> startMenuAnalytics.runMenu();
             case 0 -> {
                 log.info(CLOSE_APPLICATION);
                 System.exit(0);
