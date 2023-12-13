@@ -1,17 +1,16 @@
 package pl.senla.hotel.service;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.senla.hotel.comparators.*;
 import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.dao.DaoHotelServiceSpring;
 import pl.senla.hotel.dao.DaoOrderSpring;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.entity.services.HotelService;
@@ -32,6 +31,7 @@ import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 @Service
 @Slf4j
+@NoArgsConstructor
 public class ServiceRoomReservationSpring implements ServiceRoomReservation {
 
     @Autowired
@@ -48,8 +48,6 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
     private transient ServiceFacility serviceRoom;
     @Value("${room-records.number}")
     private Integer roomRecordsNumber;
-
-    public ServiceRoomReservationSpring() {}
 
     @Override
     public List<HotelService> readAll() {
@@ -176,19 +174,19 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         log.debug(ALL_ROOM_RESERVATION_IS_EMPTY);
     }
 
-    @Override // ready
+    @Override
     public int countNumberOfGuestsOnDate(String checkedDateString) {
         log.debug("START: Hotel Service countNumberOfGuestsOnDate");
         return daoHotelService.countGuestOnDate(checkedDateString);
     }
 
-    @Override
+    @Override // ready with guestID
     public List<HotelService> readAllRoomReservationsSortByGuestName() {
         log.debug("START: Hotel Service readAllRoomReservationsSortByGuestName");
         return daoHotelService.findAllOrderByGuestName();
     }
 
-    @Override //ready
+    @Override
     public List<HotelService> readAllRoomReservationsSortByGuestCheckOut() {
         log.debug("START: Hotel Service readAllRoomReservationsSortByGuestCheckOut");
         return daoHotelService.findByOrderByCheckOutTime();
@@ -197,42 +195,25 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
     @Override
     public int countGuestPaymentForRoom(int idGuest) {
         log.debug("START: Hotel Service countGuestPaymentForRoom");
-        List<Integer> costs = readAll()
-                .stream()
-                .filter(rr -> rr.getGuest().getIdGuest() == idGuest)
-                .map(HotelService::getCost)
-                .toList();
-        int sum = 0;
-        for(Integer cost : costs){
-            sum = sum + cost;
-        }
-        return sum;
+        return daoHotelService.getSumForRoomByGuest(idGuest);
     }
 
     @Override
-    public List<String> read3LastGuestAndDatesForRoom(int idRoom) throws InvocationTargetException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public List<String> read3LastGuestAndDatesForRoom(int idRoom) {
         log.debug("START: Hotel Service read3LastGuestAndDatesForRoom");
         List<String> guestsAndDates = new ArrayList<>();
-        List<HotelService> roomReservationsForRoom = readAll()
-                .stream()
-                .filter(rr -> rr.getRoom().getIdRoom() == idRoom)
-                .sorted(new RoomReservationsComparatorByCheckOutReverse())
-                .limit(3)
-                .toList();
+        List<HotelService> roomReservationsForRoom = daoHotelService.findLast3ByRoomId(idRoom);
+        System.out.println("\n3 rr: " + roomReservationsForRoom);
+        int i = 1;
         for (HotelService rr : roomReservationsForRoom){
             if (rr != null) {
-                int idGuest = rr.getGuest().getIdGuest();
-                for (int i = 0; i < daoGuest.findAll().size(); i++) {
-                    if (idGuest == daoGuest.findById(i).get().getIdGuest()) {
-                        String guestAndDate = "\n#" + (i + 1) +
-                                ":\nGuest's name: " + daoGuest.findById(i).get().getName() +
-                                ", check-in:" + rr.getCheckInTime() +
-                                ", check-out = " + rr.getCheckOutTime();
-                        guestsAndDates.add(guestAndDate);
-                    } else {
-                        guestsAndDates.add("\n#" + (i + 1) + ": no reservation");
-                    }
+                Optional<Guest> guest = daoGuest.findById(rr.getGuest().getIdGuest());
+                if (guest.isPresent()) {
+                    String guestAndDate = "\n#" + (i++) +
+                            ":\nGuest's name: " + guest.get().getName() +
+                            ", check-in:" + rr.getCheckInTime() +
+                            ", check-out = " + rr.getCheckOutTime();
+                    guestsAndDates.add(guestAndDate);
                 }
             }
         }
@@ -240,81 +221,46 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
     }
 
     @Override
-    public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
+    public List<Room> readAllRoomsFreeOnDate(String checkedTimeString) {
         log.debug("START: Hotel Service readAllRoomsFreeInTime");
-        LocalDateTime checkedDateTime = getDateTime(checkedTimeString);
-        List<Room> occupiedRooms = readAll().stream()
-                .filter(rr -> rr.getTypeOfService().equals(TypeOfService.ROOM_RESERVATION))
-                .filter(rr -> (checkedDateTime.isAfter(rr.getCheckInTime()) && checkedDateTime.isBefore(rr.getCheckOutTime())))
-                .map(rr -> {
-                    try {
-                        return serviceHotelFacility.read(rr.getRoom().getIdRoom());
-                    } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
-                             IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .toList();
-        List<Room> rooms = serviceHotelFacility.readAll().stream()
-                .filter(hs -> hs.getCategory().equals(CategoryFacility.ROOM))
-                .toList();
-        List<Room> freeRooms = new ArrayList<>();
-        for (Room r : rooms) {
-            for (Room hs : occupiedRooms) {
-                if (r.equals(hs)) {
-                    freeRooms.add(r);
-                }
-            }
-        }
-        return freeRooms;
+        return daoFacility.readAllRoomsFreeOnDate(checkedTimeString);
     }
 
     @Override
     public int countFreeRoomsInTime(String checkedTimeString) {
         log.debug("START: Hotel Service countFreeRoomsInTime");
-        return readAllRoomsFreeInTime(checkedTimeString).size();
+        return daoFacility.countFreeRoomsInTime(checkedTimeString);
     }
 
     @Override
     public List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString) {
         log.debug("START: Hotel Service readAllFreeRoomsSortByPrice");
-        return readAllRoomsFreeInTime(checkedTimeString).stream()
-                .sorted(new RoomComparatorByPrice())
-                .toList();
+        return daoFacility.readAllRoomsFreeOnDateOrderByPrice(checkedTimeString);
+
     }
 
     @Override
     public List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
         log.debug("START: Hotel Service readAllFreeRoomsSortByCapacity");
-        return readAllRoomsFreeInTime(checkedTimeString).stream()
-                .sorted(new RoomComparatorByCapacity())
-                .toList();
+        return daoFacility.readAllRoomsFreeOnDateOrderByCapacity(checkedTimeString);
     }
 
     @Override
     public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
         log.debug("START: Hotel Service readAllFreeRoomsSortByLevel");
-        return readAllRoomsFreeInTime(checkedTimeString).stream()
-                .sorted(new RoomComparatorByLevel())
-                .toList();
+        return daoFacility.readAllRoomsFreeOnDateOrderByLevel(checkedTimeString);
     }
 
     @Override
     public List<HotelService> readAllServicesSortByDate() {
         log.debug("START: Hotel Service readAllServicesSortByDate");
-        return daoHotelService.findAll()
-                .stream()
-                .sorted(new HotelServicesComparatorByDate())
-                .toList();
+        return daoHotelService.findByOrderByCheckInTime();
     }
 
     @Override
     public List<HotelService> readAllServicesSortByPrice() {
         log.debug("START: Hotel Service readAllServicesSortByPrice");
-        return daoHotelService.findAll()
-                .stream()
-                .sorted(new HotelServicesComparatorByPrice())
-                .toList();
+        return daoHotelService.findByOrderByCost();
     }
 
     private HotelService createFromObject(HotelService reservation) {

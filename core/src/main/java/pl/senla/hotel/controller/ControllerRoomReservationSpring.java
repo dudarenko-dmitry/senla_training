@@ -96,7 +96,7 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
     @Override
     public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllRoomsFreeInTime'.");
-        return roomReservationService.readAllRoomsFreeInTime(checkedTimeString);
+        return roomReservationService.readAllRoomsFreeOnDate(checkedTimeString);
     }
 
     @Override

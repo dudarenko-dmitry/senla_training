@@ -26,7 +26,7 @@ public class Room implements Serializable {
     @Column(name = "category", nullable = false)
     private CategoryFacility category;
 
-    @Column(name = "nameFacility", nullable = false)
+    @Column(name = "name_facility", nullable = false)
     private String nameFacility;
 
     @Column(name = "price", nullable = false)

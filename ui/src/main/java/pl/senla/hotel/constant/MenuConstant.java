@@ -79,7 +79,7 @@ public class MenuConstant {
     public static final String MENU_ITEM_9_COUNT_AVAILABLE_ROOMS =             "\t\t\t\t9. Total number of available rooms.";
     public static final String MENU_ITEM_10_COUNT_GUESTS =                     "\t\t\t\t10. Total number of guests.";
     public static final String MENU_ITEM_11_COUNT_GUESTS_ON_DATE =             "\t\t\t\t\t11. Total number of guests on date.";
-    public static final String MENU_ITEM_12_AVAILABLE_ROOMS_ON_DATE =          "\t\t\t\t12. List of rooms that is available" +
+    public static final String MENU_ITEM_12_AVAILABLE_ROOMS_ON_DATE =          "\t\t\t\t12. List of available rooms" +
             " on date.";
     public static final String MENU_ITEM_13_PAYMENT_OF_GUEST =                 "\t\t\t\t\t13. Payment for the room to be paid" +
             " by the guest.";

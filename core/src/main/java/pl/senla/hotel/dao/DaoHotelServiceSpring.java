@@ -11,6 +11,8 @@ import java.util.List;
 public interface DaoHotelServiceSpring extends JpaRepository<HotelService, Integer> {
 
     List<HotelService> findByOrderByCheckOutTime();
+    List<HotelService> findByOrderByCheckInTime();
+    List<HotelService> findByOrderByCost();
 
     @Query(value = "SELECT count(guestID)" +
             "FROM hotel.reservations as r " +
@@ -18,13 +20,29 @@ public interface DaoHotelServiceSpring extends JpaRepository<HotelService, Integ
     nativeQuery = true)
     int countGuestOnDate(String checkedDateString);
 
-    @Query(value = "SELECT " +
-            "new example.HotelServiceAndGuest(r.serviceID, r.orderID, g.guestID, g.name, " +
-            "r.service_type, r.facilityID, r.check_in, r.check_out, r.day, r.cost) " +
+    @Query(value = "SELECT g.name, r.serviceID, r.orderID, r.guestID, " +
+            "r.service_type, r.facilityID, r.check_in, r.check_out, r.day, r.cost " +
             "FROM hotel.reservations r " +
             "JOIN hotel.guests g " +
             "ON r.guestID=g.guestID " +
             "ORDER BY name",
     nativeQuery = true)
-    List<Object[]> findAllOrderByGuestName();
+    List<HotelService> findAllOrderByGuestName();
+
+    @Query(value = "SELECT sum(cost) " +
+            "FROM hotel.reservations " +
+            "WHERE guestID=?",
+    nativeQuery = true)
+    int getSumForRoomByGuest(int idGuest);
+
+    @Query(value = "SELECT rr.serviceID, rr.orderID, rr.guestID, " +
+            "rr.service_type, rr.facilityID, rr.check_in, rr.check_out, rr.day, rr.cost " +
+            "FROM hotel.reservations as rr " +
+            "JOIN hotel.rooms as r " +
+            "ON r.facilityID=rr.facilityID " +
+            "WHERE r.facilityID=? " +
+            "ORDER BY rr.check_in DESC " +
+            "LIMIT 3",
+    nativeQuery = true)
+    List<HotelService> findLast3ByRoomId(int idRoom);
 }
