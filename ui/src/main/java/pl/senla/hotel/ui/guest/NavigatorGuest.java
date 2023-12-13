@@ -1,19 +1,18 @@
 package pl.senla.hotel.ui.guest;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_GUEST;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class NavigatorGuest implements Navigator {
-
-    public NavigatorGuest() {
-    }
 
     public void buildMenu() {
         log.info("");

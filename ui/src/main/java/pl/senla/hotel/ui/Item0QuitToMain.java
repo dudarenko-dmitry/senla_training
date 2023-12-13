@@ -1,6 +1,7 @@
 package pl.senla.hotel.ui;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_ITEM_0_QUIT_TO_MAIN;
 

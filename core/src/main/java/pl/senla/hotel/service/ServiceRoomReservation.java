@@ -14,7 +14,7 @@ public interface ServiceRoomReservation extends ServiceCRUDALL<HotelService> {
     int countGuestPaymentForRoom(int idGuest);
     List<String> read3LastGuestAndDatesForRoom(int idRoom) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    List<Room> readAllRoomsFreeInTime(String checkedTimeString);
+    List<Room> readAllRoomsFreeOnDate(String checkedTimeString);
     int countFreeRoomsInTime(String checkedTimeString);
     List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString);
     List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString);
@@ -23,4 +23,6 @@ public interface ServiceRoomReservation extends ServiceCRUDALL<HotelService> {
     List<HotelService> readAllServicesSortByDate();
 
     List<HotelService> readAllServicesSortByPrice();
+
+    List<HotelService> findServicesForOrder(int idOrder);
 }

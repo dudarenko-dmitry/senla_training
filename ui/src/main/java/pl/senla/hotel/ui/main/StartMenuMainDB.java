@@ -1,9 +1,14 @@
 package pl.senla.hotel.ui.main;
 
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.application.annotation.StartMethod;
-import pl.senla.hotel.application.annotation.StartPoint;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.ExitCodeGenerator;
+import org.springframework.boot.SpringApplication;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Choice;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.Navigator;
@@ -11,27 +16,36 @@ import pl.senla.hotel.ui.StartMenu;
 
 import java.lang.reflect.InvocationTargetException;
 
-@AppComponent
-@StartPoint
+@Component
+@NoArgsConstructor
+@Slf4j
 public class StartMenuMainDB implements StartMenu {
 
-    @GetInstance(beanName = "NavigatorMainMenu")
+    @Autowired
+    @Qualifier("navigatorMainMenu")
     private Navigator navigator;
-    @GetInstance(beanName = "UserChoice")
+    @Autowired
     private Choice userChoice;
-    @GetInstance(beanName = "ExecutorMainDB")
+    @Autowired
+    @Qualifier("executorMainDB")
     private Executor executor;
 
-    public StartMenuMainDB() {}
-
-    @StartMethod
     @Override
+    @PostConstruct
     public void runMenu() throws IllegalAccessException, InvocationTargetException,
             NoSuchMethodException, InstantiationException {
-        while (true) {
+        int menuPoint = 1;
+        while (menuPoint != 0) {
             navigator.buildMenu();
-            int menuPoint = userChoice.makeChoice();
-            executor.execute(menuPoint);
+            menuPoint = userChoice.makeChoice();
+            if (menuPoint != 0) {
+                executor.execute(menuPoint);
+            }
         }
+    }
+
+    @PreDestroy
+    public void closeApplication() {
+        log.info("Application completed.");
     }
 }

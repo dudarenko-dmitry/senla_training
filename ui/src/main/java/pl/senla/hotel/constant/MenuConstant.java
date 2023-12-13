@@ -7,7 +7,8 @@ public class MenuConstant {
     public static final String MENU_ITEM_1_HOTEL_FACILITY_OPERATIONS = "\t\t1. Hotel facilities operations.";
     public static final String MENU_ITEM_2_GUEST_OPERATIONS =          "\t\t\t2. Guests operations.";
     public static final String MENU_ITEM_3_ORDER_OPERATIONS =          "\t\t\t3. Orders' operations.";
-    public static final String MENU_ITEM_4_ANALYTICS_REPORTS =         "\t\t\t4. Analytics reports.";
+    public static final String MENU_ITEM_4_HOT_SERV_OPERATIONS =       "\t\t4. Hotel Services operations.";
+    public static final String MENU_ITEM_5_ANALYTICS_REPORTS =         "\t\t\t5. Analytics reports.";
     public static final String MENU_ITEM_5_INPUT_OUTPUT =              "\t\t\t5. Input/Output Operations.";
 
     public static final String MENU_ITEM_0_QUIT_TO_MAIN =              "\t\t\t\t0. Quit to Main menu.";
@@ -45,15 +46,12 @@ public class MenuConstant {
     public static final String MENU_ITEM_4_UPDATE_ORDER =              "\t\t\t4. Update Order.";
     public static final String MENU_ITEM_5_DELETE_ORDER =              "\t\t\t5. Delete Order.";
 
-    public static final String MENU_INPUT_OUTPUT =                         "\t\t\t===== Data's Import-Export =====";
-    public static final String MENU_ITEM_1_IMPORT_ALL_DATA =               "\t\t\t1. Import (load) all application's Entities from file (use after START application).";
-    public static final String MENU_ITEM_2_EXPORT_ALL_DATA =               "\t\t\t2. Export (save) all application's Entities to file (use before EXIT application).";
-    public static final String MENU_ITEM_3_IMPORT_ROOM_DATA =              "\t\t\t3. Import (load) Rooms' information from file (works only for Hotel Facility - ROOM).";
-    public static final String MENU_ITEM_4_EXPORT_ROOM_DATA =              "\t\t\t4. Export (save) Rooms' information from file (works only for Hotel Facility - ROOM).";
-    public static final String MENU_ITEM_5_IMPORT_GUEST_DATA =             "\t\t\t5. Import (load) Guests' information from file.";
-    public static final String MENU_ITEM_6_EXPORT_GUEST_DATA =             "\t\t\t6. Export (save) Guests' information to file.";
-    public static final String MENU_ITEM_7_IMPORT_SERVICE_AND_ORDER_DATA = "\t\t7. Import (load) Orders' and Services' information from file.";
-    public static final String MENU_ITEM_8_EXPORT_SERVICE_AND_ORDER_DATA = "\t\t8. Export (save) Orders' and Services' (RoomReservation only) information to file.";
+    public static final String MENU_HOT_SERV =                         "\t\t\t===== Menu Hotel Services =====";
+    public static final String MENU_ITEM_1_READ_ALL_HOT_SERV =         "\t\t\t1. Read all Hotel Services.";
+    public static final String MENU_ITEM_2_READ_HOT_SERV =             "\t\t\t\t2. Read Hotel Service.";
+    public static final String MENU_ITEM_3_CREATE_HOT_SERV =           "\t\t\t\t3. Create new Hotel Service.";
+    public static final String MENU_ITEM_4_UPDATE_HOT_SERV =           "\t\t\t\t4. Update Hotel Service.";
+    public static final String MENU_ITEM_5_DELETE_HOT_SERV =           "\t\t\t\t5. Delete Hotel Service.";
 
     public static final String MENU_HOTEL_SERVICE =                        "\t\t===== Hotel Services =====";
     public static final String MENU_ITEM_0_QUIT_TO_ORDER_MENU =            "\t\t\t0. Save List and Quit to Order menu.";
@@ -79,7 +77,7 @@ public class MenuConstant {
     public static final String MENU_ITEM_9_COUNT_AVAILABLE_ROOMS =             "\t\t\t\t9. Total number of available rooms.";
     public static final String MENU_ITEM_10_COUNT_GUESTS =                     "\t\t\t\t10. Total number of guests.";
     public static final String MENU_ITEM_11_COUNT_GUESTS_ON_DATE =             "\t\t\t\t\t11. Total number of guests on date.";
-    public static final String MENU_ITEM_12_AVAILABLE_ROOMS_ON_DATE =          "\t\t\t\t12. List of rooms that is available" +
+    public static final String MENU_ITEM_12_AVAILABLE_ROOMS_ON_DATE =          "\t\t\t\t12. List of available rooms" +
             " on date.";
     public static final String MENU_ITEM_13_PAYMENT_OF_GUEST =                 "\t\t\t\t\t13. Payment for the room to be paid" +
             " by the guest.";

@@ -1,8 +1,9 @@
 package pl.senla.hotel.ui.services;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.controller.ControllerRoomReservation;
 
@@ -12,22 +13,21 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.HotelFacilityConstant.ROOM_NOT_EXISTS;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class ExecutorCreateHotelServiceDB {
 
-    @GetInstance(beanName = "ControllerRoomReservationDB")
+    @Autowired
     private ControllerRoomReservation roomReservationController;
-    @GetInstance(beanName = "ControllerFacilityDB")
+    @Autowired
     private ControllerFacility controllerFacility;
 
-    public ExecutorCreateHotelServiceDB() {}
-
-    //Later change return from RoomReservation to HotelService and refactor
-    protected boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService)
+    public boolean createHotelServiceForGuest(int idOrder, int idGuest, int typeOfService)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,
             InstantiationException { //use only (1) RoomReservation
-        int typeOfService2 = makeChoice();
+//        int typeOfService2 = makeChoice();
+        int typeOfService2 = 1;
         Scanner sc = new Scanner(System.in);
         switch (typeOfService) {
             case 1 -> {

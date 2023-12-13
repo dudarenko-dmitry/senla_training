@@ -1,19 +1,18 @@
 package pl.senla.hotel.ui.analytic;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Item0QuitToMain;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_ANALYTICS_REPORTS;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class NavigatorAnalytics implements Navigator {
-
-    public NavigatorAnalytics() {
-    }
 
     @Override
     public void buildMenu() {

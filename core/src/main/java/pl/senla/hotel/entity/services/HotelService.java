@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.service.ServiceFacility;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -31,13 +31,12 @@ public class HotelService implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idService;
 
-//    @Column(name = "orderID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderID")
     private Order order;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "serviceType", nullable = false)
+    @Column(name = "service_type", nullable = false)
     private TypeOfService typeOfService;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,26 +50,23 @@ public class HotelService implements Serializable {
     @Column(name = "day", nullable = false)
     private Integer numberOfDays;
 
-    @Column(name = "checkIn", nullable = false)
+    @Column(name = "check_in")
     private LocalDateTime checkInTime;
 
-    @Column(name = "checkOut", nullable = false)
+    @Column(name = "check_out")
     private LocalDateTime checkOutTime;
 
     @Column(name = "cost", nullable = false)
     private Integer cost;
 
-    @GetInstance(beanName = "ServiceFacilityDB")
-    private transient ServiceFacility serviceRoom;
-
     @Override
     public String toString() {
-        return "HotelService{" +
+        return "\nHotelService{" +
                 "idService=" + idService +
                 ", idOrder=" + order.getIdOrder() +
                 ", typeOfService=" + typeOfService +
-                "\nGuest=" + guest.getIdGuest() +
-                "\nRoom=" + room.getIdRoom() +
+                ", Guest=" + guest.getIdGuest() +
+                ", Room=" + room.getIdRoom() + "," +
                 "\nnumberOfDays=" + numberOfDays +
                 ", checkInTime=" + checkInTime +
                 ", checkOutTime=" + checkOutTime +

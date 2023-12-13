@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface ControllerFacility extends ControllerCRUDALL<Room> {
 
-    boolean updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+    Room updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    boolean updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+    Room updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
 
     List<Room> readPriceListForServicesSortByCategory();

@@ -1,17 +1,20 @@
 package pl.senla.hotel.ui.room.roomlevel;
 
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Navigator;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 public class StartMenuRoomLevel {
-    @GetInstance(beanName = "NavigatorRoomLevel")
-    private Navigator navigator;
-    @GetInstance(beanName = "ExecutorRoomLevel")
-    private ExecutorRoomLevel executor;
 
-    public StartMenuRoomLevel() {}
+    @Autowired
+    @Qualifier("navigatorRoomLevel")
+    private Navigator navigator;
+    @Autowired
+    private ExecutorRoomLevel executor;
 
     public String runMenu() throws IllegalAccessException {
         navigator.buildMenu();

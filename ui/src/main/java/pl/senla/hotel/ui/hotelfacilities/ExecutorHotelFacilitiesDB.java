@@ -1,7 +1,9 @@
 package pl.senla.hotel.ui.hotelfacilities;
 
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.Executor;
 import pl.senla.hotel.ui.StartMenu;
 
@@ -9,13 +11,13 @@ import java.lang.reflect.InvocationTargetException;
 
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 public class ExecutorHotelFacilitiesDB implements Executor {
 
-    @GetInstance(beanName = "StartMenuRoomDB")
+    @Autowired
+    @Qualifier("startMenuRoomDB")
     private StartMenu menuRoom;
-
-    public ExecutorHotelFacilitiesDB() {}
 
     @Override
     public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,

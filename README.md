@@ -247,3 +247,15 @@ and "low coupling";
 •	the application must be embedded in the git in a separate branch with all configuration
 files, scripts for creating a database and filling it in;
 •	all work with dependencies is done with the help of maven.
+
+-----------------------------------------------------------------------------
+
+Tasks for lecture No. 13
+
+Task 1 (difficulty 4)
+Replace your (current) Dependency Injection implementation with DI using the Spring
+(spring-context module).
+1.	Use any of the configuration methods;
+2.	Make sure that repositories and services exist each in a single instance;
+3.	Configure PropertySourcesPlaceholderConfigurer to embed parameters into beans
+    from configuration files using the @Value annotation.

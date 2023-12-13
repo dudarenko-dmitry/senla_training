@@ -1,18 +1,17 @@
 package pl.senla.hotel.ui.room.roomlevel;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.ui.MenuItem;
 import pl.senla.hotel.ui.Navigator;
 
 import static pl.senla.hotel.constant.MenuConstant.MENU_ROOM_LEVEL;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class NavigatorRoomLevel implements Navigator {
-
-    public NavigatorRoomLevel() {
-    }
 
     @Override
     public void buildMenu() {

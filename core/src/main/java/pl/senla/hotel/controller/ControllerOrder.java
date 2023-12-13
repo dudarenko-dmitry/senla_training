@@ -1,14 +1,11 @@
 package pl.senla.hotel.controller;
 
 import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.services.HotelService;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface ControllerOrder extends ControllerCRUDALL<Order> {
 
-    boolean addServicesToOrder(int idOrder) throws InvocationTargetException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException;
-
-    List<Integer> readAllIdServicesForOrder(int idOrderNew);
+    List<HotelService> readAllServicesForOrder(int idOrderNew);
 }

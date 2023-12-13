@@ -1,9 +1,12 @@
 package pl.senla.hotel.ui.analytic;
 
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
-import pl.senla.hotel.controller.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import pl.senla.hotel.controller.ControllerFacility;
+import pl.senla.hotel.controller.ControllerGuest;
+import pl.senla.hotel.controller.ControllerOrder;
+import pl.senla.hotel.controller.ControllerRoomReservation;
 import pl.senla.hotel.ui.Executor;
 
 import java.lang.reflect.InvocationTargetException;
@@ -11,17 +14,17 @@ import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
-@AppComponent
+@Component
 @Slf4j
 public class ExecutorAnalyticsDB implements Executor {
 
-    @GetInstance(beanName = "ControllerFacilityDB")
+    @Autowired
     private ControllerFacility facilityController;
-    @GetInstance(beanName = "ControllerRoomReservationDB")
+    @Autowired
     private ControllerRoomReservation roomReservationController;
-    @GetInstance(beanName = "ControllerGuestDB")
+    @Autowired
     private ControllerGuest guestController;
-    @GetInstance(beanName = "ControllerOrderDB")
+    @Autowired
     private ControllerOrder orderController;
 
     public ExecutorAnalyticsDB(){}
@@ -115,6 +118,6 @@ public class ExecutorAnalyticsDB implements Executor {
         int hour = sc.nextInt();
         System.out.print(INPUT_MINUTE);
         int minute = sc.nextInt();
-        return year + "-" + month + "-" + day + "-" + hour + "-" + minute;
+        return year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-00";
     }
 }

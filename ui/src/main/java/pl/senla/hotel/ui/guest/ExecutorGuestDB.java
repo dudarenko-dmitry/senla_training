@@ -1,8 +1,9 @@
 package pl.senla.hotel.ui.guest;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerGuest;
 import pl.senla.hotel.ui.Executor;
 
@@ -11,14 +12,13 @@ import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class ExecutorGuestDB implements Executor {
 
-    @GetInstance(beanName = "ControllerGuestDB")
+    @Autowired
     private ControllerGuest guestController;
-
-    public ExecutorGuestDB() {}
 
     @Override
     public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,
@@ -52,7 +52,8 @@ public class ExecutorGuestDB implements Executor {
             case 5 -> {
                 log.info(INPUT_ID_GUEST);
                 int idGuestDelete = sc.nextInt();
-                log.info(CONSOLE_DELETE_GUEST, guestController.delete(idGuestDelete));
+                guestController.delete(idGuestDelete);
+                log.info(CONSOLE_DELETE_GUEST);
             }
             default -> {
                 log.info(ERROR_INPUT);

@@ -1,11 +1,11 @@
 package pl.senla.hotel.entity.facilities;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -26,7 +26,7 @@ public class Room implements Serializable {
     @Column(name = "category", nullable = false)
     private CategoryFacility category;
 
-    @Column(name = "nameFacility", nullable = false)
+    @Column(name = "name_facility", nullable = false)
     private String nameFacility;
 
     @Column(name = "price", nullable = false)

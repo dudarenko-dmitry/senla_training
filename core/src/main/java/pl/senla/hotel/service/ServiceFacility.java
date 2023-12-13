@@ -14,9 +14,9 @@ public interface ServiceFacility extends ServiceCRUDALL<Room> {
     List<Room> readAllRoomsSortByCapacity();
     List<Room> readAllRoomsSortByLevel();
 
-    boolean updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+    Room updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    boolean updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+    Room updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
 }

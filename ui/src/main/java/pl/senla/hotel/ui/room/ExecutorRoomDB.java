@@ -1,8 +1,10 @@
 package pl.senla.hotel.ui.room;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerFacility;
 import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.Room;
@@ -15,16 +17,15 @@ import java.util.Scanner;
 
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class ExecutorRoomDB implements Executor {
 
-    @GetInstance(beanName = "StartMenuRoomLevel")
+    @Autowired
     private StartMenuRoomLevel startMenuRoomLevel;
-    @GetInstance(beanName = "ControllerFacilityDB")
+    @Autowired
     private ControllerFacility facilityController;
-
-    public ExecutorRoomDB(){}
 
     @Override
     public void execute(int menuPoint) throws IllegalAccessException, InvocationTargetException,
@@ -93,7 +94,8 @@ public class ExecutorRoomDB implements Executor {
             case 7 -> {
                 log.info(INPUT_ID_ROOM);
                 int idRoomDelete = sc.nextInt();
-                log.info(CONSOLE_DELETE_ROOM, facilityController.delete(idRoomDelete));
+                facilityController.delete(idRoomDelete);
+                log.info(CONSOLE_DELETE_ROOM);
             }
             default -> {
                 log.info(ERROR_INPUT);

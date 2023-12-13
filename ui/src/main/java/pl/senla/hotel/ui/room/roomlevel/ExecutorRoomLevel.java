@@ -1,7 +1,8 @@
 package pl.senla.hotel.ui.room.roomlevel;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.entity.facilities.RoomLevel;
 
 import java.util.Scanner;
@@ -9,11 +10,10 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
 import static pl.senla.hotel.constant.ConsoleConstant.INPUT_MENU_POINT;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class ExecutorRoomLevel {
-
-    public ExecutorRoomLevel() {}
 
     public String execute() {
         int userSelection = makeChoice();

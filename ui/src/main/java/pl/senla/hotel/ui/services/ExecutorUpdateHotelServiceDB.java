@@ -1,11 +1,12 @@
 package pl.senla.hotel.ui.services;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.senla.hotel.application.annotation.AppComponent;
-import pl.senla.hotel.application.annotation.GetInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.senla.hotel.controller.ControllerOrder;
 import pl.senla.hotel.controller.ControllerRoomReservation;
-import pl.senla.hotel.entity.services.TypeOfService;
+import pl.senla.hotel.entity.services.HotelService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
@@ -13,18 +14,17 @@ import java.util.Scanner;
 import static pl.senla.hotel.constant.ConsoleConstant.*;
 import static pl.senla.hotel.constant.OrderConstant.ORDER_NOT_EXISTS;
 
-@AppComponent
+@Component
+@NoArgsConstructor
 @Slf4j
 public class ExecutorUpdateHotelServiceDB {
 
-    @GetInstance(beanName = "ControllerOrderDB")
+    @Autowired
     private ControllerOrder orderController;
-    @GetInstance(beanName = "ControllerRoomReservationDB")
+    @Autowired
     private ControllerRoomReservation roomReservationController;
 
-    public ExecutorUpdateHotelServiceDB() {}
-
-    protected boolean updateHotelServiceList(int idOrderUpdate) throws IllegalAccessException,
+    protected HotelService updateHotelServiceList(int idOrderUpdate) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         if(orderController.read(idOrderUpdate) != null){
             int typeOfServiceInt = makeChoice();
@@ -32,19 +32,8 @@ public class ExecutorUpdateHotelServiceDB {
             switch (typeOfServiceInt) {
                 case 1 -> {
                     log.info(UPDATE_RESERVATION);
-                    log.info(CONSOLE_READ_ALL_SERVICES, orderController.read(idOrderUpdate)
-                            .getHotelServices()
-                            .stream()
-                            .filter(s -> {
-                                try {
-                                    return roomReservationController.read(s.getIdService()).getTypeOfService()
-                                            .equals(TypeOfService.ROOM_RESERVATION);
-                                } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
-                                         IllegalAccessException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            })
-                            .toList());
+                    log.info(CONSOLE_READ_ALL_SERVICES_FOR_ORDER,
+                            orderController.readAllServicesForOrder(idOrderUpdate));
                     log.info(INPUT_ID_RESERVATION_UPDATE);
                     int idRoomReservation = sc.nextInt();
                     log.info(SELECT_START_TIME);
@@ -57,21 +46,21 @@ public class ExecutorUpdateHotelServiceDB {
                 }
                 case 2 -> {
                     log.info("Update Restaurant's Reservation: do not use");
-                    return true;
+                    return null;
                 }
                 case 3 -> {
                     log.info("Update Transfer's Reservation: do not use");
-                    return true;
+                    return null;
                 }
                 default -> {
                     updateHotelServiceList(idOrderUpdate);
-                    return false;
+                    return null;
                 }
             }
         } else {
             log.info(ORDER_NOT_EXISTS);
             log.info(ERROR_INPUT);
-            return false;
+            return null;
         }
     }
 
