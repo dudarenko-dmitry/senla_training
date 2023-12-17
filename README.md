@@ -259,3 +259,20 @@ Replace your (current) Dependency Injection implementation with DI using the Spr
 2.	Make sure that repositories and services exist each in a single instance;
 3.	Configure PropertySourcesPlaceholderConfigurer to embed parameters into beans
     from configuration files using the @Value annotation.
+
+      
+-----------------------------------------------------------------------------
+
+Tasks for lecture No. 16
+Task 1 (difficulty 10)
+Modify the application from previous tasks to a web application.
+Task requirements:
+1.	For implementation use Spring MVC;
+2.	Add DTO (Data transfer objects) to the project to describe controller responses;
+3.	Responses to requests must be in JSON and/or XML format;
+4.	The application must have a REST architecture (use the Postman tool for verification);
+5.	All the requirements for the functionality of the application must be available in the controllers;
+6.	Processing and issuing exceptions to the user should be implemented using @ExceptionHandler and @Controlleradvice;
+7.	Rewrite previously implemented work with transactions via Hibernate to use the
+@Transactional annotation in the service layer;
+8.	Build the application in WAR and deploy it on Tomcat or Jetty.
