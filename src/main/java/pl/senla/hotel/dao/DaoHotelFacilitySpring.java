@@ -14,6 +14,7 @@ public interface DaoHotelFacilitySpring extends JpaRepository<Room, Integer> {
     List<Room> findByOrderByCapacity();
     List<Room> findByOrderByRoomLevel();
     List<Room> findByOrderByCategory();
+    Room getRoomByNameFacility(String nameFacility);
 
     @Query(value = "SELECT r.facilityID, r.category, r.name_facility, r.price, r.capacity, r.level, r.status " +
             " FROM hotel.rooms AS r " +

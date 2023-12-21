@@ -24,7 +24,7 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
     }
 
     @Override
-    public HotelService create(String reservationString) throws IllegalAccessException,
+    public HotelService create(HotelService t) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'create'.");
         return roomReservationService.create(reservationString);
@@ -38,10 +38,10 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
     }
 
     @Override
-    public HotelService update(int idReservation, String reservationString) throws InvocationTargetException,
+    public HotelService update(int idReservation, HotelService tNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'update'.");
-        return roomReservationService.update(idReservation, reservationString);
+        return roomReservationService.update(idReservation, , reservationString);
     }
 
     @Override

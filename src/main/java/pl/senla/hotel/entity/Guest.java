@@ -1,22 +1,23 @@
 package pl.senla.hotel.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.services.HotelService;
 
-import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static pl.senla.hotel.constant.ClientConstant.*;
+import static pl.senla.hotel.constant.ClientConstant.ERROR_NULL_NAME;
+import static pl.senla.hotel.constant.ClientConstant.ERROR_NULL_PHONE;
 
-@Setter
-@Getter
-@NoArgsConstructor
+@Data
+@Builder
+@RequiredArgsConstructor
 @Slf4j
 @Table(name = "guests")
 @Entity

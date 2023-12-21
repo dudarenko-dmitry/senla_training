@@ -2,14 +2,17 @@ package pl.senla.hotel.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import pl.senla.hotel.dto.RoomDto;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.service.ServiceFacility;
+import pl.senla.hotel.utils.RoomDtoMapperUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/rooms")
 @Slf4j
 public class ControllerFacilitySpring implements ControllerFacility{
 
@@ -17,80 +20,106 @@ public class ControllerFacilitySpring implements ControllerFacility{
     private ServiceFacility serviceFacility;
 
     @Override
-    public List<Room> readAll() {
+    @GetMapping("/")
+    public List<RoomDto> readAll() {
         log.debug("ControllerFacility call ServiceFacility's method 'ReadAll'.");
-        return serviceFacility.readAll();
+        return serviceFacility.readAll().stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public Room create(String hotelFacilityString) throws IllegalAccessException,
+    @PostMapping("/")
+    public RoomDto create(@RequestBody RoomDto roomDto) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         log.debug("ControllerFacility call ServiceFacility's method 'Create'.");
-        return serviceFacility.create(hotelFacilityString);
+        return RoomDtoMapperUtil.convertRoomToRoomDto(serviceFacility.create(roomDto));
     }
 
     @Override
-    public Room read(int id) throws InvocationTargetException, NoSuchMethodException,
+    @GetMapping("/{id}")
+    public RoomDto read(@PathVariable int id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerFacility call ServiceFacility's method 'Read'.");
-        return serviceFacility.read(id);
+        return RoomDtoMapperUtil.convertRoomToRoomDto(serviceFacility.read(id));
     }
 
     @Override
-    public Room update(int id, String hotelFacilityString) throws InvocationTargetException,
+    @PutMapping("/{id}")
+    public RoomDto update(@PathVariable int id, @RequestBody RoomDto RoomDtoNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerFacility call ServiceFacility's method 'Update'.");
-        return serviceFacility.update(id, hotelFacilityString);
+        return RoomDtoMapperUtil.convertRoomToRoomDto(serviceFacility.update(id, RoomDtoNew));
     }
 
     @Override
-    public Room updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+    @PutMapping("/{id}")
+    public Room updateRoomStatusAvailable(@PathVariable int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerFacility call ServiceFacility's method 'UpdateRoomStatusAvailable'.");
         return serviceFacility.updateRoomStatusAvailable(idRoom);
     }
 
     @Override
-    public Room updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+    @PutMapping("/{id}")
+    public Room updateRoomStatusRepaired(@PathVariable int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerFacility call ServiceFacility's method 'UpdateRoomStatusRepaired'.");
         return serviceFacility.updateRoomStatusRepaired(idRoom);
     }
 
     @Override
-    public void delete(int id) throws InvocationTargetException, NoSuchMethodException,
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerFacility call ServiceFacility's method 'Delete'.");
         serviceFacility.delete(id);
     }
 
+
+    // try to replace below methods by creating "?sort=..."
     @Override
-    public List<Room> readPriceListForServicesSortByCategory() {
+    @GetMapping("?sort=status")
+    public List<RoomDto> readPriceListForServicesSortByCategory() {
         log.debug("ControllerFacility call ServiceFacility's method 'readPriceListForServicesSortByCategory'.");
-        return serviceFacility.readPriceListForServicesSortByCategory();
+        return serviceFacility.readPriceListForServicesSortByCategory().stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public List<Room> readPriceListForServicesSortByPrice() {
+    @GetMapping("?sort=price")
+    public List<RoomDto> readPriceListForServicesSortByPrice() {
         log.debug("ControllerFacility call ServiceFacility's method 'readPriceListForServicesSortByPrice'.");
-        return serviceFacility.readPriceListForServicesSortByPrice();
+        return serviceFacility.readPriceListForServicesSortByPrice().stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public List<Room> readAllRoomsSortByPrice() {
+    @GetMapping("?category=ROOM&sort=price")
+    public List<RoomDto> readAllRoomsSortByPrice() {
         log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByPrice'.");
-        return serviceFacility.readAllRoomsSortByPrice();
+        return serviceFacility.readAllRoomsSortByPrice().stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public List<Room> readAllRoomsSortByCapacity() {
+    @GetMapping("?category=ROOM&sort=capacity")
+    public List<RoomDto> readAllRoomsSortByCapacity() {
         log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByCapacity'.");
-        return serviceFacility.readAllRoomsSortByCapacity();
+        return serviceFacility.readAllRoomsSortByCapacity().stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public List<Room> readAllRoomsSortByLevel() {
+    @GetMapping("?category=ROOM&sort=level")
+    public List<RoomDto> readAllRoomsSortByLevel() {
         log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByLevel'.");
-        return serviceFacility.readAllRoomsSortByLevel();
+        return serviceFacility.readAllRoomsSortByLevel().stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 }

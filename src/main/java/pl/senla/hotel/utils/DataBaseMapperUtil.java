@@ -3,7 +3,7 @@ package pl.senla.hotel.utils;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.OrderDto;
+import pl.senla.hotel.dto.OrderDto;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 

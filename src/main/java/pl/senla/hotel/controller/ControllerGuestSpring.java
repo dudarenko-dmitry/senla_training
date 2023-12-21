@@ -2,14 +2,16 @@ package pl.senla.hotel.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import pl.senla.hotel.entity.Guest;
+import org.springframework.web.bind.annotation.*;
+import pl.senla.hotel.dto.GuestDto;
 import pl.senla.hotel.service.ServiceGuest;
+import pl.senla.hotel.utils.GuestDtoMapperUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/guests")
 @Slf4j
 public class ControllerGuestSpring implements ControllerGuest {
 
@@ -17,40 +19,48 @@ public class ControllerGuestSpring implements ControllerGuest {
     private ServiceGuest guestService;
 
     @Override
-    public List<Guest> readAll() {
+    @GetMapping("/")
+    public List<GuestDto> readAll() {
         log.debug("ControllerGuest call ServiceGuest's method 'readAll'.");
-        return guestService.readAll();
+        return guestService.readAll().stream()
+                .map(GuestDtoMapperUtil::convertGuestToGuestDto)
+                .toList();
     }
 
     @Override
-    public Guest create(String guest) throws IllegalAccessException,
+    @PostMapping("/")
+    public GuestDto create(@RequestBody GuestDto guestDto) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         log.debug("ControllerGuest call ServiceGuest's method 'create'.");
-        return guestService.create(guest);
+        return GuestDtoMapperUtil.convertGuestToGuestDto(guestService.create(guestDto));
     }
 
     @Override
-    public Guest read(int id) throws InvocationTargetException, NoSuchMethodException,
+    @GetMapping("/{id}")
+    public GuestDto read(@PathVariable int id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerGuest call ServiceGuest's method 'read'.");
-        return guestService.read(id);
+        return GuestDtoMapperUtil.convertGuestToGuestDto(guestService.read(id));
     }
 
     @Override
-    public Guest update(int id, String guestUpdate) throws InvocationTargetException,
+    @PutMapping("/{id}")
+    public GuestDto update(@PathVariable int id, @RequestBody GuestDto guestDtoNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerGuest call ServiceGuest's method 'update'.");
-        return guestService.update(id, guestUpdate);
+        return GuestDtoMapperUtil.convertGuestToGuestDto(guestService.update(id, guestDtoNew));
     }
 
     @Override
-    public void delete(int id) throws InvocationTargetException, NoSuchMethodException,
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerGuest call ServiceGuest's method 'delete'.");
         guestService.delete(id);
     }
 
     @Override
+    @GetMapping("/count-guests")
     public int countNumberOfGuestsTotal() {
         log.debug("ControllerGuest call ServiceGuest's method 'countNumberOfGuestsTotal'.");
         return guestService.countNumberOfGuestsTotal();

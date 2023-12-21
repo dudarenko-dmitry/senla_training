@@ -6,9 +6,9 @@ import java.util.List;
 public interface ControllerCRUDALL<T> {
 
     List<T> readAll();
-    T create(String tString) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException;
+    T create(T t) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException;
     T read(int id) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
-    T update(int id, String tString) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+    T update(int id, T tNew) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
     void delete(int id) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
 }

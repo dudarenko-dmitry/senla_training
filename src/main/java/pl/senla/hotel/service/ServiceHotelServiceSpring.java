@@ -52,11 +52,11 @@ public class ServiceHotelServiceSpring implements ServiceHotelService{
     }
 
     @Override
-    public HotelService update(int idHotelService, String hotelServiceString) throws InvocationTargetException,
+    public HotelService update(int idHotelService, Object t2New) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("START: HotelService Update");
         if (daoHotelService.existsById(idHotelService)) {
-            return serviceRoomReservation.update(idHotelService, hotelServiceString);
+            return serviceRoomReservation.update(idHotelService, , hotelServiceString);
             }
         log.debug(SERVICE_NOT_EXISTS);
         return null;

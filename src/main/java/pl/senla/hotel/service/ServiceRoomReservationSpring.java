@@ -130,7 +130,7 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
 
     @Transactional
     @Override // ready
-    public HotelService update(int idReservation, String reservationUpdatingString) throws InvocationTargetException,
+    public HotelService update(int idReservation, Object t2New) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("START: Hotel Service update");
         if(read(idReservation) == null){

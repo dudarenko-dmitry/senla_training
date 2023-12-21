@@ -1,23 +1,19 @@
 package pl.senla.hotel.entity.services;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.service.ServiceFacility;
 
-import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Setter
-@Getter
-@NoArgsConstructor
+@Data
+@Builder
 @Slf4j
 @Entity
 @Table(name = "reservations")

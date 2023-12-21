@@ -66,7 +66,7 @@ public class ServiceOrderSpring implements ServiceOrder {
     }
 
     @Override
-    public Order update(int idOrder, String orderUpdatingString) {
+    public Order update(int idOrder, Object t2New) {
 // this method is never used.
 // Updating of Order is processed by updating of its reservations in pl.senla.hotel.ui.services;
         log.debug("this method is never used");

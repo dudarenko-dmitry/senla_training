@@ -12,4 +12,6 @@ public interface DaoGuestSpring extends JpaRepository<Guest, Integer> {
             " FROM hotel.guests",
             nativeQuery = true)
     int countFindAll();
+
+    Guest getReferenceByName(String name);
 }

@@ -24,7 +24,7 @@ public class ControllerOrderSpring implements ControllerOrder {
     }
 
     @Override
-    public Order create(String orderString) throws IllegalAccessException, InvocationTargetException,
+    public Order create(Order t) throws IllegalAccessException, InvocationTargetException,
             NoSuchMethodException, InstantiationException {
         log.debug("ControllerOrder call ServiceOrder's method 'create'.");
         return orderService.create(orderString);
@@ -38,7 +38,7 @@ public class ControllerOrderSpring implements ControllerOrder {
     }
 
     @Override
-    public Order update(int idOrder, String orderString) throws InvocationTargetException,
+    public Order update(int idOrder, Order orderDtoNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerOrder call ServiceOrder's method 'update'.");
         return orderService.update(idOrder, orderString);

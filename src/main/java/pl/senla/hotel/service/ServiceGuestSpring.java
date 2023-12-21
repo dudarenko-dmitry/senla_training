@@ -4,11 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.senla.hotel.dao.DaoGuestSpring;
+import pl.senla.hotel.dto.GuestDto;
 import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.exceptions.GuestNotFoundException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Optional;
 
 import static pl.senla.hotel.constant.ClientConstant.CLIENT_NOT_EXISTS;
 
@@ -21,39 +22,45 @@ public class ServiceGuestSpring implements ServiceGuest {
 
     @Override
     public List<Guest> readAll() {
-        log.debug("START: GuestReadAll");
+        log.debug("Service: GuestReadAll");
         return daoGuest.findAll();
     }
 
+//    @Override
+//    public Guest create(String guestString) {
+//        Guest guest = new Guest();
+//        String[] guestData = guestString.split(";");
+//        guest.setName(guestData[0]);
+//        guest.setPhoneNumber(Integer.parseInt(guestData[1]));
+//        log.debug("START: GuestCreate");
+//        return daoGuest.save(guest);
+//    }
+
     @Override
-    public Guest create(String guestString) {
+    public Guest create(GuestDto guestDto) {
         Guest guest = new Guest();
-        String[] guestData = guestString.split(";");
-        guest.setName(guestData[0]);
-        guest.setPhoneNumber(Integer.parseInt(guestData[1]));
-        log.debug("START: GuestCreate");
+        guest.setName(guest.getName());
+        guest.setPhoneNumber(guestDto.getPhoneNumber());
+        log.debug("Service: GuestCreate");
         return daoGuest.save(guest);
     }
 
     @Override
     public Guest read(int idGuest) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
-        log.debug("START: GuestRead");
-        Optional<Guest> guest = daoGuest.findById(idGuest);
-        if(guest.isPresent()) {
-            return guest.get();
-        }
-        log.debug(CLIENT_NOT_EXISTS);
-        return null;
+        log.debug("Service: GuestRead");
+        return daoGuest.findById(idGuest)
+                .orElseThrow(() -> new GuestNotFoundException(idGuest)) ;
     }
 
     @Override
-    public Guest update(int idGuest, String guestUpdate) throws InvocationTargetException,
+    public Guest update(int idGuest, GuestDto guestDtoUpdate) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
-        log.debug("START: GuestUpdate");
+        log.debug("Service: GuestUpdate");
         if(daoGuest.existsById(idGuest)){
             Guest guest = read(idGuest);
-            guest.setPhoneNumber(Integer.parseInt(guestUpdate));
+            guest.setName(guestDtoUpdate.getName());
+            guest.setPhoneNumber(guestDtoUpdate.getPhoneNumber());
             return daoGuest.save(guest);
         }
         log.debug(CLIENT_NOT_EXISTS);
@@ -63,7 +70,7 @@ public class ServiceGuestSpring implements ServiceGuest {
     @Override
     public void delete(int idGuest) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
-        log.debug("START: GuestDelete");
+        log.debug("Service: GuestDelete");
         if(daoGuest.existsById(idGuest)){
             daoGuest.deleteById(idGuest);
         }
@@ -72,7 +79,13 @@ public class ServiceGuestSpring implements ServiceGuest {
 
     @Override
     public int countNumberOfGuestsTotal() {
-        log.debug("START: CountGuest");
+        log.debug("Service: CountGuest");
         return daoGuest.countFindAll();
+    }
+
+    @Override
+    public Guest getGuestByName(String name) {
+        log.debug("Service: getGuestByName");
+        return  daoGuest.getReferenceByName(name);
     }
 }
