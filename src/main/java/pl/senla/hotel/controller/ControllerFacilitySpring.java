@@ -76,7 +76,6 @@ public class ControllerFacilitySpring implements ControllerFacility{
         serviceFacility.delete(id);
     }
 
-
     // try to replace below methods by creating "?sort=..."
     @Override
     @GetMapping("?sort=status")

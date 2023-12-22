@@ -124,4 +124,10 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
         return roomReservationService.readAllServicesSortByPrice();
     }
 
+    @Override
+    public List<HotelService> readAllServicesForOrder(int idOrder) {
+        log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'findServicesForOrder'.");
+        return roomReservationService.findServicesForOrder(idOrder);
+    }
+
 }

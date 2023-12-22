@@ -6,17 +6,15 @@ import org.springframework.stereotype.Service;
 import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.dao.DaoOrderSpring;
-import pl.senla.hotel.entity.Guest;
+import pl.senla.hotel.dto.OrderDto;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.services.HotelService;
+import pl.senla.hotel.exceptions.OrderNotFoundException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Optional;
 
-import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
-import static pl.senla.hotel.constant.OrderConstant.READ_ALL_ORDERS_IS_EMPTY;
 import static pl.senla.hotel.constant.OrderConstant.ORDER_NOT_EXISTS;
+import static pl.senla.hotel.constant.OrderConstant.READ_ALL_ORDERS_IS_EMPTY;
 
 @Service
 @Slf4j
@@ -24,6 +22,8 @@ public class ServiceOrderSpring implements ServiceOrder {
 
     @Autowired
     private ServiceHotelService serviceHotelService;
+    @Autowired
+    private ServiceRoomReservation serviceRoomReservation;
     @Autowired
     private DaoOrderSpring daoOrder;
     @Autowired
@@ -35,7 +35,7 @@ public class ServiceOrderSpring implements ServiceOrder {
 
     @Override
     public List<Order> readAll() {
-        log.debug("START: Order ReadAll");
+        log.debug("Service: Order ReadAll");
         List<Order> orderList = daoOrder.findAll();
         if (orderList.isEmpty()) {
             log.debug(READ_ALL_ORDERS_IS_EMPTY);
@@ -44,29 +44,33 @@ public class ServiceOrderSpring implements ServiceOrder {
     }
 
     @Override
-    public Order create(String orderString) {
-        log.debug("START: Order Create");
-        int idGuest = Integer.parseInt(orderString);
-        Order order = new Order();
-        Optional<Guest> guest = daoGuest.findById(idGuest);
-        guest.ifPresent(order::setGuest);
-        return daoOrder.save(order);
+    public Order create(OrderDto orderDto) {
+        log.debug("Service: Order Create");
+        return daoOrder.save(new Order(orderDto.getIdGuest()));
     }
+
+//    @Override
+//    public Order read(int idOrder) throws InvocationTargetException, NoSuchMethodException,
+//            InstantiationException, IllegalAccessException {
+//        log.debug("Service: Order Read");
+//        Optional<Order> order = daoOrder.findById(idOrder);
+//        if (order.isPresent()) {
+//            return order.get();
+//        }
+//        log.debug(ERROR_INPUT);
+//        return null;
+//    }
 
     @Override
     public Order read(int idOrder) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
-        log.debug("START: Order Read");
-        Optional<Order> order = daoOrder.findById(idOrder);
-        if (order.isPresent()) {
-            return order.get();
-        }
-        log.debug(ERROR_INPUT);
-        return null;
+        log.debug("Service: Order Read");
+        return daoOrder.findById(idOrder)
+                .orElseThrow(() -> new OrderNotFoundException(idOrder));
     }
 
     @Override
-    public Order update(int idOrder, Object t2New) {
+    public Order update(int idOrder, OrderDto orderDtoUpdate) {
 // this method is never used.
 // Updating of Order is processed by updating of its reservations in pl.senla.hotel.ui.services;
         log.debug("this method is never used");
@@ -78,17 +82,11 @@ public class ServiceOrderSpring implements ServiceOrder {
     @Override
     public void delete(int idOrder) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
-        log.debug("START: Order Delete");
+        log.debug("Service: Order Delete");
         if (daoOrder.findById(idOrder).isPresent()) {
             daoOrder.deleteById(idOrder);
         }
         log.debug(ORDER_NOT_EXISTS);
-    }
-
-    @Override
-    public List<HotelService> readAllIdServicesForOrder(int idOrder) {
-        log.debug("START: ReadAll Services for Order");
-        return serviceHotelService.findServicesForOrder(idOrder);
     }
 
 }

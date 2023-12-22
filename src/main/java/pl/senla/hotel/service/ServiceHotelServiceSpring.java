@@ -56,7 +56,7 @@ public class ServiceHotelServiceSpring implements ServiceHotelService{
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("START: HotelService Update");
         if (daoHotelService.existsById(idHotelService)) {
-            return serviceRoomReservation.update(idHotelService, , hotelServiceString);
+            return serviceRoomReservation.update(idHotelService, hotelServiceString);
             }
         log.debug(SERVICE_NOT_EXISTS);
         return null;
@@ -72,9 +72,4 @@ public class ServiceHotelServiceSpring implements ServiceHotelService{
         log.debug(SERVICE_NOT_EXISTS);
     }
 
-    @Override
-    public List<HotelService> findServicesForOrder(int idOrder) {
-        log.debug("START: HotelService findServicesForOrder");
-        return serviceRoomReservation.findServicesForOrder(idOrder);
-    }
 }

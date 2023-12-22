@@ -22,4 +22,6 @@ public interface ControllerRoomReservation extends ControllerCRUDALL<HotelServic
 
     List<HotelService> readAllServicesSortByDate();
     List<HotelService> readAllServicesSortByPrice();
+
+    List<HotelService> readAllServicesForOrder(int idOrder);
 }

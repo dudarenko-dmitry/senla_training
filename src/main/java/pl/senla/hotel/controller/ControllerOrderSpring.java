@@ -2,15 +2,18 @@ package pl.senla.hotel.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.entity.services.HotelService;
+import org.springframework.web.bind.annotation.*;
+import pl.senla.hotel.dto.OrderDto;
+import pl.senla.hotel.dto.OrderDtoRead;
 import pl.senla.hotel.service.ServiceOrder;
+import pl.senla.hotel.utils.OrderDtoMapperUtil;
+import pl.senla.hotel.utils.OrderDtoReadMapperUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/orders")
 @Slf4j
 public class ControllerOrderSpring implements ControllerOrder {
 
@@ -18,42 +21,62 @@ public class ControllerOrderSpring implements ControllerOrder {
     private ServiceOrder orderService;
 
     @Override
-    public List<Order> readAll() {
+    public List<OrderDto> readAll() {
         log.debug("ControllerOrder call ServiceOrder's method 'readAll'.");
-        return orderService.readAll();
+        log.info("USE method List<OrderDtoRead> readAllWithServices()");
+        return orderService.readAll().stream()
+                .map(OrderDtoMapperUtil::convertOrderToOrderDto)
+                .toList();
     }
 
     @Override
-    public Order create(Order t) throws IllegalAccessException, InvocationTargetException,
+    @GetMapping("/")
+    public List<OrderDtoRead> readAllWithServices() {
+        log.debug("ControllerOrder call ServiceOrder's method 'readAll'.");
+        return orderService.readAll().stream()
+                .map(OrderDtoReadMapperUtil::convertOrderToOrderDtoRead)
+                .toList();
+    }
+
+    @Override
+    @PostMapping("/")
+    public OrderDto create(@RequestBody OrderDto orderDto) throws IllegalAccessException, InvocationTargetException,
             NoSuchMethodException, InstantiationException {
         log.debug("ControllerOrder call ServiceOrder's method 'create'.");
-        return orderService.create(orderString);
+        return OrderDtoMapperUtil.convertOrderToOrderDto(orderService.create(orderDto));
     }
 
     @Override
-    public Order read(int idOrder) throws InvocationTargetException, NoSuchMethodException,
+    public OrderDto read(int id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerOrder call ServiceOrder's method 'read'.");
-        return orderService.read(idOrder);
+        log.info("USE method OrderDtoRead readWithServices()");
+        return OrderDtoMapperUtil.convertOrderToOrderDto(orderService.read(id));
     }
 
     @Override
-    public Order update(int idOrder, Order orderDtoNew) throws InvocationTargetException,
+    @GetMapping("/{id}")
+    public OrderDtoRead readWithServices(@PathVariable int id) throws InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
+        log.debug("ControllerOrder call ServiceOrder's method 'read'.");
+        log.info("USE method OrderDtoRead readWithServices()");
+        return OrderDtoReadMapperUtil.convertOrderToOrderDtoRead(orderService.read(id));
+    }
+
+    @Override
+    @PutMapping("/{id}")
+    public OrderDto update(@PathVariable int id, @RequestBody OrderDto orderDtoNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerOrder call ServiceOrder's method 'update'.");
-        return orderService.update(idOrder, orderString);
+        return OrderDtoMapperUtil.convertOrderToOrderDto(orderService.update(id, orderDtoNew));
     }
 
     @Override
+    @DeleteMapping("/{id}")
     public void delete(int id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerOrder call ServiceOrder's method 'delete'.");
         orderService.delete(id);
     }
 
-    @Override
-    public List<HotelService> readAllServicesForOrder(int idOrder) {
-        log.debug("ControllerOrder call ServiceOrder's method 'readAllIdServicesForOrder'.");
-        return orderService.readAllIdServicesForOrder(idOrder);
-    }
 }
