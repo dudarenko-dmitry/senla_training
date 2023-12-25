@@ -10,24 +10,26 @@ import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.dao.DaoHotelServiceSpring;
 import pl.senla.hotel.dao.DaoOrderSpring;
+import pl.senla.hotel.dto.HotelServiceDto;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.entity.services.TypeOfService;
+import pl.senla.hotel.exceptions.GuestNotFoundException;
+import pl.senla.hotel.exceptions.HotelServiceNotFoundException;
+import pl.senla.hotel.exceptions.OrderNotFoundException;
+import pl.senla.hotel.exceptions.RoomNotFoundException;
+import pl.senla.hotel.utils.HotelServiceDtoMapperUtil;
 
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static pl.senla.hotel.constant.ConsoleConstant.CONSOLE_CHANGE_ROOM_RESERVATION;
 import static pl.senla.hotel.constant.ConsoleConstant.ERROR_INPUT;
-import static pl.senla.hotel.constant.HotelConstant.HOTEL_CHECK_IN_TIME;
-import static pl.senla.hotel.constant.HotelConstant.HOTEL_CHECK_OUT_TIME;
 import static pl.senla.hotel.constant.RoomReservationConstant.*;
 
 @Service
@@ -50,7 +52,7 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
     @Value("${room-records.number}")
     private Integer roomRecordsNumber;
 
-    @Override // ready
+    @Override
     public List<HotelService> readAll() {
         log.debug("START: Hotel Service ReadAll");
         List<HotelService> hotelServiceList = daoHotelService.findAll();
@@ -61,44 +63,102 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         return hotelServiceList;
     }
 
+//    @Transactional
+//    @Override
+//    public HotelService create(HotelServiceDto hotelServiceDto) throws InvocationTargetException,
+//            NoSuchMethodException, InstantiationException, IllegalAccessException {
+//        log.debug("START: Hotel Service Create");
+//        String[] reservationData = reservationString.split(";");
+//        int idOrder = Integer.parseInt(reservationData[0]);
+//        int idGuest = Integer.parseInt(reservationData[1]);
+//        int idRoom = Integer.parseInt(reservationData[2]);
+//        if(idGuest < 0 || idGuest >= daoGuest.findAll().size()){
+//            log.debug(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
+//            return null;
+//        } else if(idRoom < 0 || idRoom >= daoFacility.findAll().size()) {
+//            log.debug(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
+//            return null;
+//        } else if ((daoFacility.findById(idRoom)).get().getRoomStatus().equals(RoomStatus.REPAIRED)) { // edit later!!!
+//            log.debug(ERROR_CREATE_ROOM_RESERVATION_REPAIRED);
+//            return null;
+//        } else {
+//            LocalDate checkInDate = getDate(reservationData[3]);
+//            LocalDateTime checkInTime = LocalDateTime.of(checkInDate, HOTEL_CHECK_IN_TIME);
+//            int numberOfDays = Integer.parseInt(reservationData[4]);
+//            LocalDateTime checkOutTime = LocalDateTime.of(checkInDate.plusDays(numberOfDays),
+//                    HOTEL_CHECK_OUT_TIME);
+//
+//            if(isVacant(idRoom, checkInTime, checkOutTime)){
+//                HotelService reservation = new HotelService();
+//                Optional<Order> order = daoOrder.findById(idOrder);
+//                order.ifPresent(reservation::setOrder);
+//                Optional<Guest> guest = daoGuest.findById(idGuest);
+//                guest.ifPresent(reservation::setGuest);
+//                Optional<Room> room = daoFacility.findById(idRoom);
+//                room.ifPresent(reservation::setRoom);
+//                reservation.setCheckInTime(checkInTime);
+//                reservation.setNumberOfDays(numberOfDays);
+//                reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION);
+//                reservation.setCheckOutTime(checkOutTime);
+//                reservation.setCost(daoFacility.findById(idRoom).get().getPrice() * numberOfDays);
+//                List<HotelService> roomReservationList = readAll().stream()
+//                        .filter(rr -> rr.getRoom().getIdRoom() == idRoom)
+//                        .toList();
+//                int numberOfRecords = roomReservationList.size();
+//                if (numberOfRecords >= roomRecordsNumber) {
+//                    int idRoomReservationToDelete = roomReservationList.get(0).getIdService();
+//                    delete(idRoomReservationToDelete);
+//                }
+//                return daoHotelService.save(reservation);
+//            } else {
+//                log.debug(ERROR_ROOM_NOT_AVAILABLE);
+//                return null;
+//            }
+//        }
+//    }
+
     @Transactional
     @Override
-    public HotelService create(String reservationString) throws InvocationTargetException,
+    public HotelService create(HotelServiceDto hotelServiceDto) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("START: Hotel Service Create");
-        String[] reservationData = reservationString.split(";");
-        int idOrder = Integer.parseInt(reservationData[0]);
-        int idGuest = Integer.parseInt(reservationData[1]);
-        int idRoom = Integer.parseInt(reservationData[2]);
-        if(idGuest < 0 || idGuest >= daoGuest.findAll().size()){
+
+        int idOrder = hotelServiceDto.getIdOrder();
+        int idGuest = hotelServiceDto.getIdGuest();
+        int idRoom = hotelServiceDto.getIdHotelFacility();
+
+        if(daoGuest.findById(idGuest).isEmpty()){
             log.debug(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
             return null;
-        } else if(idRoom < 0 || idRoom >= daoFacility.findAll().size()) {
+        } else if(daoFacility.findById(idRoom).isEmpty()) {
             log.debug(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
             return null;
         } else if ((daoFacility.findById(idRoom)).get().getRoomStatus().equals(RoomStatus.REPAIRED)) { // edit later!!!
             log.debug(ERROR_CREATE_ROOM_RESERVATION_REPAIRED);
             return null;
         } else {
-            LocalDate checkInDate = getDate(reservationData[3]);
-            LocalDateTime checkInTime = LocalDateTime.of(checkInDate, HOTEL_CHECK_IN_TIME);
-            int numberOfDays = Integer.parseInt(reservationData[4]);
-            LocalDateTime checkOutTime = LocalDateTime.of(checkInDate.plusDays(numberOfDays),
-                    HOTEL_CHECK_OUT_TIME);
-
+            LocalDateTime checkInTime = HotelServiceDtoMapperUtil
+                    .convertStringToTime(hotelServiceDto.getCheckInTimeString()).plusMinutes(1);
+            int numberOfDays = hotelServiceDto.getNumberOfDays();
+            LocalDateTime checkOutTime = checkInTime.plusDays(numberOfDays).minusMinutes(1);
             if(isVacant(idRoom, checkInTime, checkOutTime)){
-                HotelService reservation = new HotelService();
-                Optional<Order> order = daoOrder.findById(idOrder);
-                order.ifPresent(reservation::setOrder);
-                Optional<Guest> guest = daoGuest.findById(idGuest);
-                guest.ifPresent(reservation::setGuest);
-                Optional<Room> room = daoFacility.findById(idRoom);
-                room.ifPresent(reservation::setRoom);
-                reservation.setCheckInTime(checkInTime);
-                reservation.setNumberOfDays(numberOfDays);
-                reservation.setTypeOfService(TypeOfService.ROOM_RESERVATION);
-                reservation.setCheckOutTime(checkOutTime);
-                reservation.setCost(daoFacility.findById(idRoom).get().getPrice() * numberOfDays);
+                Order order = daoOrder.findById(idOrder)
+                        .orElseThrow(() -> new OrderNotFoundException(idOrder));
+                Guest guest = daoGuest.findById(idGuest)
+                                .orElseThrow(() -> new GuestNotFoundException(idGuest));
+                Room room = daoFacility.findById(idRoom)
+                                .orElseThrow(() -> new RoomNotFoundException(idRoom));
+                HotelService reservation = HotelService.builder()
+                        .order(order)
+                        .typeOfService(TypeOfService.ROOM_RESERVATION)
+                        .guest(guest)
+                        .room(room)
+                        .numberOfDays(numberOfDays)
+                        .checkInTime(checkInTime)
+                        .checkOutTime(checkInTime)
+                        .cost(room.getPrice() * numberOfDays)
+                        .build();
+                // check number of records for this room:
                 List<HotelService> roomReservationList = readAll().stream()
                         .filter(rr -> rr.getRoom().getIdRoom() == idRoom)
                         .toList();
@@ -115,64 +175,74 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         }
     }
 
-
     @Override
     public HotelService read(int idReservation) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("START: Hotel Service Read");
-        Optional<HotelService> hotelService = daoHotelService.findById(idReservation);
-        if(hotelService.isPresent()){
-            return hotelService.get();
-        }
-        log.debug(ROOM_RESERVATION_NOT_EXISTS);
-        return null;
+        return daoHotelService.findById(idReservation)
+                .orElseThrow(() -> new HotelServiceNotFoundException(idReservation));
     }
 
     @Transactional
-    @Override // ready
-    public HotelService update(int idReservation, Object t2New) throws InvocationTargetException,
+    @Override
+    public HotelService update(int id, HotelServiceDto hotelServiceDto) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("START: Hotel Service update");
-        if(read(idReservation) == null){
+        if(read(id) == null){
             log.debug(ROOM_RESERVATION_NOT_EXISTS);
             log.debug(ERROR_INPUT);
             return null;
         }
-        HotelService reservationOld = read(idReservation);
-        String[] reservationData = reservationUpdatingString.split(";");
-        String dateString = reservationData[0];
-        LocalDate checkInDate = getDate(dateString);
-        LocalDateTime checkInTime = LocalDateTime.of(checkInDate, HOTEL_CHECK_IN_TIME);
-        int numberOfDaysNew = Integer.parseInt(reservationData[1]);
-        LocalDateTime checkOutTime = LocalDateTime.of(checkInDate.plusDays(numberOfDaysNew), HOTEL_CHECK_OUT_TIME);
+        delete(id);
 
-        HotelService reservationUpdate = new HotelService();
-        reservationUpdate.setIdService(idReservation);
-        reservationUpdate.setTypeOfService(TypeOfService.ROOM_RESERVATION);
-        reservationUpdate.setGuest(reservationOld.getGuest());
-        reservationUpdate.setRoom(reservationOld.getRoom());
-        reservationUpdate.setCheckInTime(checkInTime);
-        reservationUpdate.setNumberOfDays(numberOfDaysNew);
-        reservationUpdate.setCheckOutTime(checkOutTime);
-        reservationUpdate.setCost(daoFacility.findById(reservationOld.getRoom().getIdRoom()).get().getPrice() * numberOfDaysNew);
-
-        delete(idReservation);
-        if(createFromObject(reservationUpdate) != null){
-            log.debug(CONSOLE_CHANGE_ROOM_RESERVATION + " " + true);
-            return reservationUpdate;
+        int idOrder = hotelServiceDto.getIdOrder();
+        int idGuest = hotelServiceDto.getIdGuest();
+        int idRoom = hotelServiceDto.getIdHotelFacility();
+        if(daoGuest.findById(idGuest).isEmpty()){
+            log.debug(ERROR_CREATE_ROOM_RESERVATION_NO_CLIENT);
+            return null;
+        } else if(daoFacility.findById(idRoom).isEmpty()) {
+            log.debug(ERROR_CREATE_ROOM_RESERVATION_NO_ROOM);
+            return null;
+        } else if ((daoFacility.findById(idRoom)).get().getRoomStatus().equals(RoomStatus.REPAIRED)) { // edit later!!!
+            log.debug(ERROR_CREATE_ROOM_RESERVATION_REPAIRED);
+            return null;
         } else {
-            createFromObject(reservationOld);
-            log.debug(ERROR_UPDATE_ROOM_RESERVATION);
-            return reservationOld;
+            LocalDateTime checkInTime = HotelServiceDtoMapperUtil
+                    .convertStringToTime(hotelServiceDto.getCheckInTimeString()).plusMinutes(1);
+            int numberOfDays = hotelServiceDto.getNumberOfDays();
+            LocalDateTime checkOutTime = checkInTime.plusDays(numberOfDays).minusMinutes(1);
+            if (isVacant(idRoom, checkInTime, checkOutTime)) {
+                Order order = daoOrder.findById(idOrder)
+                        .orElseThrow(() -> new OrderNotFoundException(idOrder));
+                Guest guest = daoGuest.findById(idGuest)
+                        .orElseThrow(() -> new GuestNotFoundException(idGuest));
+                Room room = daoFacility.findById(idRoom)
+                        .orElseThrow(() -> new RoomNotFoundException(idRoom));
+                HotelService reservationUpdate = HotelService.builder()
+                        .order(order)
+                        .typeOfService(TypeOfService.ROOM_RESERVATION)
+                        .guest(guest)
+                        .room(room)
+                        .numberOfDays(numberOfDays)
+                        .checkInTime(checkInTime)
+                        .checkOutTime(checkInTime)
+                        .cost(room.getPrice() * numberOfDays)
+                        .build();
+                return daoHotelService.save(reservationUpdate);
+            } else {
+                log.debug(ERROR_ROOM_NOT_AVAILABLE);
+                return null;
+            }
         }
     }
 
     @Override
-    public void delete(int idReservation) throws InvocationTargetException, NoSuchMethodException,
+    public void delete(int id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("START: Hotel Service delete");
-        if(read(idReservation) != null){
-            daoHotelService.deleteById(idReservation);
+        if(read(id) != null){
+            daoHotelService.deleteById(id);
         }
         log.debug(ALL_ROOM_RESERVATION_IS_EMPTY);
     }
@@ -272,17 +342,6 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         return daoHotelService.findByOrder(idOrder);
     }
 
-
-        private HotelService createFromObject(HotelService reservation) {
-        log.debug("START: Hotel Service createFromObject");
-        if(isVacant(reservation.getRoom().getIdRoom(), reservation.getCheckInTime(), reservation.getCheckOutTime())){
-            return daoHotelService.save(reservation); // changed here
-        } else {
-            System.out.println(ERROR_ROOM_NOT_AVAILABLE);
-            return null;
-        }
-    }
-
     private boolean isVacant(int idRoom, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
         log.debug("START: Hotel Service isVacant");
         return readAll().stream()
@@ -291,26 +350,6 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
                         (checkOutTime.isAfter(r.getCheckInTime()) && checkInTime.isBefore(r.getCheckOutTime())))
                 .toList()
                 .isEmpty();
-    }
-
-    private LocalDate getDate(String reservationDatum) {
-        log.debug("START: Hotel Service getDate");
-        String[] numbers = reservationDatum.split("-");
-        int year = Integer.parseInt(numbers[0]);
-        int month = Integer.parseInt(numbers[1]);
-        int day = Integer.parseInt(numbers[2]);
-        return LocalDate.of(year,month,day);
-    }
-
-    private LocalDateTime getDateTime(String checkedDateString) {
-        log.debug("START: Hotel Service getDateTime");
-        String[] timeData = checkedDateString.split("-");
-        int year = Integer.parseInt(timeData[0]);
-        int month = Integer.parseInt(timeData[1]);
-        int day = Integer.parseInt(timeData[2]);
-        int hour = Integer.parseInt(timeData[3]);
-        int minute = Integer.parseInt(timeData[4]);
-        return LocalDateTime.of(year,month,day, hour, minute);
     }
 
 }

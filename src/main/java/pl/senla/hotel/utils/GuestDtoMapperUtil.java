@@ -18,11 +18,11 @@ public class GuestDtoMapperUtil {
 
     public static Guest convertGuestDtoToGuest(GuestDto guestDto) {
         log.debug("Start: convert GuestDto to Guest");
-        return Guest.builder()
-                .idGuest(serviceGuest.getGuestByName(guestDto.getName()).getIdGuest())
-                .name(guestDto.getName())
-                .phoneNumber(guestDto.getPhoneNumber())
-                .build();
+        Guest guest = new Guest();
+        guest.setIdGuest(serviceGuest.getGuestByName(guestDto.getName()).getIdGuest());
+        guest.setName(guestDto.getName());
+        guest.setPhoneNumber(guestDto.getPhoneNumber());
+        return guest;
     }
 
 

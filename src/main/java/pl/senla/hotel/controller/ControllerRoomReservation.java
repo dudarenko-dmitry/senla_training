@@ -1,27 +1,27 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.entity.services.HotelService;
+import pl.senla.hotel.dto.HotelServiceDto;
+import pl.senla.hotel.dto.RoomDto;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public interface ControllerRoomReservation extends ControllerCRUDALL<HotelService>{
+public interface ControllerRoomReservation extends ControllerCRUDALL<HotelServiceDto>{
 
-    List<HotelService> readAllRoomReservationsSortByGuestName();
-    List<HotelService> readAllRoomReservationsSortByGuestCheckOut();
+    List<HotelServiceDto> readAllRoomReservationsSortByGuestName();
+    List<HotelServiceDto> readAllRoomReservationsSortByGuestCheckOut();
     int countNumberOfGuestsOnDate(String checkedTimeString);
     int countGuestPaymentForRoom(int idGuest);
     List<String> read3LastGuestAndDatesForRoom(int idRoom) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString);
-    List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString);
-    List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString);
+    List<RoomDto> readAllFreeRoomsSortByPrice(String checkedTimeString);
+    List<RoomDto> readAllFreeRoomsSortByCapacity(String checkedTimeString);
+    List<RoomDto> readAllFreeRoomsSortByLevel(String checkedTimeString);
     int countFreeRoomsInTime(String checkedTimeString);
-    List<Room> readAllRoomsFreeInTime(String checkedTimeString);
+    List<RoomDto> readAllRoomsFreeInTime(String checkedTimeString);
 
-    List<HotelService> readAllServicesSortByDate();
-    List<HotelService> readAllServicesSortByPrice();
+    List<HotelServiceDto> readAllServicesSortByDate();
+    List<HotelServiceDto> readAllServicesSortByPrice();
 
-    List<HotelService> readAllServicesForOrder(int idOrder);
+    List<HotelServiceDto> readAllServicesForOrder(int idOrder);
 }

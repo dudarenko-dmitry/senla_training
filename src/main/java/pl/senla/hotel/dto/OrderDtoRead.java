@@ -3,7 +3,6 @@ package pl.senla.hotel.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import pl.senla.hotel.entity.services.HotelService;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -18,7 +17,7 @@ public class OrderDtoRead implements Serializable {
     private static final long serialVersionUID = 132L;
 
     private Integer idGuest;
-    private List<HotelService> hotelServices;
+    private List<HotelServiceDto> hotelServices;
 
     @Override
     public String toString() {

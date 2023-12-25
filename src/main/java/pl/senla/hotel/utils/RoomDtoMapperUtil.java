@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.dto.RoomDto;
-import pl.senla.hotel.entity.facilities.CategoryFacility;
 import pl.senla.hotel.entity.facilities.Room;
+import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.service.ServiceFacility;
 
 @Component
@@ -19,15 +19,15 @@ public class RoomDtoMapperUtil {
 
     public static Room convertRoomDtoToRoom(RoomDto roomDto) {
         log.debug("Start: convert RoomDto to Room");
-        return Room.builder()
-                .idRoom(serviceFacility.getRoomByNameFacility(roomDto.getNameFacility()).getIdRoom())
-                .category(CategoryFacility.ROOM)
-                .nameFacility(roomDto.getNameFacility())
-                .price(roomDto.getPrice())
-                .capacity(roomDto.getCapacity())
-                .roomLevel(roomDto.getRoomLevel())
-                .roomStatus(serviceFacility.getRoomByNameFacility(roomDto.getNameFacility()).getRoomStatus())
-                .build();
+        Room room = new Room();
+        room.setIdRoom(serviceFacility.getRoomByNameFacility(roomDto.getNameFacility()).getIdRoom());
+        room.setCategory(roomDto.getCategory());
+        room.setNameFacility(roomDto.getNameFacility());
+        room.setPrice(roomDto.getPrice());
+        room.setCapacity(roomDto.getCapacity());
+        room.setRoomLevel(roomDto.getRoomLevel());
+        room.setRoomStatus(RoomStatus.AVAILABLE);
+        return room;
     }
 
     public static RoomDto convertRoomToRoomDto(Room room) {

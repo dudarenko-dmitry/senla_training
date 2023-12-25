@@ -1,9 +1,8 @@
 package pl.senla.hotel.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.services.HotelService;
 
@@ -13,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Slf4j
 @Entity
 @Table(name = "orders")

@@ -1,12 +1,13 @@
 package pl.senla.hotel.service;
 
+import pl.senla.hotel.dto.HotelServiceDto;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public interface ServiceRoomReservation extends ServiceCRUDALL<HotelService> {
+public interface ServiceRoomReservation extends ServiceCRUDALL<HotelService, HotelServiceDto> {
 
     List<HotelService> readAllRoomReservationsSortByGuestName();
     List<HotelService> readAllRoomReservationsSortByGuestCheckOut();

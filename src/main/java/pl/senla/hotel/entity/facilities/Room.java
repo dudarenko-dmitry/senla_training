@@ -1,17 +1,15 @@
 package pl.senla.hotel.entity.facilities;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Data
-@RequiredArgsConstructor
-@Builder
+@NoArgsConstructor
 @Slf4j
 @Entity
 @Table(name = "rooms")

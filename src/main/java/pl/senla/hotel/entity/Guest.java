@@ -1,9 +1,8 @@
 package pl.senla.hotel.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.services.HotelService;
 
@@ -16,8 +15,7 @@ import static pl.senla.hotel.constant.ClientConstant.ERROR_NULL_NAME;
 import static pl.senla.hotel.constant.ClientConstant.ERROR_NULL_PHONE;
 
 @Data
-@Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Slf4j
 @Table(name = "guests")
 @Entity

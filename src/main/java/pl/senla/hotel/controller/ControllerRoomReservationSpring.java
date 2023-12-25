@@ -2,15 +2,18 @@ package pl.senla.hotel.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.entity.services.HotelService;
+import org.springframework.web.bind.annotation.*;
+import pl.senla.hotel.dto.HotelServiceDto;
+import pl.senla.hotel.dto.RoomDto;
 import pl.senla.hotel.service.ServiceRoomReservation;
+import pl.senla.hotel.utils.HotelServiceDtoMapperUtil;
+import pl.senla.hotel.utils.RoomDtoMapperUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/reservations")
 @Slf4j
 public class ControllerRoomReservationSpring implements ControllerRoomReservation {
 
@@ -18,116 +21,165 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
     private ServiceRoomReservation roomReservationService;
 
     @Override
-    public List<HotelService> readAll() {
+    @GetMapping("/")
+    public List<HotelServiceDto> readAll() {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAll'.");
-        return roomReservationService.readAll();
+        return roomReservationService.readAll()
+                .stream()
+                .map(HotelServiceDtoMapperUtil::convertHotelServiceToHotelServiceDto)
+                .toList();
     }
 
     @Override
-    public HotelService create(HotelService t) throws IllegalAccessException,
+    public HotelServiceDto create(HotelServiceDto hotelServiceDto) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'create'.");
-        return roomReservationService.create(reservationString);
+        return HotelServiceDtoMapperUtil
+                .convertHotelServiceToHotelServiceDto(roomReservationService.create(hotelServiceDto));
     }
 
     @Override
-    public HotelService read(int idReservation) throws InvocationTargetException,
+    @GetMapping("/{id}")
+    public HotelServiceDto read(@PathVariable int id) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'read'.");
-        return roomReservationService.read(idReservation);
+        return HotelServiceDtoMapperUtil
+                .convertHotelServiceToHotelServiceDto(roomReservationService.read(id));
     }
 
     @Override
-    public HotelService update(int idReservation, HotelService tNew) throws InvocationTargetException,
+    @PutMapping("/{id}")
+    public HotelServiceDto update(@PathVariable int id, @RequestBody HotelServiceDto hotelServiceDtoNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'update'.");
-        return roomReservationService.update(idReservation, , reservationString);
+        return HotelServiceDtoMapperUtil
+                .convertHotelServiceToHotelServiceDto(roomReservationService.update(id, hotelServiceDtoNew));
     }
 
     @Override
-    public void delete(int idReservation) throws InvocationTargetException,
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'delete'.");
-        roomReservationService.delete(idReservation);
+        roomReservationService.delete(id);
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByPrice(String checkedTimeString) {
+    @GetMapping("/free-rooms/{time}/sort=price")
+    public List<RoomDto> readAllFreeRoomsSortByPrice(@PathVariable String time) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllFreeRoomsSortByPrice'.");
-        return roomReservationService.readAllFreeRoomsSortByPrice(checkedTimeString);
+        return roomReservationService.readAllFreeRoomsSortByPrice(time)
+                .stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByCapacity(String checkedTimeString) {
+    @GetMapping("/free-rooms/{time}/sort=capacity")
+    public List<RoomDto> readAllFreeRoomsSortByCapacity(@PathVariable String time) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllFreeRoomsSortByCapacity'.");
-        return roomReservationService.readAllFreeRoomsSortByCapacity(checkedTimeString);
+        return roomReservationService.readAllFreeRoomsSortByCapacity(time)
+                .stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public List<Room> readAllFreeRoomsSortByLevel(String checkedTimeString) {
+    @GetMapping("/free-rooms/{time}/sort=level")
+    public List<RoomDto> readAllFreeRoomsSortByLevel(@PathVariable String time) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllFreeRoomsSortByLevel'.");
-        return roomReservationService.readAllFreeRoomsSortByLevel(checkedTimeString);
+        return roomReservationService.readAllFreeRoomsSortByLevel(time)
+                .stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public List<HotelService> readAllRoomReservationsSortByGuestName() {
+    @GetMapping("/sort-guest-name")
+    public List<HotelServiceDto> readAllRoomReservationsSortByGuestName() {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllRoomReservationsSortByGuestName'.");
-        return roomReservationService.readAllRoomReservationsSortByGuestName();
+        return roomReservationService.readAllRoomReservationsSortByGuestName()
+                .stream()
+                .map(HotelServiceDtoMapperUtil::convertHotelServiceToHotelServiceDto)
+                .toList();
     }
 
     @Override
-    public List<HotelService> readAllRoomReservationsSortByGuestCheckOut() {
+    @GetMapping("?sort=check_out")
+    public List<HotelServiceDto> readAllRoomReservationsSortByGuestCheckOut() {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllRoomReservationsSortByGuestCheckOut'.");
-        return roomReservationService.readAllRoomReservationsSortByGuestCheckOut();
+        return roomReservationService.readAllRoomReservationsSortByGuestCheckOut()
+                .stream()
+                .map(HotelServiceDtoMapperUtil::convertHotelServiceToHotelServiceDto)
+                .toList();
     }
 
     @Override
+    @GetMapping("/free-rooms/count")
     public int countFreeRoomsInTime(String checkedTimeString) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'countFreeRoomsInTime'.");
         return roomReservationService.countFreeRoomsInTime(checkedTimeString);
     }
 
     @Override
-    public int countNumberOfGuestsOnDate(String checkedTimeString) {
+    @GetMapping("/guests-number/{}")
+    public int countNumberOfGuestsOnDate(@PathVariable String time) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'countNumberOfGuestsOnDate'.");
-        return roomReservationService.countNumberOfGuestsOnDate(checkedTimeString);
+        return roomReservationService.countNumberOfGuestsOnDate(time);
     }
 
     @Override
-    public List<Room> readAllRoomsFreeInTime(String checkedTimeString) {
+    @GetMapping("/free-rooms/{time}")
+    public List<RoomDto> readAllRoomsFreeInTime(@PathVariable String time) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllRoomsFreeInTime'.");
-        return roomReservationService.readAllRoomsFreeOnDate(checkedTimeString);
+        return roomReservationService.readAllRoomsFreeOnDate(time)
+                .stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
-    public int countGuestPaymentForRoom(int idGuest) {
+    @GetMapping("/guest-payment/{id}")
+    public int countGuestPaymentForRoom(@PathVariable int idGuest) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'countGuestPaymentForRoom'.");
         return roomReservationService.countGuestPaymentForRoom(idGuest);
     }
 
     @Override
-    public List<String> read3LastGuestAndDatesForRoom(int idRoom) throws InvocationTargetException,
+    @GetMapping("/rooms-last-reservations/{id}")
+    public List<String> read3LastGuestAndDatesForRoom(@PathVariable int idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'read3LastGuestAndDatesForRoom'.");
         return roomReservationService.read3LastGuestAndDatesForRoom(idRoom);
     }
 
     @Override
-    public List<HotelService> readAllServicesSortByDate() {
+    @GetMapping("?sort=check_in")
+    public List<HotelServiceDto> readAllServicesSortByDate() {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllServicesSortByDate'.");
-        return roomReservationService.readAllServicesSortByDate();
+        return roomReservationService.readAllServicesSortByDate()
+                .stream()
+                .map(HotelServiceDtoMapperUtil::convertHotelServiceToHotelServiceDto)
+                .toList();
     }
 
     @Override
-    public List<HotelService> readAllServicesSortByPrice() {
+    @GetMapping("?sort=price")
+    public List<HotelServiceDto> readAllServicesSortByPrice() {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllServicesSortByPrice'.");
-        return roomReservationService.readAllServicesSortByPrice();
+        return roomReservationService.readAllServicesSortByPrice()
+                .stream()
+                .map(HotelServiceDtoMapperUtil::convertHotelServiceToHotelServiceDto)
+                .toList();
     }
 
     @Override
-    public List<HotelService> readAllServicesForOrder(int idOrder) {
+    public List<HotelServiceDto> readAllServicesForOrder(int idOrder) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'findServicesForOrder'.");
-        return roomReservationService.findServicesForOrder(idOrder);
+        return roomReservationService.findServicesForOrder(idOrder)
+                .stream()
+                .map(HotelServiceDtoMapperUtil::convertHotelServiceToHotelServiceDto)
+                .toList();
     }
 
 }
