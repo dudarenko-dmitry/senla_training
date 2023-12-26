@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version>
+        <version>3.1.5</version>
     </parent>
 
     <groupId>pl.senla.hotel</groupId>
@@ -17,9 +17,6 @@
     <packaging>war</packaging>
 <!--    <packaging>jar</packaging>-->
     <name>hotel</name>
-<!--    <modules>-->
-<!--        <module>core</module>-->
-<!--    </modules>-->
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
