@@ -11,7 +11,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>hotel</servlet-name>
-        <url-pattern>/hotel</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
 </web-app>
