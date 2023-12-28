@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.dto.RoomDto;
 import pl.senla.hotel.entity.facilities.Room;
@@ -35,6 +36,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
+    @Transactional
     public Room create(RoomDto roomDto) {
         Room room = new Room();
         room.setCategory(roomDto.getCategory());
@@ -56,6 +58,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
+    @Transactional
     public Room update(Integer idFacility, RoomDto roomDtoNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if(daoHotelFacility.existsById(idFacility)){
@@ -73,6 +76,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
+    @Transactional
     public void delete(Integer idFacility) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         if(daoHotelFacility.existsById(idFacility)){
@@ -113,6 +117,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
+    @Transactional
     public Room updateRoomStatusAvailable(Integer idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled) {
@@ -129,6 +134,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
+    @Transactional
     public Room updateRoomStatusRepaired(Integer idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled){

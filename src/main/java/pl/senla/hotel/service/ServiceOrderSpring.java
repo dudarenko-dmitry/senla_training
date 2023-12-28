@@ -3,6 +3,7 @@ package pl.senla.hotel.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.dao.DaoOrderSpring;
 import pl.senla.hotel.dto.OrderCreateDto;
@@ -47,6 +48,7 @@ public class ServiceOrderSpring implements ServiceOrder {
     }
 
     @Override
+    @Transactional
     public Order create(OrderCreateDto orderCreateDto) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("Service: Order Create");
         log.debug("Service get idGuest: " + orderCreateDto.getIdGuest());
@@ -66,6 +68,7 @@ public class ServiceOrderSpring implements ServiceOrder {
     }
 
     @Override
+    @Transactional
     public Order update(Integer idOrder, OrderCreateDto orderCreateDtoUpdate) {
 // this method is never used.
 // Updating of Order is processed by updating of its reservations in pl.senla.hotel.ui.services;
@@ -76,6 +79,7 @@ public class ServiceOrderSpring implements ServiceOrder {
     }
 
     @Override
+    @Transactional
     public void delete(Integer idOrder) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("Service: Order Delete");

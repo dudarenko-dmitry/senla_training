@@ -3,6 +3,7 @@ package pl.senla.hotel.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.dto.GuestDto;
 import pl.senla.hotel.entity.Guest;
@@ -27,6 +28,7 @@ public class ServiceGuestSpring implements ServiceGuest {
     }
 
     @Override
+    @Transactional
     public Guest create(GuestDto guestDto) {
         Guest guest = new Guest();
         guest.setName(guestDto.getName());
@@ -44,6 +46,7 @@ public class ServiceGuestSpring implements ServiceGuest {
     }
 
     @Override
+    @Transactional
     public Guest update(Integer idGuest, GuestDto guestDtoUpdate) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("Service: GuestUpdate");
@@ -58,6 +61,7 @@ public class ServiceGuestSpring implements ServiceGuest {
     }
 
     @Override
+    @Transactional
     public void delete(Integer idGuest) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("Service: GuestDelete");

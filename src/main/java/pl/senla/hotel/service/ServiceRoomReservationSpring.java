@@ -174,6 +174,7 @@ public class ServiceRoomReservationSpring implements ServiceRoomReservation {
         }
     }
 
+    @Transactional
     @Override
     public void delete(Integer id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
