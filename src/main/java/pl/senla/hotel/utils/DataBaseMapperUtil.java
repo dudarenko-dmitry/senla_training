@@ -3,7 +3,7 @@ package pl.senla.hotel.utils;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
-import pl.senla.hotel.dto.OrderDto;
+import pl.senla.hotel.dto.OrderCreateDto;
 import pl.senla.hotel.entity.facilities.Room;
 import pl.senla.hotel.entity.services.HotelService;
 
@@ -27,7 +27,7 @@ public final class DataBaseMapperUtil {
             mapper = getGuestMapper();
         } else if (type.equals(HotelService.class)) {
             mapper = getHotelServiceMapper();
-        } else if (type.equals(OrderDto.class) || type.equals(Order.class)) {
+        } else if (type.equals(OrderCreateDto.class) || type.equals(Order.class)) {
             mapper = getOrderMapper();
         } else {
             log.warn(DB_NO_TABLE, new SQLException());

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.senla.hotel.dto.RoomDto;
 import pl.senla.hotel.entity.facilities.Room;
-import pl.senla.hotel.entity.facilities.RoomStatus;
 import pl.senla.hotel.service.ServiceFacility;
 
 @Component
@@ -26,7 +25,7 @@ public class RoomDtoMapperUtil {
         room.setPrice(roomDto.getPrice());
         room.setCapacity(roomDto.getCapacity());
         room.setRoomLevel(roomDto.getRoomLevel());
-        room.setRoomStatus(RoomStatus.AVAILABLE);
+        room.setRoomStatus(roomDto.getRoomStatus());
         return room;
     }
 
@@ -38,6 +37,7 @@ public class RoomDtoMapperUtil {
                 .price(room.getPrice())
                 .capacity(room.getCapacity())
                 .roomLevel(room.getRoomLevel())
+                .roomStatus(room.getRoomStatus())
                 .build();
     }
 

@@ -1,8 +1,8 @@
 package pl.senla.hotel.entity.services;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
+@NoArgsConstructor
 @Slf4j
 @Entity
 @Table(name = "reservations")

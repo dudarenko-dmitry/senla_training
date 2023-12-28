@@ -34,21 +34,6 @@ public class ServiceFacilitySpring implements ServiceFacility{
         return hotelFacilityList;
     }
 
-//    @Override
-//    public Room create(String hotelFacilityString) {
-//        String[] facilityData = hotelFacilityString.split(";");
-//        Room hotelFacility = new Room();
-//        hotelFacility.setCategory(CategoryFacility.valueOf(facilityData[0]));
-//        hotelFacility.setNameFacility(facilityData[1]);
-//        hotelFacility.setPrice(Integer.parseInt(facilityData[2]));
-//        hotelFacility.setCapacity(Integer.parseInt(facilityData[3]));
-//        hotelFacility.setRoomLevel(RoomLevel.valueOf(facilityData[4]));
-//        hotelFacility.setRoomStatus(RoomStatus.valueOf(facilityData[5]));
-//        Room savedRoom = daoHotelFacility.save(hotelFacility);
-//        log.debug("Create new HotelFacility");
-//        return savedRoom;
-//    }
-
     @Override
     public Room create(RoomDto roomDto) {
         Room room = new Room();
@@ -62,20 +47,8 @@ public class ServiceFacilitySpring implements ServiceFacility{
         return daoHotelFacility.save(room);
     }
 
-//    @Override
-//    public Room read(int idFacility) throws InvocationTargetException, NoSuchMethodException,
-//            InstantiationException, IllegalAccessException {
-//        Optional<Room> hotelFacility = daoHotelFacility.findById(idFacility);
-//        if(hotelFacility.isPresent()){
-//            log.debug("Read HotelFacility.");
-//            return hotelFacility.get();
-//        }
-//        log.debug(READ_HOTEL_FACILITY_NOT_EXIST);
-//        return null;
-//    }
-
     @Override
-    public Room read(int idFacility) throws InvocationTargetException, NoSuchMethodException,
+    public Room read(Integer idFacility) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("Read HotelFacility.");
         return daoHotelFacility.findById(idFacility)
@@ -83,7 +56,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
-    public Room update(int idFacility, RoomDto roomDtoNew) throws InvocationTargetException,
+    public Room update(Integer idFacility, RoomDto roomDtoNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if(daoHotelFacility.existsById(idFacility)){
             Room roomUpdate = read(idFacility);
@@ -91,6 +64,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
             roomUpdate.setNameFacility(roomDtoNew.getNameFacility());
             roomUpdate.setPrice(roomDtoNew.getPrice());
             roomUpdate.setRoomLevel(roomDtoNew.getRoomLevel());
+            roomUpdate.setRoomStatus(roomDtoNew.getRoomStatus());
             log.debug("Update HotelFacility");
             return daoHotelFacility.save(roomUpdate);
         }
@@ -99,7 +73,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
-    public void delete(int idFacility) throws InvocationTargetException, NoSuchMethodException,
+    public void delete(Integer idFacility) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         if(daoHotelFacility.existsById(idFacility)){
             log.debug("Delete HotelFacility.");
@@ -139,7 +113,7 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
-    public Room updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+    public Room updateRoomStatusAvailable(Integer idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled) {
             if(daoHotelFacility.existsById(idRoom)){
@@ -155,13 +129,13 @@ public class ServiceFacilitySpring implements ServiceFacility{
     }
 
     @Override
-    public Room updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+    public Room updateRoomStatusRepaired(Integer idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (changeRoomStatusEnabled){
             if(daoHotelFacility.existsById(idRoom)){
                 Room roomUpdate = read(idRoom);
                 roomUpdate.setRoomStatus(RoomStatus.REPAIRED);
-                log.debug("Set HotelFacility's status AVAILABLE");
+                log.debug("Set HotelFacility's status UNDER REPAIR");
                 return daoHotelFacility.save(roomUpdate);
             }
             log.debug(ROOM_NOT_EXISTS);

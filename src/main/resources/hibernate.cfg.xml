@@ -18,7 +18,7 @@
         <mapping class="pl.senla.hotel.entity.facilities.Room"/>
         <mapping class="pl.senla.hotel.entity.Guest"/>
         <mapping class="pl.senla.hotel.entity.services.HotelService"/>
-        <mapping class="pl.senla.hotel.dto.OrderDto"/>
+        <mapping class="pl.senla.hotel.dto.OrderCreateDto"/>
         <mapping class="pl.senla.hotel.entity.Order"/>
 
     </session-factory>

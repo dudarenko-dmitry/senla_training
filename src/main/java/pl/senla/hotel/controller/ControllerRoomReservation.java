@@ -1,27 +1,28 @@
 package pl.senla.hotel.controller;
 
-import pl.senla.hotel.dto.HotelServiceDto;
+import pl.senla.hotel.dto.HotelServiceCreateDto;
+import pl.senla.hotel.dto.HotelServiceReadDto;
 import pl.senla.hotel.dto.RoomDto;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public interface ControllerRoomReservation extends ControllerCRUDALL<HotelServiceDto>{
+public interface ControllerRoomReservation extends ControllerCRUDALL<HotelServiceReadDto, HotelServiceCreateDto>{
 
-    List<HotelServiceDto> readAllRoomReservationsSortByGuestName();
-    List<HotelServiceDto> readAllRoomReservationsSortByGuestCheckOut();
-    int countNumberOfGuestsOnDate(String checkedTimeString);
-    int countGuestPaymentForRoom(int idGuest);
-    List<String> read3LastGuestAndDatesForRoom(int idRoom) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+    List<HotelServiceReadDto> readAllRoomReservationsSortByGuestName();
+    List<HotelServiceReadDto> readAllRoomReservationsSortByGuestCheckOut();
+    Integer countNumberOfGuestsOnDate(String checkedTimeString);
+    Integer countGuestPaymentForRoom(Integer idGuest);
+    List<String> read3LastGuestAndDatesForRoom(Integer idRoom) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
     List<RoomDto> readAllFreeRoomsSortByPrice(String checkedTimeString);
     List<RoomDto> readAllFreeRoomsSortByCapacity(String checkedTimeString);
     List<RoomDto> readAllFreeRoomsSortByLevel(String checkedTimeString);
-    int countFreeRoomsInTime(String checkedTimeString);
+    Integer countFreeRoomsInTime(String checkedTimeString);
     List<RoomDto> readAllRoomsFreeInTime(String checkedTimeString);
 
-    List<HotelServiceDto> readAllServicesSortByDate();
-    List<HotelServiceDto> readAllServicesSortByPrice();
+    List<HotelServiceReadDto> readAllServicesSortByDate();
+    List<HotelServiceReadDto> readAllServicesSortByCost();
 
-    List<HotelServiceDto> readAllServicesForOrder(int idOrder);
+    List<HotelServiceReadDto> readAllServicesForOrder(Integer idOrder);
 }

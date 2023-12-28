@@ -74,7 +74,7 @@ public interface DaoHotelFacilitySpring extends JpaRepository<Room, Integer> {
             "ON r2.facilityID=rr.facilityID " +
             "WHERE DATE(?) BETWEEN rr.check_in AND rr.check_out)) AS total",
             nativeQuery = true)
-    int countFreeRoomsInTime(String checkedTimeString);
+    Integer countFreeRoomsInTime(String checkedTimeString);
 
 }
 

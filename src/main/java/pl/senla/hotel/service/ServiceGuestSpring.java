@@ -26,27 +26,17 @@ public class ServiceGuestSpring implements ServiceGuest {
         return daoGuest.findAll();
     }
 
-//    @Override
-//    public Guest create(String guestString) {
-//        Guest guest = new Guest();
-//        String[] guestData = guestString.split(";");
-//        guest.setName(guestData[0]);
-//        guest.setPhoneNumber(Integer.parseInt(guestData[1]));
-//        log.debug("START: GuestCreate");
-//        return daoGuest.save(guest);
-//    }
-
     @Override
     public Guest create(GuestDto guestDto) {
         Guest guest = new Guest();
-        guest.setName(guest.getName());
+        guest.setName(guestDto.getName());
         guest.setPhoneNumber(guestDto.getPhoneNumber());
         log.debug("Service: GuestCreate");
         return daoGuest.save(guest);
     }
 
     @Override
-    public Guest read(int idGuest) throws InvocationTargetException, NoSuchMethodException,
+    public Guest read(Integer idGuest) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("Service: GuestRead");
         return daoGuest.findById(idGuest)
@@ -54,7 +44,7 @@ public class ServiceGuestSpring implements ServiceGuest {
     }
 
     @Override
-    public Guest update(int idGuest, GuestDto guestDtoUpdate) throws InvocationTargetException,
+    public Guest update(Integer idGuest, GuestDto guestDtoUpdate) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("Service: GuestUpdate");
         if(daoGuest.existsById(idGuest)){
@@ -68,7 +58,7 @@ public class ServiceGuestSpring implements ServiceGuest {
     }
 
     @Override
-    public void delete(int idGuest) throws InvocationTargetException, NoSuchMethodException,
+    public void delete(Integer idGuest) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("Service: GuestDelete");
         if(daoGuest.existsById(idGuest)){
@@ -78,7 +68,7 @@ public class ServiceGuestSpring implements ServiceGuest {
     }
 
     @Override
-    public int countNumberOfGuestsTotal() {
+    public Integer countNumberOfGuestsTotal() {
         log.debug("Service: CountGuest");
         return daoGuest.countFindAll();
     }
@@ -86,6 +76,6 @@ public class ServiceGuestSpring implements ServiceGuest {
     @Override
     public Guest getGuestByName(String name) {
         log.debug("Service: getGuestByName");
-        return  daoGuest.getReferenceByName(name);
+        return  daoGuest.getGuestByName(name);
     }
 }

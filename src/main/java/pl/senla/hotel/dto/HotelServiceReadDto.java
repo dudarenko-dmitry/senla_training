@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @Builder
-public class HotelServiceDto implements Serializable {
+public class HotelServiceReadDto implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 120L;

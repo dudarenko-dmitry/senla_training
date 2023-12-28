@@ -1,17 +1,16 @@
 package pl.senla.hotel.controller;
 
 import pl.senla.hotel.dto.RoomDto;
-import pl.senla.hotel.entity.facilities.Room;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public interface ControllerFacility extends ControllerCRUDALL<RoomDto> {
+public interface ControllerFacility extends ControllerCRUDALL<RoomDto, RoomDto> {
 
-    Room updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+    RoomDto updateRoomStatusAvailable(Integer idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    Room updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+    RoomDto updateRoomStatusRepaired(Integer idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
 
     List<RoomDto> readPriceListForServicesSortByCategory();

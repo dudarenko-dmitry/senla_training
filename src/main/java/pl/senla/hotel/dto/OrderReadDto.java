@@ -11,13 +11,13 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class OrderDtoRead implements Serializable {
+public class OrderReadDto implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 132L;
 
     private Integer idGuest;
-    private List<HotelServiceDto> hotelServices;
+    private List<HotelServiceReadDto> hotelServices;
 
     @Override
     public String toString() {

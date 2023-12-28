@@ -18,7 +18,7 @@ public interface DaoHotelServiceSpring extends JpaRepository<HotelService, Integ
             "FROM hotel.reservations as r " +
             "WHERE DATE(?) BETWEEN check_in AND check_out",
     nativeQuery = true)
-    int countGuestOnDate(String checkedDateString);
+    Integer countGuestOnDate(String checkedDateString);
 
     @Query(value = "SELECT g.name, r.serviceID, r.orderID, r.guestID, " +
             "r.service_type, r.facilityID, r.check_in, r.check_out, r.day, r.cost " +

@@ -5,7 +5,7 @@ import pl.senla.hotel.entity.Guest;
 
 public interface ServiceGuest extends ServiceCRUDALL<Guest, GuestDto> {
 
-    int countNumberOfGuestsTotal();
+    Integer countNumberOfGuestsTotal();
 
     Guest getGuestByName(String name);
 }

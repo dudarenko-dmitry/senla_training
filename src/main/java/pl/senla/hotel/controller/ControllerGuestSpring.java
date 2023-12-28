@@ -19,7 +19,7 @@ public class ControllerGuestSpring implements ControllerGuest {
     private ServiceGuest guestService;
 
     @Override
-    @GetMapping("/")
+    @GetMapping
     public List<GuestDto> readAll() {
         log.debug("ControllerGuest call ServiceGuest's method 'readAll'.");
         return guestService.readAll().stream()
@@ -37,7 +37,7 @@ public class ControllerGuestSpring implements ControllerGuest {
 
     @Override
     @GetMapping("/{id}")
-    public GuestDto read(@PathVariable int id) throws InvocationTargetException, NoSuchMethodException,
+    public GuestDto read(@PathVariable Integer id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerGuest call ServiceGuest's method 'read'.");
         return GuestDtoMapperUtil.convertGuestToGuestDto(guestService.read(id));
@@ -45,7 +45,7 @@ public class ControllerGuestSpring implements ControllerGuest {
 
     @Override
     @PutMapping("/{id}")
-    public GuestDto update(@PathVariable int id, @RequestBody GuestDto guestDtoNew) throws InvocationTargetException,
+    public GuestDto update(@PathVariable Integer id, @RequestBody GuestDto guestDtoNew) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerGuest call ServiceGuest's method 'update'.");
         return GuestDtoMapperUtil.convertGuestToGuestDto(guestService.update(id, guestDtoNew));
@@ -53,7 +53,7 @@ public class ControllerGuestSpring implements ControllerGuest {
 
     @Override
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) throws InvocationTargetException, NoSuchMethodException,
+    public void delete(@PathVariable Integer id) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("ControllerGuest call ServiceGuest's method 'delete'.");
         guestService.delete(id);
@@ -61,7 +61,7 @@ public class ControllerGuestSpring implements ControllerGuest {
 
     @Override
     @GetMapping("/count-guests")
-    public int countNumberOfGuestsTotal() {
+    public Integer countNumberOfGuestsTotal() {
         log.debug("ControllerGuest call ServiceGuest's method 'countNumberOfGuestsTotal'.");
         return guestService.countNumberOfGuestsTotal();
     }

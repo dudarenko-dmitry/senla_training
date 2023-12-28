@@ -15,10 +15,10 @@ public interface ServiceFacility extends ServiceCRUDALL<Room, RoomDto> {
     List<Room> readAllRoomsSortByCapacity();
     List<Room> readAllRoomsSortByLevel();
 
-    Room updateRoomStatusAvailable(int idRoom) throws InvocationTargetException,
+    Room updateRoomStatusAvailable(Integer idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    Room updateRoomStatusRepaired(int idRoom) throws InvocationTargetException,
+    Room updateRoomStatusRepaired(Integer idRoom) throws InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException;
 
     Room getRoomByNameFacility(String nameFacility);

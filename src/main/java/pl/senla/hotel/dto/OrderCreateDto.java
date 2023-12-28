@@ -2,15 +2,15 @@ package pl.senla.hotel.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto implements Serializable {
+public class OrderCreateDto implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 132L;

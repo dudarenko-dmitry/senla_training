@@ -33,8 +33,8 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "order")
     private List<HotelService> hotelServices = new ArrayList<>();
 
-    public Order(Integer idGuest) {
-        this.idOrder = idGuest;
+    public Order(Guest guest) {
+        this.guest = guest;
     }
 
     @Override

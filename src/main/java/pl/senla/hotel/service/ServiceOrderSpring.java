@@ -3,11 +3,12 @@ package pl.senla.hotel.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.senla.hotel.dao.DaoGuestSpring;
 import pl.senla.hotel.dao.DaoHotelFacilitySpring;
 import pl.senla.hotel.dao.DaoOrderSpring;
-import pl.senla.hotel.dto.OrderDto;
+import pl.senla.hotel.dto.OrderCreateDto;
+import pl.senla.hotel.entity.Guest;
 import pl.senla.hotel.entity.Order;
+import pl.senla.hotel.entity.services.HotelService;
 import pl.senla.hotel.exceptions.OrderNotFoundException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -21,56 +22,51 @@ import static pl.senla.hotel.constant.OrderConstant.READ_ALL_ORDERS_IS_EMPTY;
 public class ServiceOrderSpring implements ServiceOrder {
 
     @Autowired
-    private ServiceHotelService serviceHotelService;
-    @Autowired
     private ServiceRoomReservation serviceRoomReservation;
+    @Autowired
+    private ServiceGuest serviceGuest;
     @Autowired
     private DaoOrderSpring daoOrder;
     @Autowired
     private DaoHotelFacilitySpring daoRoom;
-    @Autowired
-    private DaoGuestSpring daoGuest;
 
     public ServiceOrderSpring() {}
 
     @Override
     public List<Order> readAll() {
         log.debug("Service: Order ReadAll");
-        List<Order> orderList = daoOrder.findAll();
-        if (orderList.isEmpty()) {
+        List<Order> orders = daoOrder.findAll();
+        if (orders.isEmpty()) {
             log.debug(READ_ALL_ORDERS_IS_EMPTY);
         }
-        return orderList;
+        for (Order order : orders) {
+            List<HotelService> hotelServices = serviceRoomReservation.findServicesForOrder(order.getIdOrder());
+            order.setHotelServices(hotelServices);
+        }
+        return orders;
     }
 
     @Override
-    public Order create(OrderDto orderDto) {
+    public Order create(OrderCreateDto orderCreateDto) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("Service: Order Create");
-        return daoOrder.save(new Order(orderDto.getIdGuest()));
+        log.debug("Service get idGuest: " + orderCreateDto.getIdGuest());
+        Guest guest = serviceGuest.read(orderCreateDto.getIdGuest());
+        return daoOrder.save(new Order(guest));
     }
 
-//    @Override
-//    public Order read(int idOrder) throws InvocationTargetException, NoSuchMethodException,
-//            InstantiationException, IllegalAccessException {
-//        log.debug("Service: Order Read");
-//        Optional<Order> order = daoOrder.findById(idOrder);
-//        if (order.isPresent()) {
-//            return order.get();
-//        }
-//        log.debug(ERROR_INPUT);
-//        return null;
-//    }
-
     @Override
-    public Order read(int idOrder) throws InvocationTargetException, NoSuchMethodException,
+    public Order read(Integer idOrder) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("Service: Order Read");
-        return daoOrder.findById(idOrder)
+        Order order = daoOrder.findById(idOrder)
                 .orElseThrow(() -> new OrderNotFoundException(idOrder));
+        List<HotelService> hotelServices = serviceRoomReservation.findServicesForOrder(idOrder);
+        order.setHotelServices(hotelServices);
+        return order;
     }
 
     @Override
-    public Order update(int idOrder, OrderDto orderDtoUpdate) {
+    public Order update(Integer idOrder, OrderCreateDto orderCreateDtoUpdate) {
 // this method is never used.
 // Updating of Order is processed by updating of its reservations in pl.senla.hotel.ui.services;
         log.debug("this method is never used");
@@ -80,7 +76,7 @@ public class ServiceOrderSpring implements ServiceOrder {
     }
 
     @Override
-    public void delete(int idOrder) throws InvocationTargetException, NoSuchMethodException,
+    public void delete(Integer idOrder) throws InvocationTargetException, NoSuchMethodException,
             InstantiationException, IllegalAccessException {
         log.debug("Service: Order Delete");
         if (daoOrder.findById(idOrder).isPresent()) {
