@@ -19,7 +19,7 @@ public class ControllerFacilitySpring implements ControllerFacility {
     private ServiceFacility serviceFacility;
 
     @Override
-    @GetMapping("/search")
+    @GetMapping
     public List<RoomDto> readAll(
             @RequestParam(value = "sort", required = false, defaultValue = "id") String sortBy,
             @RequestParam(value = "category", required = false, defaultValue = "ROOM") String filter) {
