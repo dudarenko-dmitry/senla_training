@@ -20,8 +20,17 @@ public class ControllerGuestSpring implements ControllerGuest {
 
     @Override
     @GetMapping
-    public List<GuestDto> readAll() {
+    public List<GuestDto> readAll(
+            @RequestParam(value = "sort", required = false, defaultValue = "guestID") String sortBy,
+            @RequestParam(value = "name", required = false) String filter) {
         log.debug("ControllerGuest call ServiceGuest's method 'readAll'.");
+        log.info("Guests sorted by '{} and filtered by {}", sortBy, filter);
+        if (filter != null) {
+            return guestService.readAll().stream()
+                    .filter(g -> g.getName().equals(filter))
+                    .map(GuestDtoMapperUtil::convertGuestToGuestDto)
+                    .toList();
+        }
         return guestService.readAll().stream()
                 .map(GuestDtoMapperUtil::convertGuestToGuestDto)
                 .toList();

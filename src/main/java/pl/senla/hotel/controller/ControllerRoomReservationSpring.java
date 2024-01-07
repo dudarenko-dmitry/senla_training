@@ -24,7 +24,7 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
 
     @Override
     @GetMapping
-    public List<HotelServiceReadDto> readAll() {
+    public List<HotelServiceReadDto> readAll(String sortBy, String filter) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAll'.");
         return roomReservationService.readAll()
                 .stream()

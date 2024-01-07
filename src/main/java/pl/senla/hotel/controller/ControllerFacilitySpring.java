@@ -21,7 +21,7 @@ public class ControllerFacilitySpring implements ControllerFacility {
     @Override
     @GetMapping
     public List<RoomDto> readAll(
-            @RequestParam(value = "sort", required = false, defaultValue = "id") String sortBy,
+            @RequestParam(value = "sort", required = false, defaultValue = "facilityID") String sortBy,
             @RequestParam(value = "category", required = false, defaultValue = "ROOM") String filter) {
         log.debug("ControllerFacility works.");
         log.info("Facilities sorted by '{}' and category '{}'", sortBy, filter);

@@ -27,7 +27,7 @@ public class ControllerOrderSpring implements ControllerOrder {
 
     @Override
     @GetMapping
-    public List<OrderReadDto> readAll() {
+    public List<OrderReadDto> readAll(String sortBy, String filter) {
         log.debug("ControllerOrder call ServiceOrder's method 'readAll'.");
         return OrderReadDtoMapperUtil
                 .convertListOrderToOrderDtoRead(orderService.readAll(), serviceRoomReservation.readAll());
