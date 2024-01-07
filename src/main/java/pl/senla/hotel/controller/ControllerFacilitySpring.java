@@ -13,18 +13,39 @@ import java.util.List;
 @RestController
 @RequestMapping("/rooms")
 @Slf4j
-public class ControllerFacilitySpring implements ControllerFacility{
+public class ControllerFacilitySpring implements ControllerFacility {
 
     @Autowired
     private ServiceFacility serviceFacility;
 
     @Override
-    @GetMapping
-    public List<RoomDto> readAll() {
-        log.debug("ControllerFacility call ServiceFacility's method 'ReadAll'.");
-        return serviceFacility.readAll().stream()
-                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
-                .toList();
+    @GetMapping("/search")
+    public List<RoomDto> readAll(
+            @RequestParam(value = "sort", required = false, defaultValue = "id") String sortBy,
+            @RequestParam(value = "category", required = false, defaultValue = "ROOM") String filter) {
+        log.debug("ControllerFacility works.");
+        log.info("Facilities sorted by '{}' and category '{}'", sortBy, filter);
+        if ("ROOM".equals(filter)) {
+            return switch (sortBy) {
+                case "price" -> serviceFacility.readPriceListForServicesSortByPrice().stream()
+                        .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                        .toList();
+                case "capacity" -> serviceFacility.readAllRoomsSortByCapacity().stream()
+                        .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                        .toList();
+                case "level" -> serviceFacility.readAllRoomsSortByLevel().stream()
+                        .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                        .toList();
+                default -> serviceFacility.readAll().stream()
+                        .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                        .toList();
+            };
+        } else {
+            log.info("There is no such category of facilities in Hotel.");
+            return serviceFacility.readPriceListForServicesSortByCategory().stream()
+                    .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                    .toList();
+        }
     }
 
     @Override
@@ -75,48 +96,48 @@ public class ControllerFacilitySpring implements ControllerFacility{
         serviceFacility.delete(id);
     }
 
-    @Override
-    @GetMapping("/sort=category")
-    public List<RoomDto> readPriceListForServicesSortByCategory() {
-        log.debug("ControllerFacility call ServiceFacility's method 'readPriceListForServicesSortByCategory'.");
-        return serviceFacility.readPriceListForServicesSortByCategory().stream()
-                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
-                .toList();
-    }
+//    @Override // done
+//    @GetMapping("/sort=category")
+//    public List<RoomDto> readPriceListForServicesSortByCategory() {
+//        log.debug("ControllerFacility call ServiceFacility's method 'readPriceListForServicesSortByCategory'.");
+//        return serviceFacility.readPriceListForServicesSortByCategory().stream()
+//                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+//                .toList();
+//    }
 
-    @Override
-    @GetMapping("/sort=price")
-    public List<RoomDto> readPriceListForServicesSortByPrice() {
-        log.debug("ControllerFacility call ServiceFacility's method 'readPriceListForServicesSortByPrice'.");
-        return serviceFacility.readPriceListForServicesSortByPrice().stream()
-                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
-                .toList();
-    }
+//    @Override // done
+//    @GetMapping("/sort=price")
+//    public List<RoomDto> readPriceListForServicesSortByPrice() {
+//        log.debug("ControllerFacility call ServiceFacility's method 'readPriceListForServicesSortByPrice'.");
+//        return serviceFacility.readPriceListForServicesSortByPrice().stream()
+//                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+//                .toList();
+//    }
 
-    @Override
-    @GetMapping("/category=ROOM&sort=price")
-    public List<RoomDto> readAllRoomsSortByPrice() {
-        log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByPrice'.");
-        return serviceFacility.readAllRoomsSortByPrice().stream()
-                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
-                .toList();
-    }
+//    @Override // done
+//    @GetMapping("/category=ROOM&sort=price")
+//    public List<RoomDto> readAllRoomsSortByPrice() {
+//        log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByPrice'.");
+//        return serviceFacility.readAllRoomsSortByPrice().stream()
+//                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+//                .toList();
+//    }
 
-    @Override
-    @GetMapping("/category=ROOM&sort=capacity")
-    public List<RoomDto> readAllRoomsSortByCapacity() {
-        log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByCapacity'.");
-        return serviceFacility.readAllRoomsSortByCapacity().stream()
-                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
-                .toList();
-    }
+//    @Override // done
+//    @GetMapping("/category=ROOM&sort=capacity")
+//    public List<RoomDto> readAllRoomsSortByCapacity() {
+//        log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByCapacity'.");
+//        return serviceFacility.readAllRoomsSortByCapacity().stream()
+//                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+//                .toList();
+//    }
 
-    @Override
-    @GetMapping("/category=ROOM&sort=level")
-    public List<RoomDto> readAllRoomsSortByLevel() {
-        log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByLevel'.");
-        return serviceFacility.readAllRoomsSortByLevel().stream()
-                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
-                .toList();
-    }
+//    @Override // done
+//    @GetMapping("/category=ROOM&sort=level")
+//    public List<RoomDto> readAllRoomsSortByLevel() {
+//        log.debug("ControllerFacility call ServiceFacility's method 'readAllRoomsSortByLevel'.");
+//        return serviceFacility.readAllRoomsSortByLevel().stream()
+//                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+//                .toList();
+//    }
 }

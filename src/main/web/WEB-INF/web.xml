@@ -7,7 +7,8 @@
 
     <servlet>
         <servlet-name>hotel</servlet-name>
-        <servlet-class>pl.senla.hotel.hotel</servlet-class>
+        <servlet-class>pl.senla.hotel.hotel/src/main/java</servlet-class>
+<!--        <servlet-class>C://IT/senla_training/src/main/java/pl/senla/hotel/Main.java</servlet-class>-->
     </servlet>
     <servlet-mapping>
         <servlet-name>hotel</servlet-name>
