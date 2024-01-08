@@ -12,7 +12,6 @@ import pl.senla.hotel.service.ServiceRoomReservation;
 import pl.senla.hotel.utils.OrderReadDtoMapperUtil;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,10 +26,20 @@ public class ControllerOrderSpring implements ControllerOrder {
 
     @Override
     @GetMapping
-    public List<OrderReadDto> readAll(String sortBy, String filter) {
+    public List<OrderReadDto> readAll(
+            @RequestParam(value = "sort", required = false, defaultValue = "orderID") String sortBy,
+            @RequestParam(value = "guestID", required = false) String filter) {
         log.debug("ControllerOrder call ServiceOrder's method 'readAll'.");
-        return OrderReadDtoMapperUtil
-                .convertListOrderToOrderDtoRead(orderService.readAll(), serviceRoomReservation.readAll());
+        log.info("Orders sorted by '{}' and category '{}'", sortBy, filter);
+        if(filter != null) {
+            return orderService.readAll().stream()
+                    .filter(o -> o.getGuest().getIdGuest().equals(Integer.parseInt(filter)))
+                    .map(OrderReadDtoMapperUtil::convertOrderToOrderDtoRead)
+                    .toList();
+        }
+        return orderService.readAll().stream()
+                .map(OrderReadDtoMapperUtil::convertOrderToOrderDtoRead)
+                .toList();
     }
 
     @Override
@@ -39,7 +48,7 @@ public class ControllerOrderSpring implements ControllerOrder {
             InvocationTargetException, NoSuchMethodException, InstantiationException {
         log.debug("ControllerOrder call ServiceOrder's method 'create'.");
         Order order = orderService.create(orderCreateDto);
-        return OrderReadDtoMapperUtil.convertOrderToOrderDtoRead(order, new ArrayList<>());
+        return OrderReadDtoMapperUtil.convertOrderToOrderDtoRead(order);
     }
 
     @Override
@@ -50,7 +59,7 @@ public class ControllerOrderSpring implements ControllerOrder {
         log.info("USE method OrderDtoRead readWithServices()");
         Order order = orderService.read(id);
         List<HotelService> hotelServices = order.getHotelServices();
-        return OrderReadDtoMapperUtil.convertOrderToOrderDtoRead(order, hotelServices);
+        return OrderReadDtoMapperUtil.convertOrderToOrderDtoRead(order);
     }
 
     @Override
@@ -61,7 +70,7 @@ public class ControllerOrderSpring implements ControllerOrder {
         Order orderUpdate = orderService.update(id, orderCreateDtoNew);
         List<HotelService> hotelServices = orderUpdate.getHotelServices();
         return OrderReadDtoMapperUtil
-                .convertOrderToOrderDtoRead(orderUpdate, hotelServices);
+                .convertOrderToOrderDtoRead(orderUpdate);
     }
 
     @Override
