@@ -19,7 +19,7 @@ public interface ControllerRoomReservation extends ControllerCRUDALL<HotelServic
     List<RoomDto> readAllFreeRoomsSortByCapacity(String checkedTimeString);
     List<RoomDto> readAllFreeRoomsSortByLevel(String checkedTimeString);
     Integer countFreeRoomsInTime(String checkedTimeString);
-    List<RoomDto> readAllRoomsFreeInTime(String checkedTimeString);
+    List<RoomDto> readAllRoomsFreeInTime(String checkedTimeString, String sortBy);
 
     List<HotelServiceReadDto> readAllServicesSortByDate();
     List<HotelServiceReadDto> readAllServicesSortByCost();

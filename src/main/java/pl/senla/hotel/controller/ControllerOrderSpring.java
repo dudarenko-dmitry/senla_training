@@ -30,7 +30,7 @@ public class ControllerOrderSpring implements ControllerOrder {
             @RequestParam(value = "sort", required = false, defaultValue = "orderID") String sortBy,
             @RequestParam(value = "guestID", required = false) String filter) {
         log.debug("ControllerOrder call ServiceOrder's method 'readAll'.");
-        log.info("Orders sorted by '{}' and category '{}'", sortBy, filter);
+        log.info("Orders sorted by '{}' and guestID '{}'", sortBy, filter);
         if(filter != null) {
             return orderService.readAll().stream()
                     .filter(o -> o.getGuest().getIdGuest().equals(Integer.parseInt(filter)))

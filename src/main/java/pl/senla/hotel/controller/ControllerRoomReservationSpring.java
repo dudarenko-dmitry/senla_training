@@ -24,13 +24,34 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
 
     @Override
     @GetMapping
-    public List<HotelServiceReadDto> readAll(String sortBy, String filter) {
+    public List<HotelServiceReadDto> readAll(
+            @RequestParam(value = "sort", required = false, defaultValue = "serviceID") String sortBy,
+            @RequestParam(value = "sort", required = false) String filter) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAll'.");
+        log.info("HotelServices sorted by '{}' and filtered by '{}':\n", sortBy, filter);
+
         return roomReservationService.readAll()
                 .stream()
                 .map(HotelServiceReadDtoMapperUtil::convertHotelServiceToHotelServiceDto)
                 .toList();
     }
+
+//    List<HotelServiceReadDto> readAllRoomReservationsSortByGuestName();
+//    List<HotelServiceReadDto> readAllRoomReservationsSortByGuestCheckOut();
+
+//    List<HotelServiceReadDto> readAllServicesSortByDate();
+//    List<HotelServiceReadDto> readAllServicesSortByCost();
+
+//    List<RoomDto> readAllRoomsFreeInTime(String checkedTimeString);
+//    List<RoomDto> readAllFreeRoomsSortByPrice(String checkedTimeString);
+//    List<RoomDto> readAllFreeRoomsSortByCapacity(String checkedTimeString);
+//    List<RoomDto> readAllFreeRoomsSortByLevel(String checkedTimeString);
+
+//    Integer countFreeRoomsInTime(String checkedTimeString);
+
+//    Integer countGuestPaymentForRoom(Integer idGuest);
+//    Integer countNumberOfGuestsOnDate(String checkedTimeString);
+//    List<String> read3LastGuestAndDatesForRoom(Integer idRoom);
 
     @Override
     @PostMapping("/")
@@ -66,6 +87,20 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'delete'.");
         roomReservationService.delete(id);
+    }
+
+    @Override
+    @GetMapping("/free-rooms/{time}")
+    public List<RoomDto> readAllRoomsFreeInTime(
+            @PathVariable String time,
+            @RequestParam(value = "sort", required = false, defaultValue = "serviceID") String sortBy) {
+        log.debug("ControllerRoomReservation call ServiceRoomReservation's methods 'readAllRoomsFreeInTime'.");
+        log.info("HotelServices sorted by '{}': \n", sortBy);
+
+        return roomReservationService.readAllRoomsFreeOnDate(time)
+                .stream()
+                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
+                .toList();
     }
 
     @Override
@@ -130,16 +165,6 @@ public class ControllerRoomReservationSpring implements ControllerRoomReservatio
     public Integer countNumberOfGuestsOnDate(@PathVariable String time) {
         log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'countNumberOfGuestsOnDate'.");
         return roomReservationService.countNumberOfGuestsOnDate(time);
-    }
-
-    @Override
-    @GetMapping("/free-rooms/{time}")
-    public List<RoomDto> readAllRoomsFreeInTime(@PathVariable String time) {
-        log.debug("ControllerRoomReservation call ServiceRoomReservation's method 'readAllRoomsFreeInTime'.");
-        return roomReservationService.readAllRoomsFreeOnDate(time)
-                .stream()
-                .map(RoomDtoMapperUtil::convertRoomToRoomDto)
-                .toList();
     }
 
     @Override
