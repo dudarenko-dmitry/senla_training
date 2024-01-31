@@ -1,0 +1,18 @@
+<web-app xmlns=""
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation=""
+         version="3.1">
+
+    <display-name>hotel</display-name>
+
+    <servlet>
+        <servlet-name>hotel</servlet-name>
+        <servlet-class>pl.senla.hotel.hotel/src/main/java</servlet-class>
+<!--        <servlet-class>C://IT/senla_training/src/main/java/pl/senla/hotel/Main.java</servlet-class>-->
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>hotel</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+</web-app>
